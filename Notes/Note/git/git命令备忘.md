@@ -42,7 +42,7 @@ git remote add origin <server>
 git status
 ```
 
-![git工作流](/image/47C122262CA9DC0D98BE1738317B16D0.png)
+![git工作流](../../image/47C122262CA9DC0D98BE1738317B16D0.png)
 
 ## Git版本控制
 
@@ -100,7 +100,7 @@ git checkout -- <file> //丢弃工作区的修改
 git checkout HEAD -- <files> //回滚到复制最后一次提交
 ```
 
-![git回滚](/image/CA50C1157244EB9A635C658474EEE535.png)
+![git回滚](../../image/CA50C1157244EB9A635C658474EEE535.png)
 
 #### 将文件从缓存区撤回到工作区：
 
@@ -108,7 +108,7 @@ git checkout HEAD -- <files> //回滚到复制最后一次提交
 git reset HEAD <file>
 ```
 
-![git回滚](/image/924FCF12113FA97555744C88FAF76486.png)
+![git回滚](../../image/924FCF12113FA97555744C88FAF76486.png)
 
 ----
 

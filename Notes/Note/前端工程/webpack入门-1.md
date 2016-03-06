@@ -5,7 +5,7 @@ tags: webpack
 ---
 
 
-![webpack.png](/image/3B0BB29D22F20C57E570847DD508C1FF.png)
+![webpack.png](../../image/3B0BB29D22F20C57E570847DD508C1FF.png)
 
 ## webpack安装
 

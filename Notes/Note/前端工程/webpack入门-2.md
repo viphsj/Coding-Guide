@@ -4,9 +4,9 @@ date: 2016-03-03 09:23:53
 tags: webpack
 ---
 
-![webpack_awesome.png](/image/F4E4D3A902E078283E05C68DFA4B4AF9.png)
+![webpack_awesome.png](../../image/F4E4D3A902E078283E05C68DFA4B4AF9.png)
 
-![webpack\_g.png](/image/2ADB441F592FF8840000448DC6C3D54A.png)
+![webpack\_g.png](../../image/2ADB441F592FF8840000448DC6C3D54A.png)
 
 ## 在Webpack下实时调试React组件
 
