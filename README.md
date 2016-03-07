@@ -1,10 +1,13 @@
 - Components Demo
+- Tools
+	- Plugin
+	- Framework
 - Notes
 	- Coding
 		- JavaScript
 		- Python (coming soon)
 		- html & css
-		- NodeJS
+		- NodeJS (coming soon)
 		- React
 			- ReactJS
 			- React Native
