@@ -42,6 +42,12 @@
 > 
 > 点击图片全屏展示，可左右切换图片
 
+#### [Fabric.js](http://fabricjs.com/)
+
+> Fabric.js is a powerful and simple Javascript HTML5 canvas library
+> 
+> html5 canvas绘图插件。挺强大的，基本上只有你想不到没有它做不到。提供的接口可以让你自己进行各种扩展
+
 #### [Cropper](http://fengyuanchen.github.io/cropper/)
 
 > A simple jQuery image cropping plugin.
@@ -57,6 +63,14 @@
 > 简洁清晰的js chart图表库
 
 ### OTHER TOOLS
+
+#### [UNDERSCORE.JS](http://underscorejs.org/)
+
+> 工具类函数库，非常之方便。。但是有一点 --> 用太多会被它惯坏啊喂
+> 
+> 推荐看它[源码](http://underscorejs.org/docs/underscore.html)进行学习，深入理解那些函数底层的实现
+> 
+> 另有[汉化版文档](http://www.css88.com/doc/underscore/)
 
 #### [favico.js](http://lab.ejci.net/favico.js/)
 
