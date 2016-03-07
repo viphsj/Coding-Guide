@@ -1,5 +1,4 @@
 - Components Demo
-- Coding Guide
 - Notes
 	- Coding
 		- JavaScript
