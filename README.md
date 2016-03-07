@@ -1,1 +1,14 @@
-some components demo here.
+- Components Demo
+- Coding Guide
+- Notes
+	- Coding
+		- JavaScript
+		- Python (coming soon)
+		- html & css
+		- NodeJS
+		- React
+			- ReactJS
+			- React Native
+	- Project
+		- PM
+		- Design
