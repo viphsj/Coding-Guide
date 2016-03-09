@@ -38,15 +38,3 @@
 #### [React Toolbox](http://react-toolbox.com/#/)
 
 > 相比于 Material-UI，算是一个轻量级的React Material Design UI库
-
-### React 插件
-
-#### [Draft.js](https://facebook.github.io/draft-js/)
-
-> 虽然并不是 React UI框架，但是是一个React 文本编辑器
-> 
-> 支持Markdown
-
-#### [React Select](http://jedwatson.github.io/react-select/)
-
-> 一个基于 React 的下拉列表插件
