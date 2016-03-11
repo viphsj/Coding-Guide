@@ -102,3 +102,7 @@ jQuery date & time input picker.
 #### [tinymce](https://www.tinymce.com/)
 
 > 文本编辑器插件
+
+#### [Store.js](https://github.com/marcuswestin/store.js)
+
+> 适用于所有浏览器的本地存储，不使用 cookies 或者 flash。会根据浏览器的不同选择 localStorage, globalStorage, 和 userData 作为存储引擎。
