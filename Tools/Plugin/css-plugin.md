@@ -12,10 +12,6 @@
 
 > 又一个CSS Loading动画库
 
-#### [Tasty CSS-animated hamburgers](https://jonsuh.com/hamburgers/)
-
-> 基于CSS的带有动效的汉堡菜单icon
-
 #### [balloon.css](http://kazzkiq.github.io/balloon.css/)
 
 > 带有一个小小的动效的悬浮Tips动效库
@@ -33,3 +29,45 @@
 #### [Slick.css](http://kenwheeler.github.io/slick)
 
 > 图片画廊，各种左右切换page的效果
+
+### ICONS & WEB-FONT
+
+#### [Font-awesome](http://fontawesome.io/)
+
+> CSS字体图标库
+
+#### [Fileicon.css](http://picturepan2.github.io/fileicon.css/)
+
+> 几款文件图标库，展现doc/ppt/xls/png/mp3文件图标
+
+#### [Material Icons](http://google.github.io/material-design-icons/)
+
+> Material 风格的icon图标库
+
+#### [ICONO](http://saeedalipoor.github.io/icono/)
+
+> CSS小图标库
+
+#### [CIKONSS](http://www.bootcss.com/p/cikonss/)
+
+> 纯CSS实现的响应式Icon
+> 
+> 兼容IE8+
+> 
+> 然而不是很好看。。。。
+
+#### [Transformicons](http://www.transformicons.com/)
+
+> 带有动效的小图标库
+> 
+> 然而也不是很好看。。。。。。。。。。。。
+
+#### [twig](https://wiredcraft.com/twig/)
+
+> 简约线条式的图标库
+>
+> 好看！
+
+#### [Tasty CSS-animated hamburgers](https://jonsuh.com/hamburgers/)
+
+> 基于CSS的带有动效的汉堡菜单icon

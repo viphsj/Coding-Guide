@@ -30,6 +30,12 @@
 
 > 上下全屏滑动。现在很多网站首屏上常见到的动效
 
+#### [Headroom.js](http://wicky.nillia.ms/headroom.js/)
+
+> 下滑页面隐藏导航栏，上滑展现导航栏
+> 
+> 为页面顶部多留些空间
+
 ### ABOUT MEDIA
 
 #### [Spectrum](http://bgrins.github.io/spectrum/)
