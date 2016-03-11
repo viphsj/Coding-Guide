@@ -32,6 +32,14 @@
 
 ### ABOUT MEDIA
 
+#### [Spectrum](http://bgrins.github.io/spectrum/)
+
+> 基于jQuery的colorPicker，简单易用
+> 
+> 已知bug(?): 在颜色选择面板一直打开的情况下，选择其他颜色之后，无法在回到打开面板是的那个active颜色。
+> 
+> 解决方案: 参数设置`hideAfterPaletteSelect:true`，每次选择完颜色面板都会自动关闭:)
+
 #### [VideoJs](http://videojs.com/)
 
 > 用于视频处理的js库
