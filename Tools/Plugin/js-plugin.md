@@ -120,3 +120,7 @@ jQuery date & time input picker.
 #### [Store.js](https://github.com/marcuswestin/store.js)
 
 > 适用于所有浏览器的本地存储，不使用 cookies 或者 flash。会根据浏览器的不同选择 localStorage, globalStorage, 和 userData 作为存储引擎。
+
+#### [PLEASE.JS](http://www.checkman.io/please/)
+
+> 生成随机色的js插件，带有过度的动画效果
