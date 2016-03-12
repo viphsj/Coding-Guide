@@ -1,6 +1,10 @@
 ## CSS PLUGIN
 
-### ABOUT ANIMATION
+### About animation
+
+#### [Animate.css](http://daneden.github.io/animate.css/)
+
+> 老牌的CSS动效库，满足你的各种需求
 
 #### [CONNOR ATHERTON](https://connoratherton.com/)
 
@@ -16,7 +20,7 @@
 
 > 带有一个小小的动效的悬浮Tips动效库
 
-### ABOUT COLOR
+### About color
 
 #### [Colofilter.css](http://lukyvj.github.io/colofilter.css/)
 
@@ -24,13 +28,13 @@
 > 
 > 然而并不支持 IE&Edge浏览器，Opera Mini，以及Safari(desktop&IOS) ==
 
-### ABOUT PAGE-SWITCH
+### About page-switch
 
 #### [Slick.css](http://kenwheeler.github.io/slick)
 
 > 图片画廊，各种左右切换page的效果
 
-### ICONS & WEB-FONT
+### Icons & Web-Font
 
 #### [Font-awesome](http://fontawesome.io/)
 

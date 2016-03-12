@@ -1,6 +1,6 @@
 ### JS PLUGIN
 
-### ABOUT ANIMATION
+### About animation
 
 #### [mo.js](http://mojs.io/)
 
@@ -16,7 +16,7 @@
 
 > 一个做视差滚动的js库
 
-### ABOUT PAGE-SWITCH
+### About page-switch
 
 #### [reveal.js](http://lab.hakim.se/reveal-js/#/)
 
@@ -36,7 +36,7 @@
 > 
 > 为页面顶部多留些空间
 
-### ABOUT MEDIA
+### About media
 
 #### [Spectrum](http://bgrins.github.io/spectrum/)
 
@@ -68,7 +68,7 @@
 > 
 > 基于jQuery的图片剪裁库
 
-### ABOUT CHARTS
+### About charts
 
 #### [Chart.js](http://www.chartjs.org/)
 
@@ -76,7 +76,7 @@
 > 
 > 简洁清晰的js chart图表库
 
-### OTHER TOOLS
+### Other tools
 
 #### [UNDERSCORE.JS](http://underscorejs.org/)
 
@@ -124,3 +124,7 @@ jQuery date & time input picker.
 #### [PLEASE.JS](http://www.checkman.io/please/)
 
 > 生成随机色的js插件，带有过度的动画效果
+
+#### *[Feature.js](http://featurejs.com/)*
+
+> 快速有效的检测用户浏览器对各个API的兼容性
