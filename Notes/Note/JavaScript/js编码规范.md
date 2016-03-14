@@ -194,6 +194,18 @@ const foo = function () {
 function foo() {
 }
 ```
+
+```js
+// 函数声明的名称和函数体都会被提升
+
+function example() {
+  getName(); // ecmadao
+
+  function getName() {
+    console.log('ecmadao');
+  }
+}
+```
   
 - 直接给函数的参数指定默认值，不要使用一个变化的函数参数
 
@@ -253,4 +265,142 @@ const myName = person.name;
 - 一直使用 `const` 来声明变量
 
 > 避免全局命名空间的污染
+
+- 对于不确定值的变量。可以初始化赋值`null`，通过 `value !== null` 判断
+
+### 比较运算符
+
+- use `!==` & `===` instead of `!=` & `==`
+
+- 使用简写
+
+```js
+let name = '';
+if(!name) {
+	console.log('don\'t have name yet');
+}
+if(list.length) {
+	// do something...
+}
+```
+
+### 代码美观
+
+- 使用 // 作为单行注释。在评论对象上面另起一行使用单行注释。在注释前插入空行
+
+```js
+function example(){
+	const name = 'ecmadao';
+	
+	// this is an example
+	function sayName() {
+		console.log(name);
+	}
+}
+```
+
+- 注释前缀
+
+> 对于需要简短说明的注释，在注释前使用前缀快速标注
+> 
+> `FIXME` 代表需要 review 的代码段/标注问题
+> 
+> `TODO` 则标注问题的可能解决方案
+
+- 在花括号前放一个空格
+- 在控制语句（if、while 等）的小括号前放一个空格
+
+```js
+function example() {}
+
+if(true) {}
+```
+
+- 在使用长方法链时进行缩进。使用前面的点 `.` 强调这是方法调用而不是新语句
+
+```js
+// bad
+$('#items').find('.selected').highlight().end().find('.open').updateCount();
+
+// bad
+$('#items').
+  find('.selected').
+    highlight().
+    end().
+  find('.open').
+    updateCount();
+
+// good
+$('#items')
+  .find('.selected')
+    .highlight()
+    .end()
+  .find('.open')
+    .updateCount();
+
+// bad
+const leds = stage.selectAll('.led').data(data).enter().append('svg:svg').class('led', true)
+    .attr('width', (radius + margin) * 2).append('svg:g')
+    .attr('transform', 'translate(' + (radius + margin) + ',' + (radius + margin) + ')')
+    .call(tron.led);
+
+// good
+const leds = stage.selectAll('.led')
+    .data(data)
+  .enter().append('svg:svg')
+    .classed('led', true)
+    .attr('width', (radius + margin) * 2)
+  .append('svg:g')
+    .attr('transform', 'translate(' + (radius + margin) + ',' + (radius + margin) + ')')
+    .call(tron.led);
+```
+
+### null & undefined
+
+- 不要用null来检测是否传入了某个参数
+- 不要用null来检测一个未初始化的变量
+- 把null当做占位符，初始化变量的时候赋值
+- 如果所期望的值真的会是null，则可以直接和null比较
+
+```js
+let person = null;
+console.log(person === null); // true
+console.log(person === undefined); // false
+
+typeof null; // object
+typeof undefined; // undefined
+```
+
+- 检测 函数/原始值 使用 `typeof`
+- 检测 引用值/自定义类型 用 `instanceof`
+
+### 命名规则
+
+- 使用小驼峰式命名对象、函数和实例
+- 使用大驼峰式命名构造函数或类
+- 使用下划线 `_` 开头命名私有属性
+
+```js
+const exampleThree = 3;
+function exampleController() {}
+
+class User {}
+
+this._name = 'ecmadao';
+```
+
+- 别保存 `this` 的引用。使用箭头函数
+- 如果你的文件只输出一个类，那你的文件名必须和类名完全保持一致
+
+### jQuery相关
+
+- 使用 $ 作为存储 jQuery 对象的变量名前缀
+
+```js
+// bad
+const sidebar = $('.sidebar');
+
+// good
+const $sidebar = $('.sidebar');
+```
 
