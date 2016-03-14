@@ -13,7 +13,7 @@
 		- Python (coming soon)
 		- [html & css](./Notes/Note/CSS)
 		- [前端工程](./Notes/Note/前端工程)
-		- NodeJS (coming soon)
+		- [NodeJS](./Notes/Note/NodeJS)
 		- [React](./Notes/Note/React)
 			- ReactJS
 			- React Native
