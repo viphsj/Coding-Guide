@@ -61,6 +61,8 @@
 
 ### file system api
 
+#### access
+
 ```js
 fs.access(path[, mode], callback);
 
@@ -85,6 +87,8 @@ fs.accessSync(path[, mode]);
 	- 文件可删除（Windows下无效）
 
 ---
+
+#### appendFile
 
 ```js
 fs.appendFile(filename, data, [options], callback);
@@ -119,6 +123,8 @@ fs.appendFile('message.txt', 'data to append', 'utf8', (err) => {
 
 ---
 
+#### rename
+
 ```js
 fs.rename(oldPath, newPath, callback);
 
@@ -129,6 +135,8 @@ callback是失败时的回调，接收可能的异常信息作为参数
 
 ---
 
+#### close
+
 ```js
 fs.close(fd, callback)
 
@@ -136,6 +144,8 @@ fs.closeSync(fd)
 ```
 
 ---
+
+#### createReadStream
 
 ```js
 fs.createReadStream(path[, options])
@@ -178,6 +188,8 @@ Returns a new ReadStream object
 
 ---
 
+#### createWriteStream
+
 ```js
 fs.createWriteStream(path[, options])
 ```
@@ -212,6 +224,8 @@ Returns a new WriteStream object
 
 ---
 
+#### open
+
 ```js
 fs.open(path, flags[, mode], callback)
 
@@ -235,6 +249,8 @@ fs.openSync(path, flags[, mode])
 
 ---
 
+#### read
+
 ```js
 fs.read(fd, buffer, offset, length, position, callback)
 ```
@@ -249,6 +265,20 @@ Read data from the file specified by fd.
 
 ---
 
+#### write
+
+```js
+fs.write(fd, buffer, offset, length[, position], callback)
+fs.writeSync(fd, buffer, offset, length[, position])
+
+fs.write(fd, data[, position[, encoding]], callback)
+fs.writeSync(fd, data[, position[, encoding]])
+```
+
+---
+
+#### readdir
+
 ```js
 fs.readdir(path, callback)
 
@@ -260,3 +290,77 @@ fs.readdirSync(path)
 > callback接收两个参数：error和files
 > 
 > 其中files 是一个存储目录中所包含的文件名称的数组，数组中不包括 '.' 和 '..'
+
+---
+
+#### readFile
+
+```js
+fs.readFile(file[, options], callback)
+
+fs.readFileSync(file[, options])
+```
+
+- `file`
+- `options` Object或String
+	- `encoding` String或null, default = null
+	- `flag` default = `r`
+- `callback(error, data)`
+
+```js
+fs.readFile('/etc/passwd', (err, data) => {
+  if (err) throw err;
+  console.log(data);
+});
+
+fs.readFile('/etc/passwd', 'utf8', callback);
+```
+
+---
+
+#### writeFile
+
+```js
+fs.writeFile(file, data[, options], callback)
+fs.writeFileSync(file, data[, options])
+```
+- `file`
+- `data`
+- `options`
+	- `encoding` String | Null, default = 'utf8'
+	- `mode` Number, default = 0o66
+	- `flag` String, default = `w`
+- `callback(error)`
+
+```js
+fs.writeFile('message.txt', 'Hello Node.js', (err) => {
+  if (err) throw err;
+  console.log('It\'s saved!');
+});
+
+fs.writeFile('message.txt', 'Hello Node.js', 'utf8', callback);
+```
+
+> *it is unsafe to use fs.writeFile multiple times on the same file without waiting for the callback*
+
+---
+
+#### rename
+
+```js
+fs.rename(oldPath, newPath, callback)
+
+fs.renameSync(oldPath, newPath)
+```
+
+---
+
+#### rmdir & mkdir
+
+```js
+fs.rmdir(path, callback)
+fs.rmdirSync(path)
+
+fs.mkdir(path, [mode], callback)
+fs.mkdirSync(path, [mode])
+```
