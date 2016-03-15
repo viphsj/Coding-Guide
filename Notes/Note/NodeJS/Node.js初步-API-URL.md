@@ -26,21 +26,76 @@ url.parse(urlStr[, parseQueryString][, slashesDenoteHost])
 
 > 解析url，返回一个json格式的数组
 
+- `parseQueryString` 布尔值，是否将查询条件解析成为json格式的对象
+- `slashesDenoteHost` 布尔值，是否将url的"//"和第一个"/"之间的部分解析为主机名
+
 ```js
 var url = require('url');
-url.parse('http://www.baidu.com');
+url.parse('http://www.baidu.com?page=1', true, false);
 
 { protocol: 'http:',
-  slashes: null,
+  slashes: true,
   auth: null,
-  host: null,
+  host: 'www.baidu.com',
   port: null,
-  hostname: null,
+  hostname: 'www.baidu.com',
   hash: null,
-  search: null,
-  query: null,
-  pathname: 'www.baidu.com',
-  path: 'www.baidu.com',
-  href: 'http://www.baidu.com' 
+  search: '?page=1',
+  query: { page: '1' },
+  pathname: '/',
+  path: '/?page=1',
+  href: 'http://www.baidu.com/?page=1' 
 }
+
+url.parse('http://www.baidu.com/news?page=1', true, true);
+
+{ protocol: 'http:',
+  slashes: true,
+  auth: null,
+  host: 'www.baidu.com',
+  port: null,
+  hostname:'www.baidu.com',
+  hash: null,
+  search: '?page=1',
+  query: {page: 1},
+  pathname: '/news',
+  path: '/news?page=1',
+  href: 'http://www.baidu.com/news/page=1' 
+}
+```
+
+#### url.format
+
+```js
+url.format(urlObj)
+```
+> 作用与parse相反，接收一个Json对象，返回一个组装好的URL地址
+
+```js
+var url = require('url');
+url.format({
+	protocol: 'http:',
+	hostname:'www.baidu.com',
+	port:'80',
+	pathname :'/news',
+	query:{page:1}
+});
+
+// http://www.baidu.com/news?page=1
+```
+
+#### url.resolve
+
+```js
+url.resolve(from, to)
+```
+
+> Take a base URL, and a href URL, and resolve them as a browser would for an anchor tag. Examples:
+> 
+> 第一个路径是开始的路径或者说当前路径，第二个则是想要去往的路径，返回值是一个组装好的url
+
+```js
+url.resolve('/one/two/three', 'four')         // '/one/two/four'
+url.resolve('http://example.com/', '/one')    // 'http://example.com/one'
+url.resolve('http://example.com/one', '/two') // 'http://example.com/two'
 ```
