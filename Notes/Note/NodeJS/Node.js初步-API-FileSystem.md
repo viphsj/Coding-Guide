@@ -1,5 +1,7 @@
 ## Node.js初步 - API - file system
 
+node.js中提供一个名为fs的模块来支持I/O操作，fs模块的文件I/O是对标准POSIX函数的简单封装
+
 ### file system
 
 > 文件操作的API有异步/同步两种
@@ -85,6 +87,27 @@ fs.accessSync(path[, mode]);
 	- 文件可写
 - fs.X_OK
 	- 文件可删除（Windows下无效）
+
+---
+
+#### exists
+
+> 检查一个文件是否存在
+
+```js
+fs.existe(path, callback);
+
+fs.existsSync(path);
+```
+- callback(exists); exists为是否存在的布尔值
+
+```js
+var fs= require("fs");
+ 
+fs.exists('/etc/passwd', function (exists) {
+  console.log(exists ? "存在" : "不存在!");
+});
+```
 
 ---
 
@@ -330,7 +353,7 @@ fs.writeFileSync(file, data[, options])
 	- `encoding` String | Null, default = 'utf8'
 	- `mode` Number, default = 0o66
 	- `flag` String, default = `w`
-- `callback(error)`
+- `callback(error)` // 回调只有error
 
 ```js
 fs.writeFile('message.txt', 'Hello Node.js', (err) => {
@@ -341,6 +364,8 @@ fs.writeFile('message.txt', 'Hello Node.js', (err) => {
 fs.writeFile('message.txt', 'Hello Node.js', 'utf8', callback);
 ```
 
+> 如果文件已经存在则会被替换掉
+> 
 > *it is unsafe to use fs.writeFile multiple times on the same file without waiting for the callback*
 
 ---
