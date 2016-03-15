@@ -1,4 +1,4 @@
-## Node.js初步 - API - file system
+## Node.js初步 - API - File System
 
 node.js中提供一个名为fs的模块来支持I/O操作，fs模块的文件I/O是对标准POSIX函数的简单封装
 
@@ -308,7 +308,7 @@ fs.readdir(path, callback)
 fs.readdirSync(path)
 ```
 
-> 读取path路径所在目录的内容
+> 读取path路径所在目录下的所有文件
 > 
 > callback接收两个参数：error和files
 > 
@@ -383,9 +383,34 @@ fs.renameSync(oldPath, newPath)
 #### rmdir & mkdir
 
 ```js
+// 删除目录
 fs.rmdir(path, callback)
 fs.rmdirSync(path)
 
+// 创建目录
 fs.mkdir(path, [mode], callback)
 fs.mkdirSync(path, [mode])
+```
+
+- `mode` 权限，默认为0777，表示所有用户都可进行读/写/执行的操作
+- `callback(error)`
+
+---
+
+#### unlink
+
+```js
+fs.unlink(path, callback);
+
+fs.unlinkSync(path);
+```
+> 删除文件
+
+```js
+var fs = require('fs');
+ 
+fs.unlink(文件, function(err) {
+  if (err) throw err;
+  console.log('successfully deleted');
+});
 ```
