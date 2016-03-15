@@ -21,7 +21,7 @@ path.normalize('/foo/bar//baz/asdf/quux/..')
 > 
 > 当传递空string的时候返回`.`，代表了当前所在目录
 
-#### path.parse
+#### path.parse & path.format
 
 ```js
 path.parse(pathString)
@@ -38,6 +38,26 @@ path.parse('/home/user/dir/file.txt')
     ext : ".txt",
     name : "file"
 }
+```
+
+---
+
+```js
+path.format(pathObject);
+```
+
+> 与 `path.parse` 作用相反，将object合成为path
+
+```js
+path.format({
+    root : "/",
+    dir : "/home/user/dir",
+    base : "file.txt",
+    ext : ".txt",
+    name : "file"
+})
+// returns
+'/home/user/dir/file.txt'
 ```
 
 #### path.relative & path.resolve
@@ -173,4 +193,44 @@ path.extname(pathString)
 ```
 > 返回扩展名。从最后的一个`.`到路径末尾
 > 
-> 如果在路径的最后一部分中不存在`.`，或者
+> 如果在路径的最后一部分中不存在`.`，或者以`.`开头的话，则返回空
+
+```js
+path.extname('index.html')
+// returns
+'.html'
+
+path.extname('index.coffee.md')
+// returns
+'.md'
+
+path.extname('index.')
+// returns
+'.'
+
+path.extname('index')
+// returns
+''
+
+path.extname('.index')
+// returns
+''
+```
+
+#### path.basename
+
+```js
+path.basename(pathString[, ext]);
+```
+> basename函数可返回路径中的最后一部分，并且可以对其进行条件排除
+
+```js
+path.basename('/foo/bar/baz/asdf/quux.html')
+// returns
+'quux.html'
+
+path.basename('/foo/bar/baz/asdf/quux.html', '.html') // 排除 .html
+// returns
+'quux'
+```
+
