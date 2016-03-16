@@ -17,6 +17,8 @@
 		- [React](./Notes/Note/React)
 			- ReactJS
 			- React Native
+		- Lua
+		- Go
 	- [Project](./Notes/Note/Project)
 		- PM
 		- Design
