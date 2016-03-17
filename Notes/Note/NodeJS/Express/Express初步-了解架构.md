@@ -1,1 +1,185 @@
 ## Express初步 - 了解架构
+
+> 以 express V4.13.1为例
+
+### Express 安装
+
+- 安装 Node
+- 全局安装Express
+
+```js
+$ sudo npm install -g express-generator
+$ express [项目名]
+$ cd [项目名] && npm install
+```
+
+### Express 组成部分
+
+#### application对象
+
+创造一个Express模块对象：
+
+```js
+var express = require('express');
+var app = new express();
+```
+application对象的方法：
+
+```js
+app.set(name, value) // 设置一个app属性 
+app.get(name) // 提取由app.set()设置的值 
+app.enable(name) // 开启一个设置 
+app.disable(name) // 关闭一个设置 
+app.enabled(name) // 检查设置是否开启 
+app.disabled(name) // 检查设置是否不可用 
+app.configure([env], callback) // 根据开发环境进行设置 
+app.use([path], function) // 在app中载入一个中间件 
+app.engine(ext, callback) // 为app注册一个模板 
+app.param([name], callback) // 为路径变量增加逻辑 
+app.VERB(path, [callback...], callback) // 根据HTTP verbs 定义路径和处理器 
+app.all(path, [callback...], callback) // 为所有HTTP verbs定义路径和处理器 
+app.locals // 存储所有视图都能访问的变量的对象 
+app.render(view, [options], callback) // 从app中渲染一个视图 
+app.routes // 在app中定义的所有路径列表 
+app.listen() // 绑定并监听所有连接
+```
+
+#### request对象
+
+当一个客户端对Express app发起一个请求时，HTTP request对象被创建。
+它包含许多与当前请求相关的方法和属性：
+
+```js
+req.params // 包含请求路径中的变量 
+req.params(name) // 从GET变量或者POST变量中返回一个特定变量 
+req.query // 包含GET中的值 
+req.body // 包含POST中的值 
+req.files // 包含由表单上传的文件 req.route 提供当前匹配路径的信息 
+req.cookies // Cookie值 
+req.signedCookies // Signed cookie 值 
+req.get(header) // 获取http请求头文件 
+req.accepts(types) // 检查客户端是否接受媒体类型 
+req.accepted // 客户端可接受的媒体类型列表 
+req.is(type) // 检查请求中是否包含某种媒体类型 
+req.ip // 客户端的ip地址 
+req.ips // 客户端以及代理的ip地址 
+req.path // 请求路径 
+req.host // 来自HTTP头文件的主机信息 
+req.fresh // 检查请求是否刚发生 
+req.stale // 检查请求是否稳定 
+req.xhr // 检查请求是否来自于AJAX请求 
+req.protocol // 进行请求的协议 
+req.secure // 检查是否是安全连接 
+req.subdomains // 主域名下面的子域名 
+req.url // 请求路径以及查询变量 
+req.originalUrl // req.url的根源
+req.acceptedLanguages // 客户端所接受的语言列表 
+req.acceptsLanguage(langauge) // 检查客户端是否接受某种特定语言 req.acceptedCharsets // 客户端可接受字符列表 
+req.acceptsCharsets(charset) // 检查客户端是否接受某种特定字符
+```
+
+#### response对象
+
+response对象和request对象一起被创建
+
+每个中间件在把控制传递给下一个中间件之前都需要包含一个res对象和一个req对象
+
+```js
+res.status(code) // 设置HTTP恢复状态码 
+res.set(field, [value]) // 设置回复HTTP头文件 
+res.get(header) // 获取回复HTTP头文件 
+res.cookie(name, value, [options]) // 在客户端上设置cookie 
+res.clearCookie(name, [options]) // 清除客户端上的cookie 
+res.redirect([status], url) // 连同一个HTTP状态码重定向到一个新的url 
+res.location // HTTP头文件中的location值 
+res.charset // HTTP头文件中的charset值 
+res.send([body|status], [body]) // 连同一个HTTP回复码，发送一个HTTP回复对象 
+res.json([status|body], [body]) // 连同一个HTTP回复码，发送一个JSON对象 
+res.jsonp([status|body], [body]) // 连同一个HTTP回复码，发送一个JSONP对象 
+res.type(type) // 设置回复HTTP头文件的媒体类型 
+res.format(object) // 根据客户端可接受的类型发送一个HTTP回复 
+res.attachment([filename]) // 设置HTTP头文件内容为一个附件 
+res.sendfile(path, [options], [callback]]) // 向客户端发送一个文件 
+res.download(path, [filename], [callback]) // 提示客户端下载一个文件 
+res.links(links) // 设置HTTP连接头文件 
+res.locals // 存储所有视图能够访问的req的变量值 
+res.render(view, [locals], callback) // 渲染一个视图
+```
+
+### Express 目录结构
+
+-- app.js [根文件，生成了ExpressApp实例，分发路由]
+-- bin
+-- node_modules [node依赖包]
+-- public [public资源文件，存放js/css/image等]
+-- routes [路由目录]
+-- views [view层]
+
+#### 定义路由
+
+```js
+./routes/index.js
+
+var express = require('express');
+var router = express.Router();
+
+// 定义路由
+router.get('/', function(req, res, next) {
+
+  // render出view层
+  res.render('index', { title: 'Express' });
+});
+
+module.exports = router;
+```
+
+#### 分发路由
+
+```js
+./app.js
+
+var express = require('express');
+var path = require('path');
+var favicon = require('serve-favicon'); 
+
+var routes = require('./routes/index');
+var app = express();
+
+// view引擎初始化
+app.set('views', path.join(__dirname, 'views')); // 配置view文件目录
+app.set('view engine', 'jade'); // 使用 jade
+
+// 配置网站的favicon
+app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+
+// 配置public资源文件目录
+app.use(express.static(path.join(__dirname, 'public')));
+
+// 分发路由
+app.use('/', routes);
+app.use('/users', users);
+app.use('/about', routes);
+
+// 设置404页面
+app.use(function(req, res, next) {
+  var err = new Error('Not Found');
+  err.status = 404;
+  next(err);
+});
+
+module.exports = app;
+```
+
+#### view层
+
+使用`.jade`格式文件
+
+```jade
+doctype html
+html
+  head
+    title= title
+    link(rel='stylesheet', href='/stylesheets/style.css')
+  body
+    block content
+```
