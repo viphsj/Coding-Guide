@@ -134,6 +134,54 @@ router.get('/', function(req, res, next) {
 
 module.exports = router;
 ```
+其底层都是通过如下方法实现:
+
+```js
+// GET method route
+app.get('/', function (req, res) {
+  res.send('GET request to the homepage');
+});
+
+// POST method route
+app.post('/', function (req, res) {
+  res.send('POST request to the homepage');
+});
+```
+可以提供多个回调函数, 这些回调函数可能调用 next('route') 来绕过剩余的路由回调
+
+可以使用此机制对路由施加先决条件，在没有理由继续执行当前路由的情况下，可将控制权传递给后续路由
+
+多个回调函数可以处理一个路由（确保您指定 next 对象）:
+
+```js
+app.get('/example/b', function (req, res, next) {
+  console.log('the response will be sent by the next function ...');
+  next();
+}, function (req, res) {
+  res.send('Hello from B!');
+});
+```
+
+一组回调函数可以处理一个路由。例如：
+
+```js
+var cb0 = function (req, res, next) {
+  console.log('CB0');
+  next();
+}
+
+var cb1 = function (req, res, next) {
+  console.log('CB1');
+  next();
+}
+
+var cb2 = function (req, res) {
+  res.send('Hello from C!');
+}
+
+app.get('/example/c', [cb0, cb1, cb2]);
+```
+
 
 #### 分发路由
 
