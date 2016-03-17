@@ -238,3 +238,22 @@ app.use('/static', express.static(__dirname + '/public'));
 // result
 http://localhost:3000/static/css/style.css
 ```
+
+#### 处理错误页面
+
+设置404
+
+```js
+app.use(function(req, res, next) {
+  res.status(404).send('Sorry cant find that!');
+});
+```
+
+设置500
+
+```js
+app.use(function(err, req, res, next) {
+  console.error(err.stack);
+  res.status(500).send('Something broke!');
+});
+```
