@@ -110,10 +110,12 @@ res.render(view, [locals], callback) // 渲染一个视图
 
 -- app.js [根文件，生成了ExpressApp实例，分发路由]
 -- bin
+---- www
 -- node_modules [node依赖包]
 -- public [public资源文件，存放js/css/image等]
 -- routes [路由目录]
 -- views [view层]
+-- package.json
 
 #### 定义路由
 
@@ -169,6 +171,29 @@ app.use(function(req, res, next) {
 
 module.exports = app;
 ```
+在根路由 (/) 上（应用程序的主页）对 POST 请求进行响应:
+
+```js
+app.post('/', function (req, res) {
+  res.send('Got a POST request');
+});
+```
+
+对 /user 路由的 PUT 请求进行响应:
+
+```js
+app.put('/user', function (req, res) {
+  res.send('Got a PUT request at /user');
+});
+```
+
+对 /user 路由的 DELETE 请求进行响应:
+
+```js
+app.delete('/user', function (req, res) {
+  res.send('Got a DELETE request at /user');
+});
+```
 
 #### view层
 
@@ -182,4 +207,34 @@ html
     link(rel='stylesheet', href='/stylesheets/style.css')
   body
     block content
+```
+
+#### 资源文件
+
+```js
+./app.js
+
+// 配置路径
+app.use(express.static(path.join(__dirname, 'public')));
+
+// result
+http://localhost:3000/css/style.css
+```
+
+要使用多个静态资产目录，请多次调用 express.static 中间件函数:
+
+```js
+app.use(express.static('public'));
+app.use(express.static('files'));
+```
+
+要为 express.static 函数提供的文件创建虚拟路径前缀（路径并不实际存在于文件系统中），请为静态目录指定安装路径，如下所示:
+
+```js
+app.use('/static', express.static('public'));
+// 推荐使用绝对路径
+app.use('/static', express.static(__dirname + '/public'));
+
+// result
+http://localhost:3000/static/css/style.css
 ```
