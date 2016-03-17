@@ -123,6 +123,8 @@ res.render(view, [locals], callback) // 渲染一个视图
 ./routes/index.js
 
 var express = require('express');
+
+// express.Router 类来创建可安装的模块化路由处理程序。Router 实例是完整的中间件和路由系统
 var router = express.Router();
 
 // 定义路由
