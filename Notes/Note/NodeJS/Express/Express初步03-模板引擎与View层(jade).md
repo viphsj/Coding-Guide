@@ -56,30 +56,6 @@ p Actually foo is #{foo}.
 </p>
 ```
 
-#### 循环
-
-- `each value in array`
-- `each value, key in object`
-
-```jade
-- users = ['ecmadao', 'edward', 'ws']
-- each user in users
-  p= user
- 
-// 输出
-<p>ecmadao</p>
-<p>edward</p>
-<p>ws</p>
-
-- object = {name: 'ecmadao', age: 24}
-- each value, key in object
-  li #{key}: #{value}
- 
-// 输出
-<li>name: ecmadao</li>
-<li>age: 24</li>
-```
-
 #### 条件
 
 ```jade
@@ -316,3 +292,69 @@ script
 <p>I often like including markdown documents.</p>
 <script>console.log('This is coffee script')</script>
 ```
+
+### iteration循环
+
+- `each value in array`
+- `each value, key in object`
+- `white`
+
+```jade
+- users = ['ecmadao', 'edward', 'ws']
+- each user in users
+  p= user
+ 
+// 输出
+<p>ecmadao</p>
+<p>edward</p>
+<p>ws</p>
+
+- object = {name: 'ecmadao', age: 24}
+- each value, key in object
+  li #{key}: #{value}
+ 
+// 输出
+<li>name: ecmadao</li>
+<li>age: 24</li>
+
+- var n = 0
+ul
+  while n < 4
+    li= n++
+
+// 输出
+<ul>
+  <li>0</li>
+  <li>1</li>
+  <li>2</li>
+  <li>3</li>
+</ul>
+```
+
+### Mixins
+
+> 可以通过Mixins定义模板方法，并在模板中重用
+
+```jade
+//- Declaration
+mixin users(users)
+  ul
+    each user in users
+      li=user
+
+//- Usage
+- userList = ['ecmadao', 'ws', 'edward']
++users(userList)
+```
+编译为:
+
+```html
+<li>
+	<ul>ecmadao</ul>
+	<ul>ws</ul>
+	<ul>edward<ul>
+</li>
+```
+
+> 
+

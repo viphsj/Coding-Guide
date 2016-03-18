@@ -51,15 +51,15 @@ export default ComponentDemo;
 
 ```js
 <DefaultComponent
-	num="222"
-	data={this.props.data}
+  num="222"
+  data={this.props.data}
 />
 
 <DefaultComponent
-	num="222"
-	data={this.props.data}
+  num="222"
+  data={this.props.data}
 >
-	<DemoController /> // 终始在自闭合标签前面添加一个空格
+  <DemoController /> // 终始在自闭合标签前面添加一个空格
 </DefaultComponent>
 ```
 
@@ -90,10 +90,10 @@ export default ComponentDemo;
 render() {
 	return (
 		<DefaultComponent
-			num="222"
-			data={this.props.data}
+		  num="222"
+		  data={this.props.data}
 		>
-			<DemoController />
+		  <DemoController />
 		</DefaultComponent>
 	)
 }
