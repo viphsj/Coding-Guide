@@ -1,4 +1,4 @@
-## Express初步 - 了解架构
+## Express初步01 - 了解架构
 
 > 以 express V4.13.1为例
 
@@ -8,9 +8,12 @@
 - 全局安装Express
 
 ```js
+// install node
+// install express
 $ sudo npm install -g express-generator
 $ express [项目名]
 $ cd [项目名] && npm install
+$ npm start
 ```
 
 ### Express 组成部分
