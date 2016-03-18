@@ -1,4 +1,4 @@
-## Express初步03 - 模板引擎与View层(jade)
+## Express初步04 - 模板引擎与View层(jade)
 
 在默认情况下，Express使用`jade`作为模板引擎
 
