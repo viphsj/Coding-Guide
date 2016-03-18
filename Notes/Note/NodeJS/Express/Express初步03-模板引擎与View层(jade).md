@@ -252,6 +252,8 @@ html
 > **block内(block下的缩进)包含的元素可以被覆盖重写**
 > 
 > **通过`block append 模块名`可以在继承的模块后继续添加内容**
+> 
+> **通过`block prepend 模块名`可以在继承的模块前继续添加内容**
 
 ```jade
 //- layout.jade
