@@ -113,7 +113,7 @@ res.render(view, [locals], callback) // 渲染一个视图
 
 -- app.js [根文件，生成了ExpressApp实例，分发路由]
 -- bin
----- www
+---- www [最终的执行文件]
 -- node_modules [node依赖包]
 -- public [public资源文件，存放js/css/image等]
 -- routes [路由目录]
@@ -188,7 +188,7 @@ app.get('/example/c', [cb0, cb1, cb2]);
 ```
 
 
-#### 分发路由
+#### 分发路由,加载中间件
 
 ```js
 ./app.js
@@ -196,6 +196,8 @@ app.get('/example/c', [cb0, cb1, cb2]);
 var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon'); 
+var cookieParser = require('cookie-parser');
+var bodyParser = require('body-parser');
 
 var routes = require('./routes/index');
 var app = express();
@@ -206,6 +208,13 @@ app.set('view engine', 'jade'); // 使用 jade
 
 // 配置网站的favicon
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+
+// 加载解析json的中间件
+app.use(bodyParser.json());
+// 加载解析urlencoded请求体的中间件
+app.use(bodyParser.urlencoded({ extended: false }));
+// 加载解析cookie的中间件
+app.use(cookieParser());
 
 // 配置public资源文件目录
 app.use(express.static(path.join(__dirname, 'public')));
