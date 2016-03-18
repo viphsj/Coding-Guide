@@ -248,20 +248,47 @@ html
 > 父模板通过 `block` 关键字输出可以被继承的模块
 > 
 > 子模板通过 `extends` 继承父模板，可以通过 `block` 重新覆盖书写各个模块
+> 
+> **block内(block下的缩进)包含的元素可以被覆盖重写**
+> 
+> **通过`block append 模块名`可以在继承的模块后继续添加内容**
 
 ```jade
-// layout.jade
+//- layout.jade
 doctype 5
 html
   head
-    title My title
-    block head
+    block title
+    	title My title
   body
     #content
       block content
+        p this is a block
 
-// index.jade
+//- index.jade
+extends ./layout.jade
 
+block title
+  title Index Title
+
+block append content
+  h1 My Article
+  p append to block
+```
+编译为:
+
+```html
+<!doctype html>
+<html>
+  <head>
+    <title>Index Title</title>
+  </head>
+  <body>
+    <p>this is a block</p>
+    <h1>My Article</h1>
+    <p>append to block</p>
+  </body>
+</html>
 ```
 
 ### Filters过滤器
