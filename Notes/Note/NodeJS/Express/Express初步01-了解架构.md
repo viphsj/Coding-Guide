@@ -111,6 +111,7 @@ res.render(view, [locals], callback) // 渲染一个视图
 
 ### Express 目录结构
 
+```
 -- app.js [根文件，生成了ExpressApp实例，分发路由]
 -- bin
 ---- www [最终的执行文件]
@@ -119,6 +120,7 @@ res.render(view, [locals], callback) // 渲染一个视图
 -- routes [路由目录]
 -- views [view层]
 -- package.json
+```
 
 #### 定义路由
 
