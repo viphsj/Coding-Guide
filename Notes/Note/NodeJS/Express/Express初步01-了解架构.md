@@ -9,10 +9,15 @@
 
 ```js
 // install node
+
 // install express
 $ sudo npm install -g express-generator
 $ express [项目名]
 $ cd [项目名] && npm install
+
+// start 
+$ DEBUG=blog:* npm start
+// if it can't used, then try
 $ npm start
 ```
 

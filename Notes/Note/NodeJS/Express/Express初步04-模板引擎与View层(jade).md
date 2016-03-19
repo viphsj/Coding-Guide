@@ -356,5 +356,40 @@ mixin users(users)
 </li>
 ```
 
-> 
+> 将 Mixin 与 Blocks 结合
+
+```jade
+mixin article(title)
+  .article
+    .article-wrapper
+      h1= title
+      if block
+        block
+      else
+        p No content provided
+
++article('Hello world')
+
++article('Hello world')
+  p This is aaaa
+  p Amazing article
+```
+编译结果:
+
+```html
+<div class="article">
+  <div class="article-wrapper">
+    <h1>Hello world</h1>
+    <p>No content provided</p>
+  </div>
+</div>
+<div class="article">
+  <div class="article-wrapper">
+    <h1>Hello world</h1>
+    <p>This is aaaa</p>
+    <p>Amazing article</p>
+  </div>
+</div>
+```
+
 
