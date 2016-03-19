@@ -90,7 +90,7 @@ const itemsCopy = [...items];
 ```js
 // create a file named ConstValue.js
 
-export var CONST_VALUE = "constValue";
+export var CONST_VALUE = 'constValue';
 
 export var AMOUNT = 10;
 
