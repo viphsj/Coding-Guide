@@ -20,7 +20,7 @@ npm install webpack --save-dev //安装webpack到package.json文件中。
 npm install webpack-dev-server --save-dev //安装dev tools到package.json文件中，本地运行webpack服务
 ```
 
-切换到包含webpack.config.js的目录运行命令：
+在包含 `webpack.config.js` 的目录运行命令：
 
 ```sass
 webpack //执行一次开发时的编译
@@ -33,6 +33,12 @@ webpack --sort-modules-by, --sort-chunks-by, --sort-assets-by //将modules/chunk
 webpack --display-chunks //展示编译后的分块
 webpack --display-reasons //显示更多引用模块原因
 webapck --display-error-details //显示更多报错信息
+```
+
+或者如果你改变了 `webpack.config.js` 的文件名或文件路径，比如改为 `./config/dev.config.js`:
+
+```sass
+$ webpack --config congig/dev.config.js
 ```
 
 [webpack入门级教程](http://www.cnblogs.com/shinggang/p/5034404.html)
