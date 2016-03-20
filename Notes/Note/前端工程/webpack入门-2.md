@@ -408,7 +408,34 @@ if (window.location.pathname === '/feed') {
 }
 ```
 
+## 全局依赖
+
+每个页面都要 `import $ from 'jquery'`简直神烦？
+
+安装了依赖 `window.jquery` 的插件，在webpack下难以使用？
+
+懒就是第一生产力，是时候把jQuery暴露到全局了：
+
+```js
+// 安装 expose-loader
+$ sudo npm install exports-loader --save
+```
+
+```js
+// 配置 expose-loader
+// expose-loader将需要的变量从依赖包中暴露出来
+loaders: [
+	{ test: require.resolve("jquery"), loader: "expose?$!expose?jQuery" }
+]
 
 
-
-
+// Make $ and jQuery available in every module without writing require("jquery")
+// 把jquery作为全局变量插入到所有的代码中
+plugins: [
+	new webpack.ProvidePlugin({
+		$: 'jquery',
+		jQuery: 'jquery',
+		'window.jQuery': 'jquery'
+	})
+]
+```
