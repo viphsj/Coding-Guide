@@ -147,8 +147,13 @@ entry: {
 },
 ```
 
-#### 代码丑化混淆
-添加CommonsChunkPlugin
+#### 分离js公共库 与 代码混淆丑化
+
+**添加CommonsChunkPlugin**
+
+```js
+$ sudo npm install extract-text-webpack-plugin --save
+```
 
 ```js
 var webpack = require('webpack');
@@ -167,7 +172,14 @@ plugins: [
       }
     }),
     //把入口文件里面的数组打包成verdors.js(公共文件,供浏览器缓存)
-    new webpack.optimize.CommonsChunkPlugin('vendors', 'vendors.js'),
+    new webpack.optimize.CommonsChunkPlugin({
+       // 与 entry 中的 jquery 对应
+    	name: 'vendors',
+    	// 输出的公共资源名称
+    	filename: 'vendors.bundle.js',
+       // 对所有entry实行这个规则
+       minChunks: Infinity
+    }),
     // 生成html
     new HtmlwebpackPlugin({
       title: 'Hello World app'
@@ -186,7 +198,7 @@ $ npm run build
 ```js
 budle.js
 index.html
-vendors.js
+vendors.bundle.js
 ```
 
 #### 剥离css

@@ -27,11 +27,11 @@ $ npm install webpack-dev-server --save-dev // 安装webpack开发工具(可选)
 假设文件路径如下：
 
 ```js
---app
-------modules
------------MyModule.js
-------main.js (entry point)
-------utils.js
+-- app
+------ modules
+----------- MyModule.js
+------ main.js (entry point)
+------ utils.js
 ```
 
 打开 main.js 然后可以通过下面两种方式引入 app/modules/MyModule.js
@@ -68,6 +68,18 @@ var utils = require('/utils.js');
 
 **相对路径是相对当前目录。绝对路径是相对入口文件，这个案例中是 main.js。**
 
+```js
+var path = require('path');
+
+// 当前config文件所在目录
+var CURRENT_PATH = path.resolve(__dirname);
+
+// 到config文件的上一级目录
+var ROOT_PATH = path.join(__dirname, '../');
+// 指定一个build目录
+var BUILD_PATH = path.join(ROOT_PATH, './public/assets')
+```
+
 ## webpack配置
 [webpack配置文档](http://webpack.github.io/docs/configuration.html)
 
@@ -75,10 +87,13 @@ var utils = require('/utils.js');
 - 设置entry,output,module
 - 一个典型的配置文件大概如下:
 
+([CommonsChunkPlugin的配置](./webpack入门-2.md))
+
 ```js
 var webpack = require('webpack');
 //公共资源文件
 var commonsPlugin = new webpack.optimize.CommonsChunkPlugin('common.js');
+
 var path = require('path');
 var ROOT_PATH = path.resolve(__dirname);
 var APP_PATH = path.resolve(ROOT_PATH, 'app');
@@ -103,13 +118,17 @@ module.exports = {
         extensions: ['', '.js', '.jsx']
     },
     module: {
-        loaders: [{
-            test: /\.js$/,
-            loader: 'babel-loader'
-        }, {
-            test: /\.jsx$/,
-            loader: 'babel-loader!jsx-loader?harmony'
-        }]
+        loaders: [
+        	  // 典型的 babel-loader 配置，编译es6与react、jsx
+	        {
+		        test: /\.jsx?$/,
+		        exclude: /(node_modules|bower_components)/,
+		        loader: 'babel-loader',
+		        query: {
+		          presets: ['react', 'es2015']
+		        }
+	      	 },
+        ]
     },
     plugins: [commonsPlugin]
 };
@@ -163,10 +182,7 @@ module: {
         loaders: [
             //.css 文件使用 style-loader 和 css-loader 来处理
             { test: /\.css$/, loader: 'style-loader!css-loader' },
-            
-            //.js 文件使用 jsx-loader 来编译处理
-            { test: /\.js$/, loader: 'jsx-loader?harmony' },
-            
+                        
             //.scss 文件使用 style-loader、css-loader 和 sass-loader 来编译处理
             { test: /\.scss$/, loader: 'style!css!sass?sourceMap'},
             
@@ -199,7 +215,7 @@ module: {
       {
         test: /\.css$/,
         loaders: ['style', 'css'],
-        include: APP_PATH
+        include: APP_PATH // css资源文件的路径
       }
     ]
 }
@@ -233,7 +249,9 @@ var ExtractTextPlugin = require("extract-text-webpack-plugin");
 ...
 module: {
     loaders: [
-        {test: /\.css$/, loader: ExtractTextPlugin.extract("style-loader", "css-loader")}
+        { test: /\.css$/, loader: ExtractTextPlugin.extract("style-loader", "css-loader") },
+        { test: /\.scss$/,loader: ExtractTextPlugin.extract('style-loader', 'css-loader!scss-loader') },
+      	 { test: /\.less$/, loader: ExtractTextPlugin.extract('style', 'css!less') }
         //{ test: /\.css$/, loader: "style-loader!css-loader" }
         //配置了ExtractTextPlugin的话就不配置css-loader
     ]
@@ -378,11 +396,9 @@ $ npm install url-loader --save-dev
 ```js
 module: {
   loaders: [
-    {
-      test: /\.(png|jpg)$/,
-      loader: 'url?limit=40000'
+  		{ test: /\.(woff|woff2|eot|ttf|otf)$/i, loader: 'url-loader?limit=40000&name=[name].[ext]'},
+  		{ test: /\.(jpe?g|png|gif|svg)$/i, loader: 'url-loader?limit=40000&name=[name].[ext]'},
       //注意后面那个limit的参数，当你图片大小小于这个限制(40kb)的时候，会自动启用base64编码图片
-    }
   ]
 }
 ```
