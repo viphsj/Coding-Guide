@@ -439,3 +439,15 @@ plugins: [
 	})
 ]
 ```
+
+## 到生产环境
+
+在生产环境的 webpack output 配置中加入 `publicPath`
+
+```scss
+output: {
+    path: xxx,
+    publicPath: yyy,
+    filename: '[name].bundle.js'
+}
+```
