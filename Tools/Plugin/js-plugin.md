@@ -128,3 +128,8 @@ jQuery date & time input picker.
 #### *[Feature.js](http://featurejs.com/)*
 
 > 快速有效的检测用户浏览器对各个API的兼容性
+
+#### [DataTables](https://datatables.net/)
+
+> 一个基于 jQuery 的表格差价，可以实现各种表格排序功能
+
