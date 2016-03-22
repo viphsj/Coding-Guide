@@ -43,16 +43,16 @@ $ webpack --config congig/dev.config.js
 
 [webpack入门级教程](http://www.cnblogs.com/shinggang/p/5034404.html)
 
-利于分析 webpack 打包的命令
+## 利于分析 webpack 打包的命令
 
 ```scss
 // 带有色彩的输出每一步所耗费的时间和各个资源的引用情况
 $ webpack --colors --profile --display-modules
 
 // 编译完成之后输出一个json文件
-$ webpack --json
+$ webpack --json > [文件名].json
 ```
 
-在 webpack 输出 json文件之后，通过 [Webpack Analyze](http://webpack.github.io/analyse/) 或 [WEBPACK VISUALIZER](http://chrisbateman.github.io/webpack-visualizer/) 上传 json 文件可以进行详细的分析
+使用 `--json` 之后，在命令运行目录下生成一个之前指定名称的 json 文件。通过 [Webpack Analyze](http://webpack.github.io/analyse/) 或 [WEBPACK VISUALIZER](http://chrisbateman.github.io/webpack-visualizer/) 上传 json 文件可以进行详细的分析
 
 [Webpack your bags](http://blog.madewithlove.be/post/webpack-your-bags/)
