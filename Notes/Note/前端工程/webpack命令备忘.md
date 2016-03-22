@@ -55,4 +55,4 @@ $ webpack --json > [文件名].json
 
 使用 `--json` 之后，在命令运行目录下生成一个之前指定名称的 json 文件。通过 [Webpack Analyze](http://webpack.github.io/analyse/) 或 [WEBPACK VISUALIZER](http://chrisbateman.github.io/webpack-visualizer/) 上传 json 文件可以进行详细的分析
 
-[Webpack your bags](http://blog.madewithlove.be/post/webpack-your-bags/)
+[Webpack your bags](http://blog.madewithlove.be/post/webpack-your-bags/)（业界良心的绝世好文，从webpack的初步到深入都有）
