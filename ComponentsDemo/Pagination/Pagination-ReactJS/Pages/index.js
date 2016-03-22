@@ -1,33 +1,9 @@
 import React, { Component, PropTypes } from 'react';
-
 import {
   MAX_PAGE,
   SIDE_PAGE
-} from './ConstValue';
+} from '../ConstValue';
 
-class PageController extends Component{
-  constructor(props) {
-    super(props);
-  }
-
-  onPageClick() {
-    if(this.props.current || !this.props.canClick){
-      return false
-    }
-    let page = this.props.pageNumber;
-    this.props.onPageClick(page);
-  }
-
-  render() {
-    let pageClass = "footer__page ";
-    if(this.props.current){
-      pageClass += 'footer__page--active';
-    }
-    return (
-      <div className={pageClass} onClick={this.onPageClick.bind(this)}>{this.props.data}</div>
-    );
-  }
-}
 
 class Pages extends Component{
   constructor(props) {
@@ -45,7 +21,7 @@ class Pages extends Component{
     // if it unfortunately happened, you can use underscore instead of 'fill'
     // import _  from 'underscore';
     // let array = _.range(pageNum);
-    
+
     if(pageNum <= MAX_PAGE) {
       pages = array.map((value, index) => {
         let current = false, realPage = index + 1;
@@ -115,7 +91,7 @@ class Pages extends Component{
 
     return (
       <div className="page_footer">
-        <div id="page_footer_container">
+        <div className="page_footer_container">
           {pages}
         </div>
       </div>

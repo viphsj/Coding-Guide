@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
-import Pages from './PaginationReactJS';
+import Pages from './Pages/index';
 import { render } from 'react-dom';
+import './pages.scss';
 
 class PageDemo extends Component {
   constructor(props) {
