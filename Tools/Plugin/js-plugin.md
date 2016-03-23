@@ -68,13 +68,21 @@
 > 
 > 基于jQuery的图片剪裁库
 
-### About charts
+### About Data
 
 #### [Chart.js](http://www.chartjs.org/)
 
 > Simple, clean and engaging charts for designers and developers
 > 
 > 简洁清晰的js chart图表库
+
+#### [DataTables](https://datatables.net/)
+
+> 一个基于 jQuery 的表格插件，可以实现各种表格排序功能
+
+#### [tablesorter](https://mottie.github.io/tablesorter/docs/)
+
+> 基于 jQuery 的表格插件，使用起来比 DataTables 简单非常多
 
 ### Other tools
 
@@ -128,8 +136,3 @@ jQuery date & time input picker.
 #### *[Feature.js](http://featurejs.com/)*
 
 > 快速有效的检测用户浏览器对各个API的兼容性
-
-#### [DataTables](https://datatables.net/)
-
-> 一个基于 jQuery 的表格差价，可以实现各种表格排序功能
-
