@@ -84,6 +84,10 @@
 
 > 基于 jQuery 的表格插件，使用起来比 DataTables 简单非常多
 
+#### [List.js](http://www.listjs.com/)
+
+> 给 `<ul>` 或 `<table>` 做数据排序/筛选的js插件
+
 ### Other tools
 
 #### [UNDERSCORE.JS](http://underscorejs.org/)
