@@ -88,6 +88,22 @@
 
 > 给 `<ul>` 或 `<table>` 做数据排序/筛选的js插件
 
+### About Writer
+
+#### [tinymce](https://www.tinymce.com/)
+
+> 文本编辑器插件
+
+#### [Mditor](http://bh-lay.github.io/mditor/)
+
+> 轻量级的Markdown预览插件
+
+#### [clipboard.js](https://clipboardjs.com/)
+
+> 剪切板辅助js插件（一键复制什么的）
+> 
+> IE 9+ ok, 然而不支持 Safari
+
 ### Other tools
 
 #### [UNDERSCORE.JS](http://underscorejs.org/)
@@ -115,19 +131,9 @@ jQuery date & time input picker.
 > 
 > 并不是很推荐。。这种东西不如自己写一套来的爽快
 
-#### [clipboard.js](https://clipboardjs.com/)
-
-> 剪切板辅助js插件（一键复制什么的）
-> 
-> IE 9+ ok, 然而不支持 Safari
-
 #### [FlipClock.js](http://flipclockjs.com/)
 
 > 类似日历翻页效果的插件
-
-#### [tinymce](https://www.tinymce.com/)
-
-> 文本编辑器插件
 
 #### [Store.js](https://github.com/marcuswestin/store.js)
 
