@@ -9,6 +9,8 @@ Object.assign(target, ...sources);
 把任意多个目标对象所拥有的**可枚举属性**拷贝给目标对象
 返回被修改之后的 target
 
+**继承属性和不可枚举属性不能被拷贝**
+
 - 克隆对象
 
 ```js
@@ -35,7 +37,47 @@ console.log(obj); // {a:1, b:2, c:3}
 console.log(obj1); // {a:1, b:2, c:3}
 ```
 
-**继承属性和不可枚举属性不能被拷贝**
+- 修改对象（不改变原有对象，返回新对象）
+
+```js
+let obj1 = {
+	name: 'ecmadao',
+	age: 24
+};
+
+let obj2 = Object.assign({}, obj1, {name: 'edward'});
+
+console.log(obj1); // {name: 'ecmadao', age: 24}
+console.log(obj2); // {name" 'edward', age: 24}
+```
+
+当需要改变的目标对象属性嵌套层级很深时....
+
+
+```js
+let obj1 = {
+	profile: {
+		name: 'ecmadao',
+		age: 24
+	},
+	job: 'developer'
+}
+
+let obj2 = Object.assign({}, obj1, [profile]: {name: 'edward'});
+
+console.log(obj2);
+// 输出
+/**
+* {
+* 	profile: {
+*  		name: 'edward',
+*  	 	age: 24
+*  },
+*  job: 'developer'
+* }
+**/
+```
+
 
 ### `扩展运算符 ...`
 
