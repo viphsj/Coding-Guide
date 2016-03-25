@@ -8,6 +8,10 @@
 > 
 > 墙裂推荐打开官网，静静体会
 
+#### [Bounce.js](http://bouncejs.com/)
+
+> 如其名，带有各种弹性效果的动画库，还挺有意思的
+
 #### [Move.js](http://visionmedia.github.io/move.js/)
 
 > 一个JS动效库。还没仔细看它文档

@@ -6,6 +6,10 @@
 
 > 老牌的CSS动效库，满足你的各种需求
 
+#### [Effeckt.css](http://h5bp.github.io/Effeckt.css/)
+
+> 同样一个CSS动效库。。不过网站比 Animation.css 要 low 的多
+
 #### [CONNOR ATHERTON](https://connoratherton.com/)
 
 > 各种各样的CSS动画效果
