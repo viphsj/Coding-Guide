@@ -156,3 +156,120 @@ $.ajax({
 	contentType: false   // 不要设置Content-Type请求头
 })
 ```
+
+### `Fetch`
+
+用于发送异步请求，返回 Promise 对象
+
+```js
+fetch(request).then(function(response) {
+  // handle HTTP response
+  if(response.ok) {
+  	// ....
+  }else {
+  	// ...
+  }
+}, function(error) {
+  // handle network error
+})
+```
+
+更详细的例子:
+
+```js
+// 提交GET请求
+fetch(url).then(function(res) {
+
+}, function(error) {
+
+});
+
+
+// 提交POST请求
+// request 请求
+fetch(url, {
+  method: "POST",
+  body: JSON.stringify(data),
+  // fetch 的 Headers 接口
+  headers: {
+    "Content-Type": "application/json"
+  },
+  credentials: "same-origin"
+}).then(function(response) {
+
+  // response 相应
+  response.status     //=> number 100–599
+  response.statusText //=> String
+  response.headers    //=> Headers
+  response.url        //=> String
+
+  response.text().then(function(responseText) { ... })
+}, function(error) {
+  error.message //=> String
+})
+```
+
+- Headers
+
+```js
+// 不同的构造方法
+
+// key-value
+var content = "Hello World";
+var reqHeaders = new Headers();
+reqHeaders.append("Content-Type", "text/plain"
+reqHeaders.append("Content-Length", content.length.toString());
+reqHeaders.append("X-Custom-Header", "ProcessThisImmediately");
+
+// json
+reqHeaders = new Headers({
+  "Content-Type": "text/plain",
+  "Content-Length": content.length.toString(),
+  "X-Custom-Header": "ProcessThisImmediately",
+});
+```
+
+- request
+
+```
+/** 注：
+* request = (url, options)
+* url 为请求的路径
+* options为详细配置:
+**/
+
+- method (String) - HTTP 请求方式, 默认为 "GET"
+- body (String, Blob, FormData) - HTTP 请求体
+- headers (Object, Headers) - 请求头部, Default: {}
+- credentials (String) - 是否允许跨域请求 Authentication credentials mode. Default: "omit". Other data structures need to be encoded before hand as one of these types
+	- "omit" - don't include authentication credentials (e.g. cookies) in the request
+	- "same-origin" - 如果一个请求是跨域的，那么返回一个简单的error
+	- "include" - include credentials in requests to all sites
+```
+
+- response
+
+response 的属性:
+
+```js
+status (number) - HTTP状态码，100~599之间
+statusText (String) - Status text as reported by the server, e.g. "Unauthorized"
+ok (boolean) - 如果返回的HTTP状态码为2XX则为true
+headers (Headers)
+url (String)
+```
+response处理body的方法:
+
+**返回一个Promise对象**
+
+```js
+text() - 将 response text 转为 String
+json() - 输出 result of JSON.parse(responseText)
+blob() - yields a Blob
+arrayBuffer() - yields an ArrayBuffer
+formData() - 处理成可以再次被request使用的formData对象
+```
+
+**request 和 response 的body 只能被读取一次, 读取之后 bodyUsed 属性被设置为 true, 则不能再次读取**
+
+若要多次读取 body, 则应该在读取之前调用 `response.clone()` 方法, 之后读取clone的body（每个clone只能读取一次）
