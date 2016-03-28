@@ -1,6 +1,6 @@
 ## JavaScript 中的一些实用方法
 
-### `Object.assign()`
+### [Object.assign()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/assign)
 
 ```js
 Object.assign(target, ...sources);
@@ -157,7 +157,9 @@ $.ajax({
 })
 ```
 
-### `Fetch`
+### [Fetch](http://github.github.io/fetch/)
+
+
 
 用于发送异步请求，返回 Promise 对象
 
@@ -273,3 +275,108 @@ formData() - 处理成可以再次被request使用的formData对象
 **request 和 response 的body 只能被读取一次, 读取之后 bodyUsed 属性被设置为 true, 则不能再次读取**
 
 若要多次读取 body, 则应该在读取之前调用 `response.clone()` 方法, 之后读取clone的body（每个clone只能读取一次）
+
+### [Promise](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Promise)
+
+- 作用
+
+在 `Promise` 对象内部编写异步操作，并通过其自带的 `resolve` 和 `reject` 进行异步结果返回的处理。之后在使用这个 `Promise` 的时候，便可以通过 `.then((result) => {}).then((result) => {})...` 进行链式调用。 `.then()` 函数中的 `result` 参数即异步操作的结果
+
+- status
+
+Promise 对象所拥有的几种状态:
+
+	- pending 初始化状态
+	- fulfilled 成功的状态
+	- rejected 失败的状态
+
+- example
+
+```js
+function example(data) {
+	console.log(data)
+	// resolve 和 reject 分别表示异步操作执行成功或失败后的回调函数
+	var promise = new Promise((resolve, reject) => {
+		$.ajax({
+			url: www.example.com?page=1&num=1,
+			methon: get,
+			success: (data) => {
+				resolve(data);
+			},
+			error: (error) => {
+				reject(error);
+			}
+		});
+	});
+	return promise;
+}
+```
+- usage
+
+```js
+// then方法可以接受两个参数，第一个对应resolve的回调，第二个对应reject的回调
+example().then(
+	(result) => {
+		// 获取 resolve 传输的参数
+	},
+	(error) => {
+		// 获取 reject 传输的参数
+	}
+);
+
+/**
+* 或者使用 catch 写法，在 catch 中指定 reject 时的回调
+* 当 reject 或者 resolve 失败的时候，会调用 catch
+**/
+example().then((result) => {
+	// do something..
+}).catch((error) => {
+	// when fail..
+});
+```
+`Promise.then()`和`Promise.catch()`都返回 Promise 对象，因此可以链式调用
+
+```js
+/**
+* Promise 的链式操作
+* 可以保证按照顺序依次执行异步操作，并能利用上一步异步操作的结果
+**/
+example().then((data1) => {
+	// 获取 resolve 传输的参数
+	example(data1)
+}).then((data2) => {
+	example(data2);
+}).then((data3) => {
+	console.log(data3);
+});
+
+// 输出 data1 data2 data3
+```
+
+#### APIS
+
+- `Promise.all()`
+
+接收一个数组作为参数，数组内是多个 Promise 对象。 `.then()`会在**全部 Promise 执行完毕**之后返回一个包含所有异步操作结果的 list
+
+```js
+Promise.all([example(1), example(2), example(3)])
+	.then((result) => {
+		console.log(result);
+		// [data1, data2, data3]
+	});
+```
+
+`Promise.all()`所耗费的时间为最慢的异步操作的时间
+
+如果传入的数组中某项不是一个 promise ，该项会被用`Promise.resolve`转换为一个promise
+
+*如果传出的参数list中有任意 Promise 失败返回 reject, 那么 `.all()` 将带着该 Promise 的 reject参数进入 reject 状态，不再理会其他 Promise 的返回结果*
+
+- `Promise.race()`
+
+接收一个数组作为参数，数组内是多个 Promise 对象。 `.then()`会在**执行最快的 Promise 执行完毕**之后返回一个包含异步操作结果的 result
+
+在最快的 Promise 执行完毕之后，数组参数中的其他 Promise 会正常继续执行，并通过 `.then()`返回结果
+
+如果最快的 Promise 返回 reject，那么`.race()`将会返回 reject，不再理会之后的 Promise 操作结果
