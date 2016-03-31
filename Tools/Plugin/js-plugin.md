@@ -92,6 +92,24 @@
 
 > 给 `<ul>` 或 `<table>` 做数据排序/筛选的js插件
 
+#### [Moment.js](http://momentjs.com/)
+
+> 轻量级的快速处理时间的插件，便捷的输出各种格式的时间
+> 
+> 可以通过 moment 的方法快速的实现社交媒体上常见的“消息XX秒之前”以及日历上常见的“XX分钟之后”、“下周日”这样的效果
+
+```js
+moment(dateString).fromNow(); // 已现在为基准的之前
+
+moment(dateString).toNow(); // 已现在为基准的之后
+
+let before = moment('2016-3-30');
+let after = moment('2016-3-31');
+
+before.from(after); // a day ago 相对时间多久之前
+before.to(after); // in a day 相对时间多久之后
+```
+
 ### About Writer
 
 #### [tinymce](https://www.tinymce.com/)
