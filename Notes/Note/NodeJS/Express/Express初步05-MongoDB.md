@@ -83,6 +83,8 @@ app.use(session({
   secret: settings.cookieSecret, // 防止篡改cookie
   key: settings.db, // cookie name
   cookie: {maxAge: 1000 * 60 * 60 * 24 * 30}, // 30 days
+  resave: true,
+  saveUninitialized: true,
   store: new MongoStore({ // store为MongoDB实例
     url: 'mongodb://localhost/TodoApp',
     db: settings.db,
