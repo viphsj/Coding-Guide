@@ -1,27 +1,28 @@
 - [Components Demo](./ComponentsDemo)
 - Tools
-	- Plugin
-		- [css-plugin](./Tools/Plugin/css-plugin.md)
-		- [js-plugin](./Tools/Plugin/js-plugin.md)
-		- [react-plugin](./Tools/Plugin/react-plugin.md)
-	- Framework
-		- [css-ui-framework](./Tools/Framework/css-ui-framework.md)
-		- [react-ui-framework](./Tools/Framework/react-ui-framework.md)
+  - Plugin
+    - [css-plugin](./Tools/Plugin/css-plugin.md)
+    - [js-plugin](./Tools/Plugin/js-plugin.md)
+    - [react-plugin](./Tools/Plugin/react-plugin.md)
+  - Framework
+    - [css-ui-framework](./Tools/Framework/css-ui-framework.md)
+    - [react-ui-framework](./Tools/Framework/react-ui-framework.md)
 - Notes
-	- Coding
-		- [JavaScript](./Notes/Note/JavaScript)
-		- Python (coming soon)
-		- [html & css](./Notes/Note/CSS)
-		- [前端工程](./Notes/Note/前端工程)
-		- NodeJS
-			- [基础](./Notes/Note/NodeJS/基础)
-			- [Express](./Notes/Note/NodeJS/Express)
-			- [KOA](./Notes/Note/NodeJS/KOA)
-		- React
-			- [ReactJS](./Notes/Note/React/ReactJS)
-			- [React Native](./Notes/Note/React/ReactNative)
-		- Lua
-		- Go
-	- [Project](./Notes/Note/Project)
-		- PM
-		- Design
+  - Coding
+  - [JavaScript](./Notes/Note/JavaScript)
+  - Python (coming soon)
+  - [html & css](./Notes/Note/CSS)
+  - [前端工程](./Notes/Note/前端工程)
+  - NodeJS
+    - [基础](./Notes/Note/NodeJS/基础)
+    - [Express](./Notes/Note/NodeJS/Express)
+    - [KOA](./Notes/Note/NodeJS/KOA)
+  - React
+    - [Redux](./Notes/Note/React/Redux)
+    - [ReactJS](./Notes/Note/React/ReactJS)
+    - [React Native](./Notes/Note/React/ReactNative)
+  - Lua
+  - Go
+  - [Project](./Notes/Note/Project)
+    - PM
+    - Design

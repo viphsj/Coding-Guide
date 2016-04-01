@@ -303,18 +303,12 @@ import { connect } from 'react-redux';
 export default connect(mapStateToProps)(ContentComponent);
 ```
 
-### 优劣势
+### 
 
-#### 优势
+###优势
 
 通过 Redux, 我们可以少些很多繁琐的事件传输。在 Redux 之前, 顶层组件处理 state 的改变, 而触发的事件则有可能需要层层传递给底层的子组件, 子组件触发之后再次层层回调传到顶层。
 
 但 Redux 的 state 是全局的, 不必关心哪个组件触发`setState()`函数, 只需要设定好`action`和处理 action 的`reducer`, 由`store`进行分发处理。
 
 那样的话, 我们可以在底层触发 state 的改变而不必担心向上调用 --- 触发的 action 改变将被 store 监听, dispatch 给 reducer, reducer通过判断`action.type`, 做出适当的反应处理 state
-
-#### 劣势
-
-- action 很多很繁琐
-- 一开始的架构很重要，否则后期改动不易
-- 淡化了传统React的组件传输事件与props的思想, 可能一开始不易理解

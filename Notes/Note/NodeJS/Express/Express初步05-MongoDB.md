@@ -8,11 +8,18 @@
 
 #### 配置工程数据库
 
-```js
-$ cd [mongodb 的 bin 目录]
+```javascript
+// 将下载的MongoDB文件夹放在目录/Users/ecmadao/MongoDB/下，并取名为MongoDB
 
-// 将blog文件夹作为工程的储存目录并启动数据库
-$ ./mongod --dbpath ../blog/
+// 新建一个文件夹以储存数据库
+$ mkdir /Users/ecmadao/MongoDB/TodoApp
+```
+
+```js
+$ cd /Users/ecmadao/MongoDB/MongoDB/bin[mongodb 的 bin 目录]
+
+// 将TodoApp文件夹作为工程的储存目录并启动数据库
+$ ./mongod --dbpath /Users/ecmadao/MongoDB/TodoApp
 ```
 
 #### 对 Express 项目安装 MongoDB 与其他依赖
@@ -22,12 +29,12 @@ $ cd [项目文件夹]
 
 // 安装MongoDB
 $ sudo npm install mongodb --save
-
 // 安装会话支持
 $ sudo npm install express-session --save
-
 // 安装MongoDB连接工具
 $ sudo npm install connect-mongo --save
+// 安装session中信息存储工具
+$sudo npm install connect-flash
 ```
 
 #### 文件配置
@@ -36,8 +43,8 @@ $ sudo npm install connect-mongo --save
 
 ```js
 module.exports = { 
-  cookieSecret: 'myblog',  // cookie加密
-  db: 'blog',  // 数据库名称（）
+  cookieSecret: 'todoApp',  // cookie加密
+  db: 'TodoApp',  // 数据库名称（）
   host: 'localhost', // 数据库地址
   port: 27017 // 数据库端口
 }; 
@@ -56,7 +63,7 @@ var
   Db = require('mongodb').Db,
   Connection = require('mongodb').Connection,
   Server = require('mongodb').Server;
-  
+
 module.exports = new Db(settings.db, new Server(settings.host, settings.port), {safe: true});
 ```
 
@@ -70,17 +77,31 @@ module.exports = new Db(settings.db, new Server(settings.host, settings.port), {
 var setting = require('./setting');
 var session = require('express-session');
 var MongoStore = require('connect-mongo')(session);
+var flash = require('connect-flash');
 
 app.use(session({
-  secret: settings.cookieSecret,
+  secret: settings.cookieSecret, // 防止篡改cookie
   key: settings.db, // cookie name
   cookie: {maxAge: 1000 * 60 * 60 * 24 * 30}, // 30 days
-  store: new MongoStore({
-    url: 'mongodb://localhost/blog',
+  store: new MongoStore({ // store为MongoDB实例
+    url: 'mongodb://localhost/TodoApp',
     db: settings.db,
     host: settings.host,
     port: settings.port
   })
 }));
 
+app.use(flash());
 ```
+
+#### 通过终端操作
+
+```shell
+$ cd /Users/ecmadao/MongoDB/mongoDB/bin
+$ ./mongo
+// 之后会展示MongoDB的Version和当前connect，一般会默认connect到test
+> use TodoApp // 转到TodoApp的数据库
+```
+
+
+
