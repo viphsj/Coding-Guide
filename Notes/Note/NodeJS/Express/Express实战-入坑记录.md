@@ -101,6 +101,7 @@ route.get('/get', function(req, res) {
 - POST
 
 [body-parser](https://github.com/expressjs/body-parser)
+
 ```javascript
 // 添加 body-parser 中间件以获取post的参数
 $ npm install body-parser --save
@@ -110,10 +111,15 @@ var bodyParser = require('body-parser');
 var app = express();
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
+```
 
+#### POST普通类型参数 ( name=XX&age=XX )
+
+```javascript
 // route.js
 route.post('/post', (req, res) {
-  var data = req.body; 
+  var name = req.body.name;
+  var age = req.body.age;
   // do something
   res.send({})
 });
@@ -123,7 +129,7 @@ $.ajax({
   url: '/post',
   type: 'POST',
   dataType: 'json',
-  data: 'test',
+  data: 'name=ecmadao&age=24',
   success: (data) => {
     // do something
   },
@@ -131,4 +137,31 @@ $.ajax({
     // do soimething
   }
 });
+```
+
+#### POST 多层嵌套的JSON数据
+
+```javascript
+// 在上面app.js配置body-parser的基础上
+
+// demo.js
+$.ajax({
+  url: '/postData',
+  type: 'post',
+  dataType: 'json',
+  data: {
+    data: JSON.stringify(data)
+  },
+  success: (data) => {
+    // do something
+  },
+  error: (error) => {
+    // do something
+  }
+});
+
+// route.js
+route.get('/postData', function(req, res) {
+  data = JSON.parse()
+})
 ```
