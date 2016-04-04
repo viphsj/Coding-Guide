@@ -5,7 +5,6 @@
 ### 路由设置
 
 在`app.js`中设置路由
-
 ```javascript
 var routes = require('./routes/index');
 var users = require('./routes/users');
@@ -13,6 +12,7 @@ var users = require('./routes/users');
 app.use('/', routes); //根目录的路由由/routes/index.js控制
 app.use('/users', users); // /users以及之后的路由都由/routes/users.js控制
 ```
+
 路由层面
 ```javascript
 var express = require('express');
@@ -72,9 +72,45 @@ res.redirect('back');
 
 - extends
 
+jade文件中通过`block XX`输出可扩展的块
+
+```jade
+doctype html
+html
+  head
+    block head
+    meta(charset="utf-8")
+    block title
+      title= title
+    link(rel='stylesheet', href='/assets/public.bundle.css')
+  body
+    block content
+      script(src='/assets/public.bundle.js')
+```
+上例输出head块，同时head块中的title块也是可扩展的
+
+基础模板的时候，通过直接`block XX`，在其之后写入的内容会覆盖模板块中的内容，同时还有另外两种方法：
+`block append XX` 在块内部的后面追加内容，不覆盖原有内容
+`block prepend XX`在块内部的前面追加内容，不覆盖原有内容
+
+```jade
+extends ./extends/common_layout.jade
+
+block title
+  title= (title)
+block append head
+  link(rel='stylesheet', href='/assets/index.bundle.css')
+
+block append content
+  include includes/SideBar/index.jade
+  #index_body
+  script(src='/assets/index.bundle.js')
+```
+
 - layout
 
-### ajax
+
+### Ajax
 
 - GET
 
@@ -113,7 +149,7 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 ```
 
-#### POST普通类型参数 ( name=XX&age=XX )
+- POST 普通类型参数 ( name=XX&age=XX )
 
 ```javascript
 // route.js
@@ -139,7 +175,9 @@ $.ajax({
 });
 ```
 
-#### POST 多层嵌套的JSON数据
+- POST 多层嵌套的JSON数据
+
+[express为什么不能解析ajax post 上来的数据？](https://segmentfault.com/q/1010000004397502)
 
 ```javascript
 // 在上面app.js配置body-parser的基础上
@@ -162,6 +200,32 @@ $.ajax({
 
 // route.js
 route.get('/postData', function(req, res) {
-  data = JSON.parse()
+  data = JSON.parse(req.body.data); // 转为JSON格式
+  // do something
 })
 ```
+
+### MongoDB
+
+- 根据`_id`更新/查询数据
+
+```javascript
+var ObjectId = require('mongodb').ObjectID;
+
+find({
+  "_id": ObjectId("1111111")
+}).sort({
+  time: -1
+}).toArray((err, doc) => {});
+
+update({
+  "_id": ObjectId("222222") // 查询
+}, {
+  $set: {
+    content: "new content" // 更新的键值对
+  }
+}, (err, doc) => {});
+```
+
+- 关于`ObjectId`
+  [ObjectId](https://docs.mongodb.org/v3.0/reference/object-id/)
