@@ -129,3 +129,7 @@ An example:
     package.json                    # 元数据文件
     README.md                       # 说明文件
 ```
+
+### 回调
+
+**Node.js规定在JavaScript的回调函数的第一个参数为 Error 对象**
