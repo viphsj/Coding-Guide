@@ -401,3 +401,14 @@ Promise.all([example(1), example(2), example(3)])
 在最快的 Promise 执行完毕之后，数组参数中的其他 Promise 会正常继续执行，并通过 `.then()`返回结果
 
 如果最快的 Promise 返回 reject，那么`.race()`将会返回 reject，不再理会之后的 Promise 操作结果
+
+### 关于数组
+
+`map()`
+通过`.map((value, index) => {})`遍历后返回一个新的数组
+
+`some(callback)`
+some中的callback返回一个布尔值。数组中的元素只要有一个返回true，则最终将返回true
+
+`every(callback)`
+every中的callback返回一个布尔值，只有当数组中的元素全部返回true的时候才返回true，否则返回false
