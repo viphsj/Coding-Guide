@@ -120,7 +120,7 @@ let a = 'ecmadao';
 [...a]; // ['e', 'c', 'm', 'a', 'd', 'a', 'o'];
 ```
 
-### `FormData`
+### [FormData](https://developer.mozilla.org/en-US/docs/Web/API/FormData/FormData)
 
 - 构建 form
 

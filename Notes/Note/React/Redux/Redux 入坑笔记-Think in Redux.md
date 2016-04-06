@@ -1,4 +1,4 @@
-## Redux入坑笔记
+## Redux入坑笔记-Think in Redux
 
 > Redux 简要的说就是一个事件分发器和全局`state`控制台。
 
