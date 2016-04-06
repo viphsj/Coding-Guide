@@ -412,3 +412,13 @@ some中的callback返回一个布尔值。数组中的元素只要有一个返�
 
 `every(callback)`
 every中的callback返回一个布尔值，只有当数组中的元素全部返回true的时候才返回true，否则返回false
+
+```javascript
+const list = [1, 2, 3, 4];
+
+return list.map((value) => {
+  value * 2
+}); // [2, 4, 6, 8];
+return list.some((value) => value < 3); // true
+return list.every((value) => value < 3); // false
+```
