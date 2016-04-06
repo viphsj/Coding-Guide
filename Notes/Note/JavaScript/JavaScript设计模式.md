@@ -68,3 +68,34 @@ child instanceof Object // true
 
 **通过`prototype`继承的坑**
 当有多个子类实例，其中的某个子类修改了从父类继承来的属性/方法时，全部的子类都会被修改。因为它们只是通过原型链链接到了父类实例上
+
+- `Object.create(proto[, propertiesObject])`
+	- `proto` 一个对象，作为新创建对象的原型。如果不是null或对象，则抛出TypeError异常
+	- `propertiesObject`包含若干个属性描述符的对象
+
+```javascript
+// father
+const Father = () => {
+  this.x = 0;
+  this.y = 0;
+}
+Father.prototype.move = (x, y) => {
+  this.x += x;
+  this.y += y;
+  console.log('moved');
+}
+
+// child
+Child = () => {
+  Father.call(this); // 调用基类的构造函数
+}
+Child.prototype = Object.create(Father.prototype);
+
+var child = new Child();
+child instanceof Child //true
+child instanceof Father // true
+child.move(1, 2); // moved
+```
+
+传入`null`作为参数的时候，则会创建一个没有原型链的全新对象
+`Object.create(null);`
