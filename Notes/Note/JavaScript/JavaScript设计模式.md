@@ -30,6 +30,8 @@ funObject.prototype = {
 
 ### 类的继承
 
+**推荐好文** [继承与原型链]()
+
 - 通过原型链赋值父类实例实现继承
 
 将父类的实例，赋值给子类的原型链，那么子类的原型就能够访问父类的属性和方法，即继承
@@ -70,8 +72,8 @@ child instanceof Object // true
 当有多个子类实例，其中的某个子类修改了从父类继承来的属性/方法时，全部的子类都会被修改。因为它们只是通过原型链链接到了父类实例上
 
 - `Object.create(proto[, propertiesObject])`
-	- `proto` 一个对象，作为新创建对象的原型。如果不是null或对象，则抛出TypeError异常
-	- `propertiesObject`包含若干个属性描述符的对象
+  - `proto` 一个对象，作为新创建对象的原型。如果不是null或对象，则抛出TypeError异常
+  - `propertiesObject`包含若干个属性描述符的对象
 
 ```javascript
 // father
