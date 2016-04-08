@@ -30,7 +30,7 @@ funObject.prototype = {
 
 ### 类的继承
 
-**推荐好文** [继承与原型链]()
+**推荐好文** [继承与原型链](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Inheritance_and_the_prototype_chain)
 
 - 通过原型链赋值父类实例实现继承
 
