@@ -101,3 +101,75 @@ child.move(1, 2); // moved
 
 传入`null`作为参数的时候，则会创建一个没有原型链的全新对象
 `Object.create(null);`
+
+### 单例模式
+
+避免命名冲突，便于函数管理
+```javascript
+const Example = {
+  Util: {
+    method1: () => {
+      
+    },
+    method2: () => {
+      
+    }
+  },
+  Tools: {
+    fun1: () => {
+      
+    },
+    fun2: () => {
+      
+    }
+  }
+}
+
+Example.Tools.fun1();
+```
+创建静态变量:
+ 
+  - 立即调用创建单利对象
+  
+```javascript
+const Config = (() => {
+  const config = {
+    MAX_NUMBER = 10,
+    MIN_NUMBER = 1
+  };
+  return {
+    get: () => {
+      return config['MAX_NUMBER'];
+    }
+  }
+})();
+// 上例单例通过自调用()自动创建一次，并赋值给Config，Config作为一个单例放在全局空间里作为静态变量单例对象被使用
+```
+
+  - 延迟调用创建单利对象
+ 
+ ```javascript
+ const LazyConfig = (() => {
+   let _instance = null;
+   const Config = () => {
+     const config = {
+       MAX_NUMBER = 10,
+       MIN_NUMBER = 1
+     }; 
+     return {
+       get: () => {
+         return config['MAX_NUMBER'];
+       }
+     }
+   }
+   
+   return () => {
+     if(!_instance) {
+       _instance = Config();
+     }
+     return _instance;
+   }
+ })();
+ 
+ console.log(LazyConfig().get()); // 10
+ ```
