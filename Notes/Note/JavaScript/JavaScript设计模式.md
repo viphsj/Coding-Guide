@@ -36,6 +36,8 @@ funObject.prototype = {
 
 [Javascript call() & apply() vs bind()?](http://stackoverflow.com/questions/15455009/javascript-call-apply-vs-bind)
 
+[Function.prototype.apply()](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Function/apply)
+
 - 通过原型链赋值父类实例实现继承
 
 将父类的实例，赋值给子类的原型链，那么子类的原型就能够访问父类的属性和方法，即继承
