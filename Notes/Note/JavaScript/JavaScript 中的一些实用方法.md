@@ -413,6 +413,12 @@ some中的callback返回一个布尔值。数组中的元素只要有一个返�
 `every(callback)`
 every中的callback返回一个布尔值，只有当数组中的元素全部返回true的时候才返回true，否则返回false
 
+`filter((value) => {})`
+根据filter中的函数进行筛选，返回一个符合条件的list
+
+`list.forEach((value, index) => {})`
+对自身中的每一个元素进行操作
+
 ```javascript
 const list = [1, 2, 3, 4];
 
@@ -421,4 +427,6 @@ return list.map((value) => {
 }); // [2, 4, 6, 8];
 return list.some((value) => value < 3); // true
 return list.every((value) => value < 3); // false
+return list.filter((value) => value > 3); // [4]
+return list.forEach((value, index) => value * 2); // [2, 4, 6, 8]
 ```
