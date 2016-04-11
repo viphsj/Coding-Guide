@@ -405,7 +405,7 @@ Promise.all([example(1), example(2), example(3)])
 ### 关于数组
 
 `map()`
-通过`.map((value, index) => {})`遍历后返回一个新的数组
+通过`.map((value, index) => {})`遍历数组中元素
 
 `some(callback)`
 some中的callback返回一个布尔值。数组中的元素只要有一个返回true，则最终将返回true
