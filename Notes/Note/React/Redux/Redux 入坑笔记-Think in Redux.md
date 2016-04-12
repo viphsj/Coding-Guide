@@ -303,12 +303,93 @@ import { connect } from 'react-redux';
 export default connect(mapStateToProps)(ContentComponent);
 ```
 
-### 
-
-###优势
+### 优势
 
 通过 Redux, 我们可以少些很多繁琐的事件传输。在 Redux 之前, 顶层组件处理 state 的改变, 而触发的事件则有可能需要层层传递给底层的子组件, 子组件触发之后再次层层回调传到顶层。
 
 但 Redux 的 state 是全局的, 不必关心哪个组件触发`setState()`函数, 只需要设定好`action`和处理 action 的`reducer`, 由`store`进行分发处理。
 
 那样的话, 我们可以在底层触发 state 的改变而不必担心向上调用 --- 触发的 action 改变将被 store 监听, dispatch 给 reducer, reducer通过判断`action.type`, 做出适当的反应处理 state
+
+------
+
+### UPDATE
+
+关于`combineReducer`,`createStore`,`state`的一些问题
+
+在`createStore`的时候，可以传入多个参数:
+```javascript
+let store = createStore(reducer, [initialState], [enhancer]);
+````
+其中，initialState是传入reducer的初始化state，enhancer是applyMiddleware一类的中间件插件
+
+在不使用`combineReducer`的时候，可以这么写：
+```javascript
+// app.js
+import appReducer from './reducer';
+import {
+  SHOW_ALL
+} from './ConstValue';
+let initialState = {
+  list: [],
+  status: SHOW_ALL
+};
+let store = createStore(appReducer, initialState);
+
+// reducer.js
+const appReducer = (state, action) => {
+  switch (action.type) {
+    case ACTION.ADD_ITEM:
+      return Object.assign({}, {
+        list: [...state.list, action.item]
+      });
+    case ACTION.SHOW_COMPLETE:
+      return Object.assign({}, {
+        status: action.filter
+      });
+    default:
+      return state
+  }
+}
+export default appReducer;
+```
+即初始化的state为通过`createStore`传入的initialState
+
+而使用了`combineReducer`的话，则：
+```javascript
+// app.js
+import appReducer from './index';
+let initialState = {
+  list: [],
+  status: SHOW_ALL
+};
+let store = createStore(appReducer, initialState);
+// 与之前的相比不变
+
+// reducer/reducers.js
+export function List(List = [], action) {
+  switch (action.type) {
+    case ACTION.ADD_ITEM:
+      return [...List, action.item];
+    default:
+      return List;
+  }
+}
+
+export function status(status = ACTION.SHOW_ALL, action) {
+  switch (action.type) {
+    case ACTION.SHOW_COMPLETE:
+      return action.filter;
+    default:
+      return status;
+  }
+}
+
+//reducer/index.js
+import * as reducers from './reducers'
+import { combineReducers } from 'redux';
+export const appReducer = combineReducers(reducers);
+```
+即通过`combineReducer`合成reducer的话，必须给每个reducer赋一个初始值（不能为undefined）
+
+因为`combineReducer`黑魔法要求函数名与传入的state参数名相同，所以可能会在reducer进行合成的时候，提取reducer参数进行一次state的合并，成为一个默认的INIT-STATE
