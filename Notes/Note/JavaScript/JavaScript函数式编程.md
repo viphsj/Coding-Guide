@@ -76,3 +76,82 @@ console.log(plus2(1)); // 3
 > 在函数里没有临时变量
 
 [函数式编程](http://coolshell.cn/articles/10822.html)
+
+### 柯里化
+
+> 把接受多个参数的函数变换成接受一个单一参数(最初函数的第一个参数)的函数，并且返回接受余下参数且返回结果的新函数
+
+#### 概念摘要
+
+即：
+传入一个（或很少量的）参数调用父函数，父函数返回一个可接受多个参数的子函数。例：
+```javascript
+const add = (x) => {
+  return (y, z) => {
+    return x + y + z
+  }
+}
+
+let increase = add(1);
+console.log(increase(2, 3)); // 6
+```
+
+函数式编程+柯里化，将提取成柯里化的函数部分配置好之后，可作为参数传入，简化操作流程。
+```javascript
+// 给list中每个元素先加1，再加5，再减1
+let list = [1, 2, 3, 4, 5];
+
+//正常做法
+let list1 = list.map((value) => {
+  return value + 1;
+});
+let list2 = list1.map((value) => {
+  return value + 5;
+});
+let list3 = list2.map((value) => {
+  return value - 1;
+});
+console.log(list3); // [6, 7, 8, 9, 10]
+
+// 柯里化
+const changeList = (num) => {
+  return (data) => {
+    return data + num
+  }
+};
+let list1 = list.map(changeList(1)).map(changeList(5)).map(changeList(-1));
+console.log(list1); // [6, 7, 8, 9, 10]
+```
+
+#### 创建柯里化函数
+
+```javascript
+// 安装lodash依赖
+$ npm install lodash
+
+let curry = require('lodash').curry;
+let list = [1, 2, 3, 4];
+
+let filter = curry(function(f, ary) {
+  return ary.filter(f);
+});
+let map = curry(function(f, ary) {
+  return ary.map(f);
+});
+
+let filterFun = (x) => {
+  return (y) => {
+    return x < y
+  }
+}
+let mapFun = (x) => {
+  return (y) => {
+    return x + y
+  }
+}
+
+let filteredList = filter(filterFun(3), list);
+let mapedList = map(mapFun(1), list);
+console.log(filteredList); // [4]
+console.log(mapedList); // [2, 3, 4, 5]
+```
