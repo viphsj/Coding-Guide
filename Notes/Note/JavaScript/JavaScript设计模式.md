@@ -242,6 +242,6 @@ Message.showAlert();
 let MessageWithImage = new MessageWithImage({
   content: 'Message with image',
   url: '/src/image/test.png'
-}, 2000);
+}, 2000).init();
 MessageWithImage.showMessage();
 ```
