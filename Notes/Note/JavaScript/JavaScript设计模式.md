@@ -30,6 +30,13 @@ funObject.prototype = {
 
 ### 类的继承
 
+- 关于`apply()`,`call()`,`bind()`
+
+`apply()`和`call()`被用于立即修改函数的作用域（常见于继承时调用），而`bind()`则用于在函数调用的时候改变其作用域
+
+`apply()`和`call()`非常类似，不同之处在于提供参数的方法。`apply()`可以使用数组字面量，如`fun.apply(this, ['eat', 'drink'])`，或使用数组对象作为参数，如`fun.apply(this, new Array('eat', 'drink'))`
+
+
 **推荐好文** 
 
 [继承与原型链](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Inheritance_and_the_prototype_chain)
@@ -179,3 +186,62 @@ const Config = (() => {
  
  console.log(LazyConfig().get()); // 10
  ```
+ 
+ ### 模板方法模式
+ 
+ 创建一个通用类模板，子类继承模板，按需在原型链上添加自己的方法，实例化后即可使用。
+ 
+```javascript
+// 模板
+const Message = (content, time = 1000) => {
+  this.content = content;
+  this.time = time;
+  this.panel = document.createElement('div');
+  this.contentNode = document.createElement('span');
+}
+Message.prototype = {
+  init: () => {
+    this.contentNode.innerHTML = this.content;
+    this.panel.appendChild(this.contentNode);
+    body.append(this.panel);
+  },
+  showAlert: () => {
+    this.panel.addClass('negative');
+    this.panel.addClass('active');
+    this.hideMessage();
+  },
+  showMessage: () => {
+    this.panel.addClass('positive');
+    this.panel.addClass('active');
+    this.hideMessage();
+  },
+  hideMessage: () => {
+    setTimeout(this.callback, this.time);
+  },
+  callback: () => {
+    this.panel.removeClass('active');
+  }
+}
+
+// 子类
+const MessageWithImage = (data, time = 1000) => {
+  Message.call(this, data.content, time);
+  this.image = document.createElement('img');
+  this.image.src = data.url;
+}
+MessageWithImage.prototype = new Message();
+MessageWithImage.prototype.init = () => {
+  Message.prototype.init.call(this);
+  this.panel.appendChild(this.image);
+}
+
+// 实例化
+let Message = new Message('test').init();
+Message.showAlert();
+
+let MessageWithImage = new MessageWithImage({
+  content: 'Message with image',
+  url: '/src/image/test.png'
+}, 2000);
+MessageWithImage.showMessage();
+```
