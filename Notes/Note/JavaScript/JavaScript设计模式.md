@@ -245,3 +245,79 @@ let MessageWithImage = new MessageWithImage({
 }, 2000).init();
 MessageWithImage.showMessage();
 ```
+
+### 观察者模式
+
+观察者模式的核心是观察者，它与被观察者和消息接受者应该是一对多的关系，内部包含注册、取消注册、事件监听和消息发送的方法
+
+```javascript
+// 建立观察者
+class Observer {
+  constructor() {
+    this.message = {};
+  }
+  
+  regist(type, callback) {
+    if(typeof this.message[type] === 'undefined') {
+      this.message[type] = [callback]
+    }else {
+      this.message[type].push(callback);
+    }
+  }
+    // 给监听者发送消息
+  fire(type, value) {
+    this.message[type].map((callback, index) => {
+      callback.call(this, value);
+    });
+  }
+    // 移除监听者
+  remove(type, callback) {
+    let filtered = this.message[type].filter((fn) => fn !== callback);
+    this.message[type] = filtered;
+  }
+}
+
+let observer = new Observer();
+
+// 建立监听者
+class Watcher {
+  constructor(name) {
+    this.name = name;
+  }
+  
+  weatherForecast(weather) {
+    console.log(this.name);
+    console.log('weather is :' + weather);
+  }
+  
+  watch(weather) {
+    observer.regist(weather, this.weatherForecast.bind(this));
+  }
+  
+  broken(weather) {
+    console.log(this.name + ' is broken..');
+    observer.remove(weather, this.weatherForecast);
+  }
+}
+
+class Weather {
+  changeWeather(type, value) {
+    observer.fire(type, value);
+  }
+}
+
+let watcher1 = new Watcher('一号预报天气');
+watcher1.watch('rainy');
+let watcher2 = new Watcher('二号预报天气');
+watcher2.watch('sunny');
+let watcher3 = new Watcher('三号预报天气');
+watcher3.watch('rainy');
+watcher3.broken('rainy');
+let weather = new Weather();
+weather.changeWeather('rainy', 'heavyRain');
+// 一号预报天气
+// weather is :heavyRain
+weather.changeWeather('sunny', 'too hot');
+// 二号预报天气
+// weather is :too hot
+```
