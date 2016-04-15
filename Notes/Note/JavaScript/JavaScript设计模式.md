@@ -322,3 +322,51 @@ weather.changeWeather('sunny', 'too hot');
 // 二号预报天气
 // weather is :too hot
 ```
+
+### 状态模式
+
+创建一个状态对象，内部保存各种状态变量，以及对应的状态应该触发的方法。
+
+```javascript
+class BatMan {
+  constructor(name) {
+    this.name = name;
+    this.actions = {};
+    this.status = {
+      beat: () => {
+        this.beat();
+      },
+      run: () => {
+        this.run();
+      },
+      shot: () => {
+        this.shot();
+      }
+    }
+  }
+  
+  beat(num) {
+    console.log(this.name + ' beat bad guys');
+  }
+  
+  run() {
+    console.log(this.name + ' run very fast');
+  }
+  
+  shot() {
+    console.log('holy shit ' + this.name + ' was forced to use his gun');
+  }
+  
+  changeStatus(actions) {
+    actions.map((action, index) =>{
+      this.status[action]();
+    });
+  }
+}
+
+const batMan = new BatMan('bluce');
+batMan.changeStatus(['run', 'beat', 'shot']);
+// bluce run very fast
+// bluce beat undefined bad guys
+// holy shit bluce was forced to use his gun
+```
