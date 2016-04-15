@@ -256,24 +256,26 @@ class Observer {
   constructor() {
     this.message = {};
   }
-  
+  // 事件接收者注册
   regist(type, callback) {
     if(typeof this.message[type] === 'undefined') {
       this.message[type] = [callback]
     }else {
       this.message[type].push(callback);
     }
+    return this.message[type].length - 1;
   }
-    // 给监听者发送消息
+  // 给事件接收者发送消息
   fire(type, value) {
     this.message[type].map((callback, index) => {
       callback.call(this, value);
     });
   }
-    // 移除监听者
-  remove(type, callback) {
-    let filtered = this.message[type].filter((fn) => fn !== callback);
+  // 移除事件接收者
+  remove(type, key) {
+    let filtered = this.message[type].filter((fn, i) => i !== key);
     this.message[type] = filtered;
+    console.log('type length is ' + filtered.length);
   }
 }
 
@@ -284,19 +286,17 @@ class Watcher {
   constructor(name) {
     this.name = name;
   }
-  
   weatherForecast(weather) {
     console.log(this.name);
     console.log('weather is :' + weather);
   }
-  
   watch(weather) {
-    observer.regist(weather, this.weatherForecast.bind(this));
+    let key = observer.regist(weather, this.weatherForecast.bind(this));
+    this.key = key;
   }
-  
   broken(weather) {
     console.log(this.name + ' is broken..');
-    observer.remove(weather, this.weatherForecast);
+    observer.remove(weather, this.key);
   }
 }
 
@@ -313,6 +313,7 @@ watcher2.watch('sunny');
 let watcher3 = new Watcher('三号预报天气');
 watcher3.watch('rainy');
 watcher3.broken('rainy');
+// 三号预报天气 is broken..
 let weather = new Weather();
 weather.changeWeather('rainy', 'heavyRain');
 // 一号预报天气
