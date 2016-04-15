@@ -161,35 +161,35 @@ const Config = (() => {
 
   - 延迟调用创建单利对象
  
- ```javascript
- const LazyConfig = (() => {
-   let _instance = null;
-   const Config = () => {
-     const config = {
-       MAX_NUMBER = 10,
-       MIN_NUMBER = 1
-     }; 
-     return {
-       get: () => {
-         return config['MAX_NUMBER'];
-       }
-     }
-   }
+```javascript
+const LazyConfig = (() => {
+  let _instance = null;
+  const Config = () => {
+    const config = {
+      MAX_NUMBER = 10,
+      MIN_NUMBER = 1
+    }; 
+    return {
+      get: () => {
+        return config['MAX_NUMBER'];
+      }
+    }
+  }
    
-   return () => {
-     if(!_instance) {
-       _instance = Config();
-     }
-     return _instance;
-   }
- })();
+  return () => {
+    if(!_instance) {
+      _instance = Config();
+    }
+    return _instance;
+  }
+})();
  
- console.log(LazyConfig().get()); // 10
- ```
+console.log(LazyConfig().get()); // 10
+```
  
- ### 模板方法模式
+### 模板方法模式
  
- 创建一个通用类模板，子类继承模板，按需在原型链上添加自己的方法，实例化后即可使用。
+创建一个通用类模板，子类继承模板，按需在原型链上添加自己的方法，实例化后即可使用。
  
 ```javascript
 // 模板
