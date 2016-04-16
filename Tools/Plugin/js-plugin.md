@@ -168,3 +168,9 @@ jQuery date & time input picker.
 #### *[Feature.js](http://featurejs.com/)*
 
 > 快速有效的检测用户浏览器对各个API的兼容性
+
+#### [Hilo](http://hiloteam.github.io/index.html)
+
+> 一个跨终端的互动小游戏解决方案
+>
+> Hilo不仅仅是一个渲染引擎，它更是一个集成了 Hilo Audio, Hilo Preload 等游戏构建服务的综合解决方案
