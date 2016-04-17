@@ -338,5 +338,6 @@ applyMiddleware(thunkMiddleware)(createStore)(reducer, initialState)
 
 也就是说，`applyMiddleware(thunkMiddleware)`作为`enhance`，最终起了这样的作用：
 
-对 dispatch 调用的 action (例如，dispatch(addNewTodo(todo)))进行检查，如果 action 在第一次调用之后返回的是 function，则将（dispatch, getState）作为参数注入到 action返回的方法中，否则就正常对 action 进行分发
+对 dispatch 调用的 action (例如，dispatch(addNewTodo(todo)))进行检查，如果 action 在第一次调用之后返回的是 function，则将（dispatch, getState）作为参数注入到 action返回的方法中，否则就正常对 action 进行分发，这样一来我们的中间件就完成喽~
 
+当 action 内部需要获取 state，或者需要进行异步操作，在操作完成之后进行事件调用分发的话，我们就可以让 action 返回一个以（dispatch, getState）为参数的 function 而不是通常的 Object，enhance就会对其进行检测以便正确的处理
