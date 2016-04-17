@@ -1,5 +1,7 @@
 ## Redux入坑笔记-源码解析
 
+redux 函数内部包含了大量柯里化函数思想。。
+
 ### `combineReducers`
 
 ```javascript
@@ -337,3 +339,4 @@ applyMiddleware(thunkMiddleware)(createStore)(reducer, initialState)
 也就是说，`applyMiddleware(thunkMiddleware)`作为`enhance`，最终起了这样的作用：
 
 对 dispatch 调用的 action (例如，dispatch(addNewTodo(todo)))进行检查，如果 action 在第一次调用之后返回的是 function，则将（dispatch, getState）作为参数注入到 action返回的方法中，否则就正常对 action 进行分发
+
