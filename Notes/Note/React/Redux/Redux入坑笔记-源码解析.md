@@ -1,6 +1,6 @@
 ## Redux入坑笔记-源码解析
 
-redux 函数内部包含了大量柯里化函数思想。。
+> redux 函数内部包含了大量[柯里化函数](https://llh911001.gitbooks.io/mostly-adequate-guide-chinese/content/ch4.html)以及[代码组合](https://llh911001.gitbooks.io/mostly-adequate-guide-chinese/content/ch5.html)思想
 
 ### `combineReducers`
 
