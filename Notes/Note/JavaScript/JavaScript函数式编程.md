@@ -155,3 +155,14 @@ let mapedList = map(mapFun(1), list);
 console.log(filteredList); // [4]
 console.log(mapedList); // [2, 3, 4, 5]
 ```
+
+### 代码组合
+
+将数个函数对象作为参数传递给一个函数，在该函数内部将传入的函数参数分别作为参数进行嵌套。最直观的例子如下所示：
+```javascript
+const compose = (f,g) => {
+  return (x) => {
+    return f(g(x));
+  };
+};
+```
