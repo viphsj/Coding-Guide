@@ -341,3 +341,159 @@ applyMiddleware(thunkMiddleware)(createStore)(reducer, initialState)
 对 dispatch 调用的 action (例如，dispatch(addNewTodo(todo)))进行检查，如果 action 在第一次调用之后返回的是 function，则将（dispatch, getState）作为参数注入到 action返回的方法中，否则就正常对 action 进行分发，这样一来我们的中间件就完成喽~
 
 当 action 内部需要获取 state，或者需要进行异步操作，在操作完成之后进行事件调用分发的话，我们就可以让 action 返回一个以（dispatch, getState）为参数的 function 而不是通常的 Object，enhance就会对其进行检测以便正确的处理
+
+### `bindActionCreator`
+
+在传统写法下，当我们要把 state 和 action 注入到子组件中时，一般会这么做：
+
+```javascript
+import { connect } from 'react-redux';
+import {addTodo, deleteTodo} from './action.js';
+
+class TodoComponect extends Component {
+  render() {
+    return (
+      <ChildComponent 
+        deleteTodo={this.props.deleteTodo}
+        addTodo={this.props.addTodo}
+      />
+    )
+  }
+}
+
+function mapStateToProps(state) {
+  return {
+    state
+  }
+}
+function mapDispatchToProps(dispatch) {
+  return {
+    deleteTodo: (id) => {
+      dispatch(deleteTodo(id));
+    },
+    addTodo: (todo) => {
+      dispatch(addTodo(todo));
+    }
+  }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(TodoComponect);
+```
+
+使用`bindActionCreators`可以把 action 转为同名 key 的对象，但使用 dispatch 把每个 action 包围起来调用
+
+*惟一使用 bindActionCreators 的场景是当你需要把 action creator 往下传到一个组件上，却不想让这个组件觉察到 Redux 的存在，而且不希望把 Redux store 或 dispatch 传给它*
+
+```javascript
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import {addTodo, deleteTodo} as TodoActions from './action.js';
+
+class TodoComponect extends Component {
+  
+  // 在本组件内的应用
+  addTodo(todo) {
+    let action = TodoActions.addTodo(todo);
+    this.props.dispatch(action);
+  }
+  
+  deleteTodo(id) {
+    let action = TodoActions.deleteTodo(id);
+    this.props.dispatch(action);
+  }
+  
+  render() {
+    let dispatch = this.props.dispatch;
+    // 传递给子组件
+    let boundActionCreators = bindActionCreators(TodoActions, dispatch);
+    return (
+      <ChildComponent 
+        {...boundActionCreators}
+      />
+    )
+  }
+}
+
+function mapStateToProps(state) {
+  return {
+    state
+  }
+}
+export default connect(mapStateToProps)(TodoComponect)
+```
+
+#### `bindActionCreator`源码解析
+
+```javascript
+function bindActionCreator(actionCreator, dispatch) {
+  return (...args) => dispatch(actionCreator(...args))
+}
+
+// bindActionCreators期待一个Object作为actionCreators传入，里面是 key: action
+export default function bindActionCreators(actionCreators, dispatch) {
+  // 如果只是传入一个action，则通过bindActionCreator返回被绑定到dispatch的函数
+  if (typeof actionCreators === 'function') {
+    return bindActionCreator(actionCreators, dispatch)
+  }
+
+  if (typeof actionCreators !== 'object' || actionCreators === null) {
+    throw new Error(
+      `bindActionCreators expected an object or a function, instead received ${actionCreators === null ? 'null' : typeof actionCreators}. ` +
+      `Did you write "import ActionCreators from" instead of "import * as ActionCreators from"?`
+    )
+  }
+
+  // 遍历并通过bindActionCreator分发绑定至dispatch
+  var keys = Object.keys(actionCreators)
+  var boundActionCreators = {}
+  for (var i = 0; i < keys.length; i++) {
+    var key = keys[i]
+    var actionCreator = actionCreators[key]
+    if (typeof actionCreator === 'function') {
+      boundActionCreators[key] = bindActionCreator(actionCreator, dispatch)
+    }
+  }
+  return boundActionCreators
+}
+```
+
+### react-redux
+
+  - `Provider`
+
+```javascript
+export default class Provider extends Component {
+  getChildContext() {
+    // 将其声明为 context 的属性之一
+    return { store: this.store }
+  }
+
+  constructor(props, context) {
+    super(props, context)
+    // 接收 redux 的 store 作为 props
+    this.store = props.store
+  }
+
+  render() {
+    return Children.only(this.props.children)
+  }
+}
+
+if (process.env.NODE_ENV !== 'production') {
+  Provider.prototype.componentWillReceiveProps = function (nextProps) {
+    const { store } = this
+    const { store: nextStore } = nextProps
+
+    if (store !== nextStore) {
+      warnAboutReceivingStore()
+    }
+  }
+}
+
+Provider.propTypes = {
+  store: storeShape.isRequired,
+  children: PropTypes.element.isRequired
+}
+Provider.childContextTypes = {
+  store: storeShape.isRequired
+}
+```
