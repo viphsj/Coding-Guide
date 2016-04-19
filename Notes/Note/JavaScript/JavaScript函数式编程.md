@@ -166,3 +166,45 @@ const compose = (f,g) => {
   };
 };
 ```
+
+#### pointfree 函数无需提及要操作的数据是什么样的
+
+```javascript
+// 非pointfree函数。提及到了数据list
+const filterList = (list) => {
+  return list.map((value) => value * 2).filter((value) => return value < 3);
+}
+// 非pointfree函数，提及到了数据word
+const changeWord = (word) => {
+  return word.toLowerCase().split(' ');
+}
+
+// pointfree
+const filterList = compose(filter((value) => return value < 3), map((value) => value * 2));
+const changeWord = compose(split(' '), toLowerCase)
+```
+
+#### 结合律
+
+```javascript
+compose(f, compose(g, h)) == compose(compose(f, g), h);
+
+// map函数的组合律
+compose(map(f), map(p)) == map(compose(f, g));
+```
+
+#### 坑
+
+ERROR: 在没有局部调用之前，就组合类似 map 这样接受两个参数的函数
+
+```javascript
+const addOne = (value) => {
+  return value + 1;
+}
+
+// error
+const greaterList = compose(map, addOne, reverse);
+// god
+const greaterList = compose(map(addOne), reverse);
+greaterList([1, 2, 3]); // [4, 3, 2]
+```
