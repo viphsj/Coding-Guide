@@ -497,3 +497,112 @@ Provider.childContextTypes = {
   store: storeShape.isRequired
 }
 ```
+
+  - `connect`
+
+传入`mapStateToProps`,`mapDispatchToProps`,`mergeProps`,`options`。
+首先获取传入的参数，如果没有则以默认值代替
+
+```javascript
+const defaultMapStateToProps = state => ({}) // eslint-disable-line no-unused-vars
+const defaultMapDispatchToProps = dispatch => ({ dispatch })
+const { pure = true, withRef = false } = options
+```
+
+之后，通过
+```javascript
+const finalMergeProps = mergeProps || defaultMergeProps
+```
+
+选择合并`stateProps`,`dispatchProps`,`parentProps`的方式，默认的合并方式 `defaultMergeProps` 为：
+
+```javascript
+const defaultMergeProps = (stateProps, dispatchProps, parentProps) => ({
+  ...parentProps,
+  ...stateProps,
+  ...dispatchProps
+})
+```
+
+返回一个以 Component 作为参数的函数。在这个函数内部，生成了一个叫做`Connect`的 Component
+
+```javascript
+...
+  return function wrapWithConnect(WrappedComponent) {
+    const connectDisplayName = `Connect(${getDisplayName(WrappedComponent)})`
+    // 检查参数合法性
+    function checkStateShape(props, methodName) {}
+    // 合并props
+    function computeMergedProps(stateProps, dispatchProps, parentProps) {
+      const mergedProps = finalMergeProps(stateProps, dispatchProps, parentProps)
+      if (process.env.NODE_ENV !== 'production') {
+        checkStateShape(mergedProps, 'mergeProps')
+      }
+      return mergedProps
+    }
+    
+    // start of Connect
+    class Connect extends Component {
+      constructor(props, context) {
+        super(props, context);
+        this.store = props.store || context.store
+        
+        const storeState = this.store.getState()
+        this.state = { storeState }
+        this.clearCache()
+      }
+      
+      computeStateProps(store, props) {
+        // 调用configureFinalMapState，使用传入的mapStateToProps方法（或默认方法），将state map进props
+      }
+      configureFinalMapState(store, props) {}
+      
+      computeDispatchProps(store, props) {
+        // 调用configureFinalMapDispatch，使用传入的mapDispatchToProps方法（或默认方法），将action使用dispatch封装map进props
+      }
+      configureFinalMapDispatch(store, props) {}
+      
+      // 判断是否更新props
+      updateStatePropsIfNeeded() {}
+      updateDispatchPropsIfNeeded() {}
+      updateMergedPropsIfNeeded() {}
+      
+      componentDidMount() {
+        // 内部调用this.store.subscribe(this.handleChange.bind(this))
+        this.trySubscribe()
+      }
+      handleChange() {
+        const storeState = this.store.getState()
+        const prevStoreState = this.state.storeState
+        // 对数据进行监听，发送改变时调用
+        this.setState({ storeState })
+      }
+      
+      // 取消监听，清除缓存
+      componentWillUnmount() {
+        this.tryUnsubscribe()
+        this.clearCache()
+      }
+      
+      render() {
+        this.renderedElement = createElement(WrappedComponent,
+            this.mergedProps
+        )
+        return this.renderedElement
+      }
+    }
+    // end of Connect
+    
+    Connect.displayName = connectDisplayName
+    Connect.WrappedComponent = WrappedComponent
+    Connect.contextTypes = {
+      store: storeShape
+    }
+    Connect.propTypes = {
+      store: storeShape
+    }
+    
+    return hoistStatics(Connect, WrappedComponent)
+  }
+...
+```
