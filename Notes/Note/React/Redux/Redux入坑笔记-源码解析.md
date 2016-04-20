@@ -606,3 +606,17 @@ const defaultMergeProps = (stateProps, dispatchProps, parentProps) => ({
   }
 ...
 ```
+
+我们看见，在connect的最后，返回了使用`hoistStatics`包装的`Connect`和`WrappedComponent`
+
+[hoistStatics](https://github.com/mridgway/hoist-non-react-statics)是什么鬼？[为什么使用它?](https://github.com/reactjs/react-redux/issues/276)
+
+> Copies non-react specific statics from a child component to a parent component. Similar to Object.assign, but with React static keywords blacklisted from being overridden.
+
+也就是说，它类似于`Object.assign`，作用是将子组件中的 static 方法复制进父组件，但不会覆盖组件中的关键字方法(如 componentDidMount)
+
+```javascript
+import hoistNonReactStatic from 'hoist-non-react-statics';
+
+hoistNonReactStatic(targetComponent, sourceComponent);
+```
