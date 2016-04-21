@@ -473,3 +473,19 @@ function returnInt(element){
   - `weakMap.has(key)`
   - `weakMap.delete(key)`
   - `weakMap.clear()`
+
+[利用`WeakMap`创建对象中的私有变量](https://gist.github.com/greim/44e54c2f23eab955bb73b31426e96d6c)
+
+```javascript
+const __ = new WeakMap();
+
+class Foo {
+  constructor(x) {
+    __.set(this, { x });
+  }
+  getX() {
+    var { x } = __.get(this);
+    return x;
+  }
+}
+```
