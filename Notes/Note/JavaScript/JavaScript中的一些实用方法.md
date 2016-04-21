@@ -1,5 +1,7 @@
 ## JavaScript 中的一些实用方法
 
+> 偏重于ES6
+
 ### [Object.assign()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/assign)
 
 ```js
@@ -427,9 +429,9 @@ const newList = list.map((value) => {
   return value * 2
 }); 
 console.log(newList); // [2, 4, 6, 8];
-return list.some((value) => value < 3); // true
-return list.every((value) => value < 3); // false
-return list.filter((value) => value > 3); // [4]
+return list.some((value, index) => value < 3); // true
+return list.every((value, index) => value < 3); // false
+return list.filter((value, index) => value > 3); // [4]
 return list.forEach((value, index) => value * 2); // [2, 4, 6, 8]
 ```
 
@@ -455,3 +457,19 @@ function returnInt(element){
 ["1", "2", "3"].map(returnInt);
 // [1,2,3]
 ```
+
+### [WeakMap](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/WeakMap)
+
+> WeakMap对象就是简单的键/值映射.但键只能是对象值,不可以是原始值.
+> 
+> 典型应用是，一个对应DOM元素的WeakMap结构，当某个DOM元素被清除，其所对应的WeakMap记录就会自动被移除
+
+#### 方法
+
+`const weakMap = new WeakMap();`
+
+  - `weakMap.get(key [, defaultValue])`
+  - `weakMap.set(key, value)`
+  - `weakMap.has(key)`
+  - `weakMap.delete(key)`
+  - `weakMap.clear()`
