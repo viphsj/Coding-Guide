@@ -25,7 +25,33 @@ const processFile = (files) => {
 }
 ```
 
-### 拖拽上传文件
+### 通过拖拽上传文件
+
+```html
+<div id="dropFile">拖拽上传</div>
+```
+
+```javascript
+$(function(){
+  let dropFile = document.getElementById('dropFile');
+  dropFile.ondragenter = ignoreDrag;
+  dropFile.ondragover = ignoreDrag;
+  dropFile.ondrop = drop;
+  
+  const ignoreDrag = (e) => {
+    e.stopPropagation();
+    e.preventDefault();
+  }
+  const drop = (e) => {
+    e.stopPropagation();
+    e.preventDefault();
+    let data = e.dataTransfer;
+    let files = data.files;
+    
+    processFile(files)
+  }
+})
+```
 
 ### js动态加载CSS
 
