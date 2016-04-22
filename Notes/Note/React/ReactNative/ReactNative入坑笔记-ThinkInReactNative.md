@@ -1,5 +1,7 @@
 ## ReactNative入坑笔记-ThinkInReactNative
 
+部分参考并整理自[构建 F8 2016 App](http://f8-app.liaohuqiu.net/)
+
 > Learn once, write anywhere.
 
 ### INTRO
@@ -10,12 +12,14 @@ React系列充满了组件化思想，提倡组件复用。而从中衍生出的
 
 ReactNative和Redux搭配，由此更像是一个大型的单页Web应用，通过内置的`Navigator`进行页面跳转，而Redux则专心负责全局的State和事件处理。UI与逻辑分离，而Native又同时可兼顾iOS与Android双平台，因此需要从ReactNative中公共的UI组件入手，针对不同平台的UI特点进行多平台的适配。
 
-### UI初步
+### 组件UI
+
+#### 布局初步
 
 ReactNative的CSS与Web端的CSS有通用但也有很多不同，可以参考这篇文章入门学习：
 [react-native 之布局篇](https://segmentfault.com/a/1190000002658374)
 
-### StyleSheet
+#### StyleSheet
 
 通过`Platform`，我们可以分辨应用的运行平台：
 
@@ -63,4 +67,17 @@ const styles = F8StyleSheet.create({
     },
   }
 });
+```
+
+#### 按文件名加载
+
+有时候，不同的平台有自己独特的插件，如`NavigatorIOS`,`DrawerLayoutAndroid`。这种时候我们就不得不把组件文件分离。
+
+```javascript
+// file name
+AppContainer.android.js
+AppContainer.ios.js
+
+// usage
+import AppContainer from './AppContainer';
 ```
