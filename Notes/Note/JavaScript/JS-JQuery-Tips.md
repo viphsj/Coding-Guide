@@ -5,6 +5,28 @@ tags: JavaScript
 ---
 # js tips
 
+### 文件上传处理
+
+```html
+<input type="file" onchange="processFile(this.file)"/>
+```
+
+```javascript
+const processFile = (files) => {
+  let file = files[0];
+  let fileName = file.name;
+  let reader = new FileReader();
+  reader.onload = (e) => {
+    // if file is a image
+    // let url = e.target.result;
+  }
+  reader.readAsText(file); // 只能处理包含文本内容的文件
+  reader.readAsDataUrl(file); // 处理图片文件
+}
+```
+
+### 拖拽上传文件
+
 ### js动态加载CSS
 
 ```js
