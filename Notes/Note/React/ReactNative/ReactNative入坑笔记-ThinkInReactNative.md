@@ -81,3 +81,13 @@ AppContainer.ios.js
 // usage
 import AppContainer from './AppContainer';
 ```
+
+### 数据
+
+#### Redux
+
+![React-with-Redux](../../../image/React-with-Redux.png)
+
+戳这里看[Redux的入坑笔记](../Redux/Redux入坑笔记-ThinkInRedux.md)和[详细解析](../Redux/Redux入坑笔记-源码解析)
+
+#### 使用`redux-persist`完成数据持久化
