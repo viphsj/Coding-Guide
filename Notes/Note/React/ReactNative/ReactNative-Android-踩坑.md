@@ -196,3 +196,52 @@ ReactNative-Android目前还没有像原生Android那样顶部点击切换pager�
 ```
 
 则会产生3个pager。。
+
+**解决方案**
+
+**不要返回View组成的DefaultComponent，返回一个空的ViewPager**
+
+```javascript
+  <View style={styles.emptyContainer}>
+  <ListView
+    enableEmptySections={true}
+    style={styles.emptyListView}
+    dataSource={listData}
+    renderRow={(data) => {
+      return (
+        <View style={styles.defaultViewContainer}>
+          <View style={styles.defaultView}>
+            <Image resizeMode='contain' source={require('../../src/image/logo.jpg')} style={styles.defaultImage}/>
+            <Text>哎呦我去没有数据..</Text>
+            <Text>下拉可刷新哦</Text>
+          </View>
+        </View>
+      )
+    }}
+  />
+</View>
+
+const styles = StyleSheet.create({
+  emptyContainer: {
+    flex: 1,
+  },
+  emptyListView: {
+    flex: 1
+  },
+  defaultViewContainer: {
+    flex: 1,
+    height: 400,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  defaultView: {
+    height: 100,
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  defaultImage: {
+    height: 60
+  }
+});
+```
