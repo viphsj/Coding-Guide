@@ -90,4 +90,88 @@ import AppContainer from './AppContainer';
 
 戳这里看[Redux的入坑笔记](../Redux/Redux入坑笔记-ThinkInRedux.md)和[详细解析](../Redux/Redux入坑笔记-源码解析)
 
+#### 数据储存`AsyncStorage`
+
+`AsyncStorage`是ReactNative中内置的**异步**储存系统。
+
+它的方法返回一个`Promise`对象
+
+  - `getItem(key: string, callback(err, result))`
+  - `setItem(ket: string, value: string, callback(err))`
+
+  - `multiMerge([[key1,val1],[key2,val2]..], callback(err))`
+  - `mergeItem(key: string, value: string, callback(err))`
+
+```javascript
+let UID123_object = {
+ name: 'Chris',
+ age: 30,
+ traits: {hair: 'brown', eyes: 'brown'},
+};
+
+// need only define what will be added or updated
+let UID123_delta = {
+ age: 31,
+ traits: {eyes: 'blue', shoe_size: 10}
+};
+
+AsyncStorage.setItem('UID123', JSON.stringify(UID123_object), () => {
+  AsyncStorage.mergeItem('UID123', JSON.stringify(UID123_delta), () => {
+    AsyncStorage.getItem('UID123', (err, result) => {
+      console.log(result);
+      // => {'name':'Chris','age':31,'traits':{'shoe_size':10,'hair':'brown','eyes':'blue'}}
+    });
+  });
+});
+```
+
+  - `clear(callback(err))` // clear all AsyncStorage
+  - `getAllKeys(callback(err, keys))`
+
+
+  - `multiGet(keys[key1, key2..], callback(err, result[[key1, val1], [[key2, val2]]]))`
+
+```javascript
+AsyncStorage.getAllKeys((err, keys) => {
+  AsyncStorage.multiGet(keys, (err, stores) => {
+    // stores => [[key1, val1], [key2, val2]...]
+   stores.map((result, i, store) => {
+     // get at each store's key/value so you can work with it
+     let key = store[i][0];
+     let value = store[i][1];
+    });
+  });
+});
+```
+
+  - `multiSet(KeyValuePairs[[key1,val1],[key2,val2]..], callback(err))`
+  - `multiRemove(keys[key1, key2..], callback(err))`
+
+```javascript
+let keys = ['k1', 'k2'];
+AsyncStorage.multiRemove(keys, (err) => {
+  // keys k1 & k2 removed, if they existed
+  // do most stuff after removal (if you want)
+});
+```
+
+可以使用ES7的`async/await`同步式的使用`AsyncStorage`
+
+```javascript
+async getUserToken(name) {
+  try {
+    let token = await AsyncStorage.getItem(name);
+    // do something
+    return result;
+  } catch(error) {
+    // do something
+    return result;
+  }
+}
+
+checkIfLogin() {
+  let result = this.getUserToken().done();
+}
+```
+
 #### 使用`redux-persist`完成数据持久化
