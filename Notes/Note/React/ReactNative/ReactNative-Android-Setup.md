@@ -1,5 +1,5 @@
 ---
-title: React Native Android Setup
+title: ReactNative Android Setup
 date: 2016-03-03 08:48:05
 tags: React-Native
 ---

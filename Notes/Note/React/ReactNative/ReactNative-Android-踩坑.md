@@ -1,5 +1,5 @@
 ---
-title: React Native Android 踩坑
+title: ReactNative Android 踩坑
 date: 2016-03-03 08:49:55
 tags: React-Native
 ---
