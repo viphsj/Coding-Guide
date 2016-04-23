@@ -6,7 +6,7 @@
 
 ### INTRO
 
-并不是指字面意义的“四处编码运行”，毕竟，从ReactWeb到ReactNative，他们之间的本质差别还是很大的。但是，因为都是原生的js语言，所以会有很多的相同的地方。掌握本质思想，再四处踩踩坑，才能玩的更愉快:)
+Learn once, write anywhere. 并不是指字面意义的“四处编码运行”，毕竟，从ReactWeb到ReactNative，他们之间的差别还是很大的。但是，因为都是原生的js语言，所以会有很多相同的地方。掌握本质思想，再四处踩踩坑，才能玩的更愉快:)
 
 React系列充满了组件化思想，提倡组件复用。而从中衍生出的flux到Redux，更是利用函数式编程，逐步将代表UI的Component层与逻辑层(reducer, action)分离，从此写前端也有了前后端分离般的快感了呢。
 
@@ -175,3 +175,46 @@ checkIfLogin() {
 ```
 
 #### 使用`redux-persist`完成数据持久化
+
+使用[redux-persist](https://github.com/rt2zz/redux-persist)可以配合Redux完成数据持久化储存，使应用在断网的时候可以使用
+
+```javascript
+$ npm i --save redux-persist
+```
+
+还记得React中`createStore`的使用吗
+
+```javascript
+const store = createStore(reducer, initState, enhancer);
+// => 在使用applyMiddleware等enhancer时，其本质等价于
+const store = enhancer(createStore)(reducer, initState);
+```
+
+`redux-persist`也是一个enhancer
+
+```javascript
+// basic usage
+import {persistStore, autoRehydrate} from 'redux-persist'
+const store = createStore(reducer, iniState, autoRehydrate());
+persistStore(store);
+```
+
+在和其他enhancer搭配的时候
+
+```javascript
+import { AsyncStorage } from 'react-native';
+import { createStore, applyMiddleware } from 'redux';
+import thunk from 'redux-thunk';
+import {persistStore, autoRehydrate} from 'redux-persist';
+
+// 先用applyMiddleware封装createStore，返回新的store
+const middlewareWrapper = applyMiddleware(thunk);
+const store = middlewareWrapper(createStore);
+
+// autoRehydrate()返回一个可作用于Store的函数
+const rehydrator = autoRehydrate();
+// 将之前存储于本地的 Store 对象用当前的 Store 的 state 进行自动更新
+const AppStore = rehydrator(store)(appReducer, initialState);
+// 处理 Store 保存到本地存储相关的逻辑，将持久化数据(store)储存在AsyncStorage中
+persistStore(AppStore, {storage: AsyncStorage});
+```
