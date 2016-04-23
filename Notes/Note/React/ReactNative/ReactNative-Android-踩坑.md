@@ -202,6 +202,9 @@ ReactNative-Android目前还没有像原生Android那样顶部点击切换pager�
 **不要返回View组成的DefaultComponent，返回一个空的ViewPager**
 
 ```javascript
+let dataSource = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+let listData = dataSource.cloneWithRows([1]);
+
   <View style={styles.emptyContainer}>
   <ListView
     enableEmptySections={true}
@@ -245,3 +248,51 @@ const styles = StyleSheet.create({
   }
 });
 ```
+
+### 又一个大坑：
+
+ReactNative自带的ListView，有几个便利的函数：
+
+```javascript
+onEndReached={()=>{}}
+// 当所有的数据都已经渲染过，并且列表被滚动到距离最底部不足onEndReachedThreshold个像素的距离时调用。原生的滚动事件会被作为参数传递。
+
+onEndReachedThreshold={number}
+// 调用onEndReached之前的临界值，单位是像素。
+```
+
+因此，我们可以在列表滚动到底部的时候，发送请求fetch下一页的数据，之后更新到state中，就可以轻松的实现如同原生分页般的顺滑体验
+
+但是，当它和上面的自定义ViewPager配合的时候，就会出现诡异的现象：
+当ViewPager滚动到底部触发fetch事件，并获取到数据更新了state之后，ListView会被压缩至原来的一半高，下半部的ListView中的内容没有被渲染（但ListView依旧全部占满屏幕）！
+
+坑爹玩意！
+
+目前解决方案：
+
+ListView中其实还有一个不起眼的方法：
+
+```javascript
+renderScrollComponent={function}
+// 指定一个函数，在其中返回一个可以滚动的组件。ListView将会在该组件内部进行渲染。默认情况下会返回一个包含指定属性的ScrollView。
+```
+
+文档里没有详细介绍，但在最新版英文文档ListView的例子里却有它：
+
+```javascript
+var React = require('react-native');
+var {
+  ListView,
+  RecyclerViewBackedScrollView,
+  View,
+} = React;
+
+<ListView
+  dataSource={this.state.dataSource}
+  renderRow={this._renderRow}
+  renderScrollComponent={props => <RecyclerViewBackedScrollView {...props} />}
+  renderSeparator={(sectionID, rowID) => <View key={`${sectionID}-${rowID}`} style={styles.separator} />}
+/>
+```
+
+然后就OK了。。。==
