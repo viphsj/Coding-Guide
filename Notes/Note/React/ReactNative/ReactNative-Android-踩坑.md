@@ -148,3 +148,51 @@ textStyle: {
 <PullToRefreshViewAndroid></PullToRefreshViewAndroid>
 中只放一个直接关系子<View>
 ```
+
+### 组件化
+
+ReactNative-Android目前还没有像原生Android那样顶部点击切换pager的button，所以我们就来自己搭建一个。为了未来复用组件考虑，就将它独立封装一个新的组件
+
+结构：
+
+```javascript
+<View style={styles.viewPagerContainer}>
+
+  <ViewPagerToolbar
+    title={MESSAGE_PAGE}
+    navigator={navigator}
+  />
+  
+  <ViewPagerAndroid>
+    <ViewPagerContent />
+  </ViewPagerAndroid>
+</View>
+```
+
+其中，`ViewPagerToolbar`和`ViewPagerContent`是我们封装的组件
+
+已知的坑：
+把自定义组件`ViewPagerContent`代入进`ViewPagerAndroid`的时候，自定义组件最外层和向内的第一层会作为一个pager。如果第二层之后包裹了多层，则每个`View`会被作为一个pager而加载。
+
+比如，我们的`ViewPagerContent`在有数据的时候，返回：
+
+```javascript
+<View style={styles.dataContainer}>
+  <ListView />
+</View>
+```
+那样的话会产生一个pager
+
+在没有数据的时候，返回：
+
+```javascript
+<View style={styles.emptyContainer}>
+  <View style={styles.defaultView}>
+    <Image resizeMode='contain' source={require('../../src/image/logo.jpg')} style={styles.defaultImage}/>
+    <Text>哎呦我去没有数据..</Text>
+    <Text>下拉可刷新哦</Text>
+  </View>
+</View>
+```
+
+则会产生3个pager。。
