@@ -98,7 +98,7 @@ export default EcViewPagerTitle;
 
 ```javascript
 // EcViewPagerAndroid/EcViewPagerContainer.js
-class TeeViewPagerContent extends Component {
+class EcViewPagerContent extends Component {
   
   render() {
     // 只是将传入的pager组合进View中
@@ -116,7 +116,7 @@ const styles = StyleSheet.create({
   }
 });
 
-export default TeeViewPagerContent;
+export default EcViewPagerContent;
 ```
 
 ```javascript
@@ -168,7 +168,7 @@ class EcViewPagerAndroid extends Component {
     // 分别遍历props，将其组合起来
     let pagerTitles = viewPagerTitles.map((title, index) => {
       return (
-        <TeeViewPagerTitle
+        <EcViewPagerTitle
           key={index}
           index={index}
           title={title}
@@ -180,7 +180,7 @@ class EcViewPagerAndroid extends Component {
 
     let pagerContents = viewPagerPages.map((pager, index) => {
       return (
-        <TeeViewPagerContent pager={pager} key={index} />
+        <EcViewPagerContent pager={pager} key={index} />
       )
     });
 
@@ -260,7 +260,7 @@ ViewPager里放什么？View啊！那么好的，来让我们先做一个EmptyCo
 
 ```javascript
 // ECEmptyContainer.js
-class TeeEmptyContainer extends Component {
+class EcEmptyContainer extends Component {
   
   render() {
     return (
@@ -292,7 +292,7 @@ const styles = StyleSheet.create({
   }
 });
 
-export default TeeEmptyContainer;
+export default EcEmptyContainer;
 ```
 
 大功告成。让我们代入EcViewPagerAndroid试试看。然后。。等着傻眼吧。
@@ -308,7 +308,7 @@ WTF？我们只扔进去一个组件，应该只有一个pager，但居然深井
 那该怎么做一个EmptyContainer？使用ListView，内部只渲染充满屏幕的一行就好了：
 
 ```javascript
-class TeeEmptyContainer extends Component {
+class EcEmptyContainer extends Component {
 
   render() {
     // 只有一行数据，作为占位
@@ -361,7 +361,7 @@ const styles = StyleSheet.create({
   }
 });
 
-export default TeeEmptyContainer;
+export default EcEmptyContainer;
 ```
 
 ### 坑2
