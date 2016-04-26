@@ -7,21 +7,19 @@
     - [css-ui-framework](./Tools/Framework/css-ui-framework.md)
     - [react-ui-framework](./Tools/Framework/react-ui-framework.md)
 - Notes
-  - Coding
-  - [JavaScript](./Notes/Note/JavaScript)
-  - Python (coming soon)
-  - [html & css](./Notes/Note/CSS)
-  - [前端工程](./Notes/Note/前端工程)
-  - NodeJS
-    - [基础](./Notes/Note/NodeJS/基础)
-    - [Express](./Notes/Note/NodeJS/Express)
-    - [KOA](./Notes/Note/NodeJS/KOA)
-  - React
-    - [Redux](./Notes/Note/React/Redux)
-    - [ReactJS](./Notes/Note/React/ReactJS)
-    - [React Native](./Notes/Note/React/ReactNative)
+  - [JavaScript](./Notes/JavaScript)
+  - Python
+  - [html & css](./Notes/CSS)
+  - [前端工程](./Notes/前端工程)
+  - [NodeJS](./Notes/NodeJS)
+    - [基础](./Notes/NodeJS/基础)
+    - [Express](./Notes/NodeJS/Express)
+    - [KOA](./Notes/NodeJS/KOA)
+  - [React](./Notes/React)
+    - [Redux](./Notes/React/Redux)
+    - [ReactJS](./Notes/React/ReactJS)
+    - [React Native](./Notes/React/ReactNative)
   - Lua
   - Go
-  - [Project](./Notes/Note/Project)
-    - PM
-    - Design
+  - [算法](./Notes/算法)
+  - [Project](./Notes/Project)
