@@ -305,7 +305,11 @@ WTF？我们只扔进去一个组件，应该只有一个pager，但居然深井
 
 钻研半天。。好吧我只能说这可能是个bug吧（或者我写的有问题喽）。通过这种方式组件的ViewPager，pager组件只能有两层嵌套，再多就会被当做其他的pager。
 
-那该怎么做一个EmptyContainer？使用ListView，内部只渲染充满屏幕的一行就好了：
+那该怎么做一个EmptyContainer？
+
+#### 方案一
+
+使用ListView，内部只渲染充满屏幕的一行就好了：
 
 ```javascript
 class EcEmptyContainer extends Component {
@@ -362,6 +366,28 @@ const styles = StyleSheet.create({
 });
 
 export default EcEmptyContainer;
+```
+
+#### 方案二
+
+出乎意料的简单。。。在外层`<View></View>`加入`collapsable={false}`就好了
+
+```javascript
+// ECEmptyContainer.js
+class EcEmptyContainer extends Component {
+  
+  render() {
+    return (
+      <View style={styles.defaultViewContainer} collapsable={false}>
+        <View style={styles.defaultView}>
+          <Image resizeMode='contain' source={require('../../src/image/logo.jpg')} style={styles.defaultImage}/>
+          <Text>哎呦我去没有数据..</Text>
+          <Text>下拉可刷新哦</Text>
+        </View>
+      </View>
+    )
+  }
+}
 ```
 
 ### 坑2
