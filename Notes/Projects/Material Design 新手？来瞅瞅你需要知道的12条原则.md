@@ -132,3 +132,13 @@ Material Design就利用了这条简单的原则。将运动和用户管理，�
 
 ![‘REDBUS APP – Material Design Preview‘ by Anish Chandran on Behance](../../image/NewToMaterialDesign/MaterialDesignExample2.gif)
 
+### 10.让运动更逼真
+
+“逼真”是关键词。虚假动画的时代--元素仅仅是在屏幕上移动--不复存在。如果你要加入运动效果，你还需要遵守真实世界的物理学运动规律，让它感受起来更加逼真。
+
+谷歌针对[逼真运动](http://www.google.com/design/spec/animation/authentic-motion.html)这点有专门的介绍
+
+谷歌在指导方针中，解释了质量和重量、加速和减速，以及变速运动的原理（就是让运动物体的速度随着时间而改变）。
+
+在Material Design中，只有当运动和真实的世界一样时，才能达到良好的效果：丰富界面，更利于用户理解。
+
