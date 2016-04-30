@@ -56,6 +56,16 @@ Material Design叫作Material Design，绝不仅仅是个巧合。Material Desig
 
 ![‘WhatsApp | Material Design Concept‘ by Mário Gomide on Behance](../../image/NewToMaterialDesign/WhatsAppMaterialDesigin.png)
 
-### 4.大胆配色
+### 4.醒目的配色
+
+醒目、平面，且富有意义，也是Material Design的指导方针。
+
+毫无疑问，Material Design是极简抽象派的设计。换句话说，它不会用太多的设计或其他风格去修饰。反之，设计家们收到限制，不得不去寻找其他方式表达设计的意义和焦点。
+
+其中的一点就是：颜色。更确切的说，是醒目，甚至有时会聒噪的配色。
+
+醒目的配色在Material Design中扮演了重要角色（关于这点，Flat design也是）。它们让设计变的有趣并易于和用户进行（情感上的）交流。
+
+举个富有色彩的栗子：
 
 ![‘Behance New App Concept (Material Design)‘ by Fabrizio Vinci on Behance](../../image/NewToMaterialDesign/BehanceMaterialDesign.gif)
