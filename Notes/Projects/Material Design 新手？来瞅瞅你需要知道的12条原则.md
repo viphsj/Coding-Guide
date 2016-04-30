@@ -74,4 +74,14 @@ Material Design叫作Material Design，绝不仅仅是个巧合。Material Desig
 
 谷歌的官方文档是这么说的：
 
-> 
+> 通过从主色调中选择三个颜色，从辅色调中选择一个重点色，来限制自己对颜色的选择。
+
+(译者注：Material Design常用颜色戳[这里](http://flatuicolors.com/)，配色在App中的搭配戳[这里](http://www.materialpalette.com))
+
+你的主色调可以用在背景色、大块区域、盒模型、字体，或者其他元素上。而重点色，则如同它的名字那样，为你页面上的重要元素添加额外的影响力。
+
+不用说你也知道吧，重点色需要和主色调形成强烈的对比。
+
+![‘Snapchat – Material Design‘ by Vinfotech on Behance](../../image/NewToMaterialDesign/SnapchatMaterialDesign.png)
+
+### 利用留白
