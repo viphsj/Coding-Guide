@@ -22,17 +22,5 @@ Material Design现在变得很火了，许多设计师也不仅局限在Android�
 
 > Material Design的原则和指导方针是不是我想要达到的？
 
-（Note：或许在你接着看下去之前，可以看看我们之前写的这篇文章：[Is Flat Design a Web Design Standard That’s Here to Stay?](http://blogs.adobe.com/dreamweaver/2015/02/is-flat-design-a-web-design-standard-thats-here-to-stay-10-designers-chip-in.html)。在这篇文章里，我们详细介绍了Flat Design和Material Design的不同。它或许能够给你选择自己的设计方案提供帮助。）
-
-# 1.熟悉其核心思想
-
-如果你想学Material Design，最好的开始方式就是去看[谷歌的官方文档]()
-
-文档会实时保持更新，并且解释说明了在使用Material Design设计过程中的一些细节。
-
-令人兴奋的是，Material Design不仅仅是Android设计，它涵盖囊括了各种App和web端的设计。
-
-我墙裂建议你去仔细读一下文档的第一章，以便熟悉它的基础原则。
-
-# 2.理解Material Design中的“material”
+（Note：或许在你接着看下去之前，可以看看我们之前写的这篇文章：[Is Flat Design a Web Design Standard That’s Here to Stay?](http://blogs.adobe.com/dreamweaver/2015/02/is-flat-design-a-web-design-standard-thats-here-to-stay-10-designers-chip-in.html)。在这篇文章里，我们详细介绍了flat design和Material Design的不同。它或许能够给你选择自己的设计方案提供帮助。）
 
