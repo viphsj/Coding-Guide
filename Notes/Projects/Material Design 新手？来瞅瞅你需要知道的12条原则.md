@@ -115,3 +115,9 @@ Material Design中的图片都具有无边框的特色--全出血（full-bleed�
 ![‘Twitter Material Design‘ by Rico Monteiro on Behance](../../image/NewToMaterialDesign/TwitterMaterialDesign.png)
 
 ### 8.对于依赖于图片的设计，要从图片中选出色彩
+
+谷歌提倡我们从图片提取其色调，让它成为我们配色面板的一部分。
+
+这么做的理由难以反驳：通过这种方式，我们可以让一切都融为一体，给用户创造出一个统一的体验。
+
+![‘Material Design Colors Recontextualization‘ by Lonely Pig Ringo on Behance](../../image/NewToMaterialDesign/MaterialDesignExample.png)
