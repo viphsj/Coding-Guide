@@ -84,4 +84,17 @@ Material Design叫作Material Design，绝不仅仅是个巧合。Material Desig
 
 ![‘Snapchat – Material Design‘ by Vinfotech on Behance](../../image/NewToMaterialDesign/SnapchatMaterialDesign.png)
 
-### 利用留白
+### 6.利用留白
+
+Material Design从传统的印刷设计和原则中吸收了很多的灵感。
+
+例如，留白。它在Material Design中占据重要地位。它可以极大的提高你的版面设计和文字布局的美观度。
+
+事实上，在提升用户注意力方面，留白也是一个高效的工具。它能够吸引人们的注意力，并将其转移到特定的元素上（这点对于初学者来说通常难以理解）。
+
+简而言之，在头部标题上使用一些大规模的版面吧，使用大量留白，别害怕在你的设计中留下大量的空白。
+
+![‘Material Design Sign Up Page‘ by Omkar Abnave on Behance](../../image/NewToMaterialDesign/SignupPage.png)
+
+### 7.使用无边框设计（edge-to-edge）的图片
+
