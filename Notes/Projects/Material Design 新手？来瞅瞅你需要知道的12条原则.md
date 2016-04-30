@@ -55,3 +55,7 @@ Material Design叫作Material Design，绝不仅仅是个巧合。Material Desig
 在这之中，起关键影响因素的是设计的整体结构。如果你的阴影描绘出了真实材料的质感，那么它将成为整个场景中的重要结构。
 
 ![‘WhatsApp | Material Design Concept‘ by Mário Gomide on Behance](../../image/NewToMaterialDesign/WhatsAppMaterialDesigin.png)
+
+### 4.大胆配色
+
+![‘Behance New App Concept (Material Design)‘ by Fabrizio Vinci on Behance](../../image/NewToMaterialDesign/BehanceMaterialDesign.gif)
