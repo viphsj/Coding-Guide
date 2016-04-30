@@ -1,9 +1,4 @@
----
-title: 'JS & JQuery Tips'
-date: 2016-03-03 23:45:04
-tags: JavaScript
----
-# js tips
+## JavaScript Tips-1
 
 ### 文件上传处理
 
