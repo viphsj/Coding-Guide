@@ -150,3 +150,20 @@ Material Design里有一个指导方针是，让事物的工作结果，在不�
 
 自然而然，这要求设计可以适应不同场景。幸运的是，在现代的框架下，你能够获取到很多现成的工具，因此这也并不是什么特别大的挑战。
 
+### 12.请铭记：成败在于细节
+
+Material Design不易做到的原因之一是，有着如此之多繁重而又简单的原则。
+
+举个栗子吧，对于拟物化设计，原则很简单：“让设计的元素尽可能的接近真实世界的事物”。
+
+下面是遵照这个原则进行的设计：
+
+![‘15 Puzzle‘ by Kamil Ginatulin on Behance](../../image/NewToMaterialDesign/15PuzzleMaterialDesign.png)
+
+以及这个：
+
+![‘Cyrano Interactive Media‘ by Marisa Mariscotti on Behance](../../image/NewToMaterialDesign/MaterialDesignExample3.jpg)
+
+而Material Design则就简单的多。但同时，也复杂的多。
+
+最重要的一点：Material Design是一场有关细节的游戏。你需要更加务实专注的把设计转换为想要达到的目标，但同时，也不能太拟物。当你有疑问时，可以[来这里寻找灵感](https://www.behance.net/search?field=102&content=projects&sort=appreciations&time=week&search=material%20design)。
