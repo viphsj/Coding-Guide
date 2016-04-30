@@ -46,3 +46,12 @@ Material Design叫作Material Design，绝不仅仅是个巧合。Material Desig
 
 ![‘Shadow‘ by Nikhil Vootkur on Behance](../../image/NewToMaterialDesign/shadow.png)
 
+### 3.通过阴影传达层级关系
+
+表面、边缘、逼真的阴影和光照，是Material Design中的主要工具。给你的设计增加深度至关重要，但一定记住要控制在有效的范围内。
+
+举个栗子，阴影是你给一坨混合在一起的不同元素，增加层级关系的首选方案。为了决定谁在谁身上投射阴影，你需要思考各个元素的真实层级关系。
+
+在这之中，起关键影响因素的是设计的整体结构。如果你的阴影描绘出了真实材料的质感，那么它将成为整个场景中的重要结构。
+
+![‘WhatsApp | Material Design Concept‘ by Mário Gomide on Behance](../../image/NewToMaterialDesign/WhatsAppMaterialDesigin.png)
