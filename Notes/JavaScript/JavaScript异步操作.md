@@ -117,6 +117,38 @@ formData() - 处理成可以再次被request使用的formData对象
 
 若要多次读取 body, 则应该在读取之前调用 `response.clone()` 方法, 之后读取clone的body（每个clone只能读取一次）
 
+#### 实例
+
+  - 通过fetch获取数据
+
+```javascript
+fetch(url).then((response) => response.json()) // 解析获取到的json
+.then((data) => {
+  // do something
+})
+.catch((error) => {
+  // do something
+});
+```
+
+  - 通过fetch发送数据
+
+```javascript
+fetch(url, {
+  method: 'post',
+  headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({data})
+})
+.then((response) => response.json())
+.then((data) => {
+  // do something
+})
+.then((error) => {});
+```
+
 ### [Promise](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Promise)
 
 - 作用
