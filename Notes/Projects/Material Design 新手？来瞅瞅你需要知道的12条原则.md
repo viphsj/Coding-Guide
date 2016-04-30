@@ -24,7 +24,7 @@ Material Design现在变得很火了，许多设计师也不仅局限在Android�
 
 （Note：或许在你接着看下去之前，可以看看我们之前写的这篇文章：[Is Flat Design a Web Design Standard That’s Here to Stay?](http://blogs.adobe.com/dreamweaver/2015/02/is-flat-design-a-web-design-standard-thats-here-to-stay-10-designers-chip-in.html)。在这篇文章里，我们详细介绍了Flat Design和Material Design的不同。它或许能够给你选择自己的设计方案提供帮助。）
 
-# 1.熟悉其核心思想
+### 1.熟悉其核心思想
 
 如果你想学Material Design，最好的开始方式就是去看[谷歌的官方文档]()
 
@@ -34,5 +34,15 @@ Material Design现在变得很火了，许多设计师也不仅局限在Android�
 
 我墙裂建议你去仔细读一下文档的第一章，以便熟悉它的基础原则。
 
-# 2.理解Material Design中的“material”
+### 2.理解Material Design中的“material”
+
+Material Design叫作Material Design，绝不仅仅是个巧合。Material Design中的核心观点是以抽象的形式，让设计接近于真实的世界。
+
+不要让你的设计为了模仿真实世界而显得过于逼真。相反的，要给用户传达出一种“材质感”。
+
+这就是问题的所在--我们--人类--理解并能够感受材料。我们能够感受到金属，能够感受到木质的桌子。我们可以区分不同层面的事物。例如，我们可以分辨出桌子上的放在纸上的笔。
+
+在Material Design中，你首先需要学会仅仅使用少量的设计方式，例如阴影、色差等方法，表达不同元素的层级关系。
+
+![‘Shadow‘ by Nikhil Vootkur on Behance](../../image/NewToMaterialDesign/shadow.png)
 
