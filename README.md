@@ -22,4 +22,4 @@
   - Lua
   - Go
   - [算法](./Notes/算法)
-  - [Project](./Notes/Project)
+  - [Project](./Notes/Projects)
