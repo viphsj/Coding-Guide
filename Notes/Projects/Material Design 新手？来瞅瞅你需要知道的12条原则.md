@@ -121,3 +121,14 @@ Material Design中的图片都具有无边框的特色--全出血（full-bleed�
 这么做的理由难以反驳：通过这种方式，我们可以让一切都融为一体，给用户创造出一个统一的体验。
 
 ![‘Material Design Colors Recontextualization‘ by Lonely Pig Ringo on Behance](../../image/NewToMaterialDesign/MaterialDesignExample.png)
+
+### 9.动起来！
+
+运动，是好的Material Design中必不可少的一环。比较，我们在真实的世界中时刻体验着运动。它有助于我们理解事物的工作机理，把注意力集中在正确的方向。
+
+Material Design就利用了这条简单的原则。将运动和用户管理，利用它可以有效的让用户知道如何去使用我们的设计。
+
+如何加入运动？简单的对用户操作给予反馈即可。比如，用户按下按钮了吗？那就让按钮动起来，表达它刚刚接受到了用户的操作。
+
+![‘REDBUS APP – Material Design Preview‘ by Anish Chandran on Behance](../../image/NewToMaterialDesign/MaterialDesignExample2.gif)
+
