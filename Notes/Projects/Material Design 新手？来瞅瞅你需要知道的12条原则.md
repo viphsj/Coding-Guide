@@ -96,5 +96,22 @@ Material Design从传统的印刷设计和原则中吸收了很多的灵感。
 
 ![‘Material Design Sign Up Page‘ by Omkar Abnave on Behance](../../image/NewToMaterialDesign/SignupPage.png)
 
-### 7.使用无边框设计（edge-to-edge）的图片
+### 7.使用无边框（edge-to-edge）的图片
 
+> 译者注： edge-to-edge design，无边框设计，无缝设计
+>
+> 它能最大限度的排除不必要元素的干扰，突出内容，带来沉浸感，更有利于专注于当前内容
+
+Material Design于图片非常友好。如果你在设计中有包含任何图片元素，那么需要给它们一个统一的设计原则。
+
+Material Design中的图片都具有无边框的特色--全出血（full-bleed）。这意味着图片之间，以及窗口之间的边缘没有边距。
+
+> 译者注：full-bleed，全出血，印刷术语
+> 
+> 指印刷图象超出纸张四边
+
+如果使用得当，它会给用户创造出一个诱人的体验，同时，相对于使用阴影、色调、图层而言，它也会带给我们--设计师--以额外的设计工具。
+
+![‘Twitter Material Design‘ by Rico Monteiro on Behance](../../image/NewToMaterialDesign/TwitterMaterialDesign.png)
+
+### 8.对于依赖于图片的设计，要从图片中选出色彩
