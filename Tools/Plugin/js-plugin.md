@@ -72,6 +72,10 @@
 > 
 > 基于jQuery的图片剪裁库
 
+#### [Filterizr](http://yiotis.net/filterizr/)
+
+> Filterizr is a jQuery plugin that searches, sorts, shuffles and applies stunning filters over responsive galleries using CSS3 transitions.
+
 ### About Data
 
 #### [Cal-heatmap](http://cal-heatmap.com/)
@@ -115,6 +119,10 @@ let after = moment('2016-3-31');
 before.from(after); // a day ago 相对时间多久之前
 before.to(after); // in a day 相对时间多久之后
 ```
+
+#### [Basil.js](http://wisembly.github.io/basil.js/)
+
+> 集本地存储、Cookie和Session Storage API于一体，使得前端的存储管理更加方便，允许完全的本地存储
 
 ### About Writer
 
