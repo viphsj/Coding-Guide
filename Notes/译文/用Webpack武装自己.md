@@ -200,3 +200,93 @@ import $ from 'jquery';
 
 $('body').html('Hello');
 ```
+
+#### 写个小组件
+
+来写个按钮组件吧，它将包含一些SCSS样式，HTML模板和一些操作。所以我们要安装需要的工具。首先安装Mustache这个轻量级的模板库，然后安装处理Sass和HTML的loader。同样的，为了处理Sass loader返回的结果，还要安装CSS loader。一旦获取到了CSS文件，我们就可以用很多种方式来处理。目前使用的是一个叫`style-loader`的东西，它能够把CSS插入到包中。
+
+```javascript
+$ npm install mustache --save
+$ npm install css-loader style-loader html-loader sass-loader node-sass --save-dev
+```
+
+为了能够让Webpack依次处理不同loader的返回结果，我们可以将loader通过`!`链接到一起，获取使用`loaders`并对应一个由loader组成的数组：
+
+```javascript
+{
+    test:    /\.js/,
+    loader:  'babel',
+    include: __dirname + '/src',
+},
+{
+    test:   /\.scss/,
+    loader: 'style!css!sass',
+    // Or
+    loaders: ['style', 'css', 'sass'],
+},
+{
+    test:   /\.html/,
+    loader: 'html',
+}
+```
+
+有了loader，我们来写写按钮：
+
+```scss
+// src/Components/Button.scss
+.button {
+  background: tomato;
+  color: white;
+}
+```
+
+```html
+// src/Components/Button.html
+<a class="button" href="{{link}}">{{text}}</a>
+```
+
+```javascript
+// src/Components/Button.js
+import $ from 'jquery';
+import template from './Button.html';
+import Mustache from 'mustache';
+import './Button.scss';
+
+export default class Button {
+    constructor(link) {
+        this.link = link;
+    }
+
+    onClick(event) {
+        event.preventDefault();
+        alert(this.link);
+    }
+
+    render(node) {
+        const text = $(node).text();
+        // Render our button
+        $(node).html(
+            Mustache.render(template, {text})
+        );
+        // Attach our listeners
+        $('.button').click(this.onClick.bind(this));
+    }
+}
+```
+
+你的`Button.js`现在处于完全独立的状态，不管何时何地的引用它，都能获取到所有需要的依赖并渲染出来。现在渲染我们的按钮试试：
+
+```javascript
+src/index.js
+import Button from ‘./Components/Button’;
+
+const button = new Button(‘google.com’); 
+button.render(‘a’); 
+```
+
+运行Webpack，刷新页面，立刻就能看见我们这个难看的按钮了。
+
+![example01](../../image/WebpackYourBags/example01.png)
+
+现在你已经学习了如何安装loader，以及定义各个依赖配置。看起来好像也没啥。但让我们来深入扩展一下这个例子。
+
