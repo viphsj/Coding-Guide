@@ -171,4 +171,32 @@ $ npm install babel-core babel-preset-es2015 --save-dev
 { "presets": ["es2015"] }
 ```
 
-现在，Babel已经被安装并配置完成，我们要更新Webpack配置。我们想要Babel运行在所有以`.js`结尾的文件里，但是要避免运行在第三方依赖包例如jQuery里面。loader拥有`include`和`exclude`规则
+现在，Babel已经被安装并配置完成，我们要更新Webpack配置。我们想要Babel运行在所有以`.js`结尾的文件里，但是要避免运行在第三方依赖包例如jQuery里面。loader拥有`include`和`exclude`规则，里面可以是一段字符串、正则、回调等等。在这个例子里，我们只想让Babel在我们自己的文件里运行，因此使用`include`包含自己的资源文件夹：
+
+```javascript
+module.exports = {
+    entry:  './src',
+    output: {
+        path:     'builds',
+        filename: 'bundle.js',
+    },
+    module: {
+        loaders: [
+            {
+                test:   /\.js/,
+                loader: 'babel',
+                include: __dirname + '/src',
+            }
+        ],
+    }
+};
+```
+
+现在，我们可以用ES6语法重写`index.js`了：
+
+```javascript
+// index.js
+import $ from 'jquery';
+
+$('body').html('Hello');
+```
