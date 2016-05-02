@@ -290,3 +290,96 @@ button.render(‘a’);
 
 现在你已经学习了如何安装loader，以及定义各个依赖配置。看起来好像也没啥。但让我们来深入扩展一下这个例子。
 
+### 代码分离
+
+上面的例子还不错，但我们并不总是需要这个按钮。或许有的页面没有可以用来渲染按钮的`a`，我们并不想在这样的页面引用按钮的资源文件。这种时候代码分离就能起到作用了。代码分离是Webpack对于“整块全部打包”vs“难以维护的手动引导”这个问题而给出的解决方案。这需要在你的代码中设定“分离点”：代码可以据此分离成不同区域进行按需加载。它的语法很简单：
+
+```javascript
+import $ from 'jquery';
+
+// 这个是分割点
+require.ensure([], () => {
+  // 在这里import进的代码都会被打包到一个单独的文件里
+  const library = require('some-big-library');
+  $('foo').click(() => library.doSomething());
+});
+```
+
+在`require.ensure`中的东西都会在打包结果中分离开来--只有当需要加载它的时候Webpack才会通过AJAX请求进行加载。也就是说我们实际上得到的是这样的文件：
+
+```javascript
+bundle.js
+|- jquery.js
+|- index.js // 入口文件
+chunk1.js
+|- some-big-libray.js
+|- index-chunk.js // 回调中的代码在这里
+```
+
+你不需要在任何地方引用`chunk1.js`文件，Webpack会帮你在需要的时候进行请求。这意味着你可以像我们的例子一样，根据逻辑需要引进的资源全部扔进代码里。
+
+只有当页面上有链接存在时，再引用按钮组件：
+
+```javascript
+// src/index.js
+if (document.querySelectorAll('a').length) {
+    require.ensure([], () => {
+        const Button = require('./Components/Button').default;
+        const button = new Button('google.com');
+
+        button.render('a');
+    });
+}
+```
+
+需要注意的一点是，因为`require`不会同时处理default export和normal export，所以使用`require`引用资源里default export的时候，需要手动加上`.default`。相比之下，`import`则可以进行处理：
+
+`import foo from 'bar'` vs `import {baz} from 'bar'`
+
+此时Webpack的output将会变得更复杂了。跑下Webpack，用`--display-chunks`打印出来看看：
+
+```javascript
+$ webpack --display-modules --display-chunks
+Hash: 43b51e6cec5eb6572608
+Version: webpack 1.12.14
+Time: 1185ms
+      Asset     Size  Chunks             Chunk Names
+  bundle.js  3.82 kB       0  [emitted]  main
+1.bundle.js   300 kB       1  [emitted]
+chunk    {0} bundle.js (main) 235 bytes [rendered]
+    [0] ./src/index.js 235 bytes {0} [built]
+chunk    {1} 1.bundle.js 290 kB {0} [rendered]
+    [1] ./src/Components/Button.js 1.94 kB {1} [built]
+    [2] ./~/jquery/dist/jquery.js 259 kB {1} [built]
+    [3] ./src/Components/Button.html 72 bytes {1} [built]
+    [4] ./~/mustache/mustache.js 19.4 kB {1} [built]
+    [5] ./src/Components/Button.scss 1.05 kB {1} [built]
+    [6] ./~/css-loader!./~/sass-loader!./src/Components/Button.scss 212 bytes {1} [built]
+    [7] ./~/css-loader/lib/css-base.js 1.51 kB {1} [built]
+    [8] ./~/style-loader/addStyles.js 7.21 kB {1} [built]
+```
+
+正如你所见的那样，我们的入口`bundle.js`值包含了一些逻辑，而其他东西（jQuery，Mustache，Button）都被打包进了`1.bundle.js`，并且只在需要的时候才会被引用。现在为了能够让Webpack在AJAX的时候找到这些资源，我们需要改下配置里的`output`：
+
+```javascript
+path:       'builds',
+filename:   'bundle.js',
+publicPath: 'builds/',
+```
+
+`output.publicPath`告诉Webpack，从当前页面的位置出发哪里可以找到需要的资源（在这个例子里是`/builds/`）。当我们加载页面的时候一切正常，而且能够看见Webpack已经根据页面上预留的“锚”加载好了包。
+
+![example02](../../image/WebpackYourBags/example02.png)
+
+如果页面上缺少“锚”，那么只会加载`bundle.js`。通过这种方式，你可以做到在真正需要资源的时候才进行加载，避免让自己的页面变成笨重的一坨。顺带一提，我们可以改变分割点的名字，不使用`1.bundle.js`而使用更加语义化的名称。通过`require.ensure`的第三个参数来实现：
+
+```javascript
+require.ensure([], () => {
+    const Button = require('./Components/Button').default;
+    const button = new Button('google.com');
+
+    button.render('a');
+}, 'button');
+```
+
+这样的话就会生成`button.bundle.js`而不是`1.bundle.js`
