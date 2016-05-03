@@ -943,3 +943,21 @@ import Mustache from 'mustache';
 
 你看，pre-loaders也可以很强大。在文末你可以找到更多的loader
 
+### 还没看够？
+
+现在我们的应用还很小，当它变的庞大的时候，观测依赖树就变的非常有用了，从中可以看出我们做的是对是错，应用的瓶颈在哪里等等。Webpack知晓这一切，不过我们得礼貌的请教它才能知晓答案。为了做到这点，你可以通过下面的命令运行Webpack：
+
+```js
+webpack --profile --json > stats.json
+```
+
+第一个标记会让Webpack生成一个profile文件，而第二个则将它转化为JSON格式。最终，讲所有的output都生成了JSON文件。现在有很多网站都可以解析这个JSON文件，不过Webpack官方提供了一个解码的网站[Webpack Analyze](http://webpack.github.io/analyse/)。将JSON文件导入，进入Modules板块，就可以看见自己依赖树的可视化图像：
+
+![example07](../../image/WebpackYourBags/example07.png)
+
+小圆点越红，则证明在打包的时候越困难。在这个例子中，jQuery作为最大的文件而成为罪魁祸首。再瞅瞅网站上的其他模块。或许你无法从这个小小的例子里学到很多东西，但是这个工具在分析依赖树和包的时候真的非常有用。
+
+我之前提过，现在有很多服务提供可以对profile文件进行分析。其中一个是[Webpack Visualizer](http://chrisbateman.github.io/webpack-visualizer/)，它可以以饼状图的形式告知你各个文件占据了多大的比重：
+
+![example08](../../image/WebpackYourBags/example08.png)
+
