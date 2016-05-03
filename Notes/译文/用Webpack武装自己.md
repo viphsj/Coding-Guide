@@ -961,3 +961,46 @@ webpack --profile --json > stats.json
 
 ![example08](../../image/WebpackYourBags/example08.png)
 
+### 就先讲到这儿吧
+
+对我而言，Webpack已经取代了Grunt或者Gulp：大部分的功能可以使用Webpack替代，其他的则使用NPM脚本就够了。在以前，每个任务中我们都要通过Aglio，把API文档转换为HTML，而现在只需要这么做：
+
+```js
+// package.json
+{
+  "scripts": {
+    "build": "webpack",
+    "build:api": "aglio -i docs/api/index.apib -o docs/api/index.html"
+  }
+}
+```
+
+即便是一些不需要打包和构建的Glup任务，Webpack都贴心的提供了对应的服务。下面是一个将Glup融合进Webpack的例子：
+
+```js
+var gulp = require('gulp');
+var gutil = require('gutil');
+var webpack = require('webpack');
+var config = require('./webpack.config');
+
+gulp.task('default', function(callback) {
+  webpack(config, function(error, stats) {
+    if (error) throw new gutil.PluginError('webpack', error);
+    gutil.log('[webpack]', stats.toString());
+
+    callback();
+  });
+});
+```
+
+因为Webpack具有Node API，因此可以很轻松了运用在其他构建体系中。不用多久你就能发现自己深爱着它无法自拔了。
+
+不管怎样，这篇文字带你预览了Webpack能够帮你做的事情。或许你认为我们讲了很多方面，但实际上这只是个表皮而已：multiple entry points, prefetching, context replacement等等都还没有涉及到。Webpack是个强大的工具，也因此比那些传统的工具更加难懂。但一旦你知道如何使用它，它就会为你鸣奏最悦耳动听的声音。我曾在一些项目里使用过它，它提供的强大的优化和自动化让我深深不能自拔。
+
+### 资源
+
+  - [Webpack documentation](https://webpack.github.io/)
+  - [List of loaders](http://webpack.github.io/docs/list-of-loaders.html)
+  - [List of plugins](http://webpack.github.io/docs/list-of-plugins.html)
+  - [Sources for this article](https://github.com/madewithlove/webpack-article/commits/master)
+  - [Our Webpack configuration package](https://github.com/madewithlove/webpack-config)
