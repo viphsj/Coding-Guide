@@ -754,3 +754,68 @@ $ webpack
 
 顺带一提，你也可以自定义文件名，就跟之前说的改变js output-file名称一样：`ExtractTextPlugin('[name]-[hash].css')`
 
+### 使用图片（`url-loader`&`file-loader`）
+
+到目前为止，我们还没处理例如图片、字体这样的资源文件。它们在Webpack中如何工作，我们又该如何优化？接下来，我要在网站的背景里加入图片，看起来一定酷酷的：
+
+![example04](../../image/WebpackYourBags/example04.jpg)
+
+把图片保存在`img/puppy.jpg`，更新下Sass文件：
+
+```scss
+// src/styles.scss
+body {
+    font-family: sans-serif;
+    background: darken(white, 0.2);
+    background-image: url('../img/puppy.jpg');
+    background-size: cover;
+}
+```
+
+如果仅仅是这样，Webpack一定会告诉你：“你特么的想让我对JPG做啥？”，那是因为还没有加入对应的loader。有两种loader可以使用：`file-loader`和`url-loader`：
+  - `file-loader`：返回一段指向资源的URL，允许你给文件加入版本的概念（默认）
+  - `url-loader`：以`data:image/jpeg;base64`的形式返回URL
+
+两个方法不能说谁好谁坏：如果你的图片大于2M的话那你一定不希望它直接夹杂在代码中，而是独立出去；而如果仅仅是2kb左右的小图标。那么合并在一起减少HTTP请求会更好。因此，我们两个都要设置：
+
+```js
+$ npm install url-loader file-loader --save-dev
+```
+
+```js
+{
+    test:   /\.(png|gif|jpe?g|svg)$/i,
+    loader: 'url?limit=10000',
+},
+```
+
+在这里，我们给`url-loader`了一个`limit`参数，这样，当文件大小小于10kb的时候，会采取行内样式，否则的话，会转到`file-loader`进行处理。你也可以通过`query`传递一个Object来实现它：
+
+```js
+{
+    test:   /\.(png|gif|jpe?g|svg)$/i,
+    loader: 'url',
+    query: {
+      limit: 10000,
+    }
+}
+```
+
+来瞅一眼Webpack的输出：
+
+```js
+bundle.js   15 kB       0  [emitted]  main
+1-b8256867498f4be01fd7.js  317 kB       1  [emitted]
+2-e1bc215a6b91d55a09aa.js  317 kB       2  [emitted]
+               bundle.css  2.9 kB       0  [emitted]  main
+```
+
+输出里面没有JPG图像，那是因为我们的小狗图片比配置里限制的大小要小，因此被加到了行内。访问页面，你就能看见这只可爱的小狗了。
+
+![example05](../../image/WebpackYourBags/example05.png)
+
+这是一个非常强大的功能，它意味着Webpack可以智能的根据资源的大小和HTTP请求占有的比率，采取不同的优化方案。还有一个叫做[image-loader](https://github.com/tcoopman/image-webpack-loader)的loader，可以在打包前检查所有图片，避免图片的重复压缩。它有一个叫`?bypassOnDebug `的参数，通过它你可以只在生产环境下启动该插件。
+
+还有很多优秀的插件，我强烈建议你使用文末的链接去查看它们。
+
+### 做一个该死的热加载（dev-server）
