@@ -241,7 +241,7 @@ $ npm install css-loader style-loader html-loader sass-loader node-sass --save-d
 ```
 
 ```html
-// src/Components/Button.html
+<!-- src/Components/Button.html -->
 <a class="button" href="{{link}}">{{text}}</a>
 ```
 
@@ -371,7 +371,7 @@ publicPath: 'builds/',
 
 ![example02](../../image/WebpackYourBags/example02.png)
 
-如果页面上缺少“锚”，那么只会加载`bundle.js`。通过这种方式，你可以做到在真正需要资源的时候才进行加载，避免让自己的页面变成笨重的一坨。顺带一提，我们可以改变分割点的名字，不使用`1.bundle.js`而使用更加语义化的名称。通过`require.ensure`的第三个参数来实现：
+如果页面上缺少“锚”(代指link)，那么只会加载`bundle.js`。通过这种方式，你可以做到在真正需要资源的时候才进行加载，避免让自己的页面变成笨重的一坨。顺带一提，我们可以改变分割点的名字，不使用`1.bundle.js`而使用更加语义化的名称。通过`require.ensure`的第三个参数来实现：
 
 ```javascript
 require.ensure([], () => {
@@ -383,3 +383,162 @@ require.ensure([], () => {
 ```
 
 这样的话就会生成`button.bundle.js`而不是`1.bundle.js`
+
+### 再加个组件
+
+来让我们再加个组件吧：
+
+```scss
+// src/Components/Header.scss
+.header {
+  font-size: 3rem;
+}
+```
+
+```html
+// src/Components/Header.html
+<header class="header">{{text}}</header>
+```
+
+```javascript
+// src/Components/Header.js
+import $ from 'jquery';
+import Mustache from 'mustache';
+import template from './Header.html';
+import './Header.scss';
+
+export default class Header {
+    render(node) {
+        const text = $(node).text();
+        $(node).html(
+            Mustache.render(template, {text})
+        );
+    }
+}
+```
+
+将它在应用中渲染出来：
+
+```javascript
+// 如果有链接，则渲染按钮组件
+if (document.querySelectorAll('a').length) {
+    require.ensure([], () => {
+        const Button = require('./Components/Button');
+        const button = new Button('google.com');
+
+        button.render('a');
+    });
+}
+
+// 如果有标题，则渲染标题组件
+if (document.querySelectorAll('h1').length) {
+    require.ensure([], () => {
+        const Header = require('./Components/Header');
+
+        new Header().render('h1');
+    });
+}
+```
+
+瞅瞅使用了`--display-chunks --display-modules`标记后Webpack的output输出：
+
+```js
+$ webpack --display-modules --display-chunks
+Hash: 178b46d1d1570ff8bceb
+Version: webpack 1.12.14
+Time: 1548ms
+      Asset     Size  Chunks             Chunk Names
+  bundle.js  4.16 kB       0  [emitted]  main
+1.bundle.js   300 kB       1  [emitted]
+2.bundle.js   299 kB       2  [emitted]
+chunk    {0} bundle.js (main) 550 bytes [rendered]
+    [0] ./src/index.js 550 bytes {0} [built]
+chunk    {1} 1.bundle.js 290 kB {0} [rendered]
+    [1] ./src/Components/Button.js 1.94 kB {1} [built]
+    [2] ./~/jquery/dist/jquery.js 259 kB {1} {2} [built]
+    [3] ./src/Components/Button.html 72 bytes {1} [built]
+    [4] ./~/mustache/mustache.js 19.4 kB {1} {2} [built]
+    [5] ./src/Components/Button.scss 1.05 kB {1} [built]
+    [6] ./~/css-loader!./~/sass-loader!./src/Components/Button.scss 212 bytes {1} [built]
+    [7] ./~/css-loader/lib/css-base.js 1.51 kB {1} {2} [built]
+    [8] ./~/style-loader/addStyles.js 7.21 kB {1} {2} [built]
+chunk    {2} 2.bundle.js 290 kB {0} [rendered]
+    [2] ./~/jquery/dist/jquery.js 259 kB {1} {2} [built]
+    [4] ./~/mustache/mustache.js 19.4 kB {1} {2} [built]
+    [7] ./~/css-loader/lib/css-base.js 1.51 kB {1} {2} [built]
+    [8] ./~/style-loader/addStyles.js 7.21 kB {1} {2} [built]
+    [9] ./src/Components/Header.js 1.62 kB {2} [built]
+   [10] ./src/Components/Header.html 64 bytes {2} [built]
+   [11] ./src/Components/Header.scss 1.05 kB {2} [built]
+   [12] ./~/css-loader!./~/sass-loader!./src/Components/Header.scss 192 bytes {2} [built]
+```
+
+可以看出一点问题了：这两个组件都需要jQuery和Mustache，这样的话就造成了包中的依赖重复，这可不是我们想要的。尽管Webpack会在默认情况下进行一定的优化，但还得靠插件来加足火力搞定它。
+
+插件和loader的不同在于，loader只对一类特定的文件有效，而差价往往面向所有文件，并且并不总是会引起转化。Webpack提供了很多插件供你优化。在这里我们使用`CommonChunksPlugin`插件:它会分析你包中的重复依赖并提取出来，生成一个完全独立的文件（例如vendor.js），甚至生成你的主文件。
+
+现在，我们想要把共同的依赖包从入口中剔除。如果所有的页面都用到了jQuery和Mustache，那么就要把它们提取出来。更新下配置吧：
+
+```js
+var webpack = require('webpack');
+
+module.exports = {
+    entry:   './src',
+    output:  {
+      // ...
+    },
+    plugins: [
+        new webpack.optimize.CommonsChunkPlugin({
+            name: 'main', // 将依赖移到我们的主文件中
+            children: true, // 再在所有的子文件中检查依赖文件
+            minChunks: 2, // 一个依赖重复几次会被提取出来
+        }),
+    ],
+    module:  {
+      // ...
+    }
+};
+```
+
+再跑次Webpack，可以看出现在就好多了。其中，`main`是我们的默认依赖。
+
+```js
+chunk    {0} bundle.js (main) 287 kB [rendered]
+    [0] ./src/index.js 550 bytes {0} [built]
+    [2] ./~/jquery/dist/jquery.js 259 kB {0} [built]
+    [4] ./~/mustache/mustache.js 19.4 kB {0} [built]
+    [7] ./~/css-loader/lib/css-base.js 1.51 kB {0} [built]
+    [8] ./~/style-loader/addStyles.js 7.21 kB {0} [built]
+chunk    {1} 1.bundle.js 3.28 kB {0} [rendered]
+    [1] ./src/Components/Button.js 1.94 kB {1} [built]
+    [3] ./src/Components/Button.html 72 bytes {1} [built]
+    [5] ./src/Components/Button.scss 1.05 kB {1} [built]
+    [6] ./~/css-loader!./~/sass-loader!./src/Components/Button.scss 212 bytes {1} [built]
+chunk    {2} 2.bundle.js 2.92 kB {0} [rendered]
+    [9] ./src/Components/Header.js 1.62 kB {2} [built]
+   [10] ./src/Components/Header.html 64 bytes {2} [built]
+   [11] ./src/Components/Header.scss 1.05 kB {2} [built]
+   [12] ./~/css-loader!./~/sass-loader!./src/Components/Header.scss 192 bytes {2} [built]
+```
+
+如果我们改变下名字`name: 'vendor'`：
+
+```js
+new webpack.optimize.CommonsChunkPlugin({
+    name:      'vendor',
+    children:  true,
+    minChunks: 2,
+}),
+```
+
+Webpack会在没有该文件的情况下自动生成`builds/vendor.js`，之后我们可以手动引入：
+
+```html
+<script src="builds/vendor.js"></script>
+<script src="builds/bundle.js"></script>
+```
+
+你也可以通过`async: true`，并且不提供共同依赖包的命名，来达到异步加载共同依赖的效果。
+
+Webpack有很多这样给力的优化方案。我没法一个一个介绍它们，不过可以通过创造一个生产版本的应用来进一步学习。
+
