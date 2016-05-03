@@ -679,7 +679,9 @@ main-937cc23ccbf192c9edd6.js  97.2 kB       0  [emitted]  main
 
 是的，在这个小小的应用中是这样没错。但是你需要这么想：你不需要考虑在什么时候合并什么。如果你的包中含有太多的依赖，它们会被移走到异步请求包中而不会被合并起来。反之，如果它们很小，不值得独立加载，那么就会被合并。你只需要建立规则，Webpack会最大化的将其优化。没有人力劳作，不需要思考依赖关系，一切都是自动化的。
 
-![example03](../../image/WebpackYourBags/example03.png)
+![example03](../../image/WebpackYourBags/example03.gif)
 
 或许你已经注意到了，我没有对HTML或CSS进行压缩。那是因为当`debug`模式开启的时候，`css-loader`和`html-loader`已经帮我们搞好了。这也是为什么Uglify是一个独立插件的原因：在Webpack中没有`js-loader`这种东西，Webpack自己就是个JS loader。
+
+### 抽取（`ExtractPlugin`）
 
