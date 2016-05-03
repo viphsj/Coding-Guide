@@ -818,4 +818,39 @@ bundle.js   15 kB       0  [emitted]  main
 
 还有很多优秀的插件，我强烈建议你使用文末的链接去查看它们。
 
-### 做一个该死的热加载（dev-server）
+### 来个牛逼的热加载（dev-server）
+
+我们的生产环境以及整的差不多了，现在应该更多的关心一下本地开发。或许你以及注意到了，当人们提及开发工具的时候，总是会提及热加载：LiveReload，BrowserSync，或者其他的什么鬼东西。但是只有傻瓜才会整页的刷新，我们则使用更高端的热加载。因为Webpack可以确切的知道你依赖树中某一点位置的代码，因此每次的改变都会据此生成一个新的文件。简单的说，就是不需要刷新页面就能将改变展现在屏幕上。
+
+为了能够使用HMR，我们需要一个server来启动热加载。Webpack提供的`dev-server`可以完成这个任务：
+
+```js
+$ npm install webpack-dev-server --save-dev
+```
+
+安装下面的命令启动server，不能再简单了：
+
+```js
+$ webpack-dev-server --inline --hot
+```
+
+第一个标记`--inline`是让Webpack把HMR逻辑直接写入页面上而不是放到iframe里，而第二个标记则开启了HMR。接下来，访问`http://localhost:8080/webpack-dev-server/`,嗯还是那个正常的页面。试着修改Sass文件，MAGIC！
+
+![example06](../../image/WebpackYourBags/example06.gif)
+
+你可以把webpack-dev-server作为自己本地的server。如果你打算一直使用HMR，就需要这么配置：
+
+```js
+output: {
+    path: 'builds',
+    filename: production ? '[name]-[hash].js' : 'bundle.js',
+    chunkFilename: '[name]-[chunkhash].js',
+    publicPath: 'builds/',
+},
+devServer: {
+    hot: true,
+},
+```
+
+这样的话，不管我们什么时候运行`webpack-dev-server`，都会是HMR模式。值得一提的是，我们在这里使用`webpack-dev-server`对资源进行热加载，但也可以使用在其他地方例如Express server上。Webpack提供了一个中间件，使得你可以把HMR的功能用在其他server上。
+
