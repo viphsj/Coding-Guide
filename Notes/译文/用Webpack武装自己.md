@@ -854,3 +854,92 @@ devServer: {
 
 这样的话，不管我们什么时候运行`webpack-dev-server`，都会是HMR模式。值得一提的是，我们在这里使用`webpack-dev-server`对资源进行热加载，但也可以使用在其他地方例如Express server上。Webpack提供了一个中间件，使得你可以把HMR的功能用在其他server上。
 
+### 代码不干净的人都给我去罚站！（pre-loader & lint)
+
+如果你一直跟着本教程走，那或许会有这样的疑问：为什么loader都在`module.loaders`中而插件不在？那当然是因为还有其他可以配置进`module`的东西~Webpack不只是有loader，也有pre-loader和post-loader：在main-loader运行之前和之后发动的玩意。举个栗子：我基本可以确信自己在这个文章里面写的代码很糟糕，所以使用ESLint进行代码检查：
+
+```js
+$ npm install eslint eslint-loader babel-eslint --save-dev
+```
+
+新建一个肯定会引发错误的`.eslintrc`文件：
+
+```js
+// .eslintrc
+parser: 'babel-eslint'
+rules:
+  quotes: 2
+```
+
+现在增加pre-loader，语法和之前的一样，只不过加在`module.preLoaders`里：
+
+```js
+module:  {
+    preLoaders: [
+        {
+            test: /\.js/,
+            loader: 'eslint',
+        }
+    ],
+```
+
+启动Webpack，然后淡定的看它失败：
+
+```js
+$ webpack
+Hash: 33cc307122f0a9608812
+Version: webpack 1.12.2
+Time: 1307ms
+                    Asset      Size  Chunks             Chunk Names
+                bundle.js    305 kB       0  [emitted]  main
+1-551ae2634fda70fd8502.js    4.5 kB       1  [emitted]
+2-999713ac2cd9c7cf079b.js   4.17 kB       2  [emitted]
+               bundle.css  59 bytes       0  [emitted]  main
+    + 15 hidden modules
+
+ERROR in ./src/index.js
+
+/Users/anahkiasen/Sites/webpack/src/index.js
+   1:8   error  Strings must use doublequote  quotes
+   4:31  error  Strings must use doublequote  quotes
+   6:32  error  Strings must use doublequote  quotes
+   7:35  error  Strings must use doublequote  quotes
+   9:23  error  Strings must use doublequote  quotes
+  14:31  error  Strings must use doublequote  quotes
+  16:32  error  Strings must use doublequote  quotes
+  18:29  error  Strings must use doublequote  quotes
+```
+
+再举个pre-loader的例子：每个组件里我们都引用了stylesheet，而它们都有相同命名的对应模板。使用一个pre-loader可以自动将有相同名称的文件作为一个module载入：
+
+```js
+$ npm install baggage-loader --save-dev
+```
+
+```js
+{
+    test: /\.js/,
+    loader: 'baggage?[file].html=template&[file].scss',
+}
+```
+
+通过这样的方式告知Webpack，如果遇见和配置相同的HTML文件，则将它作为`template `引入，同时引入和它同名的Sass文件。这样就能改写组件文件：
+
+将：
+
+```js
+import $ from 'jquery';
+import template from './Button.html';
+import Mustache from 'mustache';
+import './Button.scss';
+```
+
+改为：
+
+```js
+import $ from 'jquery';
+import Mustache from 'mustache';
+```
+
+你看，pre-loaders也可以很强大。在文末你可以找到更多的loader
+
