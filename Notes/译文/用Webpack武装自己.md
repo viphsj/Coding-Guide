@@ -76,7 +76,7 @@ $ npm --version
 
 我还要推荐你把`node_modules/.bin`放进你的`PATH`变量，以避免每次都要输入`node_modules/.bin/webpack`。在下面了例子里我输入的指令都不会再包含`node_modules/.bin`。
 
-#### 基础指引
+#### 基础指引（setup）
 
 从创建项目安装Webpack开始。我们同时也安装了jQuery以便支持后续操作。
 
@@ -146,7 +146,7 @@ bundle.js  268 kB       0  [emitted]  main
 
 你还可以使用`webpack --watch`，在改变代码的时候自动进行打包。
 
-#### 设置第一个loader
+#### 设置第一个loader（`loader`-01）
 
 还记得Webpack可以处理各种资源的引用吗？该怎么搞？如果你跟随了这些年Web组件发展的步伐（Angular2，Vue，React，Polymer，X-Tag等等），那么你应该知道，与一堆UI相互连接组合而成的App相比，使用可维护的小型可复用的UI组件会更好：web component。
 
@@ -201,7 +201,7 @@ import $ from 'jquery';
 $('body').html('Hello');
 ```
 
-#### 写个小组件
+#### 写个小组件（`loader`-02）
 
 来写个按钮组件吧，它将包含一些SCSS样式，HTML模板和一些操作。所以我们要安装需要的工具。首先安装Mustache这个轻量级的模板库，然后安装处理Sass和HTML的loader。同样的，为了处理Sass loader返回的结果，还要安装CSS loader。一旦获取到了CSS文件，我们就可以用很多种方式来处理。目前使用的是一个叫`style-loader`的东西，它能够把CSS插入到包中。
 
@@ -290,7 +290,7 @@ button.render(‘a’);
 
 现在你已经学习了如何安装loader，以及定义各个依赖配置。看起来好像也没啥。但让我们来深入扩展一下这个例子。
 
-### 代码分离
+### 代码分离（`require.ensure`）
 
 上面的例子还不错，但我们并不总是需要这个按钮。或许有的页面没有可以用来渲染按钮的`a`，我们并不想在这样的页面引用按钮的资源文件。这种时候代码分离就能起到作用了。代码分离是Webpack对于“整块全部打包”vs“难以维护的手动引导”这个问题而给出的解决方案。这需要在你的代码中设定“分离点”：代码可以据此分离成不同区域进行按需加载。它的语法很简单：
 
@@ -384,7 +384,7 @@ require.ensure([], () => {
 
 这样的话就会生成`button.bundle.js`而不是`1.bundle.js`
 
-### 再加个组件
+### 再加个组件（`CommonChunksPlugin`）
 
 来让我们再加个组件吧：
 
@@ -540,5 +540,146 @@ Webpack会在没有该文件的情况下自动生成`builds/vendor.js`，之后�
 
 你也可以通过`async: true`，并且不提供共同依赖包的命名，来达到异步加载共同依赖的效果。
 
-Webpack有很多这样给力的优化方案。我没法一个一个介绍它们，不过可以通过创造一个生产版本的应用来进一步学习。
+Webpack有很多这样给力的优化方案。我没法一个一个介绍它们，不过可以通过创造一个生产环境的应用来进一步学习。
+
+### 飞跃到生产环境（`production`）
+
+首先，要在设置中添加几个插件，但要求只有当`NODE_ENV`为`production`的时候才运行它们：
+
+```js
+var webpack = require('webpack');
+var production = process.env.NODE_ENV === 'production';
+
+var plugins = [
+    new webpack.optimize.CommonsChunkPlugin({
+        name: 'main',
+        children: true,
+        minChunks: 2,
+    }),
+];
+
+if (production) {
+    plugins = plugins.concat([
+       // 生产环境下需要的插件
+    ]);
+}
+
+module.exports = {
+    entry:   './src',
+    output:  {
+        path:       'builds',
+        filename:   'bundle.js',
+        publicPath: 'builds/',
+    },
+    plugins: plugins,
+    // ...
+};
+```
+
+Webpack也提供了一些可以切换生产环境的设置：
+
+```js
+module.exports = {
+    debug:   !production,
+    devtool: production ? false : 'eval',
+}
+```
+
+设置中的第一行表明在开发环境下，将开启debug模式，代码不再混做一团，利于本地调试。第二行则用来生产资源地图（sourcemaps）。Webpack有[一些方法](http://webpack.github.io/docs/configuration.html#devtool)可以生成[sourcemaps](http://www.html5rocks.com/en/tutorials/developertools/sourcemaps/)，而`eval`则是在本地表现最赞的一个。在生产环境下，我们并不关心sourcemaps，因此关闭了这个选项。
+
+现在来添加生产环境下的插件吧：
+
+```js
+if (production) {
+    plugins = plugins.concat([
+        // 这个插件用来寻找相同的包和文件，并把它们合并在一起
+        new webpack.optimize.DedupePlugin(),
+
+        // 这个插件根据包/库的引用次数来优化它们
+        new webpack.optimize.OccurenceOrderPlugin(),
+
+        // 这个插件用来阻止Webpack把过小的文件打成单独的包
+        new webpack.optimize.MinChunkSizePlugin({
+            minChunkSize: 51200, // ~50kb
+        }),
+
+        // 压缩js文件
+        new webpack.optimize.UglifyJsPlugin({
+            mangle:   true,
+            compress: {
+                warnings: false, // 禁止生成warning
+            },
+        }),
+
+        // 这个插件提供了各种可用在生产环境下的变量
+        // 通过设置为false，可避免生产环境下调用到它们
+        new webpack.DefinePlugin({
+            __SERVER__:      !production,
+            __DEVELOPMENT__: !production,
+            __DEVTOOLS__:    !production,
+            'process.env':   {
+                BABEL_ENV: JSON.stringify(process.env.NODE_ENV),
+            },
+        }),
+
+    ]);
+}
+```
+
+我普遍使用的差不多就这么多了，不过Webpack还提供了非常多的插件，你可以自己去研究它们。也可以在NPM上找到很多用户自己贡献的插件。插件的链接在文末提供。
+
+还有一个关于生产环境的优化是给资源提供版本的概念。还记得`output.filename`里的`bundle.js`吗？在这个配置里面，你可以使用一些变量，而`[hash]`则会给文件提供一段随机的字符串。除此以外，我们想要包可以被版本化，因此添加了`output.chunkFilename`：
+
+```js
+output: {
+    path: 'builds',
+    filename: production ? '[name]-[hash].js' : 'bundle.js',
+    chunkFilename: '[name]-[chunkhash].js',
+    publicPath: 'builds/',
+},
+```
+
+因为无法得知每次打包生成的文件名，所以我们只在生产环境下使用它。除此之外，我们还想保证每次打包的时候，builds文件夹都会被清空以节约空间，因此使用了一个第三方插件：
+
+```js
+$ npm install clean-webpack-plugin --save-dev
+```
+
+并将它添加到配置中：
+
+```js
+var webpack     = require('webpack');
+var CleanPlugin = require('clean-webpack-plugin');
+// ...
+if (production) {
+    plugins = plugins.concat([
+        // 在打包前清空 builds/ 文件夹
+        new CleanPlugin('builds'),
+```
+
+做完这些漂亮的优化，来比较下结果的不同吧：
+
+```js
+$ webpack
+                bundle.js   314 kB       0  [emitted]  main
+1-21660ec268fe9de7776c.js  4.46 kB       1  [emitted]
+2-fcc95abf34773e79afda.js  4.15 kB       2  [emitted]
+```
+
+```js
+$ NODE_ENV=production webpack
+main-937cc23ccbf192c9edd6.js  97.2 kB       0  [emitted]  main
+```
+
+来看看Webpack都做了什么：
+  - 在第一段代码中，后两个包非常轻量，异步请求不会占用多少HTTP带宽，所以在生产环境下Webpack将它们打包进了入口文件里
+  - 所有东西都压缩过了。从322kb降到了97kb
+
+> 但是这样下去，Webpack岂不是会将js文件合并成巨大的一坨吗？
+
+是的，在这个小小的应用中是这样没错。但是你需要这么想：你不需要考虑在什么时候合并什么。如果你的包中含有太多的依赖，它们会被移走到异步请求包中而不会被合并起来。反之，如果它们很小，不值得独立加载，那么就会被合并。你只需要建立规则，Webpack会最大化的将其优化。没有人力劳作，不需要思考依赖关系，一切都是自动化的。
+
+![example03](../../image/WebpackYourBags/example03.png)
+
+或许你已经注意到了，我没有对HTML或CSS进行压缩。那是因为当`debug`模式开启的时候，`css-loader`和`html-loader`已经帮我们搞好了。这也是为什么Uglify是一个独立插件的原因：在Webpack中没有`js-loader`这种东西，Webpack自己就是个JS loader。
 
