@@ -396,7 +396,7 @@ require.ensure([], () => {
 ```
 
 ```html
-// src/Components/Header.html
+<!-- src/Components/Header.html -->
 <header class="header">{{text}}</header>
 ```
 
@@ -683,5 +683,74 @@ main-937cc23ccbf192c9edd6.js  97.2 kB       0  [emitted]  main
 
 或许你已经注意到了，我没有对HTML或CSS进行压缩。那是因为当`debug`模式开启的时候，`css-loader`和`html-loader`已经帮我们搞好了。这也是为什么Uglify是一个独立插件的原因：在Webpack中没有`js-loader`这种东西，Webpack自己就是个JS loader。
 
-### 抽取（`ExtractPlugin`）
+### 抽取（`extract-text-webpack-plugin`）
+
+可能你已经注意到了，从这个教程一开始，Webpack打包好之后，我们的样式就直接插在网页页面上，简直不能更难看了。能通过Webpack把打包过的CSS生成独立的文件吗？当然没问题：
+
+```js
+$ npm install extract-text-webpack-plugin --save-dev
+```
+
+这个插件所做的就是我刚刚说的那些：从打出的最终包里面，提取出某一类内容分离开来单独引用。它通常被用于提取CSS文件：
+
+```js
+var webpack    = require('webpack');
+var CleanPlugin = require('clean-webpack-plugin');
+var ExtractPlugin = require('extract-text-webpack-plugin');
+var production = process.env.NODE_ENV === 'production';
+
+var plugins = [
+    new ExtractPlugin('bundle.css'), // <=== 提取出来的文件
+    new webpack.optimize.CommonsChunkPlugin({
+        name: 'main',
+        children: true, 
+        minChunks: 2,
+    }),
+];
+// ...
+module.exports = {
+    // ...
+    plugins: plugins,
+    module:  {
+        loaders: [
+            {
+                test:   /\.scss/,
+                loader: ExtractPlugin.extract('style', 'css!sass'),
+            },
+            // ...
+        ],
+    }
+};
+```
+
+`ExtractPlugin.extrac`方法接收两个参数，第一个参数代表当它处于已经打包好的包（'style'）里时，如何处理那些提取出来的东西；第二个参数代表当它在主文件（'css!sass'）里时，如何对待提取出的东西。当它在包里时，肯定不能直接将CSS加在生成的东西后面，所以先用`style-loader`进行处理；而对于主文件里面的styles，则将它们放进`builds/bundle.css`文件。我们来给应用加一个主样式：
+
+```scss
+// src/styles.scss
+body {
+  font-family: sans-serif;
+  background: darken(white, 0.2);
+}
+```
+
+```js
+// src/index.js
+import './styles.scss';
+
+// Rest of our file
+```
+
+跑下Webpack，就能看见已经生成了`bundle.css`，可以把它引用进HTML里：
+
+```js
+$ webpack
+                bundle.js    318 kB       0  [emitted]  main
+1-a110b2d7814eb963b0b5.js   4.43 kB       1  [emitted]
+2-03eb25b4d6b52a50eb89.js    4.1 kB       2  [emitted]
+               bundle.css  59 bytes       0  [emitted]  main
+```
+
+如果你想提取出所有包里的样式，则需要设置`ExtractTextPlugin('bundle.css', {allChunks: true})`
+
+顺带一提，你也可以自定义文件名，就跟之前说的改变js output-file名称一样：`ExtractTextPlugin('[name]-[hash].css')`
 
