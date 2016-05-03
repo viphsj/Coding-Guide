@@ -1,4 +1,4 @@
-## 用Webpack武装自己
+## 【译文】用Webpack武装自己
 
 > 译自：[Webpack your bags](https://blog.madewithlove.be/post/webpack-your-bags/)
 

@@ -1,4 +1,4 @@
-## Material Design 新手？来瞅瞅你需要知道的12条原则
+## 【译文】Material Design 新手？来瞅瞅你需要知道的12条原则
 
 > 本文译自： [New to Material Design? 12 Principles You Need to Know](http://blogs.adobe.com/dreamweaver/2015/05/new-to-material-design-12-principles-you-need-to-know.html)
 
