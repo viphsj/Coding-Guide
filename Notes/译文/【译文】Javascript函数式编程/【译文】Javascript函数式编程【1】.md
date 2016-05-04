@@ -1,4 +1,4 @@
-## JavaScript函数式编程【1】
+## 【译文】JavaScript函数式编程【1】
 
 > 本文译自：[A GENTLE INTRODUCTION TO FUNCTIONAL JAVASCRIPT: PART 1](http://jrsinclair.com/articles/2016/gentle-introduction-to-functional-javascript-intro/)
 
