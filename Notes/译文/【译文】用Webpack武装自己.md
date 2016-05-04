@@ -102,7 +102,7 @@ $('body').html('Hello');
 module.exports = {
     entry:  './src',
     output: {
-        path:     'builds',
+        path: 'builds',
         filename: 'bundle.js',
     },
 };
@@ -175,15 +175,15 @@ $ npm install babel-core babel-preset-es2015 --save-dev
 
 ```javascript
 module.exports = {
-    entry:  './src',
+    entry: './src',
     output: {
-        path:     'builds',
+        path: 'builds',
         filename: 'bundle.js',
     },
     module: {
         loaders: [
             {
-                test:   /\.js/,
+                test: /\.js/,
                 loader: 'babel',
                 include: __dirname + '/src',
             }
@@ -214,18 +214,18 @@ $ npm install css-loader style-loader html-loader sass-loader node-sass --save-d
 
 ```javascript
 {
-    test:    /\.js/,
-    loader:  'babel',
+    test: /\.js/,
+    loader: 'babel',
     include: __dirname + '/src',
 },
 {
-    test:   /\.scss/,
+    test: /\.scss/,
     loader: 'style!css!sass',
     // Or
     loaders: ['style', 'css', 'sass'],
 },
 {
-    test:   /\.html/,
+    test: /\.html/,
     loader: 'html',
 }
 ```
@@ -277,7 +277,7 @@ export default class Button {
 你的`Button.js`现在处于完全独立的状态，不管何时何地的引用它，都能获取到所有需要的依赖并渲染出来。现在渲染我们的按钮试试：
 
 ```javascript
-src/index.js
+// src/index.js
 import Button from ‘./Components/Button’;
 
 const button = new Button(‘google.com’); 
@@ -362,8 +362,8 @@ chunk    {1} 1.bundle.js 290 kB {0} [rendered]
 正如你所见的那样，我们的入口`bundle.js`值包含了一些逻辑，而其他东西（jQuery，Mustache，Button）都被打包进了`1.bundle.js`，并且只在需要的时候才会被引用。现在为了能够让Webpack在AJAX的时候找到这些资源，我们需要改下配置里的`output`：
 
 ```javascript
-path:       'builds',
-filename:   'bundle.js',
+path: 'builds',
+filename: 'bundle.js',
 publicPath: 'builds/',
 ```
 
@@ -475,7 +475,7 @@ chunk    {2} 2.bundle.js 290 kB {0} [rendered]
 
 可以看出一点问题了：这两个组件都需要jQuery和Mustache，这样的话就造成了包中的依赖重复，这可不是我们想要的。尽管Webpack会在默认情况下进行一定的优化，但还得靠插件来加足火力搞定它。
 
-插件和loader的不同在于，loader只对一类特定的文件有效，而差价往往面向所有文件，并且并不总是会引起转化。Webpack提供了很多插件供你优化。在这里我们使用`CommonChunksPlugin`插件:它会分析你包中的重复依赖并提取出来，生成一个完全独立的文件（例如vendor.js），甚至生成你的主文件。
+插件和loader的不同在于，loader只对一类特定的文件有效，而插件往往面向所有文件，并且并不总是会引起转化。Webpack提供了很多插件供你优化。在这里我们使用`CommonChunksPlugin`插件：它会分析你包中的重复依赖并提取出来，生成一个完全独立的文件（例如vendor.js），甚至生成你的主文件。
 
 现在，我们想要把共同的依赖包从入口中剔除。如果所有的页面都用到了jQuery和Mustache，那么就要把它们提取出来。更新下配置吧：
 
@@ -483,8 +483,8 @@ chunk    {2} 2.bundle.js 290 kB {0} [rendered]
 var webpack = require('webpack');
 
 module.exports = {
-    entry:   './src',
-    output:  {
+    entry: './src',
+    output: {
       // ...
     },
     plugins: [
@@ -494,7 +494,7 @@ module.exports = {
             minChunks: 2, // 一个依赖重复几次会被提取出来
         }),
     ],
-    module:  {
+    module: {
       // ...
     }
 };
@@ -525,8 +525,8 @@ chunk    {2} 2.bundle.js 2.92 kB {0} [rendered]
 
 ```js
 new webpack.optimize.CommonsChunkPlugin({
-    name:      'vendor',
-    children:  true,
+    name: 'vendor',
+    children: true,
     minChunks: 2,
 }),
 ```
@@ -565,10 +565,10 @@ if (production) {
 }
 
 module.exports = {
-    entry:   './src',
+    entry: './src',
     output:  {
-        path:       'builds',
-        filename:   'bundle.js',
+        path: 'builds',
+        filename: 'bundle.js',
         publicPath: 'builds/',
     },
     plugins: plugins,
@@ -580,7 +580,7 @@ Webpack也提供了一些可以切换生产环境的设置：
 
 ```js
 module.exports = {
-    debug:   !production,
+    debug: !production,
     devtool: production ? false : 'eval',
 }
 ```
@@ -605,7 +605,7 @@ if (production) {
 
         // 压缩js文件
         new webpack.optimize.UglifyJsPlugin({
-            mangle:   true,
+            mangle: true,
             compress: {
                 warnings: false, // 禁止生成warning
             },
@@ -614,10 +614,10 @@ if (production) {
         // 这个插件提供了各种可用在生产环境下的变量
         // 通过设置为false，可避免生产环境下调用到它们
         new webpack.DefinePlugin({
-            __SERVER__:      !production,
+            __SERVER__: !production,
             __DEVELOPMENT__: !production,
-            __DEVTOOLS__:    !production,
-            'process.env':   {
+            __DEVTOOLS__: !production,
+            'process.env': {
                 BABEL_ENV: JSON.stringify(process.env.NODE_ENV),
             },
         }),
@@ -648,7 +648,7 @@ $ npm install clean-webpack-plugin --save-dev
 并将它添加到配置中：
 
 ```js
-var webpack     = require('webpack');
+var webpack = require('webpack');
 var CleanPlugin = require('clean-webpack-plugin');
 // ...
 if (production) {
@@ -694,7 +694,7 @@ $ npm install extract-text-webpack-plugin --save-dev
 这个插件所做的就是我刚刚说的那些：从打出的最终包里面，提取出某一类内容分离开来单独引用。它通常被用于提取CSS文件：
 
 ```js
-var webpack    = require('webpack');
+var webpack = require('webpack');
 var CleanPlugin = require('clean-webpack-plugin');
 var ExtractPlugin = require('extract-text-webpack-plugin');
 var production = process.env.NODE_ENV === 'production';
@@ -714,7 +714,7 @@ module.exports = {
     module:  {
         loaders: [
             {
-                test:   /\.scss/,
+                test: /\.scss/,
                 loader: ExtractPlugin.extract('style', 'css!sass'),
             },
             // ...
@@ -776,7 +776,7 @@ body {
   - `file-loader`：返回一段指向资源的URL，允许你给文件加入版本的概念（默认）
   - `url-loader`：以`data:image/jpeg;base64`的形式返回URL
 
-两个方法不能说谁好谁坏：如果你的图片大于2M的话那你一定不希望它直接夹杂在代码中，而是独立出去；而如果仅仅是2kb左右的小图标。那么合并在一起减少HTTP请求会更好。因此，我们两个都要设置：
+很难说两种方法谁好谁坏：如果你的图片大于2M的话那你一定不希望它直接夹杂在代码中，而是独立出去；而如果仅仅是2kb左右的小图标。那么合并在一起减少HTTP请求会更好。因此，我们两个都要设置：
 
 ```js
 $ npm install url-loader file-loader --save-dev
@@ -784,7 +784,7 @@ $ npm install url-loader file-loader --save-dev
 
 ```js
 {
-    test:   /\.(png|gif|jpe?g|svg)$/i,
+    test: /\.(png|gif|jpe?g|svg)$/i,
     loader: 'url?limit=10000',
 },
 ```
@@ -793,7 +793,7 @@ $ npm install url-loader file-loader --save-dev
 
 ```js
 {
-    test:   /\.(png|gif|jpe?g|svg)$/i,
+    test: /\.(png|gif|jpe?g|svg)$/i,
     loader: 'url',
     query: {
       limit: 10000,
