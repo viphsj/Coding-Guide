@@ -216,3 +216,114 @@ var sentence = words.reduce(joinWord, '');
 ```
 
 你可以在这里查阅[关于reduce的文档](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/Reduce)
+
+### 混合运用
+
+正如我之前提到的，这些都是些微不足道的例子--`add`和`joinWord`函数都很简单--但这正是关键所在。简单又小的函数更利于思考和测试。就算把两个这样的函数组合在了一起（例如add和reducer），它依旧比一个巨大复杂的函数易于理解。还记得我之前说啥吗？我们可以做些更有意思的事情。
+
+来做点复杂的。写点假的样板数据，使用`map`和`reduce`把它们转换到HTML的列表里。数据在这儿：
+
+```js
+var ponies = [
+    [
+        ['name', 'Fluttershy'],
+        ['image', 'http://tinyurl.com/gpbnlf6'],
+        ['description', 'Fluttershy is a female Pegasus pony and one of the main characters of My Little Pony Friendship is Magic.']
+    ],
+    [
+        ['name', 'Applejack'],
+        ['image', 'http://tinyurl.com/gkur8a6'],
+        ['description', 'Applejack is a female Earth pony and one of the main characters of My Little Pony Friendship is Magic.']
+    ],
+    [
+        ['name', 'Twilight Sparkle'],
+        ['image', 'http://tinyurl.com/hj877vs'],
+        ['description', 'Twilight Sparkle is the primary main character of My Little Pony Friendship is Magic.']
+    ]
+];
+```
+
+数据不是很干净，如果这些内部的列表是Object的话会好很多。在这以前，我们使用`reduce`函数返回简单的结果，例如数组或字符串。但没人规定它只能返回简单的结果。我们可以让它返回Object，Array，甚至DOM元素。现在来创建和函数，以一个Array作为参数（例如['name', 'Fluttershy']），将列表内部的数据转换为key/value形式的Object。
+
+```js
+var addToObject = function(obj, arr) {
+    obj[arr[0]] = arr[1];
+    return obj;
+};
+```
+
+通过这个`addToObject`方法，我们就能把ponies列表中的第一层列表里的各个列表转换为一个Object：
+
+```js
+var ponyArrayToObject = function(ponyArray) {
+    return reduce(addToObject, {}, ponyArray);
+};
+```
+
+转换为后成如下形式：
+
+```js
+var ponies = [
+  [
+    {
+      name: 'Fluttershy',
+      image: 'http://tinyurl.com/gpbnlf6',
+      description: 'Fluttershy is a female Pegasus pony and one of the main characters of My Little Pony Friendship is Magic.'
+    }
+  ],
+  [
+    {
+      // 忽略
+    }
+  ],
+  ....
+]
+```
+
+如果使用`map`函数，则可以把ponies列表中的第一层列表转为Object：
+
+```js
+var tidyPonies = map(ponyArrayToObject, ponies);
+```
+
+现在，我们就取得了一个满是Object的列表了。通过[Thomas Fuchs’ tweet-sized模板引擎](http://mir.aculo.us/2011/03/09/little-helpers-a-tweet-sized-javascript-templating-engine/)，我们可以利用`reduce`将它转换为HTML片段。模板方法使用模板字符串或Object，当它发现占位符（例如{name}或{image}）的时候，就会从Object中取出相应的数据进行替换。例如：
+
+```js
+var data = { name: "Fluttershy" };
+t("Hello {name}!", data);
+// "Hello Fluttershy!"
+
+data = { who: "Fluttershy", time: Date.now() };
+t("Hello {name}! It's {time} ms since epoch.", data);
+// "Hello Fluttershy! It's 1454135887369 ms since epoch."
+```
+
+因此，如果我们想要把列表里面的pony object转换为HTML list，可以这么做：
+
+```js
+var ponyToListItem = function(pony) {
+    var template = '<li><img src="{image}" alt="{name}"/>' +
+                   '<div><h3>{name}</h3><p>{description}</p>' +
+                   '</div></li>';
+    return t(template, pony);
+};
+```
+
+这是把一个单独的Object转为HTML。如果要转换整个list，则要使用`reduce`函数和`joinWord`函数：
+
+```js
+var ponyList = map(ponyToListItem, tidyPonies);
+var html = '<ul>' + reduce(joinWord, '', ponyList) + '</ul>';
+```
+
+戳这里查看[完整实例](http://jsbin.com/wuzini/edit?html,js,output)
+
+如果你理解掌握了`map`和`reduce`的用法，就再也不用写以前那样lowd的循环了。事实上，在项目中不使用循环还真的是个挑战。当你使用几次`map`和`reduce`以后，会注意到更多的使用模式并被它吸引。还有一些普遍的用法是从Array中[filtering](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter)或者[plucking](http://ramdajs.com/docs/#pluck)数据
+
+因为这些模式经常被使用，人们就把他们放进了单独的库中。一些比较出名的库有：
+
+  - [Ramda](http://ramdajs.com/)
+  - [Lodash](https://lodash.com/)
+  - [Underscore](http://underscorejs.org/)
+
+现在你已经看见了将函数作为参数的优势了，尤其是应对列表的时候。你可以编码更高效、成功，永远不会被复杂的参数困扰。但是，如果还想进阶学习，可以看下一章
