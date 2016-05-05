@@ -5,7 +5,7 @@
 这篇文章是《JavaScript函数式编程》四个模块中的第一部分。我们会先简要介绍JavaScript函数式编程，以及它为何如此有用的原因。
 
   1. Part1：动机和代码块
-  2. Part2：使用Array和List
+  2. [Part2：使用Array和List](【译文】Javascript函数式编程【2】.md)
   3. Part3：使用函数创造函数
   4. Part4：Doing it with style
 
