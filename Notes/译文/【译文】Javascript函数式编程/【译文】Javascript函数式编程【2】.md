@@ -45,7 +45,7 @@ for (var i = 0; i < colours.length; i = i + 1) {
 
 这样看起来还不错，比之前那个少了很多重复代码。但它并不是最佳实践。每次要使用的时候，我们都要创造一个变量并不断递增，每次还要检查是否要停止循环。那么，如果把整个包装进函数里呢？
 
-#### `For-Each`
+#### `forEach`
 
 因为JavaScript允许函数作为参数传递，因此我们可以写一个简单的`forEach`函数：
 
@@ -75,7 +75,144 @@ var colours = [
 colours.forEach(addColour);
 ```
 
-你可以在这里查阅[更多文档](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/forEach)
+你可以在这里查阅[关于forEach的文档](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/forEach)
 
-### `Map`
+#### `Map`
 
+虽然我们的`forEach`函数已经挺好用了，但还有一些缺陷。在`forEach`中，会忽略回调函数返回的值。不过只需要一点改动就能获取到它的返回值了。
+
+举个栗子，我们有一个由ID组成的列表，并想获取到相符的由DOM元素组成的列表。使用循环遍历它：
+
+```js
+var ids = ['unicorn', 'fairy', 'kitten'];
+var elements = [];
+for (var i = 0; i < ids.length; i = i + 1) {
+    elements[i] = document.getElementById(ids[i]);
+}
+// elements now contains the elements we are after
+```
+
+再一次的，我们每次都要手动创建遍历并递归它--但这些东西我们并不想关心。我们把这些代码封装到一个叫`map`的函数里，像之前那个`forEach`函数一样重构它：
+
+```js
+var map = function(callback, array) {
+    var newArray = [];
+    for (var i = 0; i < array.length; i = i + 1) {
+        newArray[i] = callback(array[i], i);
+    }
+    return newArray;
+}
+```
+
+现在我们拥有了一个`map`函数了，可以这样使用它：
+
+```js
+var getElement = function(id) {
+  return document.getElementById(id);
+};
+
+var elements = map(getElement, ids);
+```
+
+`map`函数将渺小不起眼的函数转变成为了英雄--仅仅需要调用一次list
+
+跟`forEach`一样，`map`也已经被现代的JavaScript函数语法所支持。你可以这样使用原生的`map`方法：
+
+```js
+var ids = ['unicorn', 'fairy', 'kitten'];
+var getElement = function(id) {
+  return document.getElementById(id);
+};
+var elements = ids.map(getElement, ids);
+```
+
+你可以在这里查阅[关于map的文档](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map)
+
+#### `reduce`
+
+`map`已经很好用了，但我们还能做一个更加强力的函数，以一个列表作为参数，最终返回一个结果。或许这看起来有点不合常理--一个仅仅返回单个结果的函数，怎么会比返回列表的函数更有力呢？为了寻找答案，我们先来看看这样的一个函数是如何工作的。
+
+为了说明这个问题，我们先考虑两个问题：
+
+  1. 以一串数字组成的列表作为参数，返回它们的总和
+  2. 以一串单词组成的列表作为参数，使用空格将所有单词拼接在一起
+
+这些例子看起来似乎微不足道还有点愚蠢--的确是这样。但是如果我们掌握了`reduce`，它们会变得很有趣。
+
+回到正题。解决这谢问题最高效的方法就是遍历：
+
+```js
+// Given an array of numbers, calculate the sum
+var numbers = [1, 3, 5, 7, 9];
+var total = 0;
+for (i = 0; i < numbers.length; i = i + 1) {
+    total = total + numbers[i];
+}
+// total is 25
+
+// Given an array of words, join them together with a space between each word.
+var words = ['sparkle', 'fairies', 'are', 'amazing'];
+var sentence = '';
+for (i = 0; i < words.length; i++) {
+    sentence = sentence + ' ' + words[i];
+}
+// ' sparkle fairies are amazing'
+```
+
+这两端代码有很多重叠的地方。它们都使用了`for`遍历方法，有需要缓存的变量，也都在遍历的时候，把值赋给了上一次的结果。
+
+将循环体内部的代码封装成函数试试：
+
+```js
+var add = function(a, b) {
+    return a + b;
+}
+
+// Given an array of numbers, calculate the sum
+var numbers = [1, 3, 5, 7, 9];
+var total = 0;
+for (i = 0; i < numbers.length; i = i + 1) {
+    total = add(total, numbers[i]);
+}
+// total is 25
+
+function joinWord(sentence, word) {
+    return sentence + ' ' + word;
+}
+
+// Given an array of words, join them together with a space between each word.
+var words = ['sparkle', 'fairies', 'are', 'amazing'];
+var sentence = '';
+for (i = 0; i < words.length; i++) {
+    sentence = joinWord(sentence, words[i]);
+}
+// 'sparkle fairies are amazing'
+```
+
+这样变得简洁多了。重构出来的两个方法都以上一次的结果作为第一个参数，遍历的Array中的当前值作为第二个参数。我们可以把这些凌乱的循环体放进函数里：
+
+```js
+var reduce = function(callback, initialValue, array) {
+    var working = initialValue;
+    for (var i = 0; i < array.length; i = i + 1) {
+        working = callback(working, array[i]);
+    }
+    return working;
+};
+```
+
+现在我们拥有这个迷人的`reduce`函数了。拿它做下尝试：
+
+```js
+var total = reduce(add, 0, numbers);
+var sentence = reduce(joinWord, '', words);
+```
+
+`reduce`也已经被现代化JavaScript语法支持了：
+
+```js
+var total = numbers.reduce(add, 0);
+var sentence = words.reduce(joinWord, '');
+```
+
+你可以在这里查阅[关于reduce的文档](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/Reduce)
