@@ -77,7 +77,7 @@ colours.forEach(addColour);
 
 你可以在这里查阅[关于forEach的文档](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/forEach)
 
-#### `Map`
+#### `map`
 
 虽然我们的`forEach`函数已经挺好用了，但还有一些缺陷。在`forEach`中，会忽略回调函数返回的值。不过只需要一点改动就能获取到它的返回值了。
 
