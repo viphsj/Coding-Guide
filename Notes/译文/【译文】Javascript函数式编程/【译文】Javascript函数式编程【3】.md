@@ -133,3 +133,126 @@ twinkleTwinkle.apply(null, ['bat']);
 ```
 
 这两个方法在我们创建“创建函数的函数”的时候非常有用。
+
+#### 匿名函数
+
+JavaScript允许我们直接书写函数而不用先定义。这经常用在`map`和`reduce`里。例如：
+
+```js
+var numbers = [1, 2, 3];
+var doubledArray = map(function(x) { return x * 2}, numbers);
+console.log(doubledArray);
+//=> [ 2, 4, 6 ]
+```
+
+这样的函数被称为匿名函数。有时也被称为`lambda`函数。
+
+#### 预留参数
+
+有时候不一定能给函数传满参数。例如，我们创建一个`addClass()`函数，接收`class`和DOM元素作为参数：
+
+```js
+var addClass = function(className, element) {
+    element.className += ' ' + className;
+    return element;
+}
+```
+
+我们想让它和`map`函数一起使用，给每个元素加上class。但有个问题：`map`遍历Array中的每个元素并把它们作为参数传给回调函数。但我们怎么告诉`addClass`方法应该添加哪个class？
+
+解决方案是创建一个新函数，通过它来告诉`addClass`我们想添加的class：
+
+```js
+var addTweedleClass = function(el) {
+    return addClass('tweedle', el);
+}
+```
+
+现在我们就得到了只需要一个参数的函数：
+
+```js
+var ids = ['DEE', 'DUM'];
+var elements = map(document.getElementById, ids);
+elements = map(addTweedleClass, elements);
+```
+
+可是如果我们要加入其它class，则需要创建新的函数：
+
+```js
+var addBoyClass = function(el) {
+    return addClass('boy', el);
+}
+```
+
+我们开始重复代码了。。所以我们看看能不能找到它们相同的模式。如果我们再创建个函数来生成上面的函数呢？
+
+```js
+var partialFirstOfTwo = function(fn, param1) {
+    return function(param2) {
+        return fn(param1, param2);
+    }
+}
+```
+
+由此创建了一个返回匿名函数的函数。匿名函数需要接受一个参数，然后再返回一个函数。
+
+```js
+var addTweedleClass = partialFirstOfTwo(addClass, 'tweedle');
+var addBoyClass = partialFirstOfTwo(addClass, 'boy');
+
+var ids = ['DEE', 'DUM'];
+var elements = map(document.getElementById, ids);
+elements = map(addTweedleClass, elements);
+elements = map(addBoyClass, elements);
+```
+
+当这个方法只需要传入两个参数的时候一切正常。但如果要传入三个参数呢？或者四个？针对这种情况，我们需要创建更通用的函数：
+
+```js
+var argsToArray(args) {
+    return Array.prototype.slice.call(args, 0);
+}
+
+var partial = function() {
+    // 将 arguments 转成 array 
+    var args = argsToArray(arguments);
+
+    // 取出 function (第一个参数). 之后 args 里面是剩下的参数
+    var fn = args.shift();
+
+    // Return a function that calls fn
+    return function() {
+        var remainingArgs = toArray(arguments);
+        return fn.apply(this, args.concat(remainingArgs));
+    }
+}
+```
+
+这个函数允许我们传入任意多的参数，最终将参数传给目标函数。
+
+```js
+var twinkle = function(noun, wonderAbout) {
+    return 'Twinkle, twinkle, little ' +
+        noun + '\nHow I wonder where you ' +
+        wonderAbout;
+}
+
+var twinkleBat = partial(twinkle, 'bat', 'are at');
+var twinkleStar = partial(twinkle, 'star', 'are');
+```
+
+JavaScript有个叫`bind`的内置方法，它对所有方法都有效。它的第一个参数是你想要把`this`绑定到的Object，使得`this`所在的作用域传入到函数内部。这意味着，如果你想要把一些东西部分的`apply`到`document.getElementById`上，你需要把`document`作为参数传给`bind`
+
+```js
+var getWhiteRabbit = document.getElementById.bind(document, 'white-rabbit');
+var rabbit = getWhiteRabbit();
+```
+
+然而我们并不需要`this`这个特殊的变量（尤其是我们使用了函数式编程），因此我们以`null`作为第一个参数传入。例如：
+
+```js
+var twinkleBat = twinkle.bind(null, 'bat', 'are at');
+var twinkleStar = twinkle.bind(null, 'star', 'are');
+```
+
+你可以在这儿查看等多和[bind](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_objects/Function/bind)有关的内容。
