@@ -177,3 +177,53 @@ polyglot.introduce();
 
 如果我们能够将内部的`this`指向外部的`this`，代码就会干净许多。你不这么认为吗？
 
+#### 箭头函数里的`this`
+
+在ES2015中，我们做到了这点。箭头函数没有绑定`this`变量，使得我们可以更好的利用`this`。我们可以这样重构上面的代码：
+
+```js
+"use strict";
+
+let polyglot = {
+    name : "Michel Thomas",
+    languages : ["Spanish", "French", "Italian", "German", "Polish"],
+    introduce : function () {
+        this.languages.forEach((language) => {
+            console.log("My name is " + this.name + ", and I speak " + language + ".");
+        });
+    }
+}
+```
+
+一切都能像预期那样的工作了。
+
+箭头函数有几种语法类型：
+
+```js
+"use strict";
+
+let languages = ["Spanish", "French", "Italian", "German", "Polish"];
+
+// 在多行箭头函数中，必须使用中括号，而且要有明确的返回值
+let languages_lower = languages.map((language) => {
+    return language.toLowerCase()
+});
+
+// 单行箭头函数中，中括号可选
+// 并且函数隐式的返回了表达式的最终结果
+// 你也可以显式的return一个值，不过这是可选的
+let languages_lower = languages.map((language) => language.toLowerCase());
+
+// 如果箭头函数只有一个参数，你都不需要使用小括号
+let languages_lower = languages.map(language => language.toLowerCase());
+
+// 反之，如果有多个参数，则必须使用小括号
+let languages_lower = languages.map((language, unused_param) => language.toLowerCase());
+
+console.log(languages_lower); // ["spanish", "french", "italian", "german", "polish"]
+
+// 最后，如果箭头函数不接受参数，则必须使用一个空的小括号
+(() => alert("Hello!"))();
+```
+
+[MDN文档里对于箭头函数给出了很好的介绍](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions)
