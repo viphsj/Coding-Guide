@@ -134,3 +134,46 @@ for (var j = 0; j < 6; j += 1) {
     }, 1000 * j);
 }
 ```
+
+第一个循环的结果跟你像的一样，而第二个则打印了六次“I've waited 6 seconds!”
+
+### 动态的`this`
+
+作为一个能够做所有你想让它做的事情的东西，`this`在JavaScript中早就臭名昭著。
+
+事实上，[规则很简单](https://github.com/getify/You-Dont-Know-JS/tree/master/this%20%26%20object%20prototypes)。不管怎样，在一些情景`this`会变得很笨拙：
+
+```js
+"use strict";
+
+const polyglot = {
+    name : "Michel Thomas",
+    languages : ["Spanish", "French", "Italian", "German", "Polish"],
+    introduce : function () {
+        // this.name 是 "Michel Thomas"
+        const self = this;
+        this.languages.forEach(function(language) {
+            // this.name is undefined, 所以我们得使用之前保存的self变量
+            console.log("My name is " + self.name + ", and I speak " + language + ".");
+        });
+    }
+}
+
+polyglot.introduce();
+```
+
+在`introduce`的循环体内部，`this.name`是`undefined`。在`forEach`循环里，它提及到了`polyglot`这个Object。而通常，我们希望在函数的内部和外部，`this`都能指向同一个Object。
+
+问题在于，JavaScript中的方法都会在调用过程中，[根据四个规则](https://github.com/getify/You-Dont-Know-JS/blob/master/this%20&%20object%20prototypes/ch2.md)创建它自己的`this`值。这样的机制被称为动态`this`。
+
+这意味着，当引擎寻找`this`的时候，它所找到的那个并不一定是回调函数外部的那个。有两种传统方法解决这个问题：
+
+  1. 将`this`在函数外部保存（通常赋值给`self`变量），然后在内部使用它
+  2. 使用`bind`函数把`this`绑定在目标函数上
+
+这两种方法都有效，但是一点也不简洁。
+
+从另一个方面考虑，如果内部函数没有找到它们的`this`，JavaScript会像寻找其他变量一样寻找`this`：查看父作用域直到找到一个同名的变量。这就使得我们可以使用“附近的”`this`来替代函数内的`this`。
+
+如果我们能够将内部的`this`指向外部的`this`，代码就会干净许多。你不这么认为吗？
+
