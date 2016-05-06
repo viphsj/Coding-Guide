@@ -356,3 +356,34 @@ console.log(modifyPoem(poem));
 var modifyPoem = pipe(replaceBrillig, addBreaks, wrapP, wrapBlockquote);
 ```
 
+#### 柯里化
+
+关于柯里化的细节稍微有点复杂，因此，先让我们看个例子。现在有一个叫作`formatName`的函数，用来把人的绰号放进引言里。这个函数接受三个参数。当我们以柯里化的形式调用这个函数，并传入的参数少于三个时，它会返回一个新的函数，并以传入的参数作为新函数的参数来调用它：
+
+```js
+var formatName = function(first, surname, nickname) {
+    return first + ' “' + nickname + '” ' + surname;
+}
+var formatNameCurried = curry(formatName);
+
+var james = formatNameCurried('James');
+
+console.log(james('Sinclair', 'Mad Hatter'));
+//=> James “Mad Hatter” Sinclair
+
+var jamesS = james('Sinclair')
+
+console.log(jamesS('Dormouse'));
+//=> James “Dormouse” Sinclair
+
+console.log(jamesS('Bandersnatch'));
+//=> James “Bandersnatch” Sinclair
+```
+
+这里有些助你理解柯里化的函数：
+
+```js
+formatNameCurried('a')('b')('c') === formatNameCurried('a', 'b', 'c'); // true
+formatNameCurried('a', 'b')('c') === formatNameCurried('a')('b', 'c'); // true
+```
+
