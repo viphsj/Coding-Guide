@@ -256,3 +256,103 @@ var twinkleStar = twinkle.bind(null, 'star', 'are');
 ```
 
 你可以在这儿查看等多和[bind](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_objects/Function/bind)有关的内容。
+
+#### 构造（`Compose`）
+
+我在上一篇里说过，函数式编程就是创造小型的简单的函数，并把它们组合成大型函数。它的一部分用途是作为工具，让整个编程过程变的简单。我们可以利用它来把`addClass`函数转为可以使用`map`的函数。而“构造”则是让它们组合在一起的工具。
+
+最简单的例子由两个函数组成，a和b，它们两个都接受一个参数。`Compose`创建出第三个函数c。以x作为参数调用c，返回a的被调用函数，其中，以b的被调用结果（以x为参数）作为参数（译者注：我已晕。。这种东西直接上例子多清晰。）。这特么什么鬼（译者注：我表示赞同）。还是举个例子吧：
+
+```js
+var composeTwo = function(funcA, funcB) {
+    return function(x) {
+        return funcA(funcB(x));
+    }
+}
+
+var nohow = function(sentence) {
+    return sentence + ', nohow!';
+}
+var contrariwise = function(sentence) {
+    return sentence + ' Contrariwise…';
+}
+
+var statement = 'Not nothin&amp;rsquo;';
+var nohowContrariwise = composeTwo(contrariwise, nohow);
+console.log(nohowContrariwise(statement));
+//=> Not nothin&amp;rsquo;, nohow! Contrariwise…
+```
+
+看着真棒。使用`composeTwo`可以让我们爽很长一段时间了。可是，如果你开始使用“纯函数”（我们迟点讲它）的话，你就会发现要把不只两个函数组合到一起。为此我们需要一个适应面更广的`compose`函数：
+
+```js
+var compose = function() {
+    var args = arguments;
+    var start = args.length - 1;
+    return function() {
+        var i = start;
+        var result = args[start].apply(this, arguments);
+        i = i - 1;
+        while (i >= 0) {
+            result = args[i].call(this, result);
+            i = i - 1;
+        }
+        return result;
+    };
+};
+```
+
+第一眼看上去，`compose`好像没那么神奇。我们可以这样用`compose`函数：
+
+```js
+var nohowContrariwise = compose(contrariwise, nohow);
+```
+
+可是这样看起来并不比下面的写法简洁：
+
+```js
+var nohowContrariwise = function(x) {
+    return nohow(contrariwise(x));
+}
+```
+
+`compose`的真正威力在于将它和柯里化函数组合的时候可以非常简洁。就算不是柯里化函数，与其他函数进行组合也可以让代码变的简洁。例如，想象一下有下面这首诗：
+
+```js
+var poem = 'Twas brillig, and the slithy toves\n' + 
+    'Did gyre and gimble in the wabe;\n' +
+    'All mimsy were the borogoves,\n' +
+    'And the mome raths outgrabe.';
+```
+
+它在浏览器中的表现可不怎么样，因此我们需要给他加一些分段，顺便把难懂的"brillig"换成其他单词。我们要把整首诗放进`<p></p>`标签里并作为引语。先从两个简单的函数开始：
+
+```js
+var replace = function(find, replacement, str) {
+    return str.replace(find, replacement);
+}
+
+var wrapWith = function(tag, str) {
+    return '<' + tag + '>' + str + '</' + tag + '>'; 
+}
+
+var addBreaks      = partial(replace, '\n', '<br/>\n');
+var replaceBrillig = partial(replace, 'brillig', 'four o’clock in the afternoon');
+var wrapP          = partial(wrapWith, 'p');
+var wrapBlockquote = partial(wrapWith, 'blockquote');
+
+var modifyPoem = compose(wrapBlockquote, wrapP, addBreaks, replaceBrillig);
+
+console.log(modifyPoem(poem));
+//=> <blockquote><p>Twas four o’clock in the afternoon, and the slithy toves<br/>
+//   Did gyre and gimble in the wabe;<br/>
+//   All mimsy were the borogoves,<br/>
+//   And the mome raths outgrabe.</p></blockquote>
+```
+
+值得一提的是，当你把参数从左到右的传给`compose`函数，他们将会按照反转的顺序进行调用。一些人会对此感到困惑。因此还有一种从左到右正常调用的方法叫`pipe`或`flow`:
+
+```js
+var modifyPoem = pipe(replaceBrillig, addBreaks, wrapP, wrapBlockquote);
+```
+
