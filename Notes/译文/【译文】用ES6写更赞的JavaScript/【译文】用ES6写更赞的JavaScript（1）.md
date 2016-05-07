@@ -454,3 +454,17 @@ globetrotter.countryCount(); // 2
 破坏任何一个规则都会抛出错误。
 
 随着Angular 2中对TypeScript的应用，以及`class`关键字地位的逐渐突出，我预计`get`和`set`会变得越来越流行。
+
+### 总结
+
+JavaScript发展迅速，我们有必要掌握它基本的新特性。在这篇文章里，我们简要介绍了ES2015中的：
+
+  - `let`和`const`以及它们的块作用域
+  - `this`和箭头函数
+  - 简写属性和方法，以及getter和setter方法
+
+想要更深入的了解`let`和`const`以及它们的块作用域，可以查看这篇[Kyle Simpson's take on block scoping](https://davidwalsh.name/for-and-against-let)。如果只是想快速了解它们，那只要看MDN就行了。
+
+如果你想更好的了解箭头函数，Dr Rauschmayer的[ECMAScript 6: arrow functions and method definitions](http://www.2ality.com/2012/04/arrow-functions.html)在这篇文章里对箭头函数进行了详细介绍。
+
+最后，Dr Rauschmayer的书[Exploring ES6](http://exploringjs.com/)是最好的教材。
