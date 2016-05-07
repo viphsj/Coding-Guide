@@ -227,3 +227,230 @@ console.log(languages_lower); // ["spanish", "french", "italian", "german", "pol
 ```
 
 [MDN文档里对于箭头函数给出了很好的介绍](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions)
+
+### 简写属性和方法
+
+ES2015提供了一些定义属性和方法的途径。
+
+#### 简写方法
+
+在JavaScript中，方法是Object的一个参数，只不过以一个函数作为它的值：
+
+```js
+"use strict";
+
+const myObject = {
+    const foo = function () {
+        console.log('bar');
+    },
+}
+```
+
+在ES2015中，我们可以简写成这样：
+
+```js
+"use strict";
+
+const myObject = {
+    foo () {
+        console.log('bar');
+    },
+    * range (from, to) {
+        while (from < to) {
+            if (from === to)
+                return ++from;
+            else
+                yield from ++;
+        }
+    }
+}
+```
+
+你也可以使用生成器（generator）定义方法，需要做的只是在方法名前面加上（*）。
+
+它们叫作方法描述符。和传统的方法有些近似，但有几点不同：
+
+  - 可以在内部只使用`super`
+  - 不允许用`new`调用
+
+我会在之后的文章里说明`super`。如果你都等不及了，可以先看看这篇[Exploring ES6](http://exploringjs.com/es6/ch_classes.html)
+
+#### 简写属性/计算属性
+
+ES6里同样引入了简写属性和计算属性。
+
+如果一个Object中的key的值和变量名称一样，那么就可以通过只写这个名称来达到跟`key: value`一样的效果。
+
+```js
+"use strict";
+
+const foo = 'foo';
+const bar = 'bar';
+
+// 旧方法
+const myObject = {
+    foo : foo,
+    bar : bar
+};
+
+// 新的做饭
+const myObject = { foo, bar }
+```
+
+两个方法都会生成一个有`foo`和`bar`的key和对应的value，后者只是个语法糖。
+
+当我使用[revealing module pattern](https://addyosmani.com/resources/essentialjsdesignpatterns/book/#revealingmodulepatternjavascript)写公共API的时候，就经常使用简写属性。
+
+```js
+"use strict";
+
+function Module () {
+    function foo () {
+        return 'foo';
+    }
+
+    function bar () {
+        return 'bar';
+    }
+
+    // Write this:
+    const publicAPI = { foo, bar }
+
+    /* Not this:
+    const publicAPI =  {
+       foo : foo,
+       bar : bar
+    } */ 
+
+    return publicAPI;
+};
+```
+
+在上面的代码块中，我们创建并返回了publicAPI，它的key（foo，bar）对应着foo，bar方法。
+
+#### 计算得出的属性名
+
+ES6允许你用表达式当做变量名
+
+```js
+"use strict";
+
+const myObj = {
+  // 变量名与函数的返回值相等
+    [foo ()] () {
+      return 'foo';
+    }
+};
+
+function foo () {
+    return 'foo';
+}
+
+console.log(myObj.foo() ); // 'foo'
+```
+
+根据Dr. Raushmayer的[Exploring ES6](http://exploringjs.com/)介绍的，它的主要用途是保障属性名与[`Symbol`](https://scotch.io/tutorials/better-node-with-es6-pt-i)函数值相等。
+
+#### `getter`&`setter`方法
+
+最后，我想提及下`get`和`set`方法，虽说它们在ES5里就出现了。
+
+```js
+"use strict";
+
+// 从 MDN上拿的 getter例子
+//   https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/get
+const speakingObj = {
+    // 追踪speak被调用的次数
+    words : [],
+
+    speak (word) {
+        this.words.push(word);
+        console.log('speakingObj says ' + word + '!');
+    },
+
+    get called () {
+        // 返回最后一个单词
+        const words = this.words;
+        if (!words.length)
+            return 'speakingObj hasn\'t spoken, yet.';
+        else
+            return words[words.length - 1];
+    }
+};
+
+console.log(speakingObj.called); // 'speakingObj hasn't spoken, yet.'
+
+speakingObj.speak('blargh'); // 'speakingObj says blargh!'
+
+console.log(speakingObj.called); // 'blargh'
+```
+
+当使用getter的时候有几点要铭记：
+
+  - getter不能接受参数
+  - 不能有跟getter重名的方法
+  - 你还可以通过`Object.defineProperty(OBJECT, "property name", { get : function () { . . . } })`创建getter
+
+举个栗子说明最后一点：
+
+```js
+"use strict";
+
+const speakingObj = {
+    // 追踪speak被调用的次数
+    words : [],
+
+    speak (word) {
+        this.words.push(word);
+        console.log('speakingObj says ' + word + '!');
+    }
+};
+
+// 只是为了这个例子而存在。实际上肯定不会这么写
+function called () {
+    // 返回最后一个单词
+    if (!words.length)
+        return 'speakingObj hasn\'t spoken, yet.';
+    else
+        return words[words.length - 1];
+};
+
+Object.defineProperty(speakingObj, "called", get : getCalled ) 
+```
+
+有了getter，就要增加setter。显而易见，setter使用自定义的方法改变Object上的属性值。
+
+```js
+"use strict";
+
+// 创建一个全局的globetrotter!
+const globetrotter = {
+    // 在我们的globetrotter，当前的lang是：
+    const current_lang = undefined,
+    let countries = 0,
+    // See how many countries we've travelled to
+    get countryCount () {
+        return this.countries;
+    }, 
+    // Reset current language whenever our globe trotter flies somewhere new
+    set languages (language) {
+        countries += 1;
+        this.current_lang = language; 
+    };
+};
+
+globetrotter.language = 'Japanese';
+globetrotter.countryCount(); // 1
+
+globetrotter.language = 'Spanish';
+globetrotter.countryCount(); // 2
+```
+
+之前说到的getter需要注意的几点，对于setter同样适用。不过有一点不同：
+
+  - 与getter不能接受参数这点不同，setter至少要接收一个参数
+
+破坏任何一个规则都会抛出错误。
+
+随着Angular 2中对TypeScript的应用，以及`class`关键字地位的逐渐突出，我预计`get`和`set`会变得越来越流行。
