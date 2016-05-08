@@ -231,3 +231,48 @@ console.log(fish.protein); // 26
 
 #### 体验原型链
 
+在正常状态下，JavaScript里的所有对象--包括方法--都连接到了另一个对象上，我们称之为原型。
+
+如果你调用了对象上不存在的属性，JavaScript会在该对象的原型里寻找这个属性。换句话说，当对象上的属性不存在是，它就会说：“咱不知道。去问我的原型吧。”
+
+这个过程--向其他对象查找不存在的属性--叫作**委托**
+
+```js
+"use strict";
+
+// joe 并没有toString方法
+const joe    = { name : 'Joe' },
+       sara  = { name : 'Sara' };
+
+Object.hasOwnProperty(joe, toString); // false
+Object.hasOwnProperty(sara, toString); // false
+
+// 但我们仍能调用它！
+joe.toString(); // '[object Object]', 而不是 ReferenceError!
+sara.toString(); // '[object Object]', 而不是 ReferenceError!
+```
+
+我们的`toString`方法应该完全没用，但它没有引起`ReferenceError`。那是因为虽然joe和sara没有toString方法，但他们的原型有。之后JavaScript询问`Object.prototype`是否有`toString`方法。在得到确定的回答之后，它将`Object.prototype`的`toString`方法作为最初的调用。
+
+虽然sara自己没有相应的方法但这无所谓--我们委托给了它的原型。
+
+换句话说，只要对象的原型里有我们想要的方法，我们就能从对象那里进行调用。那样的话，我们可以把属性和方法放在它的原型里，然后好像它们存在对象里面一样，正常的通过对象来进行调用。
+
+还有更赞的。如果一些对象有共同的原型--就好像上面的joe和sara--它们可以通过原型共享同样的属性和方法，而不需要进行任何的拷贝。
+
+这就是人们经常提及的原型继承--如果我的对象没有，但是对象的原型有，那么它就能从原型继承自己所需的。
+
+实际上，不存在任何的继承。在面向对象的语言里，继承暗示着子类的行为是从父类拷贝而来。而在JavaScript中，没有拷贝这样的行为--事实上，这是通过JavaScript class 里的原型获取的最大优势之一。
+
+快速的梳理一下：
+
+  - joe和sara并没有继承`toString`方法
+  - 事实上，joe和sara也没有继承`Object.prototype`
+  - joe和sara连接到了`Object.prototype`
+  - joe和sara连接着同样的`Object.prototype`
+  - 为了寻找原型--暂且把原型称之为O--调用：`Object.getPrototypeOf(O)`
+
+最后再强调一点：对象不继承他们的原型，而是委托它们。
+
+来让我们再深入一下。
+
