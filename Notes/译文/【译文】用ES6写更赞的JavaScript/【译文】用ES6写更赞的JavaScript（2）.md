@@ -276,3 +276,30 @@ sara.toString(); // '[object Object]', 而不是 ReferenceError!
 
 来让我们再深入一下。
 
+### 给对象设置原型
+
+我们已经知道了（几乎）所有的对象（O）都有原型（P），而当你在O上寻找它没有的属性时，JavaScript引擎会在P身上进行查询。
+
+那么问题是：
+
+  1. 对于方法而言，如果运行这一套机制？
+  2. 这些原型究竟是从哪儿来的？
+
+#### 名为对象的方法
+
+在JavaScript执行程序之前，它会创建一个运行的环境，在那里面建立了一个叫做[`Object`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)的函数。而与它联系的对象，则叫做 [`Object.prototype`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/prototype)
+
+换句话说，在一段执行的JavaScript程序中，`Object`和`Object.prototype`是一直存在的。
+
+这个函数（Object）跟其他的方法不同。它是一个构造函数--调用它则会返回一个新的对象：
+
+```js
+"use strict";
+
+typeof new Object(); // "object"
+typeof Object(); // Object function 的一个奇特之处是它不需要通过 new 调用
+```
+
+`Object`,`Object.prototype`都是对象，就跟其他对象一样拥有属性。
+
+![properties in Object.prototype](../../../image/BetterJavaScriptWithES6/ebbd5e3.png)
