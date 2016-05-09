@@ -179,10 +179,10 @@ fat_free_yogurt.print(); // 'Greek Yogurt | 26g P :: 16g C :: 0g F  /  Would you
 "use strict";
 
 function Food (name, protein, carbs, fat) {
-    this.name    = name;
+    this.name = name;
     this.protein = protein;
-    this.carbs    = carbs;
-    this.fat          = fat;
+    this.carbs = carbs;
+    this.fat = fat;
 }
 // 通过new关键字调用Food，返回一个对象
 const chicken_breast = new Food('Chicken Breast', 26, 0, 3.5);
@@ -276,7 +276,7 @@ sara.toString(); // '[object Object]', 而不是 ReferenceError!
 
 来让我们再深入一下。
 
-### 给对象设置原型
+#### 给对象设置原型
 
 我们已经知道了（几乎）所有的对象（O）都有原型（P），而当你在O上寻找它没有的属性时，JavaScript引擎会在P身上进行查询。
 
@@ -303,3 +303,157 @@ typeof Object(); // Object function 的一个奇特之处是它不需要通过 n
 `Object`,`Object.prototype`都是对象，就跟其他对象一样拥有属性。
 
 ![properties in Object.prototype](../../../image/BetterJavaScriptWithES6/ebbd5e3.png)
+
+关于`Object`和`Object.prototype`你需要知道的几点：
+
+  1. 那个叫Object的函数有个属性，叫作`.prototype`，指向了一个对象。
+  2. 而这个`Object.prototype`对象，有一个属性`.constructor`，指向`Object`这个函数
+
+因此当你创建函数的时候--举个例子，`someFunction`--它将会有一个`prototype`属性，指向`someFunction.prototype`对象。
+  
+反之，那个对象--`meFunction.prototype`--拥有一个名为`.constructor`的属性，返回`someFunction`方法。
+
+```js
+"use strict";
+
+function foo () {  console.log('Foo!');  }
+
+console.log(foo.prototype); // Points to an object called 'foo'
+console.log(foo.prototype.constructor); // Points to the function, 'foo'
+
+foo.prototype.constructor(); // Prints 'Foo!' -- just proving that 'foo.prototype.constructor' does, in fact, point to our original function 
+```
+
+要牢记的几点：
+
+  1. 所有的函数都有`prototype`属性，指向一个与该函数联系的对象
+  2. 函数的原型都有一个叫做`constructor`的属性，指回这个函数
+  3. 函数原型的`constructor`不需要一定指向创建函数原型的方法
+
+关于设置函数的原型有三条规则：
+
+  1. 默认规则
+  2. 通过`new`隐式设置
+  3. 通过`Object.create`显式设置
+
+##### 默认规则
+
+看下这段代码：
+
+```js
+"use strict";
+const foo = { status : 'foobar' };
+```
+
+非常简单。我们只是创建了一个叫`foo`的对象，并给了它一个叫`status`的属性。
+
+但是在这背后，JavaScript做了一些额外的工作。当我们直接创建一盒对象时，JavaScript会把对象的原型设置成`Object.prototype`，并把这个对象的`constructor`设置为`Object`：
+
+```js
+"use strict";
+const foo = { status : 'foobar' };
+Object.getPrototypeOf(foo) === Object.prototype; // true
+foo.constructor === Object; // true
+```
+
+##### 通过`new`隐式设置
+
+再来看看`Food`这个例子
+
+```js
+"use strict";
+
+function Food (name, protein, carbs, fat) {
+    this.name = name;
+    this.protein = protein;
+    this.carbs = carbs;
+    this.fat = fat;
+}
+```
+
+我们已经知道这个Food函数会与名为`Food.prototype`的对象关联。
+
+当我们使用`new`创建对象的时候：
+
+  1. 将`prototype`属性加到通过`new`声明的函数上。
+  2. 将`constructor`属性加到`new`声明的函数上。
+
+```js
+const tootsie_roll = new Food('Tootsie Roll', 0, 26, 0);
+
+Object.getPrototypeOf(tootsie_roll) === Food.prototype; // true
+tootsie_roll.constructor === Food; // true
+```
+
+```js
+"use strict";
+Food.prototype.cook = function cook () {
+    console.log(`${this.name} is cooking!`);
+};
+
+const dinner = new Food('Lamb Chops', 52, 8, 32);
+dinner.cook(); // 'Lamb Chops are cooking!'
+```
+
+##### 通过`Object.create`显式设置
+
+我们可以通过`Object.create`手动设置原型。
+
+```js
+"use strict";
+const foo = {
+    speak () {
+    console.log('Foo!');
+    }
+};
+const bar = Object.create(foo);
+
+bar.speak(); // 'Foo!'
+Object.getPrototypeOf(bar) === foo; // true
+```
+
+当你这么调用的时候：
+
+  1. 创建新对象
+  2. 设置原型
+  3. 返回这个新对象
+
+在这里查看[MDN上`Object.create()`的讲解](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/create)
+
+### 模仿class
+
+直接使用原型来模拟面向对象的行为需要很多技巧。
+
+```js
+"use strict";
+function Food (name, protein, carbs, fat) {
+    this.name = name;
+    this.protein = protein;
+    this.carbs = carbs;
+    this.fat = fat;
+}
+Food.prototype.toString = function () {
+    return `${this.name} | ${this.protein}g P :: ${this.carbs}g C :: ${this.fat}g F`;
+};
+function FatFreeFood (name, protein, carbs) {
+    Food.call(this, name, protein, carbs, 0);
+}
+// Setting up "subclass" relationships
+// =====================
+// LINE A :: 运用 Object.create 手动给 FatFreeFood设置 "parent".
+FatFreeFood.prototype = Object.create(Food.prototype);
+
+// LINE B :: 手动设置 constructor reference (!)
+Object.defineProperty(FatFreeFood.constructor, "constructor", {
+    enumerable: false,
+    writeable: true,
+    value: FatFreeFood
+});
+```
+
+在LineA，我们将`FatFreeFood.prototype`设置成了一个新的对象。新对象的原型连接到`Food.prototype`。如果没有做这一步，那么子类就不能使用父类的方法。
+
+但奇怪的是，`FatFreeFood.constructor`是个方法，而不是`FatFreeFod`。因此，我们在LineB手动设置构造函数。
+
+通过原型去模仿真正的类就是`class`的动机之一。它确实也给我们提供了便捷的语法。
+
