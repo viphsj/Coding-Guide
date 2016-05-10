@@ -629,3 +629,125 @@ Food.prototype.print = function print () {
     console.log( this.toString() ); 
 };
 ```
+
+为了更加简洁，我们可以在方法里添加生成器：
+
+```js
+"use strict";
+class Range {
+  constructor(from, to) {
+    this.from = from;
+    this.to = to;
+  }
+  * generate () {
+    let counter = this.from,
+        to = this.to;
+    while (counter < to) {
+      if (counter == to)
+        return counter++;
+      else
+        yield counter++;
+    }
+  }
+}
+
+const range = new Range(0, 3);
+const gen = range.generate();
+for (let val of range.generate()) {
+  console.log(`Generator value is: ${ val }. `);
+  //  Prints:
+  //    Generator value is: 0.
+  //    Generator value is: 1.
+  //    Generator value is: 2.
+}
+```
+
+#### symbol方法
+
+最终我们来学习下`Symbol`方法。它们是名为`Symbol`的方法，JavaScript引擎会据此识别出它，并且当你在自定义对象中使用内置构造方法的时候进行调用。
+
+[MDN文档](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol)对Symbol进行了简要的介绍：
+
+> 每个symbol都是独特且不可变的数据类型，可以作为对象属性的标识符。
+
+新建一个symbol会返还给你一个绝对独特的值，它对于创建对象属性的名称而言非常有用：不会有偶然的命名重复。拿symbol做key也使得它不可数，因此对外部而言不可见（[并不是完全不可见](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Reflect/ownKeys)）
+
+```js
+"use strict";
+
+const secureObject = {
+    // 这个key是独一无二的
+    [new Symbol("name")] : 'Dr. Secure A. F.'
+};
+
+console.log( Object.getKeys(superSecureObject) ); // [] -- 无法获取symbol
+console.log( Reflect.ownKeys(secureObject) ); // [Symbol("name")] -- . . . 但也不是真的完全不可见
+```
+
+对我们而言的好处是，它给我们了一种方法去告诉JavaScript引擎，在某些特定的目的下使用特定的方法。
+
+当你在自定义对象中使用内置构造方法的时候，JavaScript引擎会调用这个特殊Symbol方法。这个特性在JavaScript中充满诱惑。我们来看个例子：
+
+```js
+"use strict";
+// 通过扩展Array使得可以使用length属性，同时也使我们可以使用Array的内置方法，比如map, filter, reduce, push, pop等
+class FoodSet extends Array {
+    // ...foods 用于获取全部参数并将其转为Array
+    //   https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_operator
+    constructor(...foods) {
+        super();
+        this.foods = [];
+        foods.forEach((food) => this.foods.push(food))
+    }
+     // 自定义的迭代行为。虽然不是很有用，但是个好例子。
+     // 星号（*）必须写在key前面
+     * [Symbol.iterator] () {
+        let position = 0;
+        while (position < this.foods.length) {
+          if (position === this.foods.length) {
+              return "Done!"
+          } else {
+              yield `${this.foods[ position++ ]} is the food item at position ${position}`;
+          }
+         }
+     }
+      // 当用户使用Array内置的方法时，返回Array类型的对象而不是FoodSet
+      // 这使得当我们使用一段期望返回Array的代码时，FoodSet可以正常工作
+      static get [Symbol.species] () {
+          return Array;
+      }
+}
+
+const foodset = new FoodSet(new Food('Fish', 26, 0, 16), new Food('Hamburger', 26, 48, 24));
+
+// 当你对 FoodSet 调用 for...of 循环时, JavaScript 会使用你的 [Symbol.iterator]方法
+for (let food of foodset) {
+  // Prints all of our foods
+  console.log( food );
+}
+// 当你对一个array调用filter函数的时候，它会根据你“filter”的对象，调用默认的构造方法，创建并返回新的对象。
+// 
+// 通常来说，大多数的代码都会期待filter返回一个Array，因此，我们可以含蓄的通过新建一个重写[Symbol.species]的实例，告诉JavaScript引擎去使用Array的构造方法。
+const healthy_foods = foodset.filter((food) => food.name !== 'Hamburger');
+console.log( healthy_foods instanceof FoodSet );
+console.log( healthy_foods instanceof Array );
+```
+
+当你对某个对象调用`for...of`循环的时候，JavaScript会试着执行对象的`iterator`方法。它与`Symbol.iterator`这个key所对应的方法相关联。如果你对这个方法提供了自己的定义那么JavaScript就会使用它，否则就使用默认的（如果有的话）。
+
+`Symbol.species`方法同样充满诱惑。在一个自定义的class内，默认的`Symbol.species`是这个类的构造函数。但是当你的子类扩展自数列时，比如说`Array`或者`Set`，你可能经常想要在可以使用父类实例的地方调用你的子类。
+
+通过返回一个父类实例而不是子类，使得我们可以在子类里书写更加通用的代码。这就是`Symbol.species`可以做到的。
+
+即便它没能发挥太大作用，也不要嗤之以鼻。symbol依旧是个新生的生态。而上面例子里的核心要点是：
+
+  1. 你可以在自定义类里使用确定了内置函数
+  2. 如何达到这个目的
+
+### 总结
+
+ES2015的`class`并没有真的给我们带来了类，而是一种更加简便创建对象的语法。在它的底层没有什么新的东西。
+
+虽然我说了不少关于JavaScript原型的对象，但还有很多没能讲到。你可以查看Kyle Simpson的[this & Object Prototypes](https://github.com/getify/You-Dont-Know-JS/tree/master/this%20%26%20object%20prototypes)进一步学习。
+
+Dr Rauschmayer的[Exploring ES6: Classes](http://exploringjs.com/es6/ch_classes.html)值得一看。它是我写这篇文章时的灵感来源。
