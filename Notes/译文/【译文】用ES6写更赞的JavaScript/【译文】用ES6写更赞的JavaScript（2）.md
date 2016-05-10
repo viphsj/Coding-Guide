@@ -457,3 +457,175 @@ Object.defineProperty(FatFreeFood.constructor, "constructor", {
 
 通过原型去模仿真正的类就是`class`的动机之一。它确实也给我们提供了便捷的语法。
 
+### 走进“方法”
+
+现在我们已经知道了JavaScript原型系统的必要性，那么来看看三个它支持的方法，以及一个特殊的方法。
+
+  - 构造方法
+  - 静态方法
+  - 原型方法
+  - Symbol方法，一种特殊的原型方法
+
+#### 类的构造方法
+
+类的构造方法是你关注类初始化逻辑的地方。构造方法在几个地方比较特殊：
+
+  1. 它是类里面唯一可以调用父类构造方法的地方
+  2. 它干了所有设置原型链的脏活
+  3. 它通常作为类的定义。类的初始化逻辑写在构造函数内。
+
+第二点是运用JavaScript类这个概念的核心原则。引用《Exploring ES6》里面的一句话：
+
+> 子类的原型指向父类
+
+第三点很有意思。在JavaScript中，类仅仅是个方法--它相当于类中的`constructor`方法
+
+```js
+"use strict";
+class Food {
+    // Class definition is the same as before . . . 
+}
+typeof Food; // 'function'
+```
+
+与普通方法不同的是，你只能通过`new`关键字来调用构造方法：
+
+```js
+const burrito = Food('Heaven', 100, 100, 25); // TypeError
+```
+
+这引出了另一个问题：当我们没有使用`new`的时候发送了什么？
+
+简单的答案：就像其他没有明确返回值的函数一样，它返回了`undefined`。因此你必须相信开发者会通过构造函数来调用函数。这也就是为什么js委员会建议使用首字母大写的方式来命名：提醒你使用`new`关键字。
+
+```js
+"use strict";
+
+function Food (name, protein, carbs, fat) {
+    this.name    = name;
+    this.protein = protein;
+    this.carbs    = carbs;
+    this.fat          = fat;
+}
+
+const fish = Food('Halibut', 26, 0, 2); // D'oh . . .
+console.log(fish); // 'undefined'
+```
+
+ES2015提供了一个方法：[`new.target`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/new.target)，它可以让你监测实例是否是通过`new`调用的。
+
+`new.target`是通过`new`关键字调用的函数所拥有的一个属性。当你通过`new`调用一个方法的时候，方法内的`new.target`将指向该函数自身。而如果没有通过`new`调用，则这个属性的值是`undefined`。
+
+```js
+"use strict";
+
+// Enforcing constructor call
+function Food (name, protein, carbs, fat) {
+    // 通过检测，人为的使用new
+    if (!new.target)
+        return new Food(name, protein, carbs, fat); 
+    this.name = name;
+    this.protein = protein;
+    this.carbs = carbs;
+    this.fat = fat;
+}
+
+const fish = Food('Halibut', 26, 0, 2); // Oops -- but, no problem!
+fish; // 'Food {name: "Halibut", protein: 20, carbs: 5, fat: 0}'
+```
+
+在ES5中则不能更糟了：
+
+```js
+"use strict";
+function Food (name, protein, carbs, fat) {
+    if (!(this instanceof Food))
+        return new Food(name, protein, carbs, fat); 
+    this.name = name;
+    this.protein = protein;
+    this.carbs = carbs;
+    this.fat = fat;
+}
+```
+
+[MDN文档](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/new.target)对于`new.target`有更详细的介绍。
+
+#### 静态方法
+
+静态方法是构造函数上的方法，它对于实例化的类而言不可用。你可以通过`static`关键字定义它。
+
+```js
+"use strict";
+
+class Food {
+     // Class definition is the same as before . . . 
+     static describe () {
+       console.log('"Food" is a data type for storing macronutrient information.');
+      }
+}
+Food.describe(); // '"Food" is a data type for storing macronutrient information.'
+```
+
+静态方法与直接将属性加在函数身上有所类似：
+
+```js
+"use strict";
+function Food (name, protein, carbs, fat) {
+    Food.count += 1;
+    this.name = name;
+    this.protein = protein;
+    this.carbs = carbs;
+    this.fat = fat;
+}
+
+Food.count = 0;
+Food.describe = function count () {
+       console.log(`You've created ${Food.count} food(s).`);
+};
+
+const dummy = new Food();
+Food.describe(); // "You've created 1 food."
+```
+
+#### 属性方法
+
+不是构造方法或者静态方法的方法都叫做属性方法。它的名字来源自我们将方法当做属性一样的附加在函数的原型身上：
+
+```js
+"use strict";
+
+// Using ES6:
+class Food {
+    constructor (name, protein, carbs, fat) {
+      this.name = name;
+      this.protein = protein;
+      this.carbs = carbs;
+      this.fat = fat;
+    }
+
+    toString () {  
+      return `${this.name} | ${this.protein}g P :: ${this.carbs}g C :: ${this.fat}g F`; 
+    }
+
+    print () {  
+      console.log( this.toString() );  
+    }
+}
+
+// In ES5:
+function Food  (name, protein, carbs, fat) {
+    this.name = name;
+    this.protein = protein;
+    this.carbs = carbs;
+    this.fat = fat;
+}
+
+// "prototype methods" 来源于我们把方法像属性一样的加在函数的原型身上。
+Food.prototype.toString = function toString () {
+    return `${this.name} | ${this.protein}g P :: ${this.carbs}g C :: ${this.fat}g F`; 
+};
+
+Food.prototype.print = function print () {
+    console.log( this.toString() ); 
+};
+```
