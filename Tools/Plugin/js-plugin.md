@@ -188,3 +188,11 @@ jQuery date & time input picker.
 > 一个跨终端的互动小游戏解决方案
 >
 > Hilo不仅仅是一个渲染引擎，它更是一个集成了 Hilo Audio, Hilo Preload 等游戏构建服务的综合解决方案
+
+#### [jQuery WeUI](https://lihongxun945.github.io/jquery-weui/)
+
+> WeUI 是微信官方团队针对微信提供的一个H5 UI库，它只提供了一组CSS组件。
+>
+> jQuery WeUI 中使用的是官方WeUI的CSS代码，并提供了jQuery/Zepto版本的API实现。因为直接使用了官方的CSS，所以你不用担心跟官方版本的冲突。实际上 jQuery WeUI == WeUI + jQuery插件
+>
+> 同时兼容 jQuery 和 Zepto
