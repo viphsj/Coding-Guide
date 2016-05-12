@@ -99,7 +99,9 @@ module.exports = {
         exclude: /(node_modules|bower_components)/,
         loader: ['babel-loader'],
         query: {
-          presets: ['react', 'es2015']
+          presets: ['es2015']
+          // 如果安装了React的话
+          // presets: ['react', 'es2015']
         }
       },
       // image & font
@@ -160,7 +162,7 @@ $ sudo npm install exports-loader --save
 module: {
   loaders: [
     // expose-loader将需要的变量从依赖包中暴露出来
-    { test: require.resolve("jquery"), loader: "expose?$!expose?jQuery" }
+    { test: require.resolve("jquery"), loader: "exports?$! exports?jQuery" }
   ]
 },
 plugins: [
