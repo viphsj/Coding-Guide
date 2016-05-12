@@ -1,4 +1,4 @@
-## Webpack从零到一
+## Webpack配置从零到一
 
 > 这不算是初学者的入门文章，也不能算是高端用户的进阶。这只是我自己在配置Webpack过程中收集整理的一些资料，以及自己常用的整个配置流程。因为有时候老是忘了某个东西是怎么配置的，所以记录下来用于速查和备忘。
 
@@ -26,6 +26,7 @@ const MODULES_PATH = path.join(ROOT_PATH, './node_modules'); // node包目录
 const BUILD_PATH = path.join(ROOT_PATH, './public/assets'); // 最后输出放置公共资源的目录
 
 module.exports = {
+  context: path.join(__dirname, '../'), // 设置webpack配置中指向的默认目录为项目根目录
   entry: {
     index: './public/pages/index.js',
     public: './public/pages/public.js'
@@ -57,6 +58,8 @@ module.exports = {
 scss-loader的配置同理less，个人比较常用less
 
 ```bash
+$ npm install less --save-dev # install less
+
 $ npm install css-loader style-loader --save-dev # install style-loader, css-loader
 
 $ npm install less less-loader --save-dev # 基于style-loader,css-loader
@@ -155,8 +158,8 @@ $ sudo npm install exports-loader --save
 // config/webpack.config.js
 
 module: {
-  // expose-loader将需要的变量从依赖包中暴露出来
   loaders: [
+    // expose-loader将需要的变量从依赖包中暴露出来
     { test: require.resolve("jquery"), loader: "expose?$!expose?jQuery" }
   ]
 },
