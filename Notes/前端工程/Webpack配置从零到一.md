@@ -153,7 +153,7 @@ plugins: [
 $ npm install jquery --save-dev
 
 # 安装 expose-loader
-$ sudo npm install exports-loader --save
+$ sudo npm install expose-loader --save
 ```
 
 ```js
@@ -162,7 +162,7 @@ $ sudo npm install exports-loader --save
 module: {
   loaders: [
     // expose-loader将需要的变量从依赖包中暴露出来
-    { test: require.resolve("jquery"), loader: "exports?$! exports?jQuery" }
+    { test: require.resolve("jquery"), loader: "expose?$! expose?jQuery" }
   ]
 },
 plugins: [
