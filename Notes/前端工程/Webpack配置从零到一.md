@@ -215,6 +215,62 @@ plugins: [
 ]
 ```
 
+### 我要用 React!
+
+React + Webpack在我心里是个标配，自己也很喜欢React+Redux+Webpack那一套，所以怎么少得了它。
+
+#### install
+
+```bash
+$ npm install react --save
+$ npm install react-dom --save
+
+# 如果已经装了babel可以忽略下面这条
+$ npm install babel-loader babel-core babel-preset-es2015 --save-dev
+
+# 但是要用React的话一定记得安装下面这个
+$ npm install babel-preset-react --save-dev
+```
+
+#### config
+
+```js
+loaders: [
+  {
+    test: /\.jsx?$/,
+    exclude: /(node_modules|bower_components)/,
+    loader: ['babel-loader'],
+    query: {
+      presets: ['react', 'es2015']
+    }
+  }
+]
+```
+
+#### bug ?
+
+在最新的React(V15)里，如果你按照上面的配置正常使用的话，应该会出现如下的警告：
+
+```text
+Warning: It looks like you're using a minified copy of the development build of React. When deploying React apps to production, make sure to use the production build which skips development warnings and is faster. See https://fb.me/react-minification for more details.
+```
+
+我记得以前的版本没有这个警告啊？我在开发环境压缩它了？那把`UglifyJsPlugin`拿走试试。。结果还是一样。
+
+最后在[github React-issue](https://github.com/facebook/react/issues/6479)找到了目前的解决方案：
+
+在Webpack的plugins里添加：
+
+```js
+new webpack.DefinePlugin({
+  "process.env": { 
+     NODE_ENV: JSON.stringify("production") 
+   }
+})
+```
+
+然后就没问题了==
+
 ### end
 
 如果真的要玩的话，webpack可以有非常多的玩法（看看它插件就知道了）。但webpack终究是一个工具，所以也就没有特别深入探究它，知道怎么用，够用就好了。
