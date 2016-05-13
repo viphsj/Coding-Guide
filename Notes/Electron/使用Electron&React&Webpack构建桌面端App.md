@@ -35,6 +35,10 @@ $ npm install && npm start
 
 里面记录了自己搭建webpack时的常用配置，以及配合React+Redux时安装和设置。
 
+React搭配Webpack时，关于`production`和`development`需要注意的点：
+
+[Make your own React production version with webpack](http://dev.topheman.com/make-your-react-production-minified-version-with-webpack/)
+
 #### webpack + electron
 
 ##### webpack + electron 的问题
