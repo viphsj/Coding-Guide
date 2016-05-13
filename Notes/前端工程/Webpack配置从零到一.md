@@ -222,8 +222,14 @@ React + Webpack在我心里是个标配，自己也很喜欢React+Redux+Webpack�
 #### install
 
 ```bash
+# react
 $ npm install react --save
 $ npm install react-dom --save
+
+# 喜欢redux?
+$ npm install --save redux # redux
+$ npm install --save react-redux # 和React配合
+$ npm install --save redux-thunk # middleware
 
 # 如果已经装了babel可以忽略下面这条
 $ npm install babel-loader babel-core babel-preset-es2015 --save-dev
