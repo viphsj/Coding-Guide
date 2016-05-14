@@ -1,5 +1,7 @@
 ## 使用Electron&React&Webpack构建桌面端App【01】--配置
 
+### intro
+
 对于Electron的学习，什么也不比[官方文档](https://github.com/electron/electron/tree/master/docs-translations/zh-CN)+[开源项目代码](https://github.com/sindresorhus/awesome-electron#documentation)来的痛快
 
 先看下[官网](http://electron.atom.io/)，按照上面的Quick Start走：
@@ -13,6 +15,53 @@ $ cd electron-quick-start
 
 # Install the dependencies and run
 $ npm install && npm start
+```
+
+目录结构：
+
+```bash
+|--index.html # 控制首屏UI
+|--renderer.js # 渲染线程
+|--main.js # 总入口
+|--package.json
+```
+
+```js
+// main.js
+const electron = require('electron')
+// app用于控制应用的生命周期
+const app = electron.app
+// BrowserWindow用于生成一个原生的窗口
+const BrowserWindow = electron.BrowserWindow
+// 创建一个全局的窗口对象变量，并在接下来的初始化窗口函数中赋值。通过这样的方式我们可以保持对窗口对象的引用，以免垃圾回收导致应用退出
+let mainWindow
+
+function createWindow() {
+  // 创建主窗口，加载资源文件URL（html文件或一个网址）
+  // 在这个官方例子里加载了index.html
+  // 并定义当主窗口关闭时的回调函数
+}
+
+app.on('ready', createWindow)
+app.on('window-all-closed', function() {}) // 全部窗口关闭时的回调
+app.on('active', function() {
+  // 在mac平台上，当点击dock icon的时候，如果没有其他窗口的话则新建主窗口
+  if(mainWindow === null)createWindow();
+})
+```
+
+```html
+<!--index.html-->
+<!--...省略一些HTML代码-->
+<script>
+  require('./renderer.js') // 在这里render渲染进程
+</script>
+```
+
+```js
+// renderer.js
+// 在这里可以使用Node.js API
+// 例如，可以调用渲染进程的专用API，如remote（用于在主进程和渲染进程间建立联系，并可获取当前窗口），clipboard（用于粘贴渲染进程的相应文字）
 ```
 
 在进一步之前，建议先戳这里：
