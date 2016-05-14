@@ -74,8 +74,6 @@ app.on('active', function() {
 
 加深一下了解。然后我们就开始吧。Electron + React + Webpack构建桌面端App。
 
-### setup
-
 使用上面根据官方QuickStart获取的内容，进行进一步的构建。
 
 首先来让我们引入 Webpack + React的环境搭配，戳这篇：
@@ -88,7 +86,7 @@ React搭配Webpack时，关于`production`和`development`需要注意的点：
 
 [Make your own React production version with webpack](http://dev.topheman.com/make-your-react-production-minified-version-with-webpack/)
 
-#### webpack + electron
+### webpack + electron
 
 ##### webpack + electron 的问题
 
@@ -155,7 +153,24 @@ module.exports = {
 
 所有`require('electron')`的地方全部改为`window.require('electron')`
 
-### 搭建目录结构
+### setup
+
+#### React
+
+```bash
+$ npm install react --save
+$ npm install react-dom --save
+```
+
+#### Redux
+
+```bash
+$ npm install --save redux # redux
+$ npm install --save react-redux # 和React配合
+$ npm install --save redux-thunk # middleware
+```
+
+#### 搭建目录结构
 
 改变目录结构如下：
 
