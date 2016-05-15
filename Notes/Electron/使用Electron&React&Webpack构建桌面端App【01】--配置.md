@@ -192,3 +192,7 @@ $ npm install --save redux-thunk # middleware
 |--package.json
 |--main.js # Electron App的入口文件
 ```
+
+---
+
+初步的搭建目前就算完成了。接下来该做什么具体的App呢。。我先想一会儿去==
