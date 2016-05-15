@@ -100,4 +100,43 @@ Exposer.methodToExpose; // undefined
 
 任何一个JavaScript开发者都听说过**原型**，或许还会为原型继承而感到困惑。原型继承模式依赖于[JavaScript原型继承](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Inheritance_and_the_prototype_chain)，它主要用来在表现密集的场景下创建对象。
 
-在原型模式下，创建的对象都是原始对象的拷贝（浅拷贝）。使用这种设计模式的一个目的是创建一个可以被应用中其他部分使用的对象。如果其他部分要使用这个对象，
+在原型模式下，创建的对象都是原始对象的拷贝（浅拷贝）。使用这种设计模式的一个目的是利用已经存在的数据，创建一个可以被应用中其他部分使用的对象。
+
+为了clone一个对象，必须存在一个可以用来实例化的构造函数。之后，通过关键字`prototype`变量和对象构造方法中的属性进行构造。来看个基础例子：
+
+```js
+var TeslaModelS = function() {
+  this.numWheels    = 4;
+  this.manufacturer = 'Tesla';
+  this.make         = 'Model S';
+}
+
+TeslaModelS.prototype.go = function() {
+  // Rotate wheels
+}
+
+TeslaModelS.prototype.stop = function() {
+  // Apply brake pads
+}
+```
+
+构造函数运行创建一个TeslaModelS对象。当创建一个新的TeslaModelS对象时，它会保留在构造函数中的状态之中。同时，你可以很方便的维护`go`和`stop`方法因为他们都在`prototype`里。还有一种同样意义的写法：
+
+```js
+var TeslaModelS = function() {
+  this.numWheels    = 4;
+  this.manufacturer = 'Tesla';
+  this.make         = 'Model S';
+}
+
+TeslaModelS.prototype = {
+  go: function() {
+    // Rotate wheels
+  },
+  stop: function() {
+    // Apply brake pads
+  }
+}
+```
+
+#### 暴露原型模式

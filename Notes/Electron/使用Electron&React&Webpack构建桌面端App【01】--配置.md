@@ -180,8 +180,12 @@ $ npm install --save redux-thunk # middleware
 |----Redux # redux负责组件的函数逻辑和state更新
 |------actions
 |------reducers
-|----Page # html文件扔这里
+|----View # html文件扔这里
 |------index.html
+|----Page # 各个页面对应的相关资源
+|------image
+|------js
+|------stylesheet
 |--assets # 打包好以后的资源在这儿
 |--config
 |----webpack.config.js # webpack配置
