@@ -124,6 +124,14 @@ before.to(after); // in a day 相对时间多久之后
 
 > 集本地存储、Cookie和Session Storage API于一体，使得前端的存储管理更加方便，允许完全的本地存储
 
+#### [storage](https://github.com/alekseykulikov/storage)
+
+> Asynchronous browser storage with multiple back-ends (IndexedDB, WebSQL, localStorage)
+
+#### *[Store.js](https://github.com/marcuswestin/store.js)*
+
+> 适用于所有浏览器的本地存储，不使用 cookies 或者 flash。会根据浏览器的不同选择 localStorage, globalStorage, 和 userData 作为存储引擎。
+
 ### About Writer
 
 #### [tinymce](https://www.tinymce.com/)
@@ -167,13 +175,17 @@ jQuery date & time input picker.
 > 
 > 并不是很推荐。。这种东西不如自己写一套来的爽快
 
+#### [biu](http://biu.js.org/)
+
+> biu的一下冒出来一个光头~啊不，是弹窗
+
+#### [Tipso](http://tipso.object505.com/)
+
+> 鼠标hover上去以后弹出的一个提示框效果
+
 #### [FlipClock.js](http://flipclockjs.com/)
 
 > 类似日历翻页效果的插件
-
-#### [Store.js](https://github.com/marcuswestin/store.js)
-
-> 适用于所有浏览器的本地存储，不使用 cookies 或者 flash。会根据浏览器的不同选择 localStorage, globalStorage, 和 userData 作为存储引擎。
 
 #### [PLEASE.JS](http://www.checkman.io/please/)
 
