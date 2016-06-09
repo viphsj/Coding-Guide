@@ -278,3 +278,158 @@ print(new_set) # {1, 4}
 
 #### 函数
 
+定义函数: `def fun(params):`
+
+对于仅有位置参数的函数`fun(p1, p2, p3)`，调用的时候需要按照参数顺序进行传值。而通过关键字参数则可避免这个问题：
+
+```python
+def fun(p0, p1 = 1, p2 = 0): # 第一个位置参数，后两个关键字参数
+	return p0 - p1 - p2
+
+print(fun(5, p2 = 2, p1 = 1)) # 2
+```
+
+**使用`*`收集位置参数**
+
+当参数被用在函数内部时，`*`将一组**可变数量的位置参数**集合成参数值的**元组**
+
+```python
+def fun(p, *args):
+	return args
+
+fun(1, 2, 3, 4) # (2, 3, 4)
+```
+
+**使用`**`收集关键字参数**
+
+使用两个星号可以将参数收集到一个字典中，参数名则是字典的键，对应的值是字典的值
+
+```python
+def fun(**kwargs):
+	return kwargs
+
+fun(a = 0, b = 1, c = 2) # {'c': 2, 'a': 0, 'b': 1}
+```
+
+**闭包**
+
+函数返回一个被动态创建的可以记录外部变量的函数
+
+```python
+def fun(str):
+	def say():
+		return "He said: %s" % str
+	return say
+```
+
+**匿名函数`lambda()`**
+
+```python
+# 普通函数
+def print_upstr(str, fun):
+	for word in str:
+		print(fun(word))
+
+def upstr(word):
+	return word.capitalize()
+
+print_upstr('this is a test', upstr)
+# This
+# Is 
+# A
+# Test
+
+# 匿名函数
+def print_upstr(str, fun):
+	for word in str:
+		print(fun(word))
+
+print_upstr('this is a test', lambda word: word.capitalize())
+```
+
+**装饰器**
+
+用于在不改变原函数代码的情况下修改已存在的函数。常见场景是增加一句调试，来查看传入的参数
+
+```python
+def decorator_fun(fun):
+	def new_fun(*args, **kwargs):
+		print('current fun:', fun.__name__)
+		print('position arguments:', args)
+		print('key arguments:', **kwargs)
+		result = fun(*args, **kwargs)
+		print(result)
+		return result
+	return new_fun
+	
+def add(a, b):
+	return a + b
+add(3, 2) # 5
+
+new_add = decorator_fun(add)
+new_add(3, 2)
+# current fun: add
+# position arguments: (3, 2)
+# key arguments: {}
+# 5
+```
+
+*相对于人工进行装饰器赋值传参的操作过程，可以直接在要装饰的函数前面添加装饰器名称@decorator_name:*
+
+```python
+def decorator_fun(fun):
+	def new_fun(*args, **kwargs):
+		print('current fun:', fun.__name__)
+		print('position arguments:', args)
+		print('key arguments:', **kwargs)
+		result = fun(*args, **kwargs)
+		print(result)
+		return result
+	return new_fun
+	
+@decorator_fun
+def add(a, b):
+	return a + b
+
+add(3, 2)
+# current fun: add
+# position arguments: (3, 2)
+# key arguments: {}
+# 5
+```
+
+*一个函数可以有多个装饰器，靠近函数定义的装饰器最先执行，然后依次执行上面的装饰器*
+
+**命名空间和作用域**
+
+```python
+const_value = 'const_value'
+
+# example 1
+def fun():
+	global const_value # 要使用并修改全局变量前需要显示的通过global进行声明
+	print('before is:', const_value)
+	const_value = '2'
+	print(const_value)
+
+fun() # 2
+print(const_value) # 2
+
+# example 2
+def fun():
+	print('before is:', const_value)
+	const_value = '2'
+	print(const_value)
+
+fun() # error: local variable 'const_value' referenced before assignment
+# 认为函数中第一次使用的const_value是局部变量，尚未声明
+
+# example 3
+def fun():
+	const_value = '2'
+	print(const_value)
+
+fun() # 2
+print(const_value) # const_value
+# 函数中使用的const_value为局部变量
+```
