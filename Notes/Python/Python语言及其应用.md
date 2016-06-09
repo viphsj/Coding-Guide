@@ -190,7 +190,7 @@ dict(examples)
 类似于舍弃了值，仅剩下键的字典
 
 - `set()` 创建空集合。**不能使用`{}`创建，它创建的是个空字典**
-- `set(str/list/tuple)` 将字符串/列表/元组转换为集合
+- `set(str/list/tuple)` 将字符串/列表/元组转换为集合，不会包含重复元素
 - `set(dic)` 把字典转为集合时，只有键会被使用
 
 ---
@@ -205,3 +205,76 @@ dict(examples)
 
 **获取差集**(出现在第一个集合而没有在第二个集合中的元素)
 `-` or `a.difference(b)` 
+
+**判断包含关系**
+`<=` or `a.issubset(b)` 判断a是否是b的子集
+`>=` or `a.issuperset(b)` 判断b是否是a的子集
+
+### 代码结构
+
+`zip()`
+该函数可以遍历多个序列，在具有**相同位移**的项之间创建**元组**
+
+```python
+list1 = [1, 2, 3, 4]
+tuple1 = [a, b, c, d]
+list(zip(list1, tuple1)) # [(1, a), (2, b), (3, c), (4, d)]
+```
+
+`zip()`生成的结果既不是列表也不是元组，而是一个整合在一起的可迭代变量。可通过`list()`进一步处理
+
+---
+
+`range(start, end, step)`
+返回在特定区间的自然数序列，生成的是一个可循环对象
+
+```python
+list(range(2, -1, -1)) # [2, 1, 0]
+list(range(0, 11, 2)) # [0, 2, 4, 6, 8, 10]
+```
+
+---
+
+#### 列表推导式
+
+`[expression for item in iterable if condition]`
+
+expression为符合condition条件的列表生成值。e.g.
+
+```python
+# example_1
+number_list = [number for number in range(1, 6) if number % 2 == 1]
+print(number_list) # [1, 3, 5]
+
+# example_2
+rows = range(1, 4)
+cols = range(1, 3)
+cells = [(row, col) for row in rows for col in cols]
+# by the way, for row...和for col...都可以有自己的if判断
+print(cells) # [(1, 1), (1, 2), (2, 1), (2, 2), (3, 1), (3, 2)]
+```
+
+#### 字典推导式
+
+`{key_expression: value_expression for expression in iterable if condition}`
+
+```python
+word = 'letter'
+letter_counts = {letter: word.count(letter) for letter in set(word)}
+# 在set(word)中遍历，避免了重复元素的遍历
+print(letter_counts) # {'r': 1, 'l': 1, 't': 2, 'e': 2}
+```
+
+#### 集合推导式
+
+`{expression for expression in iterable if condition}`
+
+```python
+new_set = {number for number in range(1, 6) if number % 3 == 1}
+print(new_set) # {1, 4}
+```
+
+---
+
+#### 函数
+
