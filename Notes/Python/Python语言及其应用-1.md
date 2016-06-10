@@ -227,6 +227,19 @@ for item in example_items():
 	print(item) # (key: value)
 ```
 
+**`enumerate`创建迭代器**
+
+对于list，`for..in..`循环只能迭代value，无法或许index。此时，可以通过`enumerate`创建一个迭代器：
+
+```python
+example_list = [1, 2, 3]
+for index, value in enumerate(example_list):
+	print(index, ':', value)
+# 0 : 1
+# 1 : 2
+# 2 : 3
+```
+
 ---
 
 `zip()`
