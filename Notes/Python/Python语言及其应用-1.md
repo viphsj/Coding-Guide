@@ -212,6 +212,23 @@ dict(examples)
 
 ### 代码结构
 
+#### `for`迭代
+
+**列表、字符串、元组、字典、集合都是可迭代对象。**
+
+对一个字典进行迭代将会返回字典中的键。如果想对字典的值进行迭代，可以使用字典的`values()`函数：
+```python
+for value in example_dict.values():
+```
+
+而如果想返回`(key: value)`的元组形式，则可以使用字典的`items()`函数：
+```python
+for item in example_items():
+	print(item) # (key: value)
+```
+
+---
+
 `zip()`
 该函数可以遍历多个序列，在具有**相同位移**的项之间创建**元组**
 
