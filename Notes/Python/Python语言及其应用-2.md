@@ -257,7 +257,7 @@ A.kids()
 
 #### 文本格式化
 
-- 旧式格式化
+- `%`旧式格式化
 
 `%s 字符串`
 `%d 十进制整数`
@@ -276,5 +276,15 @@ A.kids()
 # this is a simple test
 ```
 
-- 新式格式化
+- `{}`和`format`的新式格式化
+
+```python
+'{},{},{}'.format('ecmadao', 'edward', 'cavalier')
+# 'ecmadao','edward','cavalier'
+
+# 旧格式化中传入参数的顺序要与%出现的顺序完全一致。但使用format则可以指定插入的顺序
+'{2},{0},{1}'.format('ecmadao', 'edward', 'cavalier')
+# 2代表最后一个参数，0代表第一个参数，1代表第二个参数
+# 'cavalier','ecmadao','edward'
+```
 
