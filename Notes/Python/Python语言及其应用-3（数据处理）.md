@@ -171,3 +171,63 @@ offset:
 0 - 默认值，代表从开头处偏移offset个字节
 1 - 从当前位置偏移offset个字节
 2 - 距离最后结尾处偏移offset个字节
+
+### 系统操作
+
+#### 路径与目录
+
+```python
+import os
+os.path.isfile(filename) # 判断是否是文件
+os.path.isdir(name) # 判断是否是目录
+os.path.isabs(name) # 判断是否是绝对路径名
+os.path.exists(name) # 判断是否存在这个目录
+
+os.mkdir(name) # 创建一个目录
+os.rmdir(name) # 删除目录
+os.listdir(name) # 列出目录下的内容(以list的形式)
+os.chdir(name) # 从当前目录跳转到目标目录下
+```
+
+**使用`glob`进行文件匹配**
+
+```python
+import glob
+glob.glob(name) # 匹配当前目录下，对应名称的文件/目录，返回一个文件/目录名组成的list
+# * 匹配任意名称
+# ? 匹配一个字符
+# [abc] 匹配字符a、b、c
+# [!abc] 匹配除了a、b和c之外的所有字符
+
+####### example
+glob.glob('??') # 获取所有名称为两个字符的文件和目录
+```
+
+#### 文件相关
+
+- 使用`open()`创建文件
+- 使用`exists()`检查文件是否存在
+- 使用`isfile()`检查是否为文件
+- 使用`copy()`复制文件
+- 使用`rename()`重命名文件
+- 使用`abspath()`获取绝对路径名
+- 使用`remove()`删除文件
+
+```python
+import os
+os.path.exists('example.txt') # True or False
+os.path.isfile('example.txt')
+os.path.abspath('example.txt') # 获取example文件的绝对路径
+
+os.remove('example.txt')
+os.rename('example.txt', 'renamed_example.txt')
+# 把example文件改名为renamed_example
+```
+
+```python
+import shutil
+shutil.copy('example.txt', 'new_example.txt')
+# 把example文件复制到new_example文件
+shutil.move('example.txt', 'new_example.txt')
+# 把example文件复制到new_example文件，并删除example文件
+```
