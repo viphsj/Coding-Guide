@@ -8,7 +8,7 @@
     - [react-ui-framework](./Tools/Framework/react-ui-framework.md)
 - Notes
   - [JavaScript](./Notes/JavaScript)
-  - Python
+  - [Python](./Notes/Python)
   - [html & css](./Notes/CSS)
   - [前端工程](./Notes/前端工程)
   - [NodeJS](./Notes/NodeJS)
