@@ -96,3 +96,50 @@ m = re.search(r'(. dish\b).*(\bfish)', source)
 m.group() # 'a dish of fish'
 m.groups() # ('a dish', 'fish')
 ```
+
+### 文件操作
+
+#### 打开文件
+
+```python
+fileobj = open(filename, mode)
+
+# mode的第一个字母
+# r 读
+# w 写，如果文件不存在则新建，若存在则重写其内容
+# x 在文件不存在的情况下新建并写文件
+# a 如果文件存在，在文件末尾追加写内容
+
+# mode的第二个字母
+# t 可省略，表示文本类型
+# b 代表二进制文件
+```
+
+如果不是使用`with`方法，则在打开文件后需要手动调用文件关闭方法`f.close()`
+
+使用`with`语句：
+
+```python
+with open(filename) as f:
+	for line in f.readlines():
+		print(line.strip()) # 去除末尾的'\n'
+```
+
+#### 读取文件
+
+```python
+f = fileobj.read() # 一次性读取全部内容
+f = fileobj.read(size) # 读取指定大小的内容
+f = fileobj.readline() # 一次读取一行内容。重复调用则会继续调用下面的行
+f = fileobj.readlines() # 一次性读取所有行，并返回各行组成的list
+```
+
+#### 写入文件
+
+```python
+with open(filename) as f:
+	f.write(str) # 返回写入文件的字节数
+	# print(str, file = f, sep = '', end = '')
+	# sep分隔符：默认为空格' '
+	# end结束字符：默认是换行符'\n'
+```
