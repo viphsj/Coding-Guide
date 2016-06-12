@@ -1,4 +1,4 @@
-## Python语言及其应用-2
+## Python语言及其应用-2(库/类/对象)
 
 ### Python标准库
 
@@ -252,39 +252,3 @@ a3 = A()
 A.kids()
 # A has 3 objects
 ```
-
-### 数据处理
-
-#### 文本格式化
-
-- `%`旧式格式化
-
-`%s 字符串`
-`%d 十进制整数`
-`%x 十六进制整数`
-`%f 十进制浮点数`
-`%e 以科学计数法表示的浮点数`
-`%% 文本值%本身`
-
-```python
-'%s' % 42 # '42'
-'%f' % 7.03 # 7.030000
-'%d%%' % 100 # 100%
-
-# 需要插入多个数据的时候，使用元组的形式
-'this %s a %s test' % ('is', 'simple')
-# this is a simple test
-```
-
-- `{}`和`format`的新式格式化
-
-```python
-'{},{},{}'.format('ecmadao', 'edward', 'cavalier')
-# 'ecmadao','edward','cavalier'
-
-# 旧格式化中传入参数的顺序要与%出现的顺序完全一致。但使用format则可以指定插入的顺序
-'{2},{0},{1}'.format('ecmadao', 'edward', 'cavalier')
-# 2代表最后一个参数，0代表第一个参数，1代表第二个参数
-# 'cavalier','ecmadao','edward'
-```
-
