@@ -132,6 +132,10 @@ f = fileobj.read() # 一次性读取全部内容
 f = fileobj.read(size) # 读取指定大小的内容
 f = fileobj.readline() # 一次读取一行内容。重复调用则会继续调用下面的行
 f = fileobj.readlines() # 一次性读取所有行，并返回各行组成的list
+
+# 读取二进制文件
+f = open(filename, 'rb')
+bytedata = f.read()
 ```
 
 #### 写入文件
@@ -142,4 +146,28 @@ with open(filename) as f:
 	# print(str, file = f, sep = '', end = '')
 	# sep分隔符：默认为空格' '
 	# end结束字符：默认是换行符'\n'
+
+# 写入二进制文件
+f = open(filename, 'wb')
+f.write(bytedata)
+f.close()
 ```
+
+#### 使用`seek()`改变读写位置
+
+`tell()`返回距离文件开始处的字节偏移量，`seek()`允许跳转到文件其他字节偏移量的位置
+
+```python
+with open(filename) as f:
+	f.tell() # 0
+	f.seek(255) # 255
+	# seek()同样返回当前的偏移量
+	f.tell() #255
+```
+
+`seek(offset, origin)`
+
+offset:
+0 - 默认值，代表从开头处偏移offset个字节
+1 - 从当前位置偏移offset个字节
+2 - 距离最后结尾处偏移offset个字节
