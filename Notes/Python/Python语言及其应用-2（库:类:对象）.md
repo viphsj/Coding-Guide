@@ -2,6 +2,8 @@
 
 ### Python标准库
 
+如果一个模块已经被引用了，Python可以做到不再次进行引用
+
 #### `setdefault()`&`defaultdict()`
 
 ```python
@@ -149,7 +151,7 @@ class Person(Animal):
 		self.type = type
 ```
 
-#### 使用属性对特性进行访问和设置
+#### 使用`property`对特性进行访问和设置
 
 Python里所有的特性(attribute)都是公开的。可以创建getter和setter方法。利用属性(property)，限制对特性的直接访问。
 
@@ -203,6 +205,8 @@ class Animal():
 		self.hiden_name = new_name
 ```
 
+若不定义`@name.setter`，则name是一个只读属性
+
 #### 使用名称重整保护私有特性
 
 **使用`__`作为命名的开头使其对外不可见**
@@ -220,15 +224,19 @@ print(human._Human__name) # ecmadao
 
 注：同时以`__`作为开头和结尾的变量不是私有变量，而是特殊变量，特殊变量是可以直接访问的
 
-#### 方法的类型
+#### 方法/属性的类型
 
 - 实例方法
+- 实例属性
 
-以`self`作为第一个参数的方法。
+以`self`作为第一个参数的方法/属性。
 
 - 类方法
+- 类属性
 
-作用于整个类，对类作出的任何改变都会对它的**所有实例对象**产生影响。类方法的第一个参数是**类本身`cls`**，并使用前缀修饰符`@classmethod`
+类方法作用于整个类，对类作出的任何改变都会对它的**所有实例对象**产生影响。类方法的第一个参数是**类本身`cls`**，并使用前缀修饰符`@classmethod`
+
+而类属性则直接写在类内部，不需要self。**当我们定义了一个类属性后，这个属性虽然归类所有，但类的所有实例都可以访问到**
 
 - 静态方法
 
@@ -236,7 +244,7 @@ print(human._Human__name) # ecmadao
 
 ```python
 class A():
-	count = 0
+	count = 0 # 类属性
 	def __init__(self):
 		A.count += 1
 		
@@ -254,3 +262,29 @@ a3 = A()
 A.kids()
 # A has 3 objects
 ```
+#### 通过`__slots__`限制类实例的属性
+
+Python作为动态语言，可以在运行的时候动态的给类的实例添加新的属性：
+
+```python
+class Test(object):
+    def __init__(self, name):
+        self.name = name
+test = Test('ecmadao')
+test.age = 24
+print(test.age) # 24
+```
+
+通过`__slots__`，则可以限制类实例所能够绑定的属性：
+
+```python
+class Test(object):
+    __slots__ = ('name', 'age')
+    def __init__(self, name):
+        self.name = name
+test = Test('ecmadao')
+test.age = 24
+test.job = 'developer'
+# AttributeError: 'Test' object has no attribute 'job'
+```
+
