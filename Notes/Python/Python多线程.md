@@ -62,6 +62,7 @@ lock = threading.Lock() # 线程锁应该只在主线程实例化一个
 
 lock.acquire() # 调用线程锁，阻塞其他线程
 lock.release() # 释放线程锁
+lock.locked() # 获取当前锁的状态，若锁已经被某个线程获取,返回True, 否则为False
 ```
 
 ### 使用实例
