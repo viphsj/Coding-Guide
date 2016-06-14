@@ -220,7 +220,9 @@ dict(examples)
 
 ### 代码结构
 
-#### `for`迭代
+#### 迭代
+
+##### `for`迭代
 
 **列表、字符串、元组、字典、集合都是可迭代对象。**
 
@@ -235,7 +237,7 @@ for item in example_items():
 	print(item) # (key: value)
 ```
 
-**`enumerate`创建迭代器**
+##### `enumerate`创建迭代器
 
 对于list，`for..in..`循环只能迭代value，无法或许index。此时，可以通过`enumerate`创建一个迭代器：
 
@@ -248,9 +250,8 @@ for index, value in enumerate(example_list):
 # 2 : 3
 ```
 
----
+##### `zip()`
 
-`zip()`
 该函数可以遍历多个序列，在具有**相同位移**的项之间创建**元组**
 
 ```python
@@ -261,9 +262,8 @@ list(zip(list1, tuple1)) # [(1, a), (2, b), (3, c), (4, d)]
 
 `zip()`生成的结果既不是列表也不是元组，而是一个整合在一起的可迭代变量。可通过`list()`进一步处理
 
----
+##### `range(start, end, step)`
 
-`range(start, end, step)`
 返回在特定区间的自然数序列，生成的是一个可循环对象
 
 ```python
@@ -271,7 +271,73 @@ list(range(2, -1, -1)) # [2, 1, 0]
 list(range(0, 11, 2)) # [0, 2, 4, 6, 8, 10]
 ```
 
----
+##### `map()`
+
+`map(fun, sequence[, sequence...])`
+根据提供的函数对指定序列做映射，返回一个可迭代对象
+
+```python
+x = map(lambda x: x * 2, [1, 2, 3, 4])
+for i in x:
+	print(i)
+# 2
+# 4
+# 6
+# 8
+
+def abc(a, b, c):
+	return a * 100 + b * 10 + c
+
+list1 = [9, 8, 7]
+list2 = [9, 8, 7]
+list3 = [9, 8, 7]
+
+for i in map(abc, list1, list2, list3):
+	print(i)
+# 999
+# 888
+# 777
+```
+
+##### `filter()`
+
+`filter(fun, sequence)`
+第一个参数为函数，接收一个参数并返回一个布尔值
+
+```python
+def larger_than_ten(a):
+	return a > 10
+	
+list1 = [10, 11, 9, 8, 7]
+
+for i in filter(larger_than_ten, list1):
+	print(i)
+# 11
+```
+
+##### `reduce()`
+
+```python
+from functools import reduce
+reduce(fun, sequence[, initial])
+# fun是一个接收两个参数的函数
+# 提供initial参数，会以sequence中的第一个元素和initial作为参数调用fun
+```
+
+```python
+from functools import reduce
+
+def add(x, y):
+	return x + y
+	
+list1 = [1, 2, 3, 4]
+result = reduce(add, list1)
+print(result)
+# 10
+result2 = reduce(add, list1, 10)
+print(result2)
+# 20
+```
 
 #### 列表推导式
 
