@@ -87,7 +87,35 @@ for key in OrderedDict(example_dict):
 from collections import deque
 ```
 
-传入一个序列，返回一个双端队列。其具有`popleft()`方法，可去掉最左边的项并返回该项；也有`pop()`方法，去掉最右边的项并返回该项
+传入一个序列，返回一个双端队列。
+
+- `popleft()` 可去掉最左边的项并返回该项
+- `pop()` 去掉最右边的项并返回该项
+- `append()`
+- `appendleft()` 把元素加在左边
+
+- `rotate()` 队列的旋转操作
+
+`rotate`参数为正时，由队列尾开始往前，依次把元素移动到队列首部，直到移动参数数目的元素；
+`rotate`参数为负时，由队列首开始往后，依次把元素移动到队列尾部，直到移动参数数目的元素
+
+```python
+from collections import deque
+
+d = deque(range(5))
+print(d) # deque([0, 1, 2, 3, 4])
+d.rotate(2)
+print(d) # deque([3, 4, 0, 1, 2])
+d.rotate(5)
+print(d) # deque([3, 4, 0, 1, 2]) 当参数大于等于列表长度的时候则无效
+
+d2 = deque(range(5))
+print(d2) # deque([0, 1, 2, 3, 4])
+d2.rotate(-2)
+print(d2) # deque([2, 3, 4, 0, 1])
+d2.rotate(-5)
+print(d2) # deque([2, 3, 4, 0, 1]) 当参数的绝对值大于等于列表长度的时候则无效
+```
 
 ---
 
