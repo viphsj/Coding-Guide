@@ -114,23 +114,93 @@ thread 2 : 9
 
 queue 模块中提供了同步的、线程安全的队列类，这些队列都实现了锁原语，能够在多线程中直接使用，可以使用队列来实现线程间的同步。
 
+[`queue`官方文档](https://docs.python.org/3/library/queue.html)
+
 ```python
 import queue
 
-q = queue.Queue(number) # number代表新建队列的大小，不写则默认为无限大
-q.put(item) # 入栈
-q.get() # 出栈，默认情况下先进先出
+q = queue.Queue(number) # 新建一个队列，默认情况下先进先出。number代表新建队列的大小，不写则默认为无限大
 
-"""
-当一个队列为空的时候如果再用get取则会堵塞，所以取队列的时候一般是用到
-get_nowait()方法，这种方法在向一个空队列取值的时候会抛一个Empty异常
-所以更常用的方法是先判断一个队列是否为空，如果不为空则取值
-"""
+q.put(item, block=True, timeout=None) # 入栈，默认情况下Block为True，代表当队列已满时会造成阻塞，timeout表示阻塞时间，为None则一直阻塞
+q.put_nowait(item) # 非阻塞的入栈，相当于 q.put(item, False)
+
+q.get(block=True, timeout=None) # 出栈，默认情况下Block为True，代表当队列为空时会造成阻塞，timeout表示阻塞时间，为None则一直阻塞
+q.get_nowait() # 非阻塞的出栈，相当于 q.get(False)，它在向一个空队列取值的时候会抛一个Empty异常
 
 q.empty() # 如果队列对空则返回True
 q.full() # 如果队列满了则返回True
+
 q.task_done() # 告诉queue这个队列item的任务已经完成了
 q.join() # 在queue里的任务完成之前阻塞线程，直到队列里所有的任务都是task_done()
 ```
 
-可以将queue看做是一个储存任务所需数据的队列
+可以将queue看做是一个储存任务所需数据的队列，以此来控制线程的数目。当queue内储存的数量达到线程数量最大值时，再向queue中put则会造成阻塞，直到某线程完成任务`q.get()` + `task_done()`
+
+```python
+import queue
+from time import sleep
+import random
+
+q = queue.Queue(1) # 限制队列大小为1
+
+for i in range(5):
+	q.put(i)
+print('all put in queue')
+# 无输出，队列阻塞
+
+for i in range(5):
+    if q.full():
+        item = q.get() # 这个举动会从queue队列里取出一个元素
+        print('queue is full, get {}'.format(item))
+        sleep(random.randrange(2, 5))
+        q.task_done()
+    q.put(i) # 当队列已满，而又没有item取出时会造成阻塞
+
+print(q.full())
+# 依次输出
+# queue is full, get 0
+# queue is full, get 1
+# queue is full, get 2
+# queue is full, get 3
+# True
+```
+
+`queue`结合`threading`：
+
+```python
+import queue
+from time import sleep
+import random
+import threading
+
+
+class TestThread(threading.Thread):
+    def __init__(self, que):
+        threading.Thread.__init__(self)
+        self.queue = que
+
+    def run(self):
+        while True: # 需要通过循环来不断的运行任务
+            item = self.queue.get()
+            sleep(random.randrange(2, 3))
+            print('queue is full, get {}'.format(item))
+            self.queue.task_done()
+
+def start_thread():
+    for thread in threads:
+        thread.start()
+
+q = queue.Queue(5)
+
+# 开启5个线程
+for i in range(5):
+    t = TestThread(q)
+    t.daemon = True
+    t.start()
+
+# 总共有20个数据跑在五个线程里
+for i in range(20):
+    q.put(i)
+
+q.join()
+```
