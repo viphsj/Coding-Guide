@@ -29,7 +29,7 @@ req = urllib.request.Request(url, headers = {
   'User-Agent': 'Mozilla/5.0 (X11; U; Linux i686) Gecko/20071127 Firefox/2.0.0.11'
 })
 
-data = request.urlopen(req).read().decode('UTF-8')
+data = urllib.request.urlopen(req).read().decode('UTF-8')
 ```
 
 #### `urllib.parse.urlencode`组合请求体

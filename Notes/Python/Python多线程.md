@@ -1,6 +1,6 @@
 ## Python多线程
 
-### threading模块
+### [`threading`模块](https://docs.python.org/3/library/threading.html)
 
 线程运行在进程内部，可以访问进程的所有内容。
 
@@ -9,6 +9,21 @@
 threading模块的常用方法：
 
 ```python
+thread = threading.Thread(target=None, name=None, daemon=None) 
+# 实例化一个线程
+# target是线程调用run()方法的时候会调用的函数
+# name是该线程名称
+# daemon=True时，thread dies when main thread (only non-daemon thread) exits.
+
+thread.start() # 一个线程最多只能调用该方法一次，如果多次调用则会报RuntimeError错误。它会调用run方法
+thread.run() # 在这里运行线程的具体任务
+thread.join(timeout=None) # 阻塞全部线程直到当前线程任务结束，timeout为阻塞时间，None时会一直阻塞
+
+thread.getName()
+thread.setName()
+
+thread.is_alive() # 判断当前进程是否存活
+
 threading.active_count()  # 返回当前线程对象Thread的个数
 threading.current_thread()  # 返回当前的线程对象Thread
 threading.current_thread().name # 返回当前线程的名称
@@ -110,11 +125,9 @@ thread 2 : 0
 thread 2 : 9
 ```
 
-### `queue`
+### [`queue`](https://docs.python.org/3/library/queue.html)
 
 queue 模块中提供了同步的、线程安全的队列类，这些队列都实现了锁原语，能够在多线程中直接使用，可以使用队列来实现线程间的同步。
-
-[`queue`官方文档](https://docs.python.org/3/library/queue.html)
 
 ```python
 import queue
