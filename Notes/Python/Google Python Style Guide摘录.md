@@ -67,15 +67,27 @@ collections.defaultdict
 
 - 使用`_`开头则表明模块变量或函数是protected的
 - 使用`__`开头的实例变量或方法表示类内私有
-
 - 类名使用大写字母开头双驼峰式写法(ExampleClass)
 - 模块名使用小写字母+`_`的形式(examlpe_class.py)
-
 - 常量名使用全大写+`_`的形式
 - 变量名使用全小写+`_`的形式
 - 变量名不应该带有类型信息，例如(example_list是不好的)
-
 - 函数的命名规则和变量名相同
+
+
+| Type                       | Public             | Internal                                 |
+| -------------------------- | ------------------ | :--------------------------------------- |
+| Moudles                    | lower_with_under   | _lower_with_under                        |
+| Packages                   | lower_with_under   |                                          |
+| Classes                    | CapWords           | _CapWords                                |
+| Exceptions                 | CapWords           |                                          |
+| Functions                  | lower_with_under() | _lower_with_under()                      |
+| Global/Class Constants     | CAPS_WITH_UNDER    | _CAPS_WITH_UNDER                         |
+| Global/Class Variables     | lower_with_under   | _lower_with_under                        |
+| Instance Variables         | lower_with_under   | _lower_with_under (protected) or __lower_with_under (private) |
+| Method Names               | lower_with_under() | _lower_with_under() (protected) or __lower_with_under() (private) |
+| Function/Method Parameters | lower_with_under   |                                          |
+| Local Variables            | lower_with_under   |                                          |
 
 #### 代码建议
 
