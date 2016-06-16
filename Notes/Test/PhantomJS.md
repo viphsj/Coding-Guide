@@ -39,7 +39,41 @@ webpage.open('https://google.com', function(status) {
 
 `phantom.exit()`必须在脚本结束时调用，否则PhantomJS永远不会终止
 
-### 获取页面上下文
+### webpage实例
+
+#### webpage属性
+
+- `page.clipRect` 返回一个Object，代表webpage截图剪裁的图像大小
+- `page.content` 返回当前页面的HTML
+- `page.cookies`
+- `page.settings.userAgent` 获取及设置UserAgent
+- `page.title`
+- `page.url`
+- `page.viewportSize` 返回当前模拟的窗口大小
+
+#### webpage方法
+
+- `page.close`
+- `page.loadFinished`
+- `page.loadStarted`
+- `page.openUrl`
+- `page.render`
+
+- `page.addCookie`
+- `page.deleteCookie`
+- `page.clearCookies`
+
+#### User-Agent
+
+通过`webpage.settings.userAgent`可以获取及设置UserAgent
+
+```python
+var webpage = require('webpage').create();
+print(webpage.setting.userAgent);
+webpage.setting.userAgent = 'new agent'
+```
+
+#### 获取页面上下文
 
 ```js
 /*
@@ -61,8 +95,6 @@ webpage.open('https://google.com', function(status) {
 });
 // 输出结果
 // Google
-
-
 ```
 
 - `evalute()`方法可以返回一个对象，然而**返回值仅限于对象，不能包含函数（或闭包）**
@@ -76,7 +108,7 @@ webpage.onConsoleMessage = function((msg) {
 });
 ```
 
-### 网页截图
+#### 网页截图
 
 在webpage成功open一个页面之后，可以调用它render的函数来截取当前页面的快照。
 
@@ -102,7 +134,7 @@ webpage.open('https://www.google.com', function(status) {
 })
 ```
 
-### 监测网络请求
+#### 监测网络请求
 
 - `onResourceRequested` 记录request
 - `onResourceReceived` 记录response
@@ -121,9 +153,7 @@ webpage.open(url, function(status) {
 });
 ```
 
-
-
-### 使用附加库
+#### 使用附加库
 
 在evaluate内获取DOM元素太慢太痛苦？我们可以引入jQuery等第三方库来便捷操作
 

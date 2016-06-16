@@ -188,6 +188,8 @@ dict(examples)
 - `d1.update(d2)` 将字典d2合并到字典d1中，若有重复的键，则新归入字典的值会取代原有的值
 - `d.clear()` 删除字典中全部元素
 - `in` 判断某个键是否存在于字典中
+- `d.copy()` 浅拷贝，只复制字典中的父对象，对子对象采用引用的方法
+- `d.deepcopy()` 深拷贝，新字典的改变不会影响原来的字典
 
 ---
 
@@ -200,6 +202,22 @@ dict(examples)
 - `d.items()` 获取所有键值对，返回一个list，里面的元素是(键，值)组成的元组
 
 当使用`d.[key]`获取字典中不存在的元素时会报错
+
+---
+
+字典的格式化字符串
+
+通过`'%(key)s' % dict`，可以取出字典中对应key的value
+
+```python
+dict_example = {
+  'a': 1,
+  'b': 2
+}
+print('a is %(a)s but b is %(b)s' % dict_example)
+# a is 1 but b is 2
+```
+
 
 #### 集合
 
