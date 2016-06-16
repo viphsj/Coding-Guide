@@ -137,3 +137,14 @@ next(o)
 import sys
 print(dir(sys))
 ```
+
+#### `isinstance`
+
+`isinstance(value, type)`
+接受两个参数，判断第一个参数是否是第二个参数类型的。第二个参数还可以是一个元组，如果value是元组里面一个类型的实例，则返回True
+
+```python
+isinstance(2, int) # True
+isinstance('2', (str, int)) # True
+```
+

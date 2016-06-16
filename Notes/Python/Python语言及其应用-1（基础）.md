@@ -150,12 +150,20 @@ print(b) # [1, 2, 3]
 - `tuple(list)` 将list转换为元组
 
 创建包含一个或多个元素的元组时，每一个元素后面都需要跟着一个逗号。如果多于一个元素，则最后的那个逗号可以省略。
+
 ```python
 empty_tuple = ()
 sinple_tuple = 'example',
 example_tuple = 'example0', 'example1', 'example2'
 
 a, b, c = example_tuple # 将元组里的值赋值给变量 -- 元组解包
+a, b, *rest = range(10)
+a # 0
+b # 1
+rest # [2, 3, 4, 5, 6, 7, 8, 9]
+
+first, second, *rest, last = range(10)
+last # 9
 ```
 
 ### 字典与集合
@@ -380,6 +388,78 @@ print(letter_counts) # {'r': 1, 'l': 1, 't': 2, 'e': 2}
 ```python
 new_set = {number for number in range(1, 6) if number % 3 == 1}
 print(new_set) # {1, 4}
+```
+
+#### 条件表达式
+
+```python
+a = x if True else y
+
+# 一个阶乘函数的递归版本
+def factorial(n):
+	return 1 if n == 0 else n * factorial(n-1)
+
+# 用条件表达式处理默认参数
+def fun(params=None):
+	params = params if params != None else 1
+	print(params)
+
+fun() # 1
+```
+
+by the way，提一句`for...else`
+
+```python
+# else 语句块会在循环结束后执行，除非在循环块中执行 break
+# 即如果for循环中break了，则不会执行for后面紧跟的else
+for i in (1, 4, 5):
+	if i % 2 == 0:
+		break
+else:
+	print("var i is always an odd")
+```
+
+#### 生成器表达式
+
+生成器表达式与列表推导式类似，但是使用的是圆括号，而不是方括号
+
+```python
+g = (x for x in range(4))
+
+print(next(g)) # 0
+print(next(g)) # 1
+```
+
+#### `try/except/else/finally`
+
+```python
+example = 1
+
+try:
+	print('1' + example)
+except TypeError as e:
+	print(e)
+else: 
+	# 当没有catch到except的时候走else
+	# else语句必须在finally之前
+	print('no except')
+finally:
+	print('finally')
+```
+
+else语句的存在必须以except X或者except语句为前提，如果在没有except语句的try block中使用else语句会引发语法错误
+
+#### `any` & `all`
+
+- `any`：接受一个布尔值序列，如果其中有任意一个值为 True 则返回 True
+- `all`：如果序列中的每个元素均为 True 才会返回 True
+
+```python
+has_greater_than_ten = any(i > 10 for i in range(11))
+print(has_greater_than_ten) # False
+
+has_greater_than_ten = any(i > 10 for i in range(12))
+print(has_greater_than_ten) # True
 ```
 
 ### 函数
