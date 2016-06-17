@@ -69,6 +69,10 @@ print(name) # ecmadao
 
 - `str.replace(target, replace, max)` replace字符串中target元素，最多修改max处
 
+- `str.strip()` 去除string两侧的空格(含tab)
+- `str.rstrip()` 去除string右侧的空格(含tab)
+- `str.lstrip()` 去除string左侧的空格(含tab)
+
 ### 列表和元组
 
 列表和元组（tuple）中的元素可以是任意类型的Python数据对象。
@@ -290,6 +294,20 @@ list(zip(list1, tuple1)) # [(1, a), (2, b), (3, c), (4, d)]
 
 ```python
 dict(zip('ab', range(2))) # {'a': 0, 'b': 1}
+
+# 压缩与解压缩
+tuple_1 = ('a', 'b', 'c')
+tuple_2 = (1, 2, 3)
+
+zip_1 = zip(tuple_1, tuple_2) # [('a', 1), ('b', 2), ('c', 1)]
+zip_2 = zip(*zip_1) # [('a', 'b', 'c'), (1, 2, 3)]
+
+# 用zip反转dict
+m = {'a': 1, 'b': 2, 'c': 3, 'd': 4}
+m.items() # [('a', 1), ('c', 3), ('b', 2), ('d', 4)]
+zip(m.values(), m.keys()) # [(1, 'a'), (3, 'c'), (2, 'b'), (4, 'd')]
+m_reverse = dict(zip(m.values(), m.keys())) # {1: 'a', 2: 'b', 3: 'c', 4: 'd'}
+
 ```
 
 ##### `range(start, end, step)`
