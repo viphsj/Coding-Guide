@@ -99,7 +99,7 @@ element = driver.find_element_by_xpath("//input[@id='passwd-id']")
 
 # 对于含有text的DOM元素，还可以：
 element = driver.find_element_by_text(text)
-# 但这个方式只能获取到精准匹配text的元素，否则报NoSuchElementException错误
+# 但这个方式只能获取到精准匹配text的元素，否则抛出NoSuchElementException错误
 ```
 
 ##### 键盘操作
@@ -134,7 +134,7 @@ options = select.options
 driver.find_element_by_id("submit").click()
 # 或者通过submit方法
 element.submit()
-# 当调用该方法的DOM元素在一个form内部时，webdriver会从该元素出发知道寻找到一个闭合的form，并进行提交操作。如果DOM元素不在form内，则会报NoSuchElementException错误
+# 当调用该方法的DOM元素在一个form内部时，webdriver会从该元素出发知道寻找到一个闭合的form，并进行提交操作。如果DOM元素不在form内，则会抛出NoSuchElementException错误
 ```
 
 #### 拖拽
@@ -194,3 +194,107 @@ driver.add_cookie(cookie)
 # And now output all the available cookies for the current URL
 driver.get_cookies()
 ```
+
+### 定位DOM元素
+
+```python
+# 定位单个元素
+find_element_by_id
+find_element_by_name
+find_element_by_xpath
+find_element_by_link_text
+find_element_by_partial_link_text
+find_element_by_tag_name
+find_element_by_class_name
+find_element_by_css_selector
+
+# 定位多个DOM元素，返回一个list
+find_elements_by_name
+find_elements_by_xpath
+find_elements_by_link_text
+find_elements_by_partial_link_text
+find_elements_by_tag_name
+find_elements_by_class_name
+find_elements_by_css_selector
+
+# 如果有一个HTML长这样：
+<html>
+ <body>
+  <p class="content">Site content goes here.</p>
+</body>
+<html>
+
+# 那么通过find_element_by_css_selector获取class为content的p则是这样：
+content = driver.find_element_by_css_selector('p.content')
+```
+
+### Waits
+
+当网页上存在异步操作的时候，可能会造成网页元素渲染结束时间的不统一。而当我们去获取一个页面上还不存在的元素(还没渲染好)时，就会抛出`ElementNotVisibleException`错误。在这种情况下，我们可以通过wait来进行线程的阻塞，知道页面渲染好再进行下一步操作。
+
+#### 明确的wait
+
+明确的wait指明了等待的时间，以及触发等待结束的条件
+
+```python
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+
+driver = webdriver.Firefox()
+driver.get("http://somedomain/url_that_delays_loading")
+try:
+	# 等待10秒知道until的条件成立，否则抛出TimeoutException错误
+    element = WebDriverWait(driver, 10).until(
+        EC.presence_of_element_located((By.ID, "myDynamicElement"))
+    )
+finally:
+    driver.quit()
+```
+
+`WebDriverWait(driver, time).until()`
+
+until的内置条件：
+
+```python
+title_is
+title_contains
+presence_of_element_located
+visibility_of_element_located
+visibility_of
+presence_of_all_elements_located
+text_to_be_present_in_element
+text_to_be_present_in_element_value
+frame_to_be_available_and_switch_to_it
+invisibility_of_element_located
+element_to_be_clickable - it is Displayed and Enabled.
+staleness_of
+element_to_be_selected
+element_located_to_be_selected
+element_selection_state_to_be
+element_located_selection_state_to_be
+alert_is_present
+
+# example
+from selenium.webdriver.support import expected_conditions as EC
+
+wait = WebDriverWait(driver, 10)
+element = wait.until(EC.element_to_be_clickable((By.ID,'someid')))
+```
+
+#### 含蓄的wait
+
+指定等待时间，只是单纯的阻塞目标时间长短的线程
+
+```python
+from selenium import webdriver
+
+driver = webdriver.Firefox()
+driver.implicitly_wait(10) # 以秒为单位
+driver.get("http://somedomain/url_that_delays_loading")
+myDynamicElement = driver.find_element_by_id("myDynamicElement")
+```
+
+### 页面对象
+
