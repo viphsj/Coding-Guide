@@ -5,7 +5,7 @@
 #### [mo.js](http://mojs.io/)
 
 > 牛逼的动效库
-> 
+>
 > 墙裂推荐打开官网，静静体会
 
 #### [Bounce.js](http://bouncejs.com/)
@@ -30,6 +30,10 @@
 
 > 专注触屏滑动，体会Android上ViewPager的爽快
 
+#### [slick](https://github.com/kenwheeler/slick)
+
+> 各种左右滑动效果
+
 #### [fullPage.js](http://alvarotrigo.com/fullPage/)
 
 > 上下全屏滑动。现在很多网站首屏上常见到的动效
@@ -37,7 +41,7 @@
 #### [Headroom.js](http://wicky.nillia.ms/headroom.js/)
 
 > 下滑页面隐藏导航栏，上滑展现导航栏
-> 
+>
 > 为页面顶部多留些空间
 
 ### About media
@@ -45,9 +49,9 @@
 #### [Spectrum](http://bgrins.github.io/spectrum/)
 
 > 基于jQuery的colorPicker，简单易用
-> 
+>
 > 已知bug(?): 在颜色选择面板一直打开的情况下，选择其他颜色之后，无法在回到打开面板是的那个active颜色。
-> 
+>
 > 解决方案: 参数设置`hideAfterPaletteSelect:true`，每次选择完颜色面板都会自动关闭:)
 
 #### [VideoJs](http://videojs.com/)
@@ -57,19 +61,19 @@
 #### [PhotoSwipe](http://photoswipe.com/)
 
 > 图片处理的库
-> 
+>
 > 点击图片全屏展示，可左右切换图片
 
 #### [Fabric.js](http://fabricjs.com/)
 
 > Fabric.js is a powerful and simple Javascript HTML5 canvas library
-> 
+>
 > html5 canvas绘图插件。挺强大的，基本上只有你想不到没有它做不到。提供的接口可以让你自己进行各种扩展
 
 #### [Cropper](http://fengyuanchen.github.io/cropper/)
 
 > A simple jQuery image cropping plugin.
-> 
+>
 > 基于jQuery的图片剪裁库
 
 #### [Filterizr](http://yiotis.net/filterizr/)
@@ -81,13 +85,13 @@
 #### [Cal-heatmap](http://cal-heatmap.com/)
 
 > 是否还记得github/gitlab上[个人中心里记录自己每日push贡献次数的日历表格](https://github.com/ecmadao)？
-> 
+>
 > 有了这货你也可以做这种酷酷的东西喽
 
 #### [Chart.js](http://www.chartjs.org/)
 
 > Simple, clean and engaging charts for designers and developers
-> 
+>
 > 简洁清晰的js chart图表库
 
 #### [DataTables](https://datatables.net/)
@@ -105,7 +109,7 @@
 #### [Moment.js](http://momentjs.com/)
 
 > 轻量级的快速处理时间的插件，便捷的输出各种格式的时间
-> 
+>
 > 可以通过 moment 的方法快速的实现社交媒体上常见的“消息XX秒之前”以及日历上常见的“XX分钟之后”、“下周日”这样的效果
 
 ```js
@@ -145,7 +149,7 @@ before.to(after); // in a day 相对时间多久之后
 #### [clipboard.js](https://clipboardjs.com/)
 
 > 剪切板辅助js插件（一键复制什么的）
-> 
+>
 > IE 9+ ok, 然而不支持 Safari
 
 ### Other tools
@@ -153,9 +157,9 @@ before.to(after); // in a day 相对时间多久之后
 #### [UNDERSCORE.JS](http://underscorejs.org/)
 
 > 工具类函数库，非常之方便。。但是有一点 --> 用太多会被它惯坏啊喂
-> 
+>
 > 推荐看它[源码](http://underscorejs.org/docs/underscore.html)进行学习，深入理解那些函数底层的实现
-> 
+>
 > 另有[汉化版文档](http://www.css88.com/doc/underscore/)
 
 #### [favico.js](http://lab.ejci.net/favico.js/)
@@ -165,14 +169,14 @@ before.to(after); // in a day 相对时间多久之后
 #### [pickadate.js](http://amsul.ca/pickadate.js/)
 
 > The mobile-friendly, responsive, and lightweight
-jQuery date & time input picker.
+> jQuery date & time input picker.
 >
 > 基于jQuery的 datePicker & timePicker
 
 #### [Messenger](http://www.bootcss.com/p/messenger/)
 
 > 一个Message弹窗组件，基于 jQuery 和 Backbone
-> 
+>
 > 并不是很推荐。。这种东西不如自己写一套来的爽快
 
 #### [biu](http://biu.js.org/)
