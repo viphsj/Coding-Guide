@@ -255,7 +255,7 @@ finally:
 
 `WebDriverWait(driver, time).until()`
 
-until的内置条件：
+**until的内置条件：**
 
 ```python
 title_is
@@ -298,3 +298,214 @@ myDynamicElement = driver.find_element_by_id("myDynamicElement")
 
 ### 页面对象
 
+页面对象是selenium所推崇的一种测试的设计模式。一个页面对象代表着一个与你的测试进行关联的网页。
+
+使用页面对象有几个好处：
+
+- 在大量的测试中复用代码
+- 减少重复代码
+- 网页样式变动时只需要修改一处的测试代码
+
+#### 测试案例
+
+在python.org上搜索一段文字，并确保找到搜索结果
+
+```python
+import unittest
+from selenium import webdriver
+import page # 别慌，这不是第三方库。后面会编写page.py
+
+class PythonOrgSearch(unittest.TestCase):
+    """展现page工作方式的简单例子"""
+
+    def setUp(self):
+        self.driver = webdriver.Firefox()
+        self.driver.get("http://www.python.org")
+
+    def test_search_in_python_org(self):
+        """
+        python.org搜索功能的测试，搜索"pycon"并展现结果。
+        需要注意的是，测试并不会在搜索结果中期待一个特定的值，而是断言它不会为空
+        """
+
+        # 加载主页面，在这个例子里是Python.org.
+        main_page = page.MainPage(self.driver)
+        assert main_page.is_title_matches("Python"), "python.org title doesn't match."
+        # 在输入框内填入"pycon"
+        main_page.search_text_element = "pycon"
+        main_page.click_go_button()
+        search_results_page = page.SearchResultsPage(self.driver)
+        # 断言结果不为空
+        assert search_results_page.is_results_found(), "No results found."
+
+    def tearDown(self):
+        self.driver.close()
+
+if __name__ == "__main__":
+    unittest.main()
+```
+
+page.py
+
+```python
+from element import BasePageElement # 同样是自定义包
+from locators import MainPageLocators # 同样是自定义包
+
+class SearchTextElement(BasePageElement):
+    """从一个特点的搜索框中获取搜索的文字"""
+
+    #The locator for search box where search string is entered
+    locator = 'q'
+
+
+class BasePage(object):
+    """初始化base page，它会被其他所有page继承"""
+
+    def __init__(self, driver):
+        self.driver = driver
+
+
+class MainPage(BasePage):
+    """测试中出现的首要页面I.e. Python.org"""
+
+    #Declares a variable that will contain the retrieved text
+    search_text_element = SearchTextElement()
+
+    def is_title_matches(self, title):
+        """断言title在driver.title内"""
+        return title in self.driver.title
+
+    def click_go_button(self):
+        """Triggers the search"""
+        element = self.driver.find_element(*MainPageLocators.GO_BUTTON)
+        element.click()
+
+
+class SearchResultsPage(BasePage):
+    """Search results page action methods come here"""
+
+    def is_results_found(self):
+        # Probably should search for this text in the specific page
+        # element, but as for now it works fine
+        return "No results found." not in self.driver.page_source
+```
+
+element.py
+
+```python
+from selenium.webdriver.support.ui import WebDriverWait
+
+
+class BasePageElement(object):
+    """所有page类的基础"""
+
+    def __set__(self, obj, value):
+        """Sets the text to the value supplied"""
+        driver = obj.driver
+        WebDriverWait(driver, 100).until(
+            lambda driver: driver.find_element_by_name(self.locator))
+        driver.find_element_by_name(self.locator).send_keys(value)
+
+    def __get__(self, obj, owner):
+        """Gets the text of the specified object"""
+        driver = obj.driver
+        WebDriverWait(driver, 100).until(
+            lambda driver: driver.find_element_by_name(self.locator))
+        element = driver.find_element_by_name(self.locator)
+        return element.get_attribute("value")
+```
+
+locators.py
+
+```python
+from selenium.webdriver.common.by import By # 可用于定位元素的API
+
+class MainPageLocators(object):
+    """A class for main page locators. All main page locators should come here"""
+    GO_BUTTON = (By.ID, 'submit')
+
+class SearchResultsPageLocators(object):
+    """A class for search results locators. All search results locators should come here"""
+    pass
+```
+
+### WebDriver API
+
+#### webdriver
+
+```python
+from selenium import webdriver
+
+webdriver.Firefox
+webdriver.Chrome
+webdriver.Ie
+webdriver.Opera
+webdriver.PhantomJS
+webdriver.Remote
+
+from selenium.webdriver.common.keys import Keys # 获取键盘
+from selenium.webdriver import ActionChains
+from selenium.common.exceptions import [TheNameOfTheExceptionClass]
+```
+
+#### ActionChains
+
+```python
+# ActionChains API
+action_chains = ActionChains(driver)
+
+action_chains.click(on_element=None)
+click_and_hold(on_element=None)
+context_click(on_element=None) # 相当于右键点击
+double_click(on_element=None)
+
+drag_and_drop(source, target) # 把一个元素拖拽到另一个元素里
+drag_and_drop_by_offset(source, xoffset, yoffset)
+
+key_down(value, element=None) # 按下一个按键，并不松开，常用于Control, Alt and Shift按键
+key_up(value, element=None) # 松开按键
+ActionChains(driver).key_down(Keys.CONTROL).send_keys('c').key_up(Keys.CONTROL).perform()
+
+perform() # 运行动作
+
+send_keys(*keys_to_send) # 传入按键内容，赋给当前聚焦的元素
+send_keys_to_element(element, *keys_to_send)
+```
+
+#### Alert
+
+```python
+from selenium.webdriver.common.alert import Alert
+from selenium import webdriver
+
+driver = webdriver.Chrome()
+
+Alert(driver).accept()
+Alert(driver).dismiss()
+Alert(driver).send_keys(keysToSend)
+Alert(driver).text
+
+# 弹窗的另一种方法
+alert = driver.switch_to_alert()
+```
+
+#### By
+
+```python
+from selenium.webdriver.common.by import By
+
+"""
+CLASS_NAME = 'class name'
+CSS_SELECTOR = 'css selector'
+ID = 'id'
+LINK_TEXT = 'link text'
+NAME = 'name'
+PARTIAL_LINK_TEXT = 'partial link text'
+TAG_NAME = 'tag name'
+XPATH = 'xpath'
+"""
+
+# example
+driver.find_element(By.ID, 'submit')
+driver.find_element(By.NAME, 'ecmadao')
+```
