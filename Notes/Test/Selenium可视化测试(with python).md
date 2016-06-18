@@ -1,5 +1,7 @@
 ## Selenium可视化测试(with python)
 
+[Selenium with Python](http://selenium-python.readthedocs.io/index.html)
+
 ### setup
 
 ```bash
@@ -509,3 +511,26 @@ XPATH = 'xpath'
 driver.find_element(By.ID, 'submit')
 driver.find_element(By.NAME, 'ecmadao')
 ```
+
+### Use with PhantomJS
+
+一个简单的例子
+
+```python
+from selenium import webdriver
+from selenium.webdriver.common.keys import Keys
+
+driver = webdriver.PhantomJS()
+driver.set_window_size(1024, 768)
+driver.get('https://www.google.com')
+driver.save_screenshot('google.png')
+
+search_input = driver.find_element_by_name('q')
+search_input.send_keys("python")
+search_input.send_keys(Keys.RETURN)
+
+print(driver.page_source)
+driver.close()
+```
+
+不过，期间并不会生成浏览器界面。。
