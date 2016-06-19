@@ -514,6 +514,8 @@ driver.find_element(By.NAME, 'ecmadao')
 
 ### Use with PhantomJS
 
+[Is there a way to use PhantomJS in Python?](http://stackoverflow.com/questions/13287490/is-there-a-way-to-use-phantomjs-in-python)
+
 一个简单的例子
 
 ```python
