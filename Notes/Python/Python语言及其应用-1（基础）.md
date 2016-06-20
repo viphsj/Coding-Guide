@@ -347,6 +347,27 @@ for i in map(abc, list1, list2, list3):
 # 777
 ```
 
+```python
+# map不仅仅可以接受变量参数list，也可以接受函数list
+
+def multiply(x):
+	return x * x
+
+def add(x):
+	return x + x
+
+funs = [multiply, add]
+for i in range(5):
+	value = map(lambda x: x(i), funs)
+	print(list(value))
+
+# [0, 0]
+# [1, 2]
+# [4, 4]
+# [9, 6]
+# [16, 8]
+```
+
 ##### `filter()`
 
 `filter(fun, sequence)`
@@ -531,6 +552,22 @@ def fun(**kwargs):
 	return kwargs
 
 fun(a = 0, b = 1, c = 2) # {'c': 2, 'a': 0, 'b': 1}
+```
+
+```python
+def example_fun(a, b):
+	print(a)
+	print(b)
+	
+# 字典的key必须和函数的参数名对应
+example_dict = {
+	"a": 1,
+	"b": 2
+}
+
+example_fun(**example_dict)
+# 1
+# 2
 ```
 
 #### 闭包
