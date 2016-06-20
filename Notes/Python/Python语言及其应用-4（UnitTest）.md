@@ -127,3 +127,41 @@ if __name__ == '__main__':
 
 [Python用于调试代码的标准库pdb](https://docs.python.org/3/library/pdb.html)
 
+```python
+import pdb
+pdb.set_trace() # 设置一个断点
+
+# example
+print('debugger begin')
+pdb.set_trace()
+for i in range(5):
+	print(i)
+
+pdb.set_trace()
+print('debugger end')
+```
+
+运行文件，会进入交互式debugger模式。在该模式下可以进行如下操作(仅列常用)：
+
+- `c`: 继续执行代码，直至下一个断点
+- `s`: 执行**当前代码行**，进入当前行调用的函数内部，并停在第一个能停的地方
+- `n`: 继续执行，到当前函数的下一行停止，或者当前行直接返回（单步跳过）
+- `w`: 显示当前正在执行的代码行的上下文信息
+- `a`: 打印当前函数的参数列表
+- `l`: 该命令后没有参数时，列出当前debug行附近的11行代码
+- `q`: 退出运行的代码
+
+```bash
+# 在Pdb的debug模式下
+
+# 以当前行为中心，上下各列出5行代码。共计11行
+(Pdb) l
+(Pdb) l .
+
+# 以第一个参数为起点，往后列出共计11行代码
+(Pdb) l 2
+
+# 以第一个参数为行数起点，第二个参数作为终止行数，列出期间的代码
+(Pdb) l 2, 5
+```
+
