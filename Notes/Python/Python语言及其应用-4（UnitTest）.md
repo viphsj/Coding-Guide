@@ -7,7 +7,7 @@
 ```bash
 # install
 $ pip3 install pylint
-
+# usage
 $ pylint example.py
 ```
 
@@ -44,6 +44,25 @@ if __name__ == '__main__':
 
 - `setUp()`方法会在每个测试方法执行之前执行，常用来进行一些初始化和分配外部资源的操作
 - `tearDown()`方法则在每个测试方法执行之后执行，常用来回收外部资源
+
+*断言方法*
+
+- `assertEqual(first, second, msg=None)`
+- `assertNotEqual(first, second, msg=None)`
+- `assertTrue(expr, msg=None)`
+- `assertFalse(expr, msg=None)`
+- `assertIs(first, second, msg=None)`
+- `assertIsNot(first, second, msg=None)`
+- `assertIsNone(expr, msg=None)`
+- `assertIsNotNone(expr, msg=None)`
+- `assertIn(first, second, msg=None)`
+- `assertNotIn(first, second, msg=None)`
+- `assertIsInstance(obj, cls, msg=None)`
+- `assertNotIsInstance(obj, cls, msg=None)`
+- `assertGreater(first, second, msg=None)`
+- `assertGreaterEqual(first, second, msg=None)`
+- `assertLess(first, second, msg=None)`
+- `assertLessEqual(first, second, msg=None)`
 
 ### doctest
 
