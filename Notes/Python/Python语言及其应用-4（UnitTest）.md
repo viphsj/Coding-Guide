@@ -2,13 +2,14 @@
 
 ### Pylint
 
-[Pylint官网](http://www.pylint.org/)
+使用Pylint来进行Python代码检测。[Pylint官网](http://www.pylint.org/)
 
 ```bash
 # install
 $ pip3 install pylint
 # usage
 $ pylint example.py
+# 之后会打印检测结果和得分
 ```
 
 ### UnitTest
@@ -139,7 +140,7 @@ if __name__ == '__main__':
 
 ```bash
 # python example.py 之前这样运行
-# python example.py -v 现在这样运行才能进行代码测试
+$ python example.py -v # 现在这样运行才能进行代码测试
 ```
 
 ### debugger
@@ -183,4 +184,6 @@ print('debugger end')
 # 以第一个参数为行数起点，第二个参数作为终止行数，列出期间的代码
 (Pdb) l 2, 5
 ```
+
+### decorator
 
