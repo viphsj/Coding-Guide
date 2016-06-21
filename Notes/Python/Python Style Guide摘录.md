@@ -1,8 +1,11 @@
-### Google Python Style Guide摘录
+## Python Style Guide摘录
+
+- [Google开源项目风格指南](http://zh-google-styleguide.readthedocs.io/en/latest/google-python-styleguide/)
+- [Python最佳实践指南](http://pythonguidecn.readthedocs.io/zh/latest/)
 
 (仅仅选取了一些值得注意的地方)
 
-#### 空格
+### 空格
 
 - `:`用在行尾时前后皆不加空格，如分枝、循环、函数和类定义语言；用在非行尾时两端加空格
 
@@ -17,7 +20,7 @@ if isTrue: # 在行尾不加空格
 def example_method(a, b=1):
 ```
 
-#### 类和注释
+### 类和注释
 
 - 类应该在其定义下有一个用于描述该类的文档字符串。如果类还有公共属性，那么文档中应该有一个属性(Attributes)段。
 
@@ -34,7 +37,7 @@ class ExampleClass(object):
 		........
 ```
 
-#### 字符串
+### 字符串
 
 - 使用`format`格式化字符串
 
@@ -42,7 +45,7 @@ class ExampleClass(object):
 
 - 为多行字符串使用三重双引号而非三重单引号
 
-#### `import`
+### `import`
 
 - 模块导入的顺序：
 
@@ -63,7 +66,7 @@ import collections
 collections.defaultdict
 ```
 
-#### 命名
+### 命名
 
 - 使用`_`开头则表明模块变量或函数是protected的
 - 使用`__`开头的实例变量或方法表示类内私有
@@ -89,10 +92,97 @@ collections.defaultdict
 | Function/Method Parameters | lower_with_under   |                                          |
 | Local Variables            | lower_with_under   |                                          |
 
-#### 代码建议
+### 代码建议
 
 - 按需使用生产器
 
 - 单行函数则使用`lambda`匿名函数
 
 - 在简单的情况下使用列表推导式`[expression for item in iterable]`，若复杂则不建议使用
+
+### Be Pythonic
+
+说得简单些，就是写代码的方式更加具有Python风。
+下面是一些实践
+
+#### 解包(Unpacking)
+
+```python
+# 同时遍历列表里的index和value
+for index, item in enumerate(example_list):
+	# do something
+
+# 交换变量
+a, b = b, a
+
+# 嵌套解包
+a, (b, c) = 1, (2, 3)
+
+# 扩展解包
+a, *rest = [1, 2, 3]
+# a = 1, rest = [2, 3]
+a, *middle, c = [1, 2, 3, 4]
+# a = 1, middle = [2, 3], c = 4
+```
+
+#### 创建一个被忽略的变量
+
+当你需要赋值于一个变量，但实际上并不需要它(比如在解包的时候)，使用`__`作为变量名：
+
+```python
+filename = 'foobar.txt'
+basename, __, ext = filename.rpartition('.')
+# filename.rpartition('.') = ('foobar', '.', 'txt')
+```
+
+#### 创建一个含N个对象的列表
+
+```python
+# so easy
+four_nones = [None] * 4
+```
+
+#### 创建一个含N个列表的列表
+
+因为列表是可变的，所以 * 操作符（如上）将会创建一个包含N个且指向 同一个 列表的列表，这可能不是你想用的。取而代之，使用列表解析：
+
+```python
+example_list = [[1]] * 4
+print(example_list)
+# [[1], [1], [1], [1]] 列表里的每个[1]实际上都指向相同的引用
+example_list[0][0] = 0
+print(example_list)
+# [[0], [0], [0], [0]]
+```
+
+```python
+# 使用列表解析式
+example_list = [[1] for i in range(5)]
+print(example_list)
+# [[1], [1], [1], [1], [1]]
+example_list[0][0] = 0
+print(example_list)
+# [[0], [1], [1], [1], [1]]
+```
+
+#### 使用列表来创建字符串
+
+避免字符串的`+`操作，使用列表的`join`方法
+
+```python
+letters = ['s', 'p', 'a', 'm']
+word = ''.join(letters)
+```
+
+#### 在集合体（collection）中查找一个项（而不是列表中）
+
+```python
+s = set(['s', 'p', 'a', 'm'])
+l = ['s', 'p', 'a', 'm']
+
+def lookup_set(s):
+    return 's' in s
+def lookup_list(l):
+    return 's' in l
+# 在集合中查找比在列表中查找要快速的多。当在列表中查找时，Python对查看每一项的值直到找到匹配的项。而在集合中，哈希值将会告诉Python在集合的哪里去查找匹配的项
+```
