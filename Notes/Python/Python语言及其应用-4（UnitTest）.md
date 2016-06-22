@@ -187,3 +187,27 @@ print('debugger end')
 
 ### decorator
 
+鉴于decorator可以人为的改变函数的行为，而可以不去影响它的内部逻辑，因此我们可以通过装饰器来增强函数行为，让它在执行前后打印出我们想要观测的数据。
+
+```python
+from time import sleep
+
+
+def decorate_fun(fun):
+	def new_fun(*args, **kwargs):
+		print('got args: {}, {}'.format(args, kwargs))
+		print('this is a fun\'s start')
+		fun(*args, **kwargs)
+		print('this is the fun\'s end')
+	return new_fun
+
+@decorate_fun
+def fun(number, start_number=0):
+	for n in range(number):
+		start_number += n
+		print(n)
+		sleep(1)
+	print('the final number is {}'.format(start_number))
+
+fun(5, start_number=5)
+```
