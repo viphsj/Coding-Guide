@@ -1,4 +1,4 @@
-## Python Style Guide摘录
+## Python Style Guide
 
 - [Google开源项目风格指南](http://zh-google-styleguide.readthedocs.io/en/latest/google-python-styleguide/)
 - [Python最佳实践指南](http://pythonguidecn.readthedocs.io/zh/latest/)
