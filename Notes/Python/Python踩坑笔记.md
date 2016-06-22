@@ -233,3 +233,36 @@ print(b)
 - 当需要重构或优化时，纯函数更易于更改或替换
 - 纯函数更容易做单元测试：很少需要复杂的上下文配置和之后的数据清除工作
 - 纯函数更容易操作、修饰和分发
+
+### 迟绑定闭包
+
+Python的闭包是 迟绑定 。 这意味着闭包中用到的变量的值，是在内部函数被调用时查询得到的。举个栗子：
+
+```python
+def create_multipliers():
+    return [lambda x : i * x for i in range(5)]
+
+for multiplier in create_multipliers():
+    print multiplier(2)
+
+# 结果输出
+# 8
+# 8
+# 8
+# 8
+# 8
+# 而不是
+# 0
+# 2
+# 4
+# 6
+# 8
+# 不论任何返回的函数是如何被调用的，i的值是调用时在周围作用域中查询到的。接着，循环完成，i的值最终变成了4
+```
+
+可以通过创建一个立即绑定参数的闭包结果上述问题：
+
+```python
+def create_multipliers():
+    return [lambda x, i=i : i * x for i in range(5)]
+```
