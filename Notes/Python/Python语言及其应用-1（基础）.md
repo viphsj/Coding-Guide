@@ -680,7 +680,8 @@ def fun():
 	const_value = '2'
 	print(const_value)
 
-fun() # error: local variable 'const_value' referenced before assignment
+fun() 
+# error: local variable 'const_value' referenced before assignment
 # 认为函数中第一次使用的const_value是局部变量，尚未声明
 
 # example 3
@@ -689,6 +690,7 @@ def fun():
 	print(const_value)
 
 fun() # 2
-print(const_value) # const_value
+print(const_value) 
+# const_value
 # 函数中使用的const_value为局部变量
 ```

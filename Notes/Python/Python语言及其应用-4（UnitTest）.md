@@ -209,5 +209,24 @@ def fun(number, start_number=0):
 		sleep(1)
 	print('the final number is {}'.format(start_number))
 
+print(fun.__name__) # new_fun
 fun(5, start_number=5)
+```
+
+如上，通过装饰器修饰之后，之前的函数fun会被new_fun替代，被重写的函数名和注释文档。为了避免这个情况，可以使用`functools.wraps`：
+
+```python
+from functools import wraps
+
+def decorate_fun(fun):
+	@wraps(fun)
+	def new_fun(*args, **kwargs):
+		print('got args: {}, {}'.format(args, kwargs))
+		print('this is a fun\'s start')
+		fun(*args, **kwargs)
+		print('this is the fun\'s end')
+	return new_fun
+
+# def fun..
+print(fun.__name__) # fun
 ```
