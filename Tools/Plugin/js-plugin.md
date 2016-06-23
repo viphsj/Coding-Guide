@@ -179,6 +179,12 @@ before.to(after); // in a day 相对时间多久之后
 >
 > 并不是很推荐。。这种东西不如自己写一套来的爽快
 
+#### [Modaal](http://humaan.com/modaal/)
+
+>JS弹窗插件
+>
+>An accessible dialog window plugin for all humans.
+
 #### [biu](http://biu.js.org/)
 
 > biu的一下冒出来一个光头~啊不，是弹窗
