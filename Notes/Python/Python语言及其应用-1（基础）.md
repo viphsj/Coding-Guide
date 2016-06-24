@@ -95,9 +95,12 @@ print(old_list) # [0, 1, 2, 3, 4]
 # list逆序排列
 new_list = old_list[::-1] # [4, 3, 2, 1, 0]
 
-# 但可以通过切片赋空值的形式达到删除的效果
+# 可以通过切片赋空值的形式达到删除的效果
 old_list[0:2] = []
 print(old_list) # [2, 3, 4]
+# 或者del进行删除
+del old_list[0:1]
+print(old_list) # [3, 4]
 ```
 
 ---
@@ -161,11 +164,25 @@ print(b) # [1, 2, 3]
 
 创建包含一个或多个元素的元组时，每一个元素后面都需要跟着一个逗号。如果多于一个元素，则最后的那个逗号可以省略。
 
+**创建元组**
+
 ```python
+# 创建空元组
 empty_tuple = ()
-sinple_tuple = 'example',
+empty_tuple = tuple()
+
 example_tuple = 'example0', 'example1', 'example2'
 
+# 创建单一元组
+sinple_tuple = 'example',
+# 注：在创建单一元组时，将值放在括号内不会创建元组
+sinple_tuple = ('example')
+print(type(sinple_tuple)) # str
+```
+
+**解构元组**
+
+```python
 a, b, c = example_tuple # 将元组里的值赋值给变量 -- 元组解包
 a, b, *rest = range(10)
 a # 0
@@ -174,6 +191,37 @@ rest # [2, 3, 4, 5, 6, 7, 8, 9]
 
 first, second, *rest, last = range(10)
 last # 9
+```
+
+**元组在函数中的运用**
+
+```python
+# 该函数可以接受任意长度的参数，并在函数内部组建成为元组的形式
+def print_all(*args):
+	print(args)
+print_all(1, 2, 3, 4) # (1, 2, 3, 4)
+
+# 将元组分散后传入函数
+def print_two(a, b):
+	print(a)
+	print(b)
+print_two(*(1, 2))
+# 1
+# 2
+
+# 当函数返回多个参数时。。
+def return_multiply():
+	# do something
+	return a, b
+# 返回值是元组的形式
+# example:
+def return_multiply(*args):
+	a, b = args
+	return a, b
+
+result = return_multiply(1, 2)
+print(type(result)) # <class 'tuple'>
+print(result) # (1, 2)
 ```
 
 ### 字典与集合
@@ -324,7 +372,6 @@ m = {'a': 1, 'b': 2, 'c': 3, 'd': 4}
 m.items() # [('a', 1), ('c', 3), ('b', 2), ('d', 4)]
 zip(m.values(), m.keys()) # [(1, 'a'), (3, 'c'), (2, 'b'), (4, 'd')]
 m_reverse = dict(zip(m.values(), m.keys())) # {1: 'a', 2: 'b', 3: 'c', 4: 'd'}
-
 ```
 
 ##### `range(start, end, step)`
@@ -437,6 +484,7 @@ number_list = [number for number in range(1, 6) if number % 2 == 1]
 print(number_list) # [1, 3, 5]
 
 # example_2
+# 嵌套列表推导式
 rows = range(1, 4)
 cols = range(1, 3)
 cells = [(row, col) for row in rows for col in cols]
@@ -495,13 +543,33 @@ else:
 
 #### 生成器表达式
 
-生成器表达式与列表推导式类似，但是使用的是圆括号，而不是方括号
+生成器表达式与列表推导式类似，但是**使用的是圆括号**，而不是方括号
 
 ```python
 g = (x for x in range(4))
 
 print(next(g)) # 0
 print(next(g)) # 1
+```
+
+#### 列表推导式&生成器表达式
+
+列表推导也可能会有一些负面效应，那就是整个列表必须一次性加载于内存之中。虽然对大多数情况这都不是问题，但是总会达到极限，内存总会被用完。
+针对上面的问题，生成器能够很好的解决。生成器表达式不会一次将整个列表加载到内存之中，而是生成一个生成器对象(Generator objector)，所以一次只加载一个列表元素
+
+```python
+num = [1, 4, -5, 10, -7, 2, 3, -1]
+double_result_g = ( x*2 for x in num if x > 0 )
+print(double_result_g)
+# <generator object <genexpr> at 0x00583E18>
+ 
+for item in double_result_g:
+	print(item)
+# 2
+# 8
+# 20
+# 4
+# 6
 ```
 
 #### `try/except/else/finally`
