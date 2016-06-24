@@ -22,8 +22,6 @@ print(dic['d']) # 0
 defaultdict(lambda: 'no-value')
 ```
 
----
-
 #### `Counter`
 
 以一个列表作为参数，返回一个Counter对象，其内部是`{元素: 元素在列表中出现次数}`，e.g.
@@ -58,8 +56,6 @@ Counter(example_list1) | Counter(example_list2)
 # Counter({'a': 3, 'b': 1, 'c': 1})
 ```
 
----
-
 #### `OrderedDict()`
 
 有序字典，记忆字典键添加的顺序，然后从一个迭代器按照相同的顺序返回。e.g.
@@ -78,8 +74,6 @@ for key in OrderedDict(example_dict):
 # b
 # c
 ```
-
----
 
 #### `deque`双端队列
 
@@ -117,7 +111,12 @@ d2.rotate(-5)
 print(d2) # deque([2, 3, 4, 0, 1]) 当参数的绝对值大于等于列表长度的时候则无效
 ```
 
----
+可以通过关键字参数`maxlen`来限制一个双端数列的大小
+
+```python
+d = deque(maxlen=30)
+
+```
 
 #### `itertools`迭代代码结构
 

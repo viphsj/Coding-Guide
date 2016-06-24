@@ -90,8 +90,14 @@ print(name) # ecmadao
 old_list = [0, 1, 2, 3, 4]
 # list切片
 new_list = old_list[0:2] # [0, 1]
+print(old_list) # [0, 1, 2, 3, 4]
+
 # list逆序排列
 new_list = old_list[::-1] # [4, 3, 2, 1, 0]
+
+# 但可以通过切片赋空值的形式达到删除的效果
+old_list[0:2] = []
+print(old_list) # [2, 3, 4]
 ```
 
 ---
@@ -278,6 +284,17 @@ for index, value in enumerate(example_list):
 # 0 : 1
 # 1 : 2
 # 2 : 3
+```
+
+`enumerate`还可以接受第二个参数，表示index的起始值：
+
+```python
+example_list = [1, 2, 3]
+for index, value in enumerate(example_list, 1):
+	print(index, ':', value)
+# 1 : 1
+# 2 : 2
+# 3 : 3
 ```
 
 ##### `zip()`
