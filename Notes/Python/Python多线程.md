@@ -1,5 +1,7 @@
 ## Python多线程
 
+[Python模块学习：threading 多线程控制和处理](http://python.jobbole.com/81546/)
+
 ### [`threading`模块](https://docs.python.org/3/library/threading.html)
 
 线程运行在进程内部，可以访问进程的所有内容。
@@ -9,9 +11,10 @@
 threading模块的常用方法：
 
 ```python
-thread = threading.Thread(target=None, name=None, daemon=None) 
+thread = threading.Thread(target=None, name=None, daemon=None, group=None, args=(), kwargs={}) 
 # 实例化一个线程
 # target是线程调用run()方法的时候会调用的函数
+# 参数args和kwargs分别表示调用target时的参数列表和关键字参数
 # name是该线程名称
 # daemon=True时，thread dies when main thread (only non-daemon thread) exits.
 
@@ -19,6 +22,7 @@ thread.start() # 一个线程最多只能调用该方法一次，如果多次调
 thread.run() # 在这里运行线程的具体任务
 thread.join(timeout=None) # 阻塞全部线程直到当前线程任务结束，timeout为阻塞时间，None时会一直阻塞
 
+thread.name
 thread.getName()
 thread.setName()
 
