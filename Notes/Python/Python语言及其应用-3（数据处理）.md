@@ -58,6 +58,11 @@ example_dict = {a: 0, b: 1, c: 2}
 
 ### 正则表达式
 
+#### 推荐教程
+
+[正则表达式30分钟入门教程](http://deerchao.net/tutorials/regex/regex.htm)
+[Python正则表达式指南](http://www.cnblogs.com/huxi/archive/2010/07/04/1771073.html)
+
 #### 匹配的方法
 
 ```python
@@ -102,7 +107,7 @@ m.groups() # ('a dish', 'fish')
 #### 打开文件
 
 ```python
-fileobj = open(filename, mode)
+fileobj = open(filename, mode, encoding)
 
 # mode的第一个字母
 # r 读
@@ -113,6 +118,10 @@ fileobj = open(filename, mode)
 # mode的第二个字母
 # t 可省略，表示文本类型
 # b 代表二进制文件
+
+# encoding表示编码方式
+# 有些文件会被误认为是与当前默认编码不同的其他编码形式，会造成UnicodeDecodeError。这时需要我们手动指定编码形式
+open('example.html', encoding='utf-8')
 ```
 
 如果不是使用`with`方法，则在打开文件后需要手动调用文件关闭方法`f.close()`
