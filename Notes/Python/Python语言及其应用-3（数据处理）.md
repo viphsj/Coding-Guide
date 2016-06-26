@@ -240,3 +240,214 @@ shutil.copy('example.txt', 'new_example.txt')
 shutil.move('example.txt', 'new_example.txt')
 # 把example文件复制到new_example文件，并删除example文件
 ```
+
+### 时间日期
+
+[Python 3 - Date & Time](http://www.tutorialspoint.com/python3/python_date_time.htm)
+[PYTHON-基础-时间日期处理小结](http://www.wklken.me/posts/2015/03/03/python-base-datetime.html)
+
+#### [time](https://docs.python.org/3/library/time.html)
+
+##### 基本用法
+
+```python
+import time
+
+time.time() # 获取当前时间戳
+time.sleep(second) # 阻塞当前线程，休眠second秒
+
+time.localtime([seconds]) # 把获取的参数(seconds)转化为一个时间元组。不传入参数的时候，相当于：
+time.localtime(time.time())
+# 输出：
+# time.struct_time(tm_year=2016, tm_mon=6, tm_mday=26, tm_hour=20, tm_min=31, tm_sec=43, tm_wday=6, tm_yday=178, tm_isdst=0)
+for t in time.localtime():
+	print(t)
+# 2016
+# 6
+# 26
+# 21
+# 19
+# 20
+# 6
+# 178
+# 0
+```
+
+##### 格式化日期
+
+```python
+time.asctime([tuple]) # 接受时间元组为参数，格式化时间。没有参数时，将当前时间的时间元组格式化
+time.asctime() # 或 time.asctime(time.localtime())
+# Sun Jun 26 21:21:49 2016
+```
+
+```python
+time.strftime(format[, tuple]) # 使用format规定的模式获取格式化的时间，没有传入时间元组的时候则格式化当前时间
+```
+
+**format规则：**
+
+```python
+%y # 两位数的年份表示（00-99）
+%Y # 四位数的年份表示（000-9999）
+%m # 月份（01-12）
+%d # 月内中的一天（0-31）
+%H # 24小时制小时数（0-23）
+%I # 12小时制小时数（01-12）
+%M # 分钟数（00=59）
+%S # 秒（00-59）
+
+# example
+format_time = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime())
+print(format_time) # 2016-06-26 21:31:29
+```
+
+#### [calendar](https://docs.python.org/3/library/calendar.html)
+
+```python
+import calendar
+calendar.month(year, month, w=2, l=1) # 返回一个多行字符串格式的year年month月日历。两行标题，一周一行。每日宽度间隔为w字符。每行的长度为7* w+6。l是每星期的行数
+calendar.isleap(year) # 是闰年返回True，否则为false
+```
+
+```python
+import calendar
+cal = calendar.month(2016, 1)
+print(cal)
+```
+
+**result：**
+
+```bash
+    January 2016
+Mo Tu We Th Fr Sa Su
+             1  2  3
+ 4  5  6  7  8  9 10
+11 12 13 14 15 16 17
+18 19 20 21 22 23 24
+25 26 27 28 29 30 31
+```
+
+#### [datetime](https://docs.python.org/3/library/datetime.html)
+
+##### datetime模块
+
+```python
+from datetime import datetime
+datetime.now() # 返回形如 2016-06-26 21:48:24.248034 的当前时间
+
+datetime.now().strftime(format) # 格式化获取的时间。format规则同上述time模块的strftime。例如：
+datetime.now().strftime("%Y-%m-%d") # 2016-06-26
+
+datetime.now().date() # 获取当前日期：2016-06-26
+```
+
+##### date模块
+
+```python
+from datetime import date
+
+# 构造一个date对象
+date(2016, 6, 29) # 2016-06-29
+
+# 由时间戳构造date对象
+date.fromtimestamp(时间戳)
+today_date = date.fromtimestamp(time.time()) # 2016-06-26
+
+# 获取当前日期
+today = date.today() # 2016-06-26
+today.year # 2016
+today.month # 6
+today.day # 26
+
+# date对象之间可以进行大小比较
+date(2016, 6, 29) > today # True
+
+# 还可以进行加减操作
+from datetime import timedelta, date
+data.today() # 2016-06-26
+date.today() + datetime.timedelta(days=1) # 2016-06-27
+```
+
+### [json](https://docs.python.org/3.3/library/json.html)
+
+```python
+import json
+
+# 编码encoding
+json.dumps() # 把一个Python对象编码转换成Json字符串
+
+# 解码decoding
+json.loads() # 把Json格式字符串解码转换成Python对象
+```
+
+```python
+print(json.dumps({"c": 0, "b": 0, "a": 0}, sort_keys=True)) # sort_keys为True则将key按顺序排序。默认为False
+```
+
+### 美化输出
+
+#### [pprint](https://docs.python.org/3/library/pprint.html)
+
+#### [colorama](https://pypi.python.org/pypi/colorama)
+
+```python
+from colorama import Fore, Back, Style
+# Fore 字体颜色
+# Back 字体背景颜色
+# Style 字体粗细
+```
+
+**Basic Use**
+
+```python
+from colorama import Fore, Back, Style
+print(Fore.RED + 'some red text')
+print('these text has the same font color') # 这里打印出的字体仍是绿色
+print(Back.GREEN + 'and with a green background')
+print(Style.BRIGHT + 'and in dim text') # 粗体
+print(Style.RESET_ALL) # 样式全部重置
+print('back to normal now')
+```
+
+*需要注意的是，在添加任意一种样式之后，如果后面的print没有再设置其他样式，则将一直保持最后一次设置的样式*
+
+**Options**
+
+```python
+Fore # BLACK, RED, GREEN, YELLOW, BLUE, MAGENTA, CYAN, WHITE, RESET.
+Back # BLACK, RED, GREEN, YELLOW, BLUE, MAGENTA, CYAN, WHITE, RESET.
+Style # DIM, NORMAL, BRIGHT, RESET_ALL
+# Style.RESET_ALL 可以重置所有样式
+```
+
+#### [prettytable](https://code.google.com/archive/p/prettytable/wikis/Tutorial.wiki)
+
+以表格的形式输出数据
+
+```bash
+$ pip3 install prettytable
+```
+
+```python
+from prettytable import PrettyTable
+
+table_headers = ['column1', 'column2', 'column3']
+
+table = PrettyTable(table_headers) # 创建一个带有表格题头的table
+for i in range(3): # 创建3行
+	table.add_row([t for t in range(3)]) # 每行都添加[0, 1, 2]
+print(table)
+```
+
+**output**
+
+```bash
++---------+---------+---------+
+| column1 | column2 | column3 |
++---------+---------+---------+
+|    0    |    1    |    2    |
+|    0    |    1    |    2    |
+|    0    |    1    |    2    |
++---------+---------+---------+
+```
