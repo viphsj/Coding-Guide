@@ -389,6 +389,29 @@ print(json.dumps({"c": 0, "b": 0, "a": 0}, sort_keys=True)) # sort_keys为True�
 
 #### [pprint](https://docs.python.org/3/library/pprint.html)
 
+格式化输出数据，便于阅读调试
+
+```python
+from pprint import PrettyPrinter, pprint
+# pprint(object, stream=None, indent=1, width=80, depth=None, *, compact=False)
+
+stuff = ['spam', 'eggs', 'lumberjack', 'knights', 'ni']
+stuff.insert(0, stuff[:])
+PrettyPrinter(indent=4).pprint(stuff)
+# PrettyPrinter返回一个配置的PrettyPrinter实例，上面例子里设定了4个空格的缩进，而默认为1
+# 之后输出
+pprint(stuff, indent=4) # 与上面的输出一样
+```
+
+```bash
+[   ['spam', 'eggs', 'lumberjack', 'knights', 'ni'],
+    'spam',
+    'eggs',
+    'lumberjack',
+    'knights',
+    'ni']
+```
+
 #### [colorama](https://pypi.python.org/pypi/colorama)
 
 ```python
@@ -398,7 +421,7 @@ from colorama import Fore, Back, Style
 # Style 字体粗细
 ```
 
-**Basic Use**
+**Basic Usage**
 
 ```python
 from colorama import Fore, Back, Style
@@ -429,6 +452,8 @@ Style # DIM, NORMAL, BRIGHT, RESET_ALL
 $ pip3 install prettytable
 ```
 
+**Basic Usage**
+
 ```python
 from prettytable import PrettyTable
 
@@ -440,7 +465,7 @@ for i in range(3): # 创建3行
 print(table)
 ```
 
-**output**
+*output*
 
 ```bash
 +---------+---------+---------+
@@ -450,4 +475,23 @@ print(table)
 |    0    |    1    |    2    |
 |    0    |    1    |    2    |
 +---------+---------+---------+
+```
+
+**Enhance**
+
+```python
+# ...接着上面的table
+
+table.align["column1"] = "l" # 将制定列进行左对齐, 默认为"c"居中对齐
+table.valign = "m" # 垂直居中，参数也可以是 "t"顶部对齐/"b"底部对齐
+# x.align = "l"/"c"/"r" 可以将所有列都左/居中/右对齐
+table.border = False # table是否有border(默认为True)
+print(table)
+```
+
+```bash
+ column1  column2  column3 
+ 0           1        2    
+ 0           1        2    
+ 0           1        2  
 ```
