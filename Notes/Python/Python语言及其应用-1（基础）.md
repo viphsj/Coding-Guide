@@ -317,7 +317,7 @@ for value in example_dict.values():
 
 而如果想返回`(key: value)`的元组形式，则可以使用字典的`items()`函数：
 ```python
-for item in example_items():
+for item in example_dict.items():
 	print(item) # (key: value)
 ```
 
