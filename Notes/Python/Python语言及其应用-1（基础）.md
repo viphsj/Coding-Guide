@@ -1,3 +1,42 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [Python语言及其应用-1(基础)](#python%E8%AF%AD%E8%A8%80%E5%8F%8A%E5%85%B6%E5%BA%94%E7%94%A8-1%E5%9F%BA%E7%A1%80)
+  - [数字、字符串和变量](#%E6%95%B0%E5%AD%97%E3%80%81%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%92%8C%E5%8F%98%E9%87%8F)
+  - [列表和元组](#%E5%88%97%E8%A1%A8%E5%92%8C%E5%85%83%E7%BB%84)
+    - [ 列表](#%E5%88%97%E8%A1%A8)
+    - [元组](#%E5%85%83%E7%BB%84)
+  - [字典与集合](#%E5%AD%97%E5%85%B8%E4%B8%8E%E9%9B%86%E5%90%88)
+    - [字典](#%E5%AD%97%E5%85%B8)
+    - [集合](#%E9%9B%86%E5%90%88)
+  - [代码结构](#%E4%BB%A3%E7%A0%81%E7%BB%93%E6%9E%84)
+    - [迭代](#%E8%BF%AD%E4%BB%A3)
+      - [`for`迭代](#for%E8%BF%AD%E4%BB%A3)
+      - [`enumerate`创建迭代器](#enumerate%E5%88%9B%E5%BB%BA%E8%BF%AD%E4%BB%A3%E5%99%A8)
+      - [`zip()`](#zip)
+      - [`range(start, end, step)`](#rangestart-end-step)
+      - [`map()`](#map)
+      - [`filter()`](#filter)
+      - [`reduce()`](#reduce)
+    - [列表推导式](#%E5%88%97%E8%A1%A8%E6%8E%A8%E5%AF%BC%E5%BC%8F)
+    - [字典推导式](#%E5%AD%97%E5%85%B8%E6%8E%A8%E5%AF%BC%E5%BC%8F)
+    - [集合推导式](#%E9%9B%86%E5%90%88%E6%8E%A8%E5%AF%BC%E5%BC%8F)
+    - [条件表达式](#%E6%9D%A1%E4%BB%B6%E8%A1%A8%E8%BE%BE%E5%BC%8F)
+    - [生成器表达式](#%E7%94%9F%E6%88%90%E5%99%A8%E8%A1%A8%E8%BE%BE%E5%BC%8F)
+    - [列表推导式&生成器表达式](#%E5%88%97%E8%A1%A8%E6%8E%A8%E5%AF%BC%E5%BC%8F&%E7%94%9F%E6%88%90%E5%99%A8%E8%A1%A8%E8%BE%BE%E5%BC%8F)
+    - [`try/except/else/finally`](#tryexceptelsefinally)
+    - [`any` & `all`](#any-&-all)
+  - [函数](#%E5%87%BD%E6%95%B0)
+    - [使用`*`收集位置参数](#%E4%BD%BF%E7%94%A8%E6%94%B6%E9%9B%86%E4%BD%8D%E7%BD%AE%E5%8F%82%E6%95%B0)
+    - [使用`**`收集关键字参数](#%E4%BD%BF%E7%94%A8%E6%94%B6%E9%9B%86%E5%85%B3%E9%94%AE%E5%AD%97%E5%8F%82%E6%95%B0)
+    - [闭包](#%E9%97%AD%E5%8C%85)
+    - [匿名函数`lambda()`](#%E5%8C%BF%E5%90%8D%E5%87%BD%E6%95%B0lambda)
+    - [装饰器](#%E8%A3%85%E9%A5%B0%E5%99%A8)
+    - [命名空间和作用域](#%E5%91%BD%E5%90%8D%E7%A9%BA%E9%97%B4%E5%92%8C%E4%BD%9C%E7%94%A8%E5%9F%9F)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 ## Python语言及其应用-1(基础)
 
 ### 数字、字符串和变量
