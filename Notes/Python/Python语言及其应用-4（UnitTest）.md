@@ -230,3 +230,42 @@ def decorate_fun(fun):
 # def fun..
 print(fun.__name__) # fun
 ```
+
+### [nose](https://nose.readthedocs.io/en/latest/index.html)
+
+#### install
+
+```bash
+$ pip3 install nose
+```
+
+nose与其他测试框架或者unittest相比，其最大的特色是不需要专门创建一个包含测试方法的类。任何名称中带有test的函数都会被执行测试。
+除此以外，在项目目录下运行:
+
+```python
+def test_example():
+	a = 1
+	b = 3
+	assert a + b is 4
+```
+
+```bash
+$ nosetests
+```
+
+都会监测到你的测试方法并运行测试
+
+#### usage
+
+nose会自动识别源文件，目录或包中的测试用例。任何符合正则表达式：
+
+```python
+(?:^|[b_.-])[Tt]est
+```
+
+的类、函数、文件或目录，以及TestCase的子类都会被识别并执行。除了自动搜索测试以外，可以显式的指定文件、模块或函数：
+
+```bash
+$ nosetests only_test_this.py
+$ nosetests test.module
+```
