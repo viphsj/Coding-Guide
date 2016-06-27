@@ -1,3 +1,25 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [Python踩坑笔记](#python%E8%B8%A9%E5%9D%91%E7%AC%94%E8%AE%B0)
+  - [函数的默认参数](#%E5%87%BD%E6%95%B0%E7%9A%84%E9%BB%98%E8%AE%A4%E5%8F%82%E6%95%B0)
+  - [捕获多个异常](#%E6%8D%95%E8%8E%B7%E5%A4%9A%E4%B8%AA%E5%BC%82%E5%B8%B8)
+  - [Python中的变量名解析](#python%E4%B8%AD%E7%9A%84%E5%8F%98%E9%87%8F%E5%90%8D%E8%A7%A3%E6%9E%90)
+  - [通过列表解析式来避免在遍历列表时改变列表](#%E9%80%9A%E8%BF%87%E5%88%97%E8%A1%A8%E8%A7%A3%E6%9E%90%E5%BC%8F%E6%9D%A5%E9%81%BF%E5%85%8D%E5%9C%A8%E9%81%8D%E5%8E%86%E5%88%97%E8%A1%A8%E6%97%B6%E6%94%B9%E5%8F%98%E5%88%97%E8%A1%A8)
+  - [`print`](#print)
+  - [最大递归深度设定](#%E6%9C%80%E5%A4%A7%E9%80%92%E5%BD%92%E6%B7%B1%E5%BA%A6%E8%AE%BE%E5%AE%9A)
+  - [生成器](#%E7%94%9F%E6%88%90%E5%99%A8)
+  - [`dir`打印所有方法](#dir%E6%89%93%E5%8D%B0%E6%89%80%E6%9C%89%E6%96%B9%E6%B3%95)
+  - [`isinstance`](#isinstance)
+  - [浅拷贝和深拷贝](#%E6%B5%85%E6%8B%B7%E8%B4%9D%E5%92%8C%E6%B7%B1%E6%8B%B7%E8%B4%9D)
+    - [浅拷贝](#%E6%B5%85%E6%8B%B7%E8%B4%9D)
+    - [深拷贝](#%E6%B7%B1%E6%8B%B7%E8%B4%9D)
+  - [使用无状态的函数](#%E4%BD%BF%E7%94%A8%E6%97%A0%E7%8A%B6%E6%80%81%E7%9A%84%E5%87%BD%E6%95%B0)
+  - [迟绑定闭包](#%E8%BF%9F%E7%BB%91%E5%AE%9A%E9%97%AD%E5%8C%85)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 ## Python踩坑笔记
 
 ### 函数的默认参数

@@ -1,3 +1,21 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [Python爬虫--BeautifulSoup](#python%E7%88%AC%E8%99%AB--beautifulsoup)
+  - [quick start](#quick-start)
+  - [遍历DOM](#%E9%81%8D%E5%8E%86dom)
+    - [获取节点内容](#%E8%8E%B7%E5%8F%96%E8%8A%82%E7%82%B9%E5%86%85%E5%AE%B9)
+    - [获取子节点](#%E8%8E%B7%E5%8F%96%E5%AD%90%E8%8A%82%E7%82%B9)
+    - [获取父节点](#%E8%8E%B7%E5%8F%96%E7%88%B6%E8%8A%82%E7%82%B9)
+    - [获取兄弟节点](#%E8%8E%B7%E5%8F%96%E5%85%84%E5%BC%9F%E8%8A%82%E7%82%B9)
+    - [获取前后节点](#%E8%8E%B7%E5%8F%96%E5%89%8D%E5%90%8E%E8%8A%82%E7%82%B9)
+  - [搜索DOM](#%E6%90%9C%E7%B4%A2dom)
+    - [全DOM搜索](#%E5%85%A8dom%E6%90%9C%E7%B4%A2)
+    - [相邻节点搜索](#%E7%9B%B8%E9%82%BB%E8%8A%82%E7%82%B9%E6%90%9C%E7%B4%A2)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 ## Python爬虫--BeautifulSoup
 
 使用BeautifulSoup库解析HTML

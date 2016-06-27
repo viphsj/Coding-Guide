@@ -1,3 +1,39 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [Python语言及其应用-3(数据处理)](#python%E8%AF%AD%E8%A8%80%E5%8F%8A%E5%85%B6%E5%BA%94%E7%94%A8-3%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86)
+  - [数据处理](#%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86)
+    - [文本格式化](#%E6%96%87%E6%9C%AC%E6%A0%BC%E5%BC%8F%E5%8C%96)
+  - [正则表达式](#%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F)
+    - [推荐教程](#%E6%8E%A8%E8%8D%90%E6%95%99%E7%A8%8B)
+    - [匹配的方法](#%E5%8C%B9%E9%85%8D%E7%9A%84%E6%96%B9%E6%B3%95)
+    - [模式标识符](#%E6%A8%A1%E5%BC%8F%E6%A0%87%E8%AF%86%E7%AC%A6)
+      - [匹配的输出](#%E5%8C%B9%E9%85%8D%E7%9A%84%E8%BE%93%E5%87%BA)
+  - [文件操作](#%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C)
+    - [打开文件](#%E6%89%93%E5%BC%80%E6%96%87%E4%BB%B6)
+    - [读取文件](#%E8%AF%BB%E5%8F%96%E6%96%87%E4%BB%B6)
+    - [写入文件](#%E5%86%99%E5%85%A5%E6%96%87%E4%BB%B6)
+    - [使用`seek()`改变读写位置](#%E4%BD%BF%E7%94%A8seek%E6%94%B9%E5%8F%98%E8%AF%BB%E5%86%99%E4%BD%8D%E7%BD%AE)
+  - [系统操作](#%E7%B3%BB%E7%BB%9F%E6%93%8D%E4%BD%9C)
+    - [路径与目录](#%E8%B7%AF%E5%BE%84%E4%B8%8E%E7%9B%AE%E5%BD%95)
+    - [文件相关](#%E6%96%87%E4%BB%B6%E7%9B%B8%E5%85%B3)
+  - [时间日期](#%E6%97%B6%E9%97%B4%E6%97%A5%E6%9C%9F)
+    - [time](#time)
+      - [基本用法](#%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95)
+      - [格式化日期](#%E6%A0%BC%E5%BC%8F%E5%8C%96%E6%97%A5%E6%9C%9F)
+    - [calendar](#calendar)
+    - [datetime](#datetime)
+      - [datetime模块](#datetime%E6%A8%A1%E5%9D%97)
+      - [date模块](#date%E6%A8%A1%E5%9D%97)
+  - [json](#json)
+  - [美化输出](#%E7%BE%8E%E5%8C%96%E8%BE%93%E5%87%BA)
+    - [pprint](#pprint)
+    - [colorama](#colorama)
+    - [prettytable](#prettytable)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 ## Python语言及其应用-3(数据处理)
 
 ### 数据处理

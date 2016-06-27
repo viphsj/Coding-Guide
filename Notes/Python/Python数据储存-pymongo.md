@@ -1,3 +1,21 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [Python数据储存-pymongo](#python%E6%95%B0%E6%8D%AE%E5%82%A8%E5%AD%98-pymongo)
+  - [MongoDB](#mongodb)
+  - [pymongo](#pymongo)
+    - [install](#install)
+    - [建立连接](#%E5%BB%BA%E7%AB%8B%E8%BF%9E%E6%8E%A5)
+    - [数据操作](#%E6%95%B0%E6%8D%AE%E6%93%8D%E4%BD%9C)
+      - [插入数据](#%E6%8F%92%E5%85%A5%E6%95%B0%E6%8D%AE)
+      - [使用`find_one`进行简单查询](#%E4%BD%BF%E7%94%A8find_one%E8%BF%9B%E8%A1%8C%E7%AE%80%E5%8D%95%E6%9F%A5%E8%AF%A2)
+      - [通过ObjectId查询](#%E9%80%9A%E8%BF%87objectid%E6%9F%A5%E8%AF%A2)
+      - [多条数据操作](#%E5%A4%9A%E6%9D%A1%E6%95%B0%E6%8D%AE%E6%93%8D%E4%BD%9C)
+      - [计数`count()`](#%E8%AE%A1%E6%95%B0count)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 ## Python数据储存-[pymongo](https://api.mongodb.com/python/current/index.html)
 
 ### [MongoDB](https://www.mongodb.com/)

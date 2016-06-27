@@ -1,3 +1,24 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [Python语言及其应用-2(库/类/对象)](#python%E8%AF%AD%E8%A8%80%E5%8F%8A%E5%85%B6%E5%BA%94%E7%94%A8-2%E5%BA%93%E7%B1%BB%E5%AF%B9%E8%B1%A1)
+  - [Python标准库](#python%E6%A0%87%E5%87%86%E5%BA%93)
+    - [`setdefault()`&`defaultdict()`](#setdefault&defaultdict)
+    - [`Counter`](#counter)
+    - [`OrderedDict()`](#ordereddict)
+    - [`deque`双端队列](#deque%E5%8F%8C%E7%AB%AF%E9%98%9F%E5%88%97)
+    - [`itertools`迭代代码结构](#itertools%E8%BF%AD%E4%BB%A3%E4%BB%A3%E7%A0%81%E7%BB%93%E6%9E%84)
+  - [类和对象](#%E7%B1%BB%E5%92%8C%E5%AF%B9%E8%B1%A1)
+    - [类的定义和初始化](#%E7%B1%BB%E7%9A%84%E5%AE%9A%E4%B9%89%E5%92%8C%E5%88%9D%E5%A7%8B%E5%8C%96)
+    - [类的继承](#%E7%B1%BB%E7%9A%84%E7%BB%A7%E6%89%BF)
+    - [使用`property`对特性进行访问和设置](#%E4%BD%BF%E7%94%A8property%E5%AF%B9%E7%89%B9%E6%80%A7%E8%BF%9B%E8%A1%8C%E8%AE%BF%E9%97%AE%E5%92%8C%E8%AE%BE%E7%BD%AE)
+    - [使用名称重整保护私有特性](#%E4%BD%BF%E7%94%A8%E5%90%8D%E7%A7%B0%E9%87%8D%E6%95%B4%E4%BF%9D%E6%8A%A4%E7%A7%81%E6%9C%89%E7%89%B9%E6%80%A7)
+    - [方法/属性的类型](#%E6%96%B9%E6%B3%95%E5%B1%9E%E6%80%A7%E7%9A%84%E7%B1%BB%E5%9E%8B)
+    - [通过`__slots__`限制类实例的属性](#%E9%80%9A%E8%BF%87__slots__%E9%99%90%E5%88%B6%E7%B1%BB%E5%AE%9E%E4%BE%8B%E7%9A%84%E5%B1%9E%E6%80%A7)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 ## Python语言及其应用-2(库/类/对象)
 
 ### Python标准库

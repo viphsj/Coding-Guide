@@ -1,3 +1,16 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [Python爬虫踩坑](#python%E7%88%AC%E8%99%AB%E8%B8%A9%E5%9D%91)
+  - [`urllib`](#urllib)
+    - [打开url](#%E6%89%93%E5%BC%80url)
+    - [设置request参数](#%E8%AE%BE%E7%BD%AErequest%E5%8F%82%E6%95%B0)
+    - [`urllib.parse.urlencode`组合请求体](#urllibparseurlencode%E7%BB%84%E5%90%88%E8%AF%B7%E6%B1%82%E4%BD%93)
+  - [使用`urllib`进行https网站的爬取](#%E4%BD%BF%E7%94%A8urllib%E8%BF%9B%E8%A1%8Chttps%E7%BD%91%E7%AB%99%E7%9A%84%E7%88%AC%E5%8F%96)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 ## Python爬虫踩坑
 
 ### `urllib`

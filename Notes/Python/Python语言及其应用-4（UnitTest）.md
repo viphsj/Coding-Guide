@@ -1,3 +1,19 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [Python语言及其应用-4（UnitTest）](#python%E8%AF%AD%E8%A8%80%E5%8F%8A%E5%85%B6%E5%BA%94%E7%94%A8-4%EF%BC%88unittest%EF%BC%89)
+  - [Pylint](#pylint)
+  - [UnitTest](#unittest)
+  - [doctest](#doctest)
+  - [debugger](#debugger)
+  - [decorator](#decorator)
+  - [nose](#nose)
+    - [install](#install)
+    - [usage](#usage)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 ## Python语言及其应用-4（UnitTest）
 
 ### Pylint

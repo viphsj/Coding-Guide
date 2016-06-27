@@ -1,3 +1,24 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [Python Style Guide](#python-style-guide)
+  - [空格](#%E7%A9%BA%E6%A0%BC)
+  - [类和注释](#%E7%B1%BB%E5%92%8C%E6%B3%A8%E9%87%8A)
+  - [字符串](#%E5%AD%97%E7%AC%A6%E4%B8%B2)
+  - [`import`](#import)
+  - [命名](#%E5%91%BD%E5%90%8D)
+  - [代码建议](#%E4%BB%A3%E7%A0%81%E5%BB%BA%E8%AE%AE)
+  - [Be Pythonic](#be-pythonic)
+    - [解包(Unpacking)](#%E8%A7%A3%E5%8C%85unpacking)
+    - [创建一个被忽略的变量](#%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AA%E8%A2%AB%E5%BF%BD%E7%95%A5%E7%9A%84%E5%8F%98%E9%87%8F)
+    - [创建一个含N个对象的列表](#%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AA%E5%90%ABn%E4%B8%AA%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%88%97%E8%A1%A8)
+    - [创建一个含N个列表的列表](#%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AA%E5%90%ABn%E4%B8%AA%E5%88%97%E8%A1%A8%E7%9A%84%E5%88%97%E8%A1%A8)
+    - [使用列表来创建字符串](#%E4%BD%BF%E7%94%A8%E5%88%97%E8%A1%A8%E6%9D%A5%E5%88%9B%E5%BB%BA%E5%AD%97%E7%AC%A6%E4%B8%B2)
+    - [在集合体（collection）中查找一个项（而不是列表中）](#%E5%9C%A8%E9%9B%86%E5%90%88%E4%BD%93%EF%BC%88collection%EF%BC%89%E4%B8%AD%E6%9F%A5%E6%89%BE%E4%B8%80%E4%B8%AA%E9%A1%B9%EF%BC%88%E8%80%8C%E4%B8%8D%E6%98%AF%E5%88%97%E8%A1%A8%E4%B8%AD%EF%BC%89)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 ## Python Style Guide
 
 - [Google开源项目风格指南](http://zh-google-styleguide.readthedocs.io/en/latest/google-python-styleguide/)
