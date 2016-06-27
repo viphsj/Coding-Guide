@@ -31,6 +31,7 @@
     - [pprint](#pprint)
     - [colorama](#colorama)
     - [prettytable](#prettytable)
+  - [数据库](#%E6%95%B0%E6%8D%AE%E5%BA%93)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -531,3 +532,10 @@ print(table)
  0           1        2    
  0           1        2  
 ```
+
+### 数据库
+
+[MongoDB](https://www.mongodb.com/)
+[pymongo](https://api.mongodb.com/python/current/index.html)
+
+[Python数据储存-pymongo](https://github.com/ecmadao/Coding-Guide/blob/master/Notes/Python/Python%E6%95%B0%E6%8D%AE%E5%82%A8%E5%AD%98-pymongo.md)
