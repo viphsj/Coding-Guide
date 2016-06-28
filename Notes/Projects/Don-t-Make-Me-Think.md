@@ -1,3 +1,25 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [别让我思考](#%E5%88%AB%E8%AE%A9%E6%88%91%E6%80%9D%E8%80%83)
+- [我们实际上是如何使用web的](#%E6%88%91%E4%BB%AC%E5%AE%9E%E9%99%85%E4%B8%8A%E6%98%AF%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8web%E7%9A%84)
+- [为扫描设计，而不是为阅读设计](#%E4%B8%BA%E6%89%AB%E6%8F%8F%E8%AE%BE%E8%AE%A1%EF%BC%8C%E8%80%8C%E4%B8%8D%E6%98%AF%E4%B8%BA%E9%98%85%E8%AF%BB%E8%AE%BE%E8%AE%A1)
+- [建立清楚的视觉层次](#%E5%BB%BA%E7%AB%8B%E6%B8%85%E6%A5%9A%E7%9A%84%E8%A7%86%E8%A7%89%E5%B1%82%E6%AC%A1)
+- [利用习惯用法](#%E5%88%A9%E7%94%A8%E4%B9%A0%E6%83%AF%E7%94%A8%E6%B3%95)
+- [用户喜欢无需思考的选择](#%E7%94%A8%E6%88%B7%E5%96%9C%E6%AC%A2%E6%97%A0%E9%9C%80%E6%80%9D%E8%80%83%E7%9A%84%E9%80%89%E6%8B%A9)
+- [省略不必要的文字](#%E7%9C%81%E7%95%A5%E4%B8%8D%E5%BF%85%E8%A6%81%E7%9A%84%E6%96%87%E5%AD%97)
+- [设计导航](#%E8%AE%BE%E8%AE%A1%E5%AF%BC%E8%88%AA)
+- [设计主页](#%E8%AE%BE%E8%AE%A1%E4%B8%BB%E9%A1%B5)
+- [开发团队关于可用性的讨论](#%E5%BC%80%E5%8F%91%E5%9B%A2%E9%98%9F%E5%85%B3%E4%BA%8E%E5%8F%AF%E7%94%A8%E6%80%A7%E7%9A%84%E8%AE%A8%E8%AE%BA)
+- [可用性测试](#%E5%8F%AF%E7%94%A8%E6%80%A7%E6%B5%8B%E8%AF%95)
+  - [焦点小组](#%E7%84%A6%E7%82%B9%E5%B0%8F%E7%BB%84)
+  - [可用性测试](#%E5%8F%AF%E7%94%A8%E6%80%A7%E6%B5%8B%E8%AF%95-1)
+- [尊重用户，并获得用户尊重](#%E5%B0%8A%E9%87%8D%E7%94%A8%E6%88%B7%EF%BC%8C%E5%B9%B6%E8%8E%B7%E5%BE%97%E7%94%A8%E6%88%B7%E5%B0%8A%E9%87%8D)
+- [可访问性](#%E5%8F%AF%E8%AE%BF%E9%97%AE%E6%80%A7)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 ---
 title: "Don't Make Me Think"
 date: 2016-03-04 14:15:57

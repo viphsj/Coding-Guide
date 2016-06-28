@@ -1,3 +1,20 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [Node.js初步 - API - Path](#nodejs%E5%88%9D%E6%AD%A5---api---path)
+  - [Path API](#path-api)
+    - [path.normalize](#pathnormalize)
+    - [path.parse & path.format](#pathparse-&-pathformat)
+    - [path.relative & path.resolve](#pathrelative-&-pathresolve)
+    - [path.sep](#pathsep)
+    - [path.join](#pathjoin)
+    - [path.isAbsolute](#pathisabsolute)
+    - [path.dirname & path.extname](#pathdirname-&-pathextname)
+    - [path.basename](#pathbasename)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 ## Node.js初步 - API - Path
 
 > 用于处理和转换文件路径的工具集,用于处理目录的对象

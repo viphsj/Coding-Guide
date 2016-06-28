@@ -1,3 +1,18 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [Express初步02 - 中间件](#express%E5%88%9D%E6%AD%A502---%E4%B8%AD%E9%97%B4%E4%BB%B6)
+  - [中间件概念](#%E4%B8%AD%E9%97%B4%E4%BB%B6%E6%A6%82%E5%BF%B5)
+  - [中间件分类](#%E4%B8%AD%E9%97%B4%E4%BB%B6%E5%88%86%E7%B1%BB)
+    - [应用层中间件](#%E5%BA%94%E7%94%A8%E5%B1%82%E4%B8%AD%E9%97%B4%E4%BB%B6)
+    - [路由层中间件](#%E8%B7%AF%E7%94%B1%E5%B1%82%E4%B8%AD%E9%97%B4%E4%BB%B6)
+    - [错误处理中间件](#%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86%E4%B8%AD%E9%97%B4%E4%BB%B6)
+    - [内置中间件](#%E5%86%85%E7%BD%AE%E4%B8%AD%E9%97%B4%E4%BB%B6)
+    - [第三方中间件](#%E7%AC%AC%E4%B8%89%E6%96%B9%E4%B8%AD%E9%97%B4%E4%BB%B6)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 ## Express初步02 - 中间件
 
 ### 中间件概念

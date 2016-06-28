@@ -1,3 +1,17 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [Javascript 设计模式](#javascript-%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F)
+  - [用对象收编变量](#%E7%94%A8%E5%AF%B9%E8%B1%A1%E6%94%B6%E7%BC%96%E5%8F%98%E9%87%8F)
+  - [类的继承](#%E7%B1%BB%E7%9A%84%E7%BB%A7%E6%89%BF)
+  - [单例模式](#%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F)
+  - [模板方法模式](#%E6%A8%A1%E6%9D%BF%E6%96%B9%E6%B3%95%E6%A8%A1%E5%BC%8F)
+  - [观察者模式](#%E8%A7%82%E5%AF%9F%E8%80%85%E6%A8%A1%E5%BC%8F)
+  - [状态模式](#%E7%8A%B6%E6%80%81%E6%A8%A1%E5%BC%8F)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 ## Javascript 设计模式
 
 ### 用对象收编变量

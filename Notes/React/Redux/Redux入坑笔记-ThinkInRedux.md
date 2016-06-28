@@ -1,3 +1,18 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [Redux入坑笔记-Think in Redux](#redux%E5%85%A5%E5%9D%91%E7%AC%94%E8%AE%B0-think-in-redux)
+  - [定义常量、state和Action](#%E5%AE%9A%E4%B9%89%E5%B8%B8%E9%87%8F%E3%80%81state%E5%92%8Caction)
+  - [定义Reducer](#%E5%AE%9A%E4%B9%89reducer)
+  - [combineReducers](#combinereducers)
+  - [注入到React](#%E6%B3%A8%E5%85%A5%E5%88%B0react)
+  - [子组价获取props和dispatch](#%E5%AD%90%E7%BB%84%E4%BB%B7%E8%8E%B7%E5%8F%96props%E5%92%8Cdispatch)
+  - [优势](#%E4%BC%98%E5%8A%BF)
+  - [UPDATE](#update)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 ## Redux入坑笔记-Think in Redux
 
 > Redux 简要的说就是一个事件分发器和全局`state`控制台。

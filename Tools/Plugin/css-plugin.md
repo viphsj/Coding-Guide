@@ -1,3 +1,30 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [CSS PLUGIN](#css-plugin)
+  - [About animation](#about-animation)
+    - [Animate.css](#animatecss)
+    - [Effeckt.css](#effecktcss)
+    - [CONNOR ATHERTON](#connor-atherton)
+    - [SpinKit](#spinkit)
+    - [balloon.css](#ballooncss)
+  - [About color](#about-color)
+    - [Colofilter.css](#colofiltercss)
+  - [About page-switch](#about-page-switch)
+    - [Slick.css](#slickcss)
+  - [Icons & Web-Font](#icons-&-web-font)
+    - [Font-awesome](#font-awesome)
+    - [Fileicon.css](#fileiconcss)
+    - [Material Icons](#material-icons)
+    - [ICONO](#icono)
+    - [CIKONSS](#cikonss)
+    - [Transformicons](#transformicons)
+    - [twig](#twig)
+    - [Tasty CSS-animated hamburgers](#tasty-css-animated-hamburgers)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 ## CSS PLUGIN
 
 ### About animation

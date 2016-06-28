@@ -1,3 +1,12 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [Redux入坑笔记-Middleware](#redux%E5%85%A5%E5%9D%91%E7%AC%94%E8%AE%B0-middleware)
+  - [当Redux遇见低版本浏览器](#%E5%BD%93redux%E9%81%87%E8%A7%81%E4%BD%8E%E7%89%88%E6%9C%AC%E6%B5%8F%E8%A7%88%E5%99%A8)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 ## Redux入坑笔记-Middleware
 
 > components shouldn’t care whether something happens synchronously or asynchronously

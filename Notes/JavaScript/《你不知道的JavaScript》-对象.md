@@ -1,3 +1,21 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [对象](#%E5%AF%B9%E8%B1%A1)
+  - [类型](#%E7%B1%BB%E5%9E%8B)
+  - [对象的内容](#%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%86%85%E5%AE%B9)
+    - [对象属性](#%E5%AF%B9%E8%B1%A1%E5%B1%9E%E6%80%A7)
+    - [复制对象](#%E5%A4%8D%E5%88%B6%E5%AF%B9%E8%B1%A1)
+    - [不变性](#%E4%B8%8D%E5%8F%98%E6%80%A7)
+    - [存在性](#%E5%AD%98%E5%9C%A8%E6%80%A7)
+    - [对象属性的遍历](#%E5%AF%B9%E8%B1%A1%E5%B1%9E%E6%80%A7%E7%9A%84%E9%81%8D%E5%8E%86)
+  - [对象创建](#%E5%AF%B9%E8%B1%A1%E5%88%9B%E5%BB%BA)
+    - [构造器模式](#%E6%9E%84%E9%80%A0%E5%99%A8%E6%A8%A1%E5%BC%8F)
+    - [原型模式](#%E5%8E%9F%E5%9E%8B%E6%A8%A1%E5%BC%8F)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 ---
 title: 《你不知道的JavaScript》--对象
 date: 2016-03-04 10:57:09

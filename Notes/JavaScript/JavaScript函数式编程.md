@@ -1,3 +1,22 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [JavaScript-函数式编程](#javascript-%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B)
+  - [函数与其他数据类型一样，处于平等地位](#%E5%87%BD%E6%95%B0%E4%B8%8E%E5%85%B6%E4%BB%96%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E4%B8%80%E6%A0%B7%EF%BC%8C%E5%A4%84%E4%BA%8E%E5%B9%B3%E7%AD%89%E5%9C%B0%E4%BD%8D)
+  - [函数应该纯天然，无副作用](#%E5%87%BD%E6%95%B0%E5%BA%94%E8%AF%A5%E7%BA%AF%E5%A4%A9%E7%84%B6%EF%BC%8C%E6%97%A0%E5%89%AF%E4%BD%9C%E7%94%A8)
+  - [引用透明](#%E5%BC%95%E7%94%A8%E9%80%8F%E6%98%8E)
+  - [immutable](#immutable)
+  - [柯里化](#%E6%9F%AF%E9%87%8C%E5%8C%96)
+    - [概念摘要](#%E6%A6%82%E5%BF%B5%E6%91%98%E8%A6%81)
+    - [创建柯里化函数](#%E5%88%9B%E5%BB%BA%E6%9F%AF%E9%87%8C%E5%8C%96%E5%87%BD%E6%95%B0)
+  - [代码组合](#%E4%BB%A3%E7%A0%81%E7%BB%84%E5%90%88)
+    - [pointfree 函数无需提及要操作的数据是什么样的](#pointfree-%E5%87%BD%E6%95%B0%E6%97%A0%E9%9C%80%E6%8F%90%E5%8F%8A%E8%A6%81%E6%93%8D%E4%BD%9C%E7%9A%84%E6%95%B0%E6%8D%AE%E6%98%AF%E4%BB%80%E4%B9%88%E6%A0%B7%E7%9A%84)
+    - [结合律](#%E7%BB%93%E5%90%88%E5%BE%8B)
+    - [坑](#%E5%9D%91)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 ## JavaScript-函数式编程
 
 命令式编程中“典型”的方法和过程都深深地根植于它们所在的环境中，通过状态、依赖和有效作用达成；纯函数与此相反，它与环境无关，只要我们愿意，可以在任何地方运行它

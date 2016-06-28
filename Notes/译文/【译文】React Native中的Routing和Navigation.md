@@ -1,3 +1,13 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [【译文】React Native中的Routing和Navigation](#%E3%80%90%E8%AF%91%E6%96%87%E3%80%91react-native%E4%B8%AD%E7%9A%84routing%E5%92%8Cnavigation)
+  - [为何是navigation](#%E4%B8%BA%E4%BD%95%E6%98%AFnavigation)
+  - [navigation为什么这么可怕](#navigation%E4%B8%BA%E4%BB%80%E4%B9%88%E8%BF%99%E4%B9%88%E5%8F%AF%E6%80%95)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 ## 【译文】React Native中的Routing和Navigation
 
 ![navigation](../../image/Routing-and-Navigation-in-React-Native/navigation.png)

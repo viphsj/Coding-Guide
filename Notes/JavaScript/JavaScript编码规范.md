@@ -1,3 +1,21 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [JavaScript编码规范](#javascript%E7%BC%96%E7%A0%81%E8%A7%84%E8%8C%83)
+  - [使用ES6中的规范](#%E4%BD%BF%E7%94%A8es6%E4%B8%AD%E7%9A%84%E8%A7%84%E8%8C%83)
+  - [文件与编码](#%E6%96%87%E4%BB%B6%E4%B8%8E%E7%BC%96%E7%A0%81)
+  - [解构](#%E8%A7%A3%E6%9E%84)
+  - [函数](#%E5%87%BD%E6%95%B0)
+  - [属性与变量](#%E5%B1%9E%E6%80%A7%E4%B8%8E%E5%8F%98%E9%87%8F)
+  - [比较运算符](#%E6%AF%94%E8%BE%83%E8%BF%90%E7%AE%97%E7%AC%A6)
+  - [代码美观](#%E4%BB%A3%E7%A0%81%E7%BE%8E%E8%A7%82)
+  - [null & undefined](#null-&-undefined)
+  - [命名规则](#%E5%91%BD%E5%90%8D%E8%A7%84%E5%88%99)
+  - [jQuery相关](#jquery%E7%9B%B8%E5%85%B3)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 ## JavaScript编码规范
 
 ### 使用ES6中的规范

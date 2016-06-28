@@ -1,3 +1,18 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [Redux入坑笔记-源码解析](#redux%E5%85%A5%E5%9D%91%E7%AC%94%E8%AE%B0-%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90)
+  - [`combineReducers`](#combinereducers)
+  - [`createStore`](#createstore)
+  - [redux-thunk](#redux-thunk)
+  - [`applyMiddleware`](#applymiddleware)
+  - [`bindActionCreator`](#bindactioncreator)
+    - [`bindActionCreator`源码解析](#bindactioncreator%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90)
+  - [react-redux](#react-redux)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 ## Redux入坑笔记-源码解析
 
 > redux 函数内部包含了大量[柯里化函数](https://llh911001.gitbooks.io/mostly-adequate-guide-chinese/content/ch4.html)以及[代码组合](https://llh911001.gitbooks.io/mostly-adequate-guide-chinese/content/ch5.html)思想

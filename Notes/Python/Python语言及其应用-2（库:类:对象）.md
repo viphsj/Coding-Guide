@@ -8,6 +8,7 @@
     - [`Counter`](#counter)
     - [`OrderedDict()`](#ordereddict)
     - [`deque`双端队列](#deque%E5%8F%8C%E7%AB%AF%E9%98%9F%E5%88%97)
+    - [`namedtuple`](#namedtuple)
     - [`itertools`迭代代码结构](#itertools%E8%BF%AD%E4%BB%A3%E4%BB%A3%E7%A0%81%E7%BB%93%E6%9E%84)
   - [类和对象](#%E7%B1%BB%E5%92%8C%E5%AF%B9%E8%B1%A1)
     - [类的定义和初始化](#%E7%B1%BB%E7%9A%84%E5%AE%9A%E4%B9%89%E5%92%8C%E5%88%9D%E5%A7%8B%E5%8C%96)
@@ -137,6 +138,23 @@ print(d2) # deque([2, 3, 4, 0, 1]) 当参数的绝对值大于等于列表长度
 ```python
 d = deque(maxlen=30)
 
+```
+
+#### `namedtuple`
+
+命名元组。通过命名元组创建的对象具有元祖的特性，而且可以通过位置索引&键值索引获取到元组内的数据。
+
+```python
+from collections import namedtuple
+Point = namedtuple('Point', ['x', 'y'])
+
+p = Point(1, 2)
+print(p) # Point(x=1, y=2)
+p.x # 1
+p.y # 2
+p[0], p[1] # (1, 2)
+x, y = p
+x, y # (1, 2)
 ```
 
 #### `itertools`迭代代码结构

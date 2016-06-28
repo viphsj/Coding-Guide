@@ -1,3 +1,25 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [Express初步04 - 模板引擎与View层(jade)](#express%E5%88%9D%E6%AD%A504---%E6%A8%A1%E6%9D%BF%E5%BC%95%E6%93%8E%E4%B8%8Eview%E5%B1%82jade)
+  - [jade的基本使用](#jade%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8)
+  - [jade输出数据](#jade%E8%BE%93%E5%87%BA%E6%95%B0%E6%8D%AE)
+    - [特殊符号](#%E7%89%B9%E6%AE%8A%E7%AC%A6%E5%8F%B7)
+    - [条件](#%E6%9D%A1%E4%BB%B6)
+    - [插入css与js](#%E6%8F%92%E5%85%A5css%E4%B8%8Ejs)
+    - [注释](#%E6%B3%A8%E9%87%8A)
+  - [模板引用(includes)](#%E6%A8%A1%E6%9D%BF%E5%BC%95%E7%94%A8includes)
+    - [引用jade公共文件](#%E5%BC%95%E7%94%A8jade%E5%85%AC%E5%85%B1%E6%96%87%E4%BB%B6)
+    - [引用资源文件](#%E5%BC%95%E7%94%A8%E8%B5%84%E6%BA%90%E6%96%87%E4%BB%B6)
+    - [直接引用markdown](#%E7%9B%B4%E6%8E%A5%E5%BC%95%E7%94%A8markdown)
+  - [模板继承(extends)](#%E6%A8%A1%E6%9D%BF%E7%BB%A7%E6%89%BFextends)
+  - [Filters过滤器](#filters%E8%BF%87%E6%BB%A4%E5%99%A8)
+  - [iteration循环](#iteration%E5%BE%AA%E7%8E%AF)
+  - [Mixins](#mixins)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 ## Express初步04 - 模板引擎与View层(jade)
 
 在默认情况下，Express使用`jade`作为模板引擎

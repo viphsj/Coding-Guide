@@ -1,3 +1,17 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [this解析](#this%E8%A7%A3%E6%9E%90)
+  - [独立函数调用](#%E7%8B%AC%E7%AB%8B%E5%87%BD%E6%95%B0%E8%B0%83%E7%94%A8)
+  - [绑定规则-隐式绑定](#%E7%BB%91%E5%AE%9A%E8%A7%84%E5%88%99-%E9%9A%90%E5%BC%8F%E7%BB%91%E5%AE%9A)
+  - [绑定规则-new绑定](#%E7%BB%91%E5%AE%9A%E8%A7%84%E5%88%99-new%E7%BB%91%E5%AE%9A)
+  - [判断this（绑定优先级）](#%E5%88%A4%E6%96%ADthis%EF%BC%88%E7%BB%91%E5%AE%9A%E4%BC%98%E5%85%88%E7%BA%A7%EF%BC%89)
+  - [空绑定](#%E7%A9%BA%E7%BB%91%E5%AE%9A)
+  - [箭头函数](#%E7%AE%AD%E5%A4%B4%E5%87%BD%E6%95%B0)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 ---
 title: 《你不知道的JavaScript》--this解析
 date: 2016-03-03 08:09:48

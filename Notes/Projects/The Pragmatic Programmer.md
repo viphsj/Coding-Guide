@@ -1,3 +1,18 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [The Pragmatic Programmer](#the-pragmatic-programmer)
+  - [注重实效的哲学](#%E6%B3%A8%E9%87%8D%E5%AE%9E%E6%95%88%E7%9A%84%E5%93%B2%E5%AD%A6)
+    - [软件质量与维护](#%E8%BD%AF%E4%BB%B6%E8%B4%A8%E9%87%8F%E4%B8%8E%E7%BB%B4%E6%8A%A4)
+    - [进步和沟通](#%E8%BF%9B%E6%AD%A5%E5%92%8C%E6%B2%9F%E9%80%9A)
+  - [注重实效的途径](#%E6%B3%A8%E9%87%8D%E5%AE%9E%E6%95%88%E7%9A%84%E9%80%94%E5%BE%84)
+    - [避免重复](#%E9%81%BF%E5%85%8D%E9%87%8D%E5%A4%8D)
+    - [正交性](#%E6%AD%A3%E4%BA%A4%E6%80%A7)
+    - [可撤销性](#%E5%8F%AF%E6%92%A4%E9%94%80%E6%80%A7)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 ## The Pragmatic Programmer
 
 ### 注重实效的哲学

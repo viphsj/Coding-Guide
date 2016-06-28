@@ -1,3 +1,30 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [JavaScript Tips-1](#javascript-tips-1)
+  - [文件上传处理](#%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%A4%84%E7%90%86)
+  - [通过拖拽上传文件](#%E9%80%9A%E8%BF%87%E6%8B%96%E6%8B%BD%E4%B8%8A%E4%BC%A0%E6%96%87%E4%BB%B6)
+  - [js动态加载CSS](#js%E5%8A%A8%E6%80%81%E5%8A%A0%E8%BD%BDcss)
+  - [js动态加载js](#js%E5%8A%A8%E6%80%81%E5%8A%A0%E8%BD%BDjs)
+  - [给通过JS动态生成的元素绑定事件](#%E7%BB%99%E9%80%9A%E8%BF%87js%E5%8A%A8%E6%80%81%E7%94%9F%E6%88%90%E7%9A%84%E5%85%83%E7%B4%A0%E7%BB%91%E5%AE%9A%E4%BA%8B%E4%BB%B6)
+  - [使用JavaScript获取CSS伪元素属性](#%E4%BD%BF%E7%94%A8javascript%E8%8E%B7%E5%8F%96css%E4%BC%AA%E5%85%83%E7%B4%A0%E5%B1%9E%E6%80%A7)
+  - [禁止右键点击](#%E7%A6%81%E6%AD%A2%E5%8F%B3%E9%94%AE%E7%82%B9%E5%87%BB)
+  - [检查图片是否加载完成](#%E6%A3%80%E6%9F%A5%E5%9B%BE%E7%89%87%E6%98%AF%E5%90%A6%E5%8A%A0%E8%BD%BD%E5%AE%8C%E6%88%90)
+  - [自动修改破损图像](#%E8%87%AA%E5%8A%A8%E4%BF%AE%E6%94%B9%E7%A0%B4%E6%8D%9F%E5%9B%BE%E5%83%8F)
+  - [验证元素是否存在于jquery对象集合中](#%E9%AA%8C%E8%AF%81%E5%85%83%E7%B4%A0%E6%98%AF%E5%90%A6%E5%AD%98%E5%9C%A8%E4%BA%8Ejquery%E5%AF%B9%E8%B1%A1%E9%9B%86%E5%90%88%E4%B8%AD)
+  - [确认/取消对话框](#%E7%A1%AE%E8%AE%A4%E5%8F%96%E6%B6%88%E5%AF%B9%E8%AF%9D%E6%A1%86)
+  - [发送邮件](#%E5%8F%91%E9%80%81%E9%82%AE%E4%BB%B6)
+  - [监测浏览器窗口的大小改变](#%E7%9B%91%E6%B5%8B%E6%B5%8F%E8%A7%88%E5%99%A8%E7%AA%97%E5%8F%A3%E7%9A%84%E5%A4%A7%E5%B0%8F%E6%94%B9%E5%8F%98)
+  - [监测按键](#%E7%9B%91%E6%B5%8B%E6%8C%89%E9%94%AE)
+  - [在head区域替换整张样式表](#%E5%9C%A8head%E5%8C%BA%E5%9F%9F%E6%9B%BF%E6%8D%A2%E6%95%B4%E5%BC%A0%E6%A0%B7%E5%BC%8F%E8%A1%A8)
+  - [`null` & `undefined `](#null-&-undefined-)
+  - [`typeof`检测原始类型](#typeof%E6%A3%80%E6%B5%8B%E5%8E%9F%E5%A7%8B%E7%B1%BB%E5%9E%8B)
+  - [`instanceof`检测引用类型](#instanceof%E6%A3%80%E6%B5%8B%E5%BC%95%E7%94%A8%E7%B1%BB%E5%9E%8B)
+  - [`for..in`循环](#forin%E5%BE%AA%E7%8E%AF)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 ## JavaScript Tips-1
 
 ### 文件上传处理

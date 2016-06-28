@@ -1,3 +1,20 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [ReactNative入坑笔记-ThinkInReactNative](#reactnative%E5%85%A5%E5%9D%91%E7%AC%94%E8%AE%B0-thinkinreactnative)
+  - [INTRO](#intro)
+  - [组件UI](#%E7%BB%84%E4%BB%B6ui)
+    - [布局初步](#%E5%B8%83%E5%B1%80%E5%88%9D%E6%AD%A5)
+    - [StyleSheet](#stylesheet)
+    - [按文件名加载](#%E6%8C%89%E6%96%87%E4%BB%B6%E5%90%8D%E5%8A%A0%E8%BD%BD)
+  - [数据](#%E6%95%B0%E6%8D%AE)
+    - [Redux](#redux)
+    - [数据储存`AsyncStorage`](#%E6%95%B0%E6%8D%AE%E5%82%A8%E5%AD%98asyncstorage)
+    - [使用`redux-persist`完成数据持久化](#%E4%BD%BF%E7%94%A8redux-persist%E5%AE%8C%E6%88%90%E6%95%B0%E6%8D%AE%E6%8C%81%E4%B9%85%E5%8C%96)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 ## ReactNative入坑笔记-ThinkInReactNative
 
 部分参考并整理自[构建 F8 2016 App](http://f8-app.liaohuqiu.net/)

@@ -1,3 +1,21 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [【译文】用ES6写更赞的JavaScript（1）](#%E3%80%90%E8%AF%91%E6%96%87%E3%80%91%E7%94%A8es6%E5%86%99%E6%9B%B4%E8%B5%9E%E7%9A%84javascript%EF%BC%881%EF%BC%89)
+  - [`let`，`const`以及它们的作用域](#let%EF%BC%8Cconst%E4%BB%A5%E5%8F%8A%E5%AE%83%E4%BB%AC%E7%9A%84%E4%BD%9C%E7%94%A8%E5%9F%9F)
+    - [`let` & `const`：谁在乎呢？](#let-&-const%EF%BC%9A%E8%B0%81%E5%9C%A8%E4%B9%8E%E5%91%A2%EF%BC%9F)
+  - [动态的`this`](#%E5%8A%A8%E6%80%81%E7%9A%84this)
+    - [箭头函数里的`this`](#%E7%AE%AD%E5%A4%B4%E5%87%BD%E6%95%B0%E9%87%8C%E7%9A%84this)
+  - [简写属性和方法](#%E7%AE%80%E5%86%99%E5%B1%9E%E6%80%A7%E5%92%8C%E6%96%B9%E6%B3%95)
+    - [简写方法](#%E7%AE%80%E5%86%99%E6%96%B9%E6%B3%95)
+    - [简写属性/计算属性](#%E7%AE%80%E5%86%99%E5%B1%9E%E6%80%A7%E8%AE%A1%E7%AE%97%E5%B1%9E%E6%80%A7)
+    - [计算得出的属性名](#%E8%AE%A1%E7%AE%97%E5%BE%97%E5%87%BA%E7%9A%84%E5%B1%9E%E6%80%A7%E5%90%8D)
+    - [`getter`&`setter`方法](#getter&setter%E6%96%B9%E6%B3%95)
+  - [总结](#%E6%80%BB%E7%BB%93)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 ## 【译文】用ES6写更赞的JavaScript（1）
 
 > 本文译自：[Better Node with ES6, Pt. I](https://scotch.io/tutorials/better-node-with-es6-pt-i)

@@ -1,3 +1,15 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [Node.js初步 - API - URL](#nodejs%E5%88%9D%E6%AD%A5---api---url)
+  - [URL API](#url-api)
+    - [url.parse](#urlparse)
+    - [url.format](#urlformat)
+    - [url.resolve](#urlresolve)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 ## Node.js初步 - API - URL
 
 `require('url');`

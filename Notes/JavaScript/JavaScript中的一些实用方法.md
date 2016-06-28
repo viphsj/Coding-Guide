@@ -1,3 +1,17 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [JavaScript 中的一些实用方法](#javascript-%E4%B8%AD%E7%9A%84%E4%B8%80%E4%BA%9B%E5%AE%9E%E7%94%A8%E6%96%B9%E6%B3%95)
+  - [Object.assign()](#objectassign)
+  - [`扩展运算符 ...`](#%E6%89%A9%E5%B1%95%E8%BF%90%E7%AE%97%E7%AC%A6-)
+  - [FormData](#formdata)
+  - [关于数组](#%E5%85%B3%E4%BA%8E%E6%95%B0%E7%BB%84)
+  - [WeakMap](#weakmap)
+    - [方法](#%E6%96%B9%E6%B3%95)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 ## JavaScript 中的一些实用方法
 
 > 偏重于ES6

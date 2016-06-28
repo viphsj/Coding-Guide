@@ -1,3 +1,16 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [JavaScript Tips-2](#javascript-tips-2)
+  - [使用`arguments`获取函数中的所有参数](#%E4%BD%BF%E7%94%A8arguments%E8%8E%B7%E5%8F%96%E5%87%BD%E6%95%B0%E4%B8%AD%E7%9A%84%E6%89%80%E6%9C%89%E5%8F%82%E6%95%B0)
+    - [example](#example)
+  - [使用`reduce()`遍历数组元素](#%E4%BD%BF%E7%94%A8reduce%E9%81%8D%E5%8E%86%E6%95%B0%E7%BB%84%E5%85%83%E7%B4%A0)
+    - [语法一览](#%E8%AF%AD%E6%B3%95%E4%B8%80%E8%A7%88)
+    - [example](#example-1)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 ## JavaScript Tips-2
 
 ### 使用`arguments`获取函数中的所有参数

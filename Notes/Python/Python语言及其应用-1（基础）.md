@@ -34,6 +34,7 @@
     - [匿名函数`lambda()`](#%E5%8C%BF%E5%90%8D%E5%87%BD%E6%95%B0lambda)
     - [装饰器](#%E8%A3%85%E9%A5%B0%E5%99%A8)
     - [命名空间和作用域](#%E5%91%BD%E5%90%8D%E7%A9%BA%E9%97%B4%E5%92%8C%E4%BD%9C%E7%94%A8%E5%9F%9F)
+  - [generator](#generator)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -817,4 +818,28 @@ fun() # 2
 print(const_value) 
 # const_value
 # 函数中使用的const_value为局部变量
+```
+
+### generator
+
+[Understanding Generators in Python](http://stackoverflow.com/questions/1756096/understanding-generators-in-python)
+
+generator内部有`yield`声明，每次调用`next()`都会使函数在`yield`处暂停，并由`yield`抛出一个返回值。
+当函数调用完全之后再次调用`next()`会报`StopIteration`错，但如果是使用`for`循环调用生成器，则会则生成器完全调用之后自动返回
+
+```python
+items = [1, 2, 3]
+# Get the iterator
+it = iter(items) # Invokes items.__iter__()
+# Run the iterator
+next(it) # Invokes it.__next__()
+# 1
+next(it)
+# 2
+next(it)
+# 3
+next(it)
+# Traceback (most recent call last):
+#     File "<stdin>", line 1, in <module>
+# StopIteration
 ```

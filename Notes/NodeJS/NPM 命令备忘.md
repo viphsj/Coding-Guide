@@ -1,3 +1,11 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [NPM 命令备忘](#npm-%E5%91%BD%E4%BB%A4%E5%A4%87%E5%BF%98)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 ## NPM 命令备忘
 
   - setup

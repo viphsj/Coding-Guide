@@ -1,3 +1,20 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [使用Electron&React&Webpack构建桌面端App【01】--配置](#%E4%BD%BF%E7%94%A8electron&react&webpack%E6%9E%84%E5%BB%BA%E6%A1%8C%E9%9D%A2%E7%AB%AFapp%E3%80%9001%E3%80%91--%E9%85%8D%E7%BD%AE)
+  - [intro](#intro)
+  - [webpack + electron](#webpack--electron)
+      - [webpack + electron 的问题](#webpack--electron-%E7%9A%84%E9%97%AE%E9%A2%98)
+    - [解决方案1：](#%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%881%EF%BC%9A)
+    - [解决方案2：](#%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%882%EF%BC%9A)
+  - [setup](#setup)
+    - [React](#react)
+    - [Redux](#redux)
+    - [搭建目录结构](#%E6%90%AD%E5%BB%BA%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 ## 使用Electron&React&Webpack构建桌面端App【01】--配置
 
 ### intro

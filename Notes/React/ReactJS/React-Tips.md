@@ -1,3 +1,14 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [React.js Tips](#reactjs-tips)
+  - [~~使用`classSet()`操作className~~](#%E4%BD%BF%E7%94%A8classset%E6%93%8D%E4%BD%9Cclassname)
+  - [`classnames`](#classnames)
+  - [`update()` - 不可变数据的辅助工具](#update---%E4%B8%8D%E5%8F%AF%E5%8F%98%E6%95%B0%E6%8D%AE%E7%9A%84%E8%BE%85%E5%8A%A9%E5%B7%A5%E5%85%B7)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 ## React.js Tips
 
 ### ~~使用`classSet()`操作className~~

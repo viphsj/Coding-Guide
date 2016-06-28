@@ -1,3 +1,16 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [Express实战-入坑记录](#express%E5%AE%9E%E6%88%98-%E5%85%A5%E5%9D%91%E8%AE%B0%E5%BD%95)
+  - [路由设置](#%E8%B7%AF%E7%94%B1%E8%AE%BE%E7%BD%AE)
+  - [路由跳转](#%E8%B7%AF%E7%94%B1%E8%B7%B3%E8%BD%AC)
+  - [jade](#jade)
+  - [Ajax](#ajax)
+  - [MongoDB](#mongodb)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 ## Express实战-入坑记录
 
 [官方API文档](http://expressjs.com/en/api.html)

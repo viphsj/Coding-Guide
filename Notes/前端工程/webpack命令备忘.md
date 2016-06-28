@@ -1,3 +1,13 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [安装webpack](#%E5%AE%89%E8%A3%85webpack)
+- [在项目中使用webpack](#%E5%9C%A8%E9%A1%B9%E7%9B%AE%E4%B8%AD%E4%BD%BF%E7%94%A8webpack)
+- [利于分析 webpack 打包的命令](#%E5%88%A9%E4%BA%8E%E5%88%86%E6%9E%90-webpack-%E6%89%93%E5%8C%85%E7%9A%84%E5%91%BD%E4%BB%A4)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 ---
 title: webpack命令备忘
 date: 2016-03-03 09:29:15

@@ -1,3 +1,30 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [Node.js初步 - API - File System](#nodejs%E5%88%9D%E6%AD%A5---api---file-system)
+  - [file system](#file-system)
+  - [file system class](#file-system-class)
+  - [file system api](#file-system-api)
+    - [access](#access)
+    - [exists](#exists)
+    - [appendFile](#appendfile)
+    - [rename](#rename)
+    - [close](#close)
+    - [createReadStream](#createreadstream)
+    - [createWriteStream](#createwritestream)
+    - [open](#open)
+    - [read](#read)
+    - [write](#write)
+    - [readdir](#readdir)
+    - [readFile](#readfile)
+    - [writeFile](#writefile)
+    - [rename](#rename-1)
+    - [rmdir & mkdir](#rmdir-&-mkdir)
+    - [unlink](#unlink)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 ## Node.js初步 - API - File System
 
 node.js中提供一个名为fs的模块来支持I/O操作，fs模块的文件I/O是对标准POSIX函数的简单封装

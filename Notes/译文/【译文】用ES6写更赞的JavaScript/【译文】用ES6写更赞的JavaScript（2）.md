@@ -1,3 +1,29 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [【译文】用ES6写更赞的JavaScript（2）](#%E3%80%90%E8%AF%91%E6%96%87%E3%80%91%E7%94%A8es6%E5%86%99%E6%9B%B4%E8%B5%9E%E7%9A%84javascript%EF%BC%882%EF%BC%89)
+  - [后退一步：类不是什么](#%E5%90%8E%E9%80%80%E4%B8%80%E6%AD%A5%EF%BC%9A%E7%B1%BB%E4%B8%8D%E6%98%AF%E4%BB%80%E4%B9%88)
+  - [基础：声明&表达式](#%E5%9F%BA%E7%A1%80%EF%BC%9A%E5%A3%B0%E6%98%8E&%E8%A1%A8%E8%BE%BE%E5%BC%8F)
+  - [使用`extends`创建子类&调用`super`方法](#%E4%BD%BF%E7%94%A8extends%E5%88%9B%E5%BB%BA%E5%AD%90%E7%B1%BB&%E8%B0%83%E7%94%A8super%E6%96%B9%E6%B3%95)
+  - [深入原型](#%E6%B7%B1%E5%85%A5%E5%8E%9F%E5%9E%8B)
+    - [使用构造函数创建对象](#%E4%BD%BF%E7%94%A8%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E5%88%9B%E5%BB%BA%E5%AF%B9%E8%B1%A1)
+    - [体验原型链](#%E4%BD%93%E9%AA%8C%E5%8E%9F%E5%9E%8B%E9%93%BE)
+    - [给对象设置原型](#%E7%BB%99%E5%AF%B9%E8%B1%A1%E8%AE%BE%E7%BD%AE%E5%8E%9F%E5%9E%8B)
+    - [名为对象的方法](#%E5%90%8D%E4%B8%BA%E5%AF%B9%E8%B1%A1%E7%9A%84%E6%96%B9%E6%B3%95)
+      - [默认规则](#%E9%BB%98%E8%AE%A4%E8%A7%84%E5%88%99)
+      - [通过`new`隐式设置](#%E9%80%9A%E8%BF%87new%E9%9A%90%E5%BC%8F%E8%AE%BE%E7%BD%AE)
+      - [通过`Object.create`显式设置](#%E9%80%9A%E8%BF%87objectcreate%E6%98%BE%E5%BC%8F%E8%AE%BE%E7%BD%AE)
+  - [模仿class](#%E6%A8%A1%E4%BB%BFclass)
+  - [走进“方法”](#%E8%B5%B0%E8%BF%9B%E2%80%9C%E6%96%B9%E6%B3%95%E2%80%9D)
+    - [类的构造方法](#%E7%B1%BB%E7%9A%84%E6%9E%84%E9%80%A0%E6%96%B9%E6%B3%95)
+    - [静态方法](#%E9%9D%99%E6%80%81%E6%96%B9%E6%B3%95)
+    - [属性方法](#%E5%B1%9E%E6%80%A7%E6%96%B9%E6%B3%95)
+    - [symbol方法](#symbol%E6%96%B9%E6%B3%95)
+  - [总结](#%E6%80%BB%E7%BB%93)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 ## 【译文】用ES6写更赞的JavaScript（2）
 
 > 本文译自：[Better JavaScript with ES6, Pt. II: A Deep Dive into Classes](https://scotch.io/tutorials/better-javascript-with-es6-pt-ii-a-deep-dive-into-classes)

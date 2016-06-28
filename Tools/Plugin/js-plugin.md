@@ -1,3 +1,56 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [JS PLUGIN](#js-plugin)
+- [About animation](#about-animation)
+  - [mo.js](#mojs)
+  - [Bounce.js](#bouncejs)
+  - [Move.js](#movejs)
+  - [Parallax.js](#parallaxjs)
+- [About page-switch](#about-page-switch)
+  - [reveal.js](#revealjs)
+  - [Swiper](#swiper)
+  - [slick](#slick)
+  - [fullPage.js](#fullpagejs)
+  - [Headroom.js](#headroomjs)
+- [About media](#about-media)
+  - [Spectrum](#spectrum)
+  - [VideoJs](#videojs)
+  - [PhotoSwipe](#photoswipe)
+  - [Fabric.js](#fabricjs)
+  - [Cropper](#cropper)
+  - [Filterizr](#filterizr)
+- [About Data](#about-data)
+  - [Cal-heatmap](#cal-heatmap)
+  - [Chart.js](#chartjs)
+  - [DataTables](#datatables)
+  - [tablesorter](#tablesorter)
+  - [List.js](#listjs)
+  - [Moment.js](#momentjs)
+  - [Basil.js](#basiljs)
+  - [storage](#storage)
+  - [*[Store.js](https://github.com/marcuswestin/store.js)*](#storejshttpsgithubcommarcuswestinstorejs)
+- [About Writer](#about-writer)
+  - [tinymce](#tinymce)
+  - [Mditor](#mditor)
+  - [clipboard.js](#clipboardjs)
+- [Other tools](#other-tools)
+  - [UNDERSCORE.JS](#underscorejs)
+  - [favico.js](#favicojs)
+  - [pickadate.js](#pickadatejs)
+  - [Messenger](#messenger)
+  - [Modaal](#modaal)
+  - [biu](#biu)
+  - [Tipso](#tipso)
+  - [FlipClock.js](#flipclockjs)
+  - [PLEASE.JS](#pleasejs)
+  - [*[Feature.js](http://featurejs.com/)*](#featurejshttpfeaturejscom)
+  - [Hilo](#hilo)
+  - [jQuery WeUI](#jquery-weui)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 ### JS PLUGIN
 
 ### About animation

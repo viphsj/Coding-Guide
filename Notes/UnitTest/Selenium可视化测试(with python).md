@@ -1,3 +1,35 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [Selenium可视化测试(with python)](#selenium%E5%8F%AF%E8%A7%86%E5%8C%96%E6%B5%8B%E8%AF%95with-python)
+  - [setup](#setup)
+  - [quick start](#quick-start)
+  - [导航](#%E5%AF%BC%E8%88%AA)
+    - [与页面交互](#%E4%B8%8E%E9%A1%B5%E9%9D%A2%E4%BA%A4%E4%BA%92)
+      - [获取页面上的元素：](#%E8%8E%B7%E5%8F%96%E9%A1%B5%E9%9D%A2%E4%B8%8A%E7%9A%84%E5%85%83%E7%B4%A0%EF%BC%9A)
+      - [键盘操作](#%E9%94%AE%E7%9B%98%E6%93%8D%E4%BD%9C)
+    - [填写表单](#%E5%A1%AB%E5%86%99%E8%A1%A8%E5%8D%95)
+    - [拖拽](#%E6%8B%96%E6%8B%BD)
+    - [切换窗口和frame](#%E5%88%87%E6%8D%A2%E7%AA%97%E5%8F%A3%E5%92%8Cframe)
+    - [弹出对话框](#%E5%BC%B9%E5%87%BA%E5%AF%B9%E8%AF%9D%E6%A1%86)
+    - [历史记录](#%E5%8E%86%E5%8F%B2%E8%AE%B0%E5%BD%95)
+    - [Cookies](#cookies)
+  - [定位DOM元素](#%E5%AE%9A%E4%BD%8Ddom%E5%85%83%E7%B4%A0)
+  - [Waits](#waits)
+    - [明确的wait](#%E6%98%8E%E7%A1%AE%E7%9A%84wait)
+    - [含蓄的wait](#%E5%90%AB%E8%93%84%E7%9A%84wait)
+  - [页面对象](#%E9%A1%B5%E9%9D%A2%E5%AF%B9%E8%B1%A1)
+    - [测试案例](#%E6%B5%8B%E8%AF%95%E6%A1%88%E4%BE%8B)
+  - [WebDriver API](#webdriver-api)
+    - [webdriver](#webdriver)
+    - [ActionChains](#actionchains)
+    - [Alert](#alert)
+    - [By](#by)
+  - [Use with PhantomJS](#use-with-phantomjs)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 ## Selenium可视化测试(with python)
 
 [Selenium with Python](http://selenium-python.readthedocs.io/index.html)

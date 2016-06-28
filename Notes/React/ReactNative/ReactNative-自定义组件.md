@@ -1,3 +1,18 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [ReactNative-自定义组件ViewPagerAndroid](#reactnative-%E8%87%AA%E5%AE%9A%E4%B9%89%E7%BB%84%E4%BB%B6viewpagerandroid)
+  - [INTRO](#intro)
+  - [目录结构](#%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84)
+  - [代码](#%E4%BB%A3%E7%A0%81)
+  - [坑1](#%E5%9D%911)
+    - [方案一](#%E6%96%B9%E6%A1%88%E4%B8%80)
+    - [方案二](#%E6%96%B9%E6%A1%88%E4%BA%8C)
+  - [坑2](#%E5%9D%912)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 ## ReactNative-自定义组件ViewPagerAndroid
 
 ### INTRO

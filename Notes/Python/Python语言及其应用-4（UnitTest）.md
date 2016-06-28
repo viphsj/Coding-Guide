@@ -11,6 +11,7 @@
   - [nose](#nose)
     - [install](#install)
     - [usage](#usage)
+  - [assert](#assert)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -285,3 +286,8 @@ nose会自动识别源文件，目录或包中的测试用例。任何符合正�
 $ nosetests only_test_this.py
 $ nosetests test.module
 ```
+
+### assert
+
+通过断言进行防御性的编程、代码检查以及运行时对程序逻辑的检测等等。详见：
+[Python 使用断言的最佳时机](http://www.oschina.net/translate/when-to-use-assert)

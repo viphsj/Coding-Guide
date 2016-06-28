@@ -1,3 +1,16 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [【译文】Javascript函数式编程【2】](#%E3%80%90%E8%AF%91%E6%96%87%E3%80%91javascript%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B%E3%80%902%E3%80%91)
+  - [使用Array](#%E4%BD%BF%E7%94%A8array)
+    - [`forEach`](#foreach)
+    - [`map`](#map)
+    - [`reduce`](#reduce)
+  - [混合运用](#%E6%B7%B7%E5%90%88%E8%BF%90%E7%94%A8)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 ## 【译文】Javascript函数式编程【2】
 
 > 本文译自：[A GENTLE INTRODUCTION TO FUNCTIONAL JAVASCRIPT: PART 2](http://jrsinclair.com/articles/2016/gentle-introduction-to-functional-javascript-arrays/)

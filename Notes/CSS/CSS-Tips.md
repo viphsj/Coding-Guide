@@ -1,3 +1,20 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [页面变灰](#%E9%A1%B5%E9%9D%A2%E5%8F%98%E7%81%B0)
+- [截断字符串](#%E6%88%AA%E6%96%AD%E5%AD%97%E7%AC%A6%E4%B8%B2)
+- [`box-sizing`](#box-sizing)
+- [`X:nth-child(n)`](#xnth-childn)
+- [让元素不捕获事件](#%E8%AE%A9%E5%85%83%E7%B4%A0%E4%B8%8D%E6%8D%95%E8%8E%B7%E4%BA%8B%E4%BB%B6)
+- [通过3在元素内部（内部的前面或者后面）动态添加元素](#%E9%80%9A%E8%BF%873%E5%9C%A8%E5%85%83%E7%B4%A0%E5%86%85%E9%83%A8%EF%BC%88%E5%86%85%E9%83%A8%E7%9A%84%E5%89%8D%E9%9D%A2%E6%88%96%E8%80%85%E5%90%8E%E9%9D%A2%EF%BC%89%E5%8A%A8%E6%80%81%E6%B7%BB%E5%8A%A0%E5%85%83%E7%B4%A0)
+- [使用负的`nth-child`选取元素](#%E4%BD%BF%E7%94%A8%E8%B4%9F%E7%9A%84nth-child%E9%80%89%E5%8F%96%E5%85%83%E7%B4%A0)
+- [currentColor是color属性的值](#currentcolor%E6%98%AFcolor%E5%B1%9E%E6%80%A7%E7%9A%84%E5%80%BC)
+- [`user-select`禁止选择文本](#user-select%E7%A6%81%E6%AD%A2%E9%80%89%E6%8B%A9%E6%96%87%E6%9C%AC)
+- [`selection`可设置文字被选择时的样式](#selection%E5%8F%AF%E8%AE%BE%E7%BD%AE%E6%96%87%E5%AD%97%E8%A2%AB%E9%80%89%E6%8B%A9%E6%97%B6%E7%9A%84%E6%A0%B7%E5%BC%8F)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 ---
 title: CSS Tips
 date: 2016-03-04 17:06:04

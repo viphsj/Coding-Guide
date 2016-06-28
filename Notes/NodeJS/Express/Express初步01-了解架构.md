@@ -1,3 +1,22 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [Express初步01 - 了解架构](#express%E5%88%9D%E6%AD%A501---%E4%BA%86%E8%A7%A3%E6%9E%B6%E6%9E%84)
+  - [Express 安装](#express-%E5%AE%89%E8%A3%85)
+  - [Express 组成部分](#express-%E7%BB%84%E6%88%90%E9%83%A8%E5%88%86)
+    - [application对象](#application%E5%AF%B9%E8%B1%A1)
+    - [request对象](#request%E5%AF%B9%E8%B1%A1)
+    - [response对象](#response%E5%AF%B9%E8%B1%A1)
+  - [Express 目录结构](#express-%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84)
+    - [定义路由](#%E5%AE%9A%E4%B9%89%E8%B7%AF%E7%94%B1)
+    - [分发路由,加载中间件](#%E5%88%86%E5%8F%91%E8%B7%AF%E7%94%B1%E5%8A%A0%E8%BD%BD%E4%B8%AD%E9%97%B4%E4%BB%B6)
+    - [view层](#view%E5%B1%82)
+    - [资源文件](#%E8%B5%84%E6%BA%90%E6%96%87%E4%BB%B6)
+    - [处理错误页面](#%E5%A4%84%E7%90%86%E9%94%99%E8%AF%AF%E9%A1%B5%E9%9D%A2)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 ## Express初步01 - 了解架构
 
 > 以 express V4.13.1为例

@@ -1,3 +1,12 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [组件命名与文件分类](#%E7%BB%84%E4%BB%B6%E5%91%BD%E5%90%8D%E4%B8%8E%E6%96%87%E4%BB%B6%E5%88%86%E7%B1%BB)
+- [代码编写规范](#%E4%BB%A3%E7%A0%81%E7%BC%96%E5%86%99%E8%A7%84%E8%8C%83)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 ---
 title: React.js 编程格式优化
 date: 2016-03-06 19:38:40

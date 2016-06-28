@@ -1,3 +1,19 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [Electron【02】--第一个Electron App](#electron%E3%80%9002%E3%80%91--%E7%AC%AC%E4%B8%80%E4%B8%AAelectron-app)
+  - [目录结构与文件](#%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84%E4%B8%8E%E6%96%87%E4%BB%B6)
+  - [运行&生成应用](#%E8%BF%90%E8%A1%8C&%E7%94%9F%E6%88%90%E5%BA%94%E7%94%A8)
+    - [通过`electron-prebuilt`运行](#%E9%80%9A%E8%BF%87electron-prebuilt%E8%BF%90%E8%A1%8C)
+    - [通过Electron Binary运行](#%E9%80%9A%E8%BF%87electron-binary%E8%BF%90%E8%A1%8C)
+    - [生成应用](#%E7%94%9F%E6%88%90%E5%BA%94%E7%94%A8)
+  - [应用打包](#%E5%BA%94%E7%94%A8%E6%89%93%E5%8C%85)
+    - [生成`asar`包](#%E7%94%9F%E6%88%90asar%E5%8C%85)
+  - [例子](#%E4%BE%8B%E5%AD%90)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 ## Electron【02】--第一个Electron App
 
 ### 目录结构与文件

@@ -1,3 +1,16 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [Electron【01】--主进程VS渲染进程&不同页面间共享数据](#electron%E3%80%9001%E3%80%91--%E4%B8%BB%E8%BF%9B%E7%A8%8Bvs%E6%B8%B2%E6%9F%93%E8%BF%9B%E7%A8%8B&%E4%B8%8D%E5%90%8C%E9%A1%B5%E9%9D%A2%E9%97%B4%E5%85%B1%E4%BA%AB%E6%95%B0%E6%8D%AE)
+  - [主进程VS渲染进程](#%E4%B8%BB%E8%BF%9B%E7%A8%8Bvs%E6%B8%B2%E6%9F%93%E8%BF%9B%E7%A8%8B)
+    - [主进程](#%E4%B8%BB%E8%BF%9B%E7%A8%8B)
+    - [渲染进程](#%E6%B8%B2%E6%9F%93%E8%BF%9B%E7%A8%8B)
+    - [主进程和渲染进程的不同](#%E4%B8%BB%E8%BF%9B%E7%A8%8B%E5%92%8C%E6%B8%B2%E6%9F%93%E8%BF%9B%E7%A8%8B%E7%9A%84%E4%B8%8D%E5%90%8C)
+  - [不同页面间共享数据](#%E4%B8%8D%E5%90%8C%E9%A1%B5%E9%9D%A2%E9%97%B4%E5%85%B1%E4%BA%AB%E6%95%B0%E6%8D%AE)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 ## Electron【01】--主进程VS渲染进程&不同页面间共享数据
 
 Electron使用了网页页面作为App的GUI，因此你可以将它看做是一个由JavaScript控制的一个小型的Chrome内核浏览器。

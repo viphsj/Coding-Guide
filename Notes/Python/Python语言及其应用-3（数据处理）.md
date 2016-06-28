@@ -5,6 +5,7 @@
 - [Python语言及其应用-3(数据处理)](#python%E8%AF%AD%E8%A8%80%E5%8F%8A%E5%85%B6%E5%BA%94%E7%94%A8-3%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86)
   - [数据处理](#%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86)
     - [文本格式化](#%E6%96%87%E6%9C%AC%E6%A0%BC%E5%BC%8F%E5%8C%96)
+    - [`input`(http://anh.cs.luc.edu/python/hands-on/3.1/handsonHtml/io.html)](#inputhttpanhcslucedupythonhands-on31handsonhtmliohtml)
   - [正则表达式](#%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F)
     - [推荐教程](#%E6%8E%A8%E8%8D%90%E6%95%99%E7%A8%8B)
     - [匹配的方法](#%E5%8C%B9%E9%85%8D%E7%9A%84%E6%96%B9%E6%B3%95)
@@ -93,6 +94,10 @@ example_dict = {a: 0, b: 1, c: 2}
 # '7.030000'
 ```
 
+#### `input`(http://anh.cs.luc.edu/python/hands-on/3.1/handsonHtml/io.html)
+
+
+
 ### 正则表达式
 
 #### 推荐教程
@@ -125,7 +130,7 @@ m = re.sub(pattern, replace, str) # 返回替换之后的新的字符串
 
 **对于模式中转义字符串的处理**
 
-Python字符串会使用一些特殊的转义符，例如 `\b``在字符串中代表退格，而在正则表达式中则代表一个单词的开头位置。因此可以在模式串的前面添加`r`来禁止字符串转义
+Python字符串会使用一些特殊的转义符，例如  \b 在字符串中代表退格，而在正则表达式中则代表一个单词的开头位置。因此可以在模式串的前面添加 r 来禁止字符串转义
 
 ##### 匹配的输出
 

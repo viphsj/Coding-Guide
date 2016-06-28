@@ -1,3 +1,20 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [Git创建](#git%E5%88%9B%E5%BB%BA)
+- [Git版本控制](#git%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6)
+    - [回滚版本](#%E5%9B%9E%E6%BB%9A%E7%89%88%E6%9C%AC)
+    - [撤销修改](#%E6%92%A4%E9%94%80%E4%BF%AE%E6%94%B9)
+    - [将文件从缓存区撤回到工作区：](#%E5%B0%86%E6%96%87%E4%BB%B6%E4%BB%8E%E7%BC%93%E5%AD%98%E5%8C%BA%E6%92%A4%E5%9B%9E%E5%88%B0%E5%B7%A5%E4%BD%9C%E5%8C%BA%EF%BC%9A)
+    - [撤销操作总结：](#%E6%92%A4%E9%94%80%E6%93%8D%E4%BD%9C%E6%80%BB%E7%BB%93%EF%BC%9A)
+    - [删除文件](#%E5%88%A0%E9%99%A4%E6%96%87%E4%BB%B6)
+- [分支操作](#%E5%88%86%E6%94%AF%E6%93%8D%E4%BD%9C)
+  - [分支操作时处理突发(bug)分支](#%E5%88%86%E6%94%AF%E6%93%8D%E4%BD%9C%E6%97%B6%E5%A4%84%E7%90%86%E7%AA%81%E5%8F%91bug%E5%88%86%E6%94%AF)
+- [标签相关](#%E6%A0%87%E7%AD%BE%E7%9B%B8%E5%85%B3)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 ---
 title: git命令备忘
 date: 2016-03-03 09:03:47

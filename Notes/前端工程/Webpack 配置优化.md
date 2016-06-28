@@ -1,3 +1,13 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [Webpack 配置优化](#webpack-%E9%85%8D%E7%BD%AE%E4%BC%98%E5%8C%96)
+  - [React 热加载](#react-%E7%83%AD%E5%8A%A0%E8%BD%BD)
+  - [`alias`配置别名](#alias%E9%85%8D%E7%BD%AE%E5%88%AB%E5%90%8D)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 ### Webpack 配置优化
 
 #### React 热加载

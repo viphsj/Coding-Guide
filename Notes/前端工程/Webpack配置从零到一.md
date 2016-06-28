@@ -1,3 +1,28 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [Webpack配置从零到一](#webpack%E9%85%8D%E7%BD%AE%E4%BB%8E%E9%9B%B6%E5%88%B0%E4%B8%80)
+  - [setup](#setup)
+  - [basic config](#basic-config)
+  - [loaders](#loaders)
+    - [install css/less/style loader](#install-csslessstyle-loader)
+    - [install url loader](#install-url-loader)
+    - [install babel loader](#install-babel-loader)
+    - [config loaders](#config-loaders)
+  - [plugin](#plugin)
+    - [`ExtractTextPlugin`分离CSS](#extracttextplugin%E5%88%86%E7%A6%BBcss)
+    - [设置`jQuery`全局变量](#%E8%AE%BE%E7%BD%AEjquery%E5%85%A8%E5%B1%80%E5%8F%98%E9%87%8F)
+    - [`CommonsChunkPlugin`抽取公共资源](#commonschunkplugin%E6%8A%BD%E5%8F%96%E5%85%AC%E5%85%B1%E8%B5%84%E6%BA%90)
+    - [`UglifyJsPlugin`代码压缩混淆](#uglifyjsplugin%E4%BB%A3%E7%A0%81%E5%8E%8B%E7%BC%A9%E6%B7%B7%E6%B7%86)
+  - [我要用 React!](#%E6%88%91%E8%A6%81%E7%94%A8-react)
+    - [install](#install)
+    - [config](#config)
+    - [bug ?](#bug-)
+  - [end](#end)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 ## Webpack配置从零到一
 
 > 这不算是初学者的入门文章，也不能算是高端用户的进阶。这只是我自己在配置Webpack过程中收集整理的一些资料，以及自己常用的整个配置流程。因为有时候老是忘了某个东西是怎么配置的，所以记录下来用于速查和备忘。

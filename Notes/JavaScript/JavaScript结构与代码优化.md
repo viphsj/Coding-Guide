@@ -1,3 +1,14 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [文件结构优化](#%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84%E4%BC%98%E5%8C%96)
+- [代码优化](#%E4%BB%A3%E7%A0%81%E4%BC%98%E5%8C%96)
+- [编码规范](#%E7%BC%96%E7%A0%81%E8%A7%84%E8%8C%83)
+- [webpack配置](#webpack%E9%85%8D%E7%BD%AE)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 ---
 title: JavaScript结构与代码优化
 date: 2016-03-05 09:25:28

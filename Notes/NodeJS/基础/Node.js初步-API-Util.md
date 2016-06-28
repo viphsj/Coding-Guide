@@ -1,3 +1,14 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [Node.js初步 - API - Util](#nodejs%E5%88%9D%E6%AD%A5---api---util)
+  - [Util API](#util-api)
+    - [inspect](#inspect)
+    - [format](#format)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 ## Node.js初步 - API - Util
 
 `var util = require('util');`

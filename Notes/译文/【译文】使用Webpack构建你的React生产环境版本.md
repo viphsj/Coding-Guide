@@ -1,3 +1,11 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [【译文】使用Webpack构建你的React生产环境版本](#%E3%80%90%E8%AF%91%E6%96%87%E3%80%91%E4%BD%BF%E7%94%A8webpack%E6%9E%84%E5%BB%BA%E4%BD%A0%E7%9A%84react%E7%94%9F%E4%BA%A7%E7%8E%AF%E5%A2%83%E7%89%88%E6%9C%AC)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 ## 【译文】使用Webpack构建你的React生产环境版本
 
 > 文本译自：[Make your own React production version with webpack](http://dev.topheman.com/make-your-react-production-minified-version-with-webpack/)

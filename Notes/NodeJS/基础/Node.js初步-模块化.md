@@ -1,3 +1,18 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [Node.js 初步 - 模块化](#nodejs-%E5%88%9D%E6%AD%A5---%E6%A8%A1%E5%9D%97%E5%8C%96)
+  - [模块化](#%E6%A8%A1%E5%9D%97%E5%8C%96)
+    - [`require`](#require)
+    - [`exports`](#exports)
+    - [package](#package)
+    - [package.json](#packagejson)
+    - [工程目录](#%E5%B7%A5%E7%A8%8B%E7%9B%AE%E5%BD%95)
+  - [回调](#%E5%9B%9E%E8%B0%83)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 ## Node.js 初步 - 模块化
 
 ### 模块化

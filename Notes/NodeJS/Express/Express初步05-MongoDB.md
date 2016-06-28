@@ -1,3 +1,15 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [Express初步05 - MongoDB](#express%E5%88%9D%E6%AD%A505---mongodb)
+    - [配置工程数据库](#%E9%85%8D%E7%BD%AE%E5%B7%A5%E7%A8%8B%E6%95%B0%E6%8D%AE%E5%BA%93)
+    - [对 Express 项目安装 MongoDB 与其他依赖](#%E5%AF%B9-express-%E9%A1%B9%E7%9B%AE%E5%AE%89%E8%A3%85-mongodb-%E4%B8%8E%E5%85%B6%E4%BB%96%E4%BE%9D%E8%B5%96)
+    - [文件配置](#%E6%96%87%E4%BB%B6%E9%85%8D%E7%BD%AE)
+    - [通过终端操作](#%E9%80%9A%E8%BF%87%E7%BB%88%E7%AB%AF%E6%93%8D%E4%BD%9C)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 ## Express初步05 - MongoDB
 
 有这么好的简明教程，自然不会再去重复造轮子:

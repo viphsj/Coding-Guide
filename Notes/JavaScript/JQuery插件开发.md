@@ -1,3 +1,17 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [为jQuery写插件](#%E4%B8%BAjquery%E5%86%99%E6%8F%92%E4%BB%B6)
+- [理解jquery的`$.extend()`、`$.fn`和`$.fn.extend()`](#%E7%90%86%E8%A7%A3jquery%E7%9A%84extend%E3%80%81fn%E5%92%8Cfnextend)
+  - [`jQuery.fn`](#jqueryfn)
+  - [`jQuery.extend(object)`](#jqueryextendobject)
+  - [`jQuery.extend( target, object1, [objectN])`](#jqueryextend-target-object1-objectn)
+  - [`jQuery.fn.extend(object);`](#jqueryfnextendobject)
+  - [`jQuery.fn.extend = jQuery.prototype.extend`](#jqueryfnextend--jqueryprototypeextend)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 ---
 title: JQuery 插件开发
 date: 2016-03-04 00:08:05

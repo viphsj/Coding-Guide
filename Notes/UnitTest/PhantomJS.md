@@ -1,3 +1,21 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [PhantomJS](#phantomjs)
+  - [install](#install)
+  - [编写测试脚本](#%E7%BC%96%E5%86%99%E6%B5%8B%E8%AF%95%E8%84%9A%E6%9C%AC)
+  - [webpage实例](#webpage%E5%AE%9E%E4%BE%8B)
+    - [webpage属性](#webpage%E5%B1%9E%E6%80%A7)
+    - [webpage方法](#webpage%E6%96%B9%E6%B3%95)
+    - [User-Agent](#user-agent)
+    - [获取页面上下文](#%E8%8E%B7%E5%8F%96%E9%A1%B5%E9%9D%A2%E4%B8%8A%E4%B8%8B%E6%96%87)
+    - [网页截图](#%E7%BD%91%E9%A1%B5%E6%88%AA%E5%9B%BE)
+    - [监测网络请求](#%E7%9B%91%E6%B5%8B%E7%BD%91%E7%BB%9C%E8%AF%B7%E6%B1%82)
+    - [使用附加库](#%E4%BD%BF%E7%94%A8%E9%99%84%E5%8A%A0%E5%BA%93)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 ## PhantomJS
 
 A browser without a GUI

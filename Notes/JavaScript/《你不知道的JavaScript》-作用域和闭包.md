@@ -1,3 +1,23 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [作用域](#%E4%BD%9C%E7%94%A8%E5%9F%9F)
+  - [js的编译过程(以 var a = 2 为例)：](#js%E7%9A%84%E7%BC%96%E8%AF%91%E8%BF%87%E7%A8%8B%E4%BB%A5-var-a--2-%E4%B8%BA%E4%BE%8B%EF%BC%9A)
+  - [LHS查询/RHS查询](#lhs%E6%9F%A5%E8%AF%A2rhs%E6%9F%A5%E8%AF%A2)
+  - [异常](#%E5%BC%82%E5%B8%B8)
+- [语法作用域](#%E8%AF%AD%E6%B3%95%E4%BD%9C%E7%94%A8%E5%9F%9F)
+- [函数作用域和块作用域](#%E5%87%BD%E6%95%B0%E4%BD%9C%E7%94%A8%E5%9F%9F%E5%92%8C%E5%9D%97%E4%BD%9C%E7%94%A8%E5%9F%9F)
+  - [规避命名冲突](#%E8%A7%84%E9%81%BF%E5%91%BD%E5%90%8D%E5%86%B2%E7%AA%81)
+  - [函数声明&函数表达式](#%E5%87%BD%E6%95%B0%E5%A3%B0%E6%98%8E&%E5%87%BD%E6%95%B0%E8%A1%A8%E8%BE%BE%E5%BC%8F)
+  - [块作用域](#%E5%9D%97%E4%BD%9C%E7%94%A8%E5%9F%9F)
+- [提升](#%E6%8F%90%E5%8D%87)
+- [作用域闭包](#%E4%BD%9C%E7%94%A8%E5%9F%9F%E9%97%AD%E5%8C%85)
+  - [循环和闭包](#%E5%BE%AA%E7%8E%AF%E5%92%8C%E9%97%AD%E5%8C%85)
+  - [模块](#%E6%A8%A1%E5%9D%97)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 ---
 title: 《你不知道的JavaScript》--作用域和闭包
 date: 2016-03-03 08:26:38

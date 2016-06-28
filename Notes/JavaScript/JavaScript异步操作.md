@@ -1,3 +1,16 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [JavaScript异步操作](#javascript%E5%BC%82%E6%AD%A5%E6%93%8D%E4%BD%9C)
+  - [Fetch](#fetch)
+    - [实例](#%E5%AE%9E%E4%BE%8B)
+  - [Promise](#promise)
+    - [APIS](#apis)
+  - [ES7的异步`async/await`](#es7%E7%9A%84%E5%BC%82%E6%AD%A5asyncawait)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 ## JavaScript异步操作
 
 ### [Fetch](http://github.github.io/fetch/)

@@ -1,3 +1,13 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [Express初步03 - 路由控制](#express%E5%88%9D%E6%AD%A503---%E8%B7%AF%E7%94%B1%E6%8E%A7%E5%88%B6)
+  - [获取并解析路径:](#%E8%8E%B7%E5%8F%96%E5%B9%B6%E8%A7%A3%E6%9E%90%E8%B7%AF%E5%BE%84)
+  - [添加路由规则](#%E6%B7%BB%E5%8A%A0%E8%B7%AF%E7%94%B1%E8%A7%84%E5%88%99)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 ## Express初步03 - 路由控制
 
 ```js

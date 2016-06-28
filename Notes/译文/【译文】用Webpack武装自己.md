@@ -1,3 +1,27 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [【译文】用Webpack武装自己](#%E3%80%90%E8%AF%91%E6%96%87%E3%80%91%E7%94%A8webpack%E6%AD%A6%E8%A3%85%E8%87%AA%E5%B7%B1)
+  - [Webpack是啥?](#webpack%E6%98%AF%E5%95%A5)
+  - [究竟为什么要这么做？](#%E7%A9%B6%E7%AB%9F%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E8%BF%99%E4%B9%88%E5%81%9A%EF%BC%9F)
+  - [来让我们一起构建一个简单的App](#%E6%9D%A5%E8%AE%A9%E6%88%91%E4%BB%AC%E4%B8%80%E8%B5%B7%E6%9E%84%E5%BB%BA%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95%E7%9A%84app)
+    - [基础指引（setup）](#%E5%9F%BA%E7%A1%80%E6%8C%87%E5%BC%95%EF%BC%88setup%EF%BC%89)
+    - [设置第一个loader（`loader`-01）](#%E8%AE%BE%E7%BD%AE%E7%AC%AC%E4%B8%80%E4%B8%AAloader%EF%BC%88loader-01%EF%BC%89)
+    - [写个小组件（`loader`-02）](#%E5%86%99%E4%B8%AA%E5%B0%8F%E7%BB%84%E4%BB%B6%EF%BC%88loader-02%EF%BC%89)
+  - [代码分离（`require.ensure`）](#%E4%BB%A3%E7%A0%81%E5%88%86%E7%A6%BB%EF%BC%88requireensure%EF%BC%89)
+  - [再加个组件（`CommonChunksPlugin`）](#%E5%86%8D%E5%8A%A0%E4%B8%AA%E7%BB%84%E4%BB%B6%EF%BC%88commonchunksplugin%EF%BC%89)
+  - [飞跃到生产环境（`production`）](#%E9%A3%9E%E8%B7%83%E5%88%B0%E7%94%9F%E4%BA%A7%E7%8E%AF%E5%A2%83%EF%BC%88production%EF%BC%89)
+  - [抽取（`extract-text-webpack-plugin`）](#%E6%8A%BD%E5%8F%96%EF%BC%88extract-text-webpack-plugin%EF%BC%89)
+  - [使用图片（`url-loader`&`file-loader`）](#%E4%BD%BF%E7%94%A8%E5%9B%BE%E7%89%87%EF%BC%88url-loader&file-loader%EF%BC%89)
+  - [来个牛逼的热加载（dev-server）](#%E6%9D%A5%E4%B8%AA%E7%89%9B%E9%80%BC%E7%9A%84%E7%83%AD%E5%8A%A0%E8%BD%BD%EF%BC%88dev-server%EF%BC%89)
+  - [代码不干净的人都给我去罚站！（pre-loader & lint)](#%E4%BB%A3%E7%A0%81%E4%B8%8D%E5%B9%B2%E5%87%80%E7%9A%84%E4%BA%BA%E9%83%BD%E7%BB%99%E6%88%91%E5%8E%BB%E7%BD%9A%E7%AB%99%EF%BC%81%EF%BC%88pre-loader-&-lint)
+  - [还没看够？](#%E8%BF%98%E6%B2%A1%E7%9C%8B%E5%A4%9F%EF%BC%9F)
+  - [就先讲到这儿吧](#%E5%B0%B1%E5%85%88%E8%AE%B2%E5%88%B0%E8%BF%99%E5%84%BF%E5%90%A7)
+  - [资源](#%E8%B5%84%E6%BA%90)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 ## 【译文】用Webpack武装自己
 
 > 译自：[Webpack your bags](https://blog.madewithlove.be/post/webpack-your-bags/)
