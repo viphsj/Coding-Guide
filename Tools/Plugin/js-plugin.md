@@ -99,6 +99,14 @@
 
 ### About media
 
+#### [bLazy.js](http://dinbror.dk/blog/blazy/)
+
+> 延迟图片加载，只有当图片首次出现在屏幕内的时候才进行加载。以此提高页面初始化速度
+
+#### [Vidage](https://github.com/dvLden/Vidage)
+
+> 全屏背景视频&图片
+
 #### [Spectrum](http://bgrins.github.io/spectrum/)
 
 > 基于jQuery的colorPicker，简单易用
