@@ -17,6 +17,7 @@
     - [深拷贝](#%E6%B7%B1%E6%8B%B7%E8%B4%9D)
   - [使用无状态的函数](#%E4%BD%BF%E7%94%A8%E6%97%A0%E7%8A%B6%E6%80%81%E7%9A%84%E5%87%BD%E6%95%B0)
   - [迟绑定闭包](#%E8%BF%9F%E7%BB%91%E5%AE%9A%E9%97%AD%E5%8C%85)
+  - [利用webbrowser控制浏览器](#%E5%88%A9%E7%94%A8webbrowser%E6%8E%A7%E5%88%B6%E6%B5%8F%E8%A7%88%E5%99%A8)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -287,4 +288,20 @@ for multiplier in create_multipliers():
 ```python
 def create_multipliers():
     return [lambda x, i=i : i * x for i in range(5)]
+```
+
+### 利用webbrowser控制浏览器
+
+```python
+import webbrowser
+
+# 使用默认浏览器打开页面
+webbrowser.open(url)
+# 新建一个浏览器打开页面
+webbrowser.open_new(url)
+# 在新tab里打开页面
+webbrowser.open_new_tab(url)
+
+# 指定浏览器类型
+webbrowser.get('firefox')
 ```

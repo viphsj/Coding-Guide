@@ -2,7 +2,7 @@
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 **Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
-- [Python多线程](#python%E5%A4%9A%E7%BA%BF%E7%A8%8B)
+- [Python及应用5-多线程](#python%E5%8F%8A%E5%BA%94%E7%94%A85-%E5%A4%9A%E7%BA%BF%E7%A8%8B)
   - [`threading`模块](#threading%E6%A8%A1%E5%9D%97)
   - [线程锁](#%E7%BA%BF%E7%A8%8B%E9%94%81)
   - [使用实例](#%E4%BD%BF%E7%94%A8%E5%AE%9E%E4%BE%8B)
@@ -10,7 +10,7 @@
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
-## Python多线程
+## Python及应用5-多线程
 
 [Python模块学习：threading 多线程控制和处理](http://python.jobbole.com/81546/)
 

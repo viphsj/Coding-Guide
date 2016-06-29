@@ -15,6 +15,8 @@
   - [fullPage.js](#fullpagejs)
   - [Headroom.js](#headroomjs)
 - [About media](#about-media)
+  - [bLazy.js](#blazyjs)
+  - [Vidage](#vidage)
   - [Spectrum](#spectrum)
   - [VideoJs](#videojs)
   - [PhotoSwipe](#photoswipe)

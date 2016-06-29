@@ -2,7 +2,7 @@
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 **Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
-- [Python数据储存-pymongo](#python%E6%95%B0%E6%8D%AE%E5%82%A8%E5%AD%98-pymongo)
+- [Python及应用4-pymongo](#python%E5%8F%8A%E5%BA%94%E7%94%A84-pymongo)
   - [MongoDB](#mongodb)
   - [pymongo](#pymongo)
     - [install](#install)
@@ -16,7 +16,7 @@
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
-## Python数据储存-[pymongo](https://api.mongodb.com/python/current/index.html)
+## Python及应用4-[pymongo](https://api.mongodb.com/python/current/index.html)
 
 ### [MongoDB](https://www.mongodb.com/)
 

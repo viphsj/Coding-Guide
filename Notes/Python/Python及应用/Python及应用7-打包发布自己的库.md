@@ -1,3 +1,19 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [Python及应用7-打包发布自己的库](#python%E5%8F%8A%E5%BA%94%E7%94%A87-%E6%89%93%E5%8C%85%E5%8F%91%E5%B8%83%E8%87%AA%E5%B7%B1%E7%9A%84%E5%BA%93)
+  - [setup.py](#setuppy)
+    - [目录结构](#%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84)
+    - [编写文件](#%E7%BC%96%E5%86%99%E6%96%87%E4%BB%B6)
+    - [本地安装](#%E6%9C%AC%E5%9C%B0%E5%AE%89%E8%A3%85)
+  - [upload to pip](#upload-to-pip)
+    - [register](#register)
+    - [upload](#upload)
+    - [upgrade](#upgrade)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 ## Python及应用7-打包发布自己的库
 
 撸完自己的代码，本地跑起来畅爽无阻~这种时候自己一个人痛快怎么行，是时候把代码上传到pip&github让大家一起爽爽了。但如果只是源码就太low了，要怎么才能做成第三方库那样安装后使用呢？

@@ -8,6 +8,7 @@
     - [设置request参数](#%E8%AE%BE%E7%BD%AErequest%E5%8F%82%E6%95%B0)
     - [`urllib.parse.urlencode`组合请求体](#urllibparseurlencode%E7%BB%84%E5%90%88%E8%AF%B7%E6%B1%82%E4%BD%93)
   - [使用`urllib`进行https网站的爬取](#%E4%BD%BF%E7%94%A8urllib%E8%BF%9B%E8%A1%8Chttps%E7%BD%91%E7%AB%99%E7%9A%84%E7%88%AC%E5%8F%96)
+  - [urllib请求带有中文字符的URL](#urllib%E8%AF%B7%E6%B1%82%E5%B8%A6%E6%9C%89%E4%B8%AD%E6%96%87%E5%AD%97%E7%AC%A6%E7%9A%84url)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -111,4 +112,19 @@ urllib.error.URLError: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certifica
 import ssl
 ssl._create_default_https_context = ssl._create_unverified_context
 # 之后按照上面正常的爬虫步骤即可
+```
+
+### urllib请求带有中文字符的URL
+
+url中的中文要单独处理，不能中英文全部合在一起处理
+
+```python
+from urllib import request, parse
+
+BASE_URL = 'https://www.google.com.hk/#newwindow=1&safe=strict&q={}'
+KEYWORD = '黑客与画家'
+
+keywords = parse.quote(KEYWORD)
+url = BASE_URL.format(keywords)
+response = request.urlopen(url).read().decode('UTF-8')
 ```
