@@ -269,6 +269,10 @@ class Animal():
 	def name(self, new_name):
 		print('set my name')
 		self.hiden_name = new_name
+
+animal = Animal('monkey')
+animal.name
+# get my name
 ```
 
 若不定义`@name.setter`，则name是一个只读属性

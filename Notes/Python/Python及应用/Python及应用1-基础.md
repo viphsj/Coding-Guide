@@ -847,3 +847,12 @@ next(it)
 #     File "<stdin>", line 1, in <module>
 # StopIteration
 ```
+
+### 中文编码
+
+```python
+# 下面三者等效
+# -*- coding: UTF-8 -*-
+# coding=utf-8
+# coding:utf-8
+```

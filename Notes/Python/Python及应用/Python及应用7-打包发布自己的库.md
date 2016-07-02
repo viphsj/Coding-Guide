@@ -113,8 +113,8 @@ $ python setup.py register
 # 之后安装提示登录pypi账号
 $ python setup.py sdist 
 # 生成支持pip的文件
-$ python setup.py upload
-# 上传代码
+$ python setup.py sdist upload
+# 生成支持pip的文件并上传代码
 ```
 
 #### upgrade

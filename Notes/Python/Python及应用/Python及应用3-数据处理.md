@@ -96,6 +96,8 @@ example_dict = {a: 0, b: 1, c: 2}
 
 #### [`input`](http://anh.cs.luc.edu/python/hands-on/3.1/handsonHtml/io.html)
 
+### 排序
+
 
 
 ### 正则表达式
@@ -103,7 +105,9 @@ example_dict = {a: 0, b: 1, c: 2}
 #### 推荐教程
 
 [正则表达式30分钟入门教程](http://deerchao.net/tutorials/regex/regex.htm)
+
 [Python正则表达式指南](http://www.cnblogs.com/huxi/archive/2010/07/04/1771073.html)
+
 [Python专题教程：正则表达式re模块详解](http://www.crifan.com/files/doc/docbook/python_topic_re/release/html/python_topic_re.html#ch03_re_search)
 
 #### 匹配的方法
