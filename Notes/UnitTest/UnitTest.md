@@ -68,7 +68,7 @@
 
 ### [Mocha](http://mochajs.org/)+[chai](http://chaijs.com/)的API/Fun UnitTest
 
-> chai只是一个断言库，为测试提供更简洁的语法
+> Chai is a BDD / TDD assertion library for node and the browser that can be delightfully paired with any javascript testing framework
 
 #### initial
 
@@ -200,18 +200,128 @@ describe('describe a test', () => {
 
 mocha无法自动监听异步方法的完成，需要我们在完成之后手动调用`done()`方法
 
+而如果要在回调之后使用异步测试语句，则需要使用`try/catch`进行捕获。成功则`done()`，失败则`done(error)`
+
 ```js
 // 普通的测试方法
-it("should work", function(){
-    console.log("Synchronous test");
+it("should work", () =>{
+  console.log("Synchronous test");
 });
 // 异步的测试方法
-it("should work", function(done){
-    console.log("Synchronous test");
+it("should work", (done) =>{
+  setTimeout(() => {
+	try {
+  	  expect(1).not.to.equal(0);
+  	  done(); // 成功
+	} catch (err) {
+  	  done(err); // 失败
+	}
+  }, 200);
 });
 ```
 
+异步测试有两种方法完结：`done`或者返回`Promise`。而通过返回`Promise`，则不再需要编写笨重的`try/catch`语句
+
+```js
+it("Using a Promise that resolves successfully with wrong expectation!", function() {
+    var testPromise = new Promise(function(resolve, reject) {
+        setTimeout(function() {
+            resolve("Hello World!");
+        }, 200);
+    });
+
+    return testPromise.then(function(result){
+        expect(result).to.equal("Hello!");
+    });
+});
+```
+
+#### [mock](https://github.com/node-nock/nock)
+
+> HTTP mocking and expectations library.
+
 #### Test Redux
+
+redux身为纯函数，非常便于mocha进行测试
+
+```js
+// 测试actions
+import * as ACTIONS from '../redux/actions';
+
+describe('test actions', () => {
+  it('should return an action to create a todo', () => {
+    let expectedAction = {
+  	  type: ACTIONS.NEW_TODO,
+  	  todo: 'this is a new todo'
+	};
+	expect(ACTIONS.addNewTodo('this is a new todo')).to.deep.equal(expectedAction);
+  });
+});
+```
+
+```js
+// 测试reducer
+import * as REDUCERS from '../redux/reducers';
+import * as ACTIONS from '../redux/actions';
+
+describe('todos', () => {
+  let todos = [];
+  it('should add a new todo', () => {
+  	todos.push({
+  	  todo: 'new todo',
+  	  complete: false
+	});
+	expect(REDUCERS.todos(todos, {
+  	  type: ACTIONS.NEW_TODO,
+  	  todo: 'new todo'
+	})).to.deep.equal([
+	  {
+  	    todo: 'new todo',
+  	    complete: false
+	  }
+	]);
+  });
+});
+```
+
+```js
+// 还可以和store混用
+import { createStore, applyMiddleware, combineReducers } from 'redux';
+import thunk from 'redux-thunk';
+import chai from 'chai';
+import thunkMiddleware from 'redux-thunk';
+import * as REDUCERS from '../redux/reducers';
+import defaultState from '../redux/ConstValues';
+import * as ACTIONS from '../redux/actions'
+
+const appReducers = combineReducers(REDUCERS);
+const AppStore = createStore(appReducers, defaultState， applyMiddleware(thunk));
+let state = Object.assign({}, AppStore.getState());
+
+// 一旦注册就会时刻监听state变化
+const subscribeListener = (result, done) => {
+  return AppStore.subscribe(() => {
+    expect(AppStore.getState()).to.deep.equal(result);
+    done();
+  });
+};
+
+describe('use store in unittest'， () => {
+  it('should create a todo', (done) => {
+    // 首先取得我们的期望值
+  	state.todos.append({
+  	  todo: 'new todo',
+  	  complete: false
+	});
+	
+	// 注册state监听
+	let unsubscribe = subscribeListener(state, done);
+	AppStore.dispatch(ACTIONS.addNewTodo('new todo'));
+	// 结束之后取消监听
+	unsubscribe();
+  });
+});
+```
 
 
 ### 基于[phantomjs](http://phantomjs.org/)的UI UnitTest
