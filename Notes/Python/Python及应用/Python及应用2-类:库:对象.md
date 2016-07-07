@@ -17,6 +17,7 @@
     - [使用名称重整保护私有特性](#%E4%BD%BF%E7%94%A8%E5%90%8D%E7%A7%B0%E9%87%8D%E6%95%B4%E4%BF%9D%E6%8A%A4%E7%A7%81%E6%9C%89%E7%89%B9%E6%80%A7)
     - [方法/属性的类型](#%E6%96%B9%E6%B3%95%E5%B1%9E%E6%80%A7%E7%9A%84%E7%B1%BB%E5%9E%8B)
     - [通过`__slots__`限制类实例的属性](#%E9%80%9A%E8%BF%87__slots__%E9%99%90%E5%88%B6%E7%B1%BB%E5%AE%9E%E4%BE%8B%E7%9A%84%E5%B1%9E%E6%80%A7)
+  - [`__init__`](#__init__)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -358,3 +359,8 @@ test.job = 'developer'
 # AttributeError: 'Test' object has no attribute 'job'
 ```
 
+### `__init__`
+
+[Python导入模块的几种姿势](http://codingpy.com/article/python-import-101/)
+
+[python import备忘笔记](http://littlewhite.us/archives/361)

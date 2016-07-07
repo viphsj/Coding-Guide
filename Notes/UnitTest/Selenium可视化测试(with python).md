@@ -12,6 +12,7 @@
     - [填写表单](#%E5%A1%AB%E5%86%99%E8%A1%A8%E5%8D%95)
     - [拖拽](#%E6%8B%96%E6%8B%BD)
     - [切换窗口和frame](#%E5%88%87%E6%8D%A2%E7%AA%97%E5%8F%A3%E5%92%8Cframe)
+    - [控制窗口大小](#%E6%8E%A7%E5%88%B6%E7%AA%97%E5%8F%A3%E5%A4%A7%E5%B0%8F)
     - [弹出对话框](#%E5%BC%B9%E5%87%BA%E5%AF%B9%E8%AF%9D%E6%A1%86)
     - [历史记录](#%E5%8E%86%E5%8F%B2%E8%AE%B0%E5%BD%95)
     - [Cookies](#cookies)
@@ -195,6 +196,26 @@ driver.switch_to_frame("frameName")
 
 for handle in driver.window_handles:
 	driver.switch_to_window(handle)
+```
+
+#### 控制窗口大小
+
+```python
+from selenium import webdriver
+
+# get initial window size
+driver = webdriver.Firefox()
+print driver.get_window_size()
+
+# set window size
+driver.set_window_size(480, 320)
+print driver.get_window_size()
+
+# maximize window
+driver.maximize_window()
+print driver.get_window_size()
+
+driver.quit()
 ```
 
 #### 弹出对话框

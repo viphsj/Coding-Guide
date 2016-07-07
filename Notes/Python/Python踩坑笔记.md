@@ -18,6 +18,9 @@
   - [使用无状态的函数](#%E4%BD%BF%E7%94%A8%E6%97%A0%E7%8A%B6%E6%80%81%E7%9A%84%E5%87%BD%E6%95%B0)
   - [迟绑定闭包](#%E8%BF%9F%E7%BB%91%E5%AE%9A%E9%97%AD%E5%8C%85)
   - [利用webbrowser控制浏览器](#%E5%88%A9%E7%94%A8webbrowser%E6%8E%A7%E5%88%B6%E6%B5%8F%E8%A7%88%E5%99%A8)
+  - [杂记](#%E6%9D%82%E8%AE%B0)
+    - [Do not use & when you use multiply int](#do-not-use-&-when-you-use-multiply-int)
+    - [Python2中的编码错误](#python2%E4%B8%AD%E7%9A%84%E7%BC%96%E7%A0%81%E9%94%99%E8%AF%AF)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -304,4 +307,50 @@ webbrowser.open_new_tab(url)
 
 # 指定浏览器类型
 webbrowser.get('firefox')
+```
+
+### 杂记
+
+#### Do not use & when you use multiply int
+
+当使用`&`作为`if`的比较条件时，如果使用多个int类型的变量，例如`1 & 2`，则无法正确判断
+
+```python
+a = 1
+b = 2
+if a & b:
+	print('true')
+else:
+	print('false')
+# false
+```
+
+而使用`and`则可以正确判断：
+
+```python
+a = 1
+b = 2
+if a and b:
+	print('true')
+else:
+	print('false')
+# true
+```
+
+个人理解，Python在运行时把&当做“交集"进行处理了，所以在a、b相等时可以正确判断
+
+#### Python2中的编码错误
+
+可参考：
+
+[Python2中的编码错误](https://www.zybuluo.com/zwenqiang/note/21851)
+
+[PYTHON-进阶-编码处理小结](http://www.wklken.me/posts/2013/08/31/python-extra-coding-intro.html)
+
+究极处理方案：
+
+```python
+import sys
+reload(sys)
+sys.setdefaultencoding('utf-8')
 ```

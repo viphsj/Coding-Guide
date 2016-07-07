@@ -3,6 +3,7 @@
 **Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
 - [Python及应用6-UnitTest](#python%E5%8F%8A%E5%BA%94%E7%94%A86-unittest)
+  - [Intro](#intro)
   - [Pylint](#pylint)
   - [UnitTest](#unittest)
   - [doctest](#doctest)
@@ -16,6 +17,26 @@
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 ## Python及应用6-UnitTest
+
+[如何测试Python应用](http://py.windrunner.info/great-code/testing.html)
+
+[如何测试Django应用](http://py.windrunner.info/great-code/django-testing.html)
+
+### Intro
+
+- 每个测试单元应该关注于一个功能，并保证其正确性。
+
+- 测试单元之间应该尽可能独立，也就是说可以独立运行，与顺序无关。
+
+- 测试的速度应该尽可能快，过慢的测试速度会成为开发的瓶颈。对于耗费时间很长的重型测试，应该将其独立出来。
+
+- 在集中编程前后都应该完整地运行一遍测试，以保证不会造成意外的破坏。
+
+- 在编程过程中，如果需要中断工作，那么编写一个不能运行的测试对于恢复工作非常有帮助。
+
+- debug 的第一步就是写一个针对性的单元测试，虽然这做起来并不一定容易，但却非常有价值。
+
+- 虽然 PEP8 提倡简短的命名，但在测试函数名称应该长而有意义。比如，编程中你可能使用 `square()`甚至`sqr()`这样的函数名称，但是在测试中你应该写成：`test_square_of_number_2()`, `test_square_negative_number()`
 
 ### Pylint
 

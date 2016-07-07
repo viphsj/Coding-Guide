@@ -35,6 +35,7 @@
     - [装饰器](#%E8%A3%85%E9%A5%B0%E5%99%A8)
     - [命名空间和作用域](#%E5%91%BD%E5%90%8D%E7%A9%BA%E9%97%B4%E5%92%8C%E4%BD%9C%E7%94%A8%E5%9F%9F)
   - [generator](#generator)
+  - [中文编码](#%E4%B8%AD%E6%96%87%E7%BC%96%E7%A0%81)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 

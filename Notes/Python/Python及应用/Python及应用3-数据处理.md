@@ -6,6 +6,8 @@
   - [数据处理](#%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86)
     - [文本格式化](#%E6%96%87%E6%9C%AC%E6%A0%BC%E5%BC%8F%E5%8C%96)
     - [`input`](#input)
+  - [排序](#%E6%8E%92%E5%BA%8F)
+    - [`sorted(list, key, reverse)`](#sortedlist-key-reverse)
   - [正则表达式](#%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F)
     - [推荐教程](#%E6%8E%A8%E8%8D%90%E6%95%99%E7%A8%8B)
     - [匹配的方法](#%E5%8C%B9%E9%85%8D%E7%9A%84%E6%96%B9%E6%B3%95)
@@ -33,6 +35,7 @@
     - [colorama](#colorama)
     - [prettytable](#prettytable)
   - [数据库](#%E6%95%B0%E6%8D%AE%E5%BA%93)
+  - [log记录](#log%E8%AE%B0%E5%BD%95)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -98,7 +101,86 @@ example_dict = {a: 0, b: 1, c: 2}
 
 ### 排序
 
+[Sorting HOW TO](https://docs.python.org/3/howto/sorting.html)
 
+[Sorting Mini-HOW TO](https://wiki.python.org/moin/HowTo/Sorting/)
+
+#### `sorted(list, key, reverse)`
+
+使用`sorted(list)`，在默认状态下可以对**任意可迭代对象**进行升序排列，返回新数组不改变原有数组。
+
+```python
+example_list = [5, 0, 6, 1, 2, 7, 3, 4]
+result_list = sorted(example_list)
+print(result_list)
+# [0, 1, 2, 3, 4, 5, 6, 7]
+```
+
+`sorted`的`key`关键字参数接受一个函数为值。该函数需要接受一个参数，并返回一个key用于排序是做比较。
+
+```python
+# 利用key进行倒序排序
+example_list = [5, 0, 6, 1, 2, 7, 3, 4]
+result_list = sorted(example_list, key=lambda x: x*-1)
+print(result_list)
+# [7, 6, 5, 4, 3, 2, 1, 0]
+
+# 其实简单的倒序排列通过reverse参数就能实现
+result_list = sorted(example_list, reverse=True)
+print(result_list)
+# [7, 6, 5, 4, 3, 2, 1, 0]
+```
+
+使用key还可以排列复杂对象
+
+```python
+people_group = [
+	('ecmadao', '24'),
+	('ws', '18'),
+	('boy', '7')
+]
+
+result_group = sorted(people_group, key=lambda x: int(x[1]))
+print(result_group)
+[('boy', '7'), ('ws', '18'), ('ecmadao', '24')]
+```
+
+**使用`itemgetter`,` attrgetter`**
+
+`itemgetter`,` attrgetter`作用类似于上面的key，但更加高效简洁。
+
+```python
+from operator import itemgetter, attrgetter
+
+people_group = [
+	('ecmadao', 24),
+	('ws', 18),
+	('boy', 7)
+]
+
+result_group = sorted(people_group, key=itemgetter(1))
+print(result_group)
+# [('boy', 7), ('ws', 18), ('ecmadao', 24)]
+```
+
+```python
+# 还可以多级排序
+people_group = [
+	('ecmadao', 24),
+	('ws', 18),
+	('edward', 18),
+	('boy', 7)
+]
+result_group = sorted(people_group, key=itemgetter(1))
+print(result_group)
+# [('boy', 7), ('ws', 18), ('edward', 18), ('ecmadao', 24)]
+# 排序是保证为稳定的，也就是说，当多条记录拥有相同的 key 时，原始的顺序会被保留下来
+
+result_group = sorted(people_group, key=itemgetter(1,0))
+print(result_group)
+# [('boy', 7), ('edward', 18), ('ws', 18), ('ecmadao', 24)]
+# 元素排序后，会对有相同key值的元素通过index 0位置的value来排序
+```
 
 ### 正则表达式
 
@@ -549,3 +631,33 @@ print(table)
 [pymongo](https://api.mongodb.com/python/current/index.html)
 
 [Python数据储存-pymongo](https://github.com/ecmadao/Coding-Guide/blob/master/Notes/Python/Python%E6%95%B0%E6%8D%AE%E5%82%A8%E5%AD%98-pymongo.md)
+
+### [log](https://docs.python.org/3/library/logging.html)记录
+
+[给简单脚本增加日志功能](http://python3-cookbook.readthedocs.io/zh_CN/latest/c13/p11_add_logging_to_simple_scripts.html)
+
+```python
+import logging # 使用logging模块
+
+# log配置
+logging.basicConfig(
+	filename='app.log', # 输出的log文件名称
+	level=logging.ERROR # 小于此程度的log不会被输出
+)
+
+# log的几种严重程度，从上到下级别依次降低
+logging.critical('critical!')
+logging.error('error!')
+logging.warning('warning!')
+logging.info('info!')
+logging.debug('debug!')
+```
+
+可以控制log输出的格式：
+
+```python
+logging.basicConfig(
+	filename='app.log',
+	level=logging.WARNING,
+	format='%(levelname)s:%(asctime)s:%(message)s')
+```
