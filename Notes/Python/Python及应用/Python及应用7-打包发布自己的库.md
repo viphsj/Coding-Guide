@@ -121,3 +121,18 @@ $ python setup.py sdist upload
 
 - 更新代码里的版本号
 - 重复upload的步骤，会自动上传并升级库至新版
+
+### pip常用命令
+
+```bash
+# 查看具体安装文件
+$ pip3 show --files SomePackage
+# 列出所有的包
+$ pip3 list
+# 检查有无升级
+$ pip3 list --outdated
+# 更新包
+$ pip3 install -U|--upgrade <package>
+# 卸载包
+$ pip3 uninstall <package>
+```

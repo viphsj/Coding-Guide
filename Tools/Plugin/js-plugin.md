@@ -67,6 +67,10 @@
 
 > 如其名，带有各种弹性效果的动画库，还挺有意思的
 
+#### [anime](http://anime-js.com/)
+
+> Javascript Animation Engine
+
 #### [Move.js](http://visionmedia.github.io/move.js/)
 
 > 一个JS动效库。还没仔细看它文档
@@ -98,6 +102,12 @@
 > 下滑页面隐藏导航栏，上滑展现导航栏
 >
 > 为页面顶部多留些空间
+
+#### [iScroll](https://iiunknown.gitbooks.io/iscroll-5-api-cn/content/index.html)
+
+> 处理页面滚动。
+> 
+> 滚动，缩放，平移，无限滚动，视差滚动，旋转功能
 
 ### About media
 
