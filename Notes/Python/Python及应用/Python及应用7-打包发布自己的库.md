@@ -11,6 +11,7 @@
     - [register](#register)
     - [upload](#upload)
     - [upgrade](#upgrade)
+  - [pip常用命令](#pip%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 

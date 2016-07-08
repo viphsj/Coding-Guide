@@ -1,3 +1,23 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [Python及应用8-命令行工具](#python%E5%8F%8A%E5%BA%94%E7%94%A88-%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%B7%A5%E5%85%B7)
+  - [docopt](#docopt)
+  - [click](#click)
+    - [arguments](#arguments)
+      - [基本用法](#%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95)
+      - [多参数](#%E5%A4%9A%E5%8F%82%E6%95%B0)
+      - [文件参数](#%E6%96%87%E4%BB%B6%E5%8F%82%E6%95%B0)
+    - [option](#option)
+      - [基本用法](#%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95-1)
+      - [多参数的选项](#%E5%A4%9A%E5%8F%82%E6%95%B0%E7%9A%84%E9%80%89%E9%A1%B9)
+      - [多参数作为元组传入](#%E5%A4%9A%E5%8F%82%E6%95%B0%E4%BD%9C%E4%B8%BA%E5%85%83%E7%BB%84%E4%BC%A0%E5%85%A5)
+      - [多次传入option](#%E5%A4%9A%E6%AC%A1%E4%BC%A0%E5%85%A5option)
+      - [boolen判断](#boolen%E5%88%A4%E6%96%AD)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 ## Python及应用8-命令行工具
 
 ### [docopt](http://docopt.org/)
@@ -178,4 +198,44 @@ $ python3 clicker.py -m foo -m bar
 
 ##### boolen判断
 
-option可以有一个
+option可以有True或False的判断，并且能够在不传入option使用默认值
+
+```python
+@click.command()
+@click.option('--happy/--no-happy', default=True)
+def boolean_option(happy):
+	if happy:
+		print('happy')
+	else:
+		print('sad')
+```
+
+```bash
+$ python3 clicker.py --happy
+# happy
+$ python3 clicker.py --no-happy
+# happy
+$ python3 clicker.py
+# happy
+```
+
+如果不想使用这种True/False的两个参数的判断，则可以使用`is_flag=True`
+
+```python
+@click.command()
+@click.option('--happy', is_flag=True)
+def boolean_option(happy):
+	if happy:
+		print('happy')
+	else:
+		print('sad')
+```
+
+若传入option则为True，否则是False
+
+```bash
+$ python3 clicker.py --happy
+# happy
+$ python3 clicker.py
+# sad
+```
