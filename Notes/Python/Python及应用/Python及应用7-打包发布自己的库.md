@@ -118,6 +118,15 @@ $ python setup.py sdist upload
 # 生成支持pip的文件并上传代码
 ```
 
+注：在第一步`setup.py register`时，可能会因为代码中的中文字符串产生如下错误：
+
+```bash
+$ python setup.py register
+# SyntaxError: Non-ASCII character '\xe4' in file /Users/ecmadao1/Dev/Python/Spider-12306/train/__init__.py on line 4, but no encoding declared; see http://python.org/dev/peps/pep-0263/ for details
+```
+
+则需要在使用中文的文件开头添加注释`# -*- coding: UTF-8 -*-`
+
 #### upgrade
 
 - 更新代码里的版本号
