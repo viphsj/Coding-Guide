@@ -8,6 +8,11 @@
   - [拆箱](#%E6%8B%86%E7%AE%B1)
   - [反转字典](#%E5%8F%8D%E8%BD%AC%E5%AD%97%E5%85%B8)
   - [命名元组](#%E5%91%BD%E5%90%8D%E5%85%83%E7%BB%84)
+  - [库](#%E5%BA%93)
+    - [数据处理](#%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86)
+    - [爬虫](#%E7%88%AC%E8%99%AB)
+    - [命令行](#%E5%91%BD%E4%BB%A4%E8%A1%8C)
+    - [workflow](#workflow)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -84,4 +89,69 @@ elpmaxa = {key: value for value, key in example.items()}
 
 ### 命名元组
 
+```python
+from collections import namedtuple
 
+Point = namedtuple('Point', ['x', 'y'])
+
+p = Point(x=11, y=22)
+p[0] + p[1] # 33
+p.x # 11
+p.y # 22
+```
+
+```python
+# namedtuple._make(sequence/iterable) 通过序列或生成器来实例化一个命名元组
+Point = namedtuple('Point', ['x', 'y'])
+p = Point._make([11, 22])
+
+# namedtuple._asdict() 作用于实例化的命名元组，返回一个新的OrderedDict
+p._asdict()
+# OrderedDict([('x', 11), ('y', 22)])
+
+# namedtuple._replace() 替换命名元组内的某些值并返回新的实例
+p._replace(x=33)
+# Point(x=33, y=22)
+
+# namedtuple._fields() 返回命名元组中key组成的元组
+p._fields()
+# ('x', 'y')
+```
+
+命名元组在通过[`csv`](https://docs.python.org/3.5/library/csv.html)包解析csv文件的时候很有用
+
+```python
+EmployeeRecord = namedtuple('EmployeeRecord', 'name, age, title, department, paygrade')
+
+import csv
+for emp in map(EmployeeRecord._make, csv.reader(open("employees.csv", "rb"))):
+    print(emp.name, emp.title)
+```
+
+### 库
+
+#### 数据处理
+
+- [openpyxl--读写Excel](http://openpyxl.readthedocs.io/en/default/)
+- [xlrd--读取Excel](https://github.com/python-excel/xlrd)
+- [Pillow--图像处理](https://pillow.readthedocs.io/en/3.3.x/)
+- [Numpy--数据科学](http://www.numpy.org/)
+- [jieba--中文分词](https://github.com/fxsjy/jieba)
+- [PyMongo--mongodb with python](https://api.mongodb.com/python/current/index.html)
+
+#### 爬虫
+
+- [cssselect--CSS选择器](https://pythonhosted.org/cssselect/)
+- [Requests--Http请求库](http://requests-docs-cn.readthedocs.io/zh_CN/latest/)
+- [BeautifulSoup--HTML解析库](https://www.crummy.com/software/BeautifulSoup/bs4/doc/index.zh.html)
+- [Selenium--web爬虫究极神器](http://selenium-python.readthedocs.io/index.html)
+
+#### 命令行
+
+- [docopt](http://docopt.org/)
+- [click](http://click.pocoo.org/6/)
+
+#### workflow
+
+- [alfred-workflow](http://www.deanishe.net/alfred-workflow/)
+- [alfred-python](https://github.com/nikipore/alfred-python)
