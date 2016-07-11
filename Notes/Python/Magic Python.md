@@ -128,16 +128,51 @@ for emp in map(EmployeeRecord._make, csv.reader(open("employees.csv", "rb"))):
     print(emp.name, emp.title)
 ```
 
+### 读写 XML/CSV
+
+- [ElementTree解析简单的XML数据](http://python3-cookbook.readthedocs.io/zh_CN/latest/c06/p03_parse_simple_xml_data.html)
+- [使用 Python ElementTree 生成 xml](http://dola.xinfan.org/?p=191)
+- [用第三方库进行XML解析](http://pythonguidecn.readthedocs.io/zh/latest/scenarios/xml.html)
+- [读写CSV数据](http://python3-cookbook.readthedocs.io/zh_CN/latest/c06/p01_read_write_csv_data.html)
+
+### 图片处理
+
 ### 库
 
 #### 数据处理
 
+**excel/word/xml/csv**
+
 - [openpyxl--读写Excel](http://openpyxl.readthedocs.io/en/default/)
 - [xlrd--读取Excel](https://github.com/python-excel/xlrd)
+
+> 注：openpyxl读取文件类型不支持xls但支持xlsx，可以使用xlrd库进行xls的读取，或者直接将xls转换为xlsx
+
+- [untangle--xml转为Python对象](https://github.com/stchris/untangle)
+- [xmltodict--xml转为dict对象](https://github.com/martinblech/xmltodict)
+- [ElementTree--解析并创建xml](http://python3-cookbook.readthedocs.io/zh_CN/latest/c06/p05_turning_dictionary_into_xml.html)
+
+- [Python-docx--读写word文档](http://hao.jobbole.com/python-docx/)
+
+- [CSV](http://python3-cookbook.readthedocs.io/zh_CN/latest/c06/p01_read_write_csv_data.html)
+
+**图像**
+
 - [Pillow--图像处理](https://pillow.readthedocs.io/en/3.3.x/)
+
+**计算**
+
 - [Numpy--数据科学](http://www.numpy.org/)
-- [jieba--中文分词](https://github.com/fxsjy/jieba)
+
+**数据库**
+
 - [PyMongo--mongodb with python](https://api.mongodb.com/python/current/index.html)
+
+**其他**
+
+- [jieba--中文分词](https://github.com/fxsjy/jieba)
+- [Delorean--时间日期时区的转换](http://delorean.readthedocs.io/en/latest/index.html)
+
 
 #### 爬虫
 
