@@ -8,6 +8,15 @@
   - [拆箱](#%E6%8B%86%E7%AE%B1)
   - [反转字典](#%E5%8F%8D%E8%BD%AC%E5%AD%97%E5%85%B8)
   - [命名元组](#%E5%91%BD%E5%90%8D%E5%85%83%E7%BB%84)
+  - [读写 XML/CSV](#%E8%AF%BB%E5%86%99-xmlcsv)
+  - [文件操作](#%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C)
+    - [os](#os)
+    - [shutil](#shutil)
+  - [beautifulsoup的技巧](#beautifulsoup%E7%9A%84%E6%8A%80%E5%B7%A7)
+  - [杂项](#%E6%9D%82%E9%A1%B9)
+    - [从可迭代对象中随机选取元素](#%E4%BB%8E%E5%8F%AF%E8%BF%AD%E4%BB%A3%E5%AF%B9%E8%B1%A1%E4%B8%AD%E9%9A%8F%E6%9C%BA%E9%80%89%E5%8F%96%E5%85%83%E7%B4%A0)
+    - [生成包含大写字母和数字的随机字符串](#%E7%94%9F%E6%88%90%E5%8C%85%E5%90%AB%E5%A4%A7%E5%86%99%E5%AD%97%E6%AF%8D%E5%92%8C%E6%95%B0%E5%AD%97%E7%9A%84%E9%9A%8F%E6%9C%BA%E5%AD%97%E7%AC%A6%E4%B8%B2)
+    - [检验一个字符串是否是数字](#%E6%A3%80%E9%AA%8C%E4%B8%80%E4%B8%AA%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%98%AF%E5%90%A6%E6%98%AF%E6%95%B0%E5%AD%97)
   - [库](#%E5%BA%93)
     - [数据处理](#%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86)
     - [爬虫](#%E7%88%AC%E8%99%AB)
@@ -135,7 +144,106 @@ for emp in map(EmployeeRecord._make, csv.reader(open("employees.csv", "rb"))):
 - [用第三方库进行XML解析](http://pythonguidecn.readthedocs.io/zh/latest/scenarios/xml.html)
 - [读写CSV数据](http://python3-cookbook.readthedocs.io/zh_CN/latest/c06/p01_read_write_csv_data.html)
 
-### 图片处理
+### 文件操作
+
+#### os
+
+```python
+import os
+
+os.listdir(path) # 列出目录下所有文件
+os.isfile(path) # 判断是否是文件
+os.path.splitext(path) # 把一个文件分为文件名和后缀
+os.path.join() # 合并路径
+os.path.exists(path) # 检查是否存在
+os.makedirs(dir) # 创建文件夹
+
+os.walk(path) # 遍历每个目录将会返回两个列表(一个文件列表,一个目录列表)
+```
+
+#### [shutil](https://docs.python.org/2/library/shutil.html)
+
+> High-level file operations
+
+```python
+# 复制文件
+import shutil
+
+shuilt.copyfile(src, dst)
+# 把src复制至dst
+```
+
+### beautifulsoup的技巧
+
+使用bs4分析html的时候，可能会遇见DOM解析出错的时候：
+
+```python
+target_url = soup.find('a').get('href')
+# or
+content = soup.find('div', attr={"class": "demo"}).string
+```
+
+如果DOM中没有找到目标元素，还进一步使用get的话，则会报出异常。因此，在没有获取到元素的时候，返回{}就可以避免get出错
+
+```python
+target_url = (soup.find('a') or {}).get('href')
+```
+
+### 杂项
+
+#### 从可迭代对象中随机选取元素
+
+```python
+import random
+
+foo = (1, 2, 3, 4, 5)
+random.choice(foo)
+```
+
+#### 生成包含大写字母和数字的随机字符串
+
+`string`有方法能让我们方便的获取所有字母和数字
+
+```python
+import string
+string.ascii_lowercase # abcdefghijklmnopqrstuvwxyz
+string.ascii_uppercase # ABCDEFGHIJKLMNOPQRSTUVWXYZ
+string.digits # 0123456789
+```
+
+通过`random.choice`即可进行随机选择
+
+```python
+import string
+import random
+
+def id_generator(size=6, chars=None):
+	chars = chars if chars is not None else string.ascii_uppercase + string.digits + string.ascii_lowercase
+	return ''.join(random.choice(chars) for _ in range(size))
+
+id_generator() # 随机生成一个混合大小写和数字的六位码
+```
+
+#### 检验一个字符串是否是数字
+
+```python
+def is_number(s):
+    try:
+        float(s)
+        return True
+    except ValueError:
+        return False
+```
+
+```python
+# 对字符串对象用isdigit()方法:
+a = "03523"
+a.isdigit()
+# True
+b = "963spam"
+b.isdigit()
+# False
+```
 
 ### 库
 
@@ -159,10 +267,14 @@ for emp in map(EmployeeRecord._make, csv.reader(open("employees.csv", "rb"))):
 **图像**
 
 - [Pillow--图像处理](https://pillow.readthedocs.io/en/3.3.x/)
+  - [Pillow v2.4.0快速入门](http://pillow-cn.readthedocs.io/zh_CN/latest/handbook/tutorial.html)
+  - [pillow-doc](https://pillow.readthedocs.io/en/3.3.x/)
 
 **计算**
 
 - [Numpy--数据科学](http://www.numpy.org/)
+  - [Quickstart tutorial](https://docs.scipy.org/doc/numpy-dev/user/quickstart.html)
+  - [Python 数据分析基础包：Numpy](http://my.oschina.net/lionets/blog/276574)
 
 **数据库**
 
@@ -185,6 +297,9 @@ for emp in map(EmployeeRecord._make, csv.reader(open("employees.csv", "rb"))):
 
 - [docopt](http://docopt.org/)
 - [click](http://click.pocoo.org/6/)
+- [prettytable](https://pypi.python.org/pypi/PrettyTable)
+- [termcolor](https://pypi.python.org/pypi/termcolor)
+- [colorama](https://pypi.python.org/pypi/colorama)
 
 #### workflow
 

@@ -18,9 +18,11 @@
   - [使用无状态的函数](#%E4%BD%BF%E7%94%A8%E6%97%A0%E7%8A%B6%E6%80%81%E7%9A%84%E5%87%BD%E6%95%B0)
   - [迟绑定闭包](#%E8%BF%9F%E7%BB%91%E5%AE%9A%E9%97%AD%E5%8C%85)
   - [利用webbrowser控制浏览器](#%E5%88%A9%E7%94%A8webbrowser%E6%8E%A7%E5%88%B6%E6%B5%8F%E8%A7%88%E5%99%A8)
+  - [特殊命名](#%E7%89%B9%E6%AE%8A%E5%91%BD%E5%90%8D)
   - [杂记](#%E6%9D%82%E8%AE%B0)
     - [Do not use & when you use multiply int](#do-not-use-&-when-you-use-multiply-int)
     - [Python2中的编码错误](#python2%E4%B8%AD%E7%9A%84%E7%BC%96%E7%A0%81%E9%94%99%E8%AF%AF)
+  - [子类中扩展property](#%E5%AD%90%E7%B1%BB%E4%B8%AD%E6%89%A9%E5%B1%95property)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -309,6 +311,14 @@ webbrowser.open_new_tab(url)
 webbrowser.get('firefox')
 ```
 
+### 特殊命名
+
+`__foo__` 一种约定,Python内部的名字,用来区别其他用户自定义的命名,以防冲突.
+
+`_foo`一种约定,用来指定变量私有.程序员用来指定私有变量的一种方式.
+
+`__foo`这个有真正的意义:解析器用`_classname__foo`来代替这个名字,以区别和其他类相同的命名.
+
 ### 杂记
 
 #### Do not use & when you use multiply int
@@ -353,4 +363,44 @@ else:
 import sys
 reload(sys)
 sys.setdefaultencoding('utf-8')
+```
+
+### 子类中扩展property
+
+在子类中扩展一个property可能会引起很多不易察觉的问题， 因为一个property其实是 getter、setter 和 deleter 方法的集合，而不是单个方法。 因此，但你扩展一个property的时候，你需要先确定你是否要重新定义所有的方法还是说只修改其中某一个
+
+```python
+# 父类
+class Person:
+    def __init__(self, name):
+        self.name = name
+
+    # Getter function
+    @property
+    def name(self):
+        return self._name
+
+    # Setter function
+    @name.setter
+    def name(self, value):
+        if not isinstance(value, str):
+            raise TypeError('Expected a string')
+        self._name = value
+```
+
+```python
+# 子类
+# 只扩展property的getter方法
+class SubPerson(Person):
+    @Person.name.getter
+    def name(self):
+        print('Getting name')
+        return super().name
+
+# 只扩展setter方法
+class SubPerson(Person):
+    @Person.name.setter
+    def name(self, value):
+        print('Setting name to', value)
+        super(SubPerson, SubPerson).name.__set__(self, value)
 ```

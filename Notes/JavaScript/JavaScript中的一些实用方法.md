@@ -9,6 +9,7 @@
   - [关于数组](#%E5%85%B3%E4%BA%8E%E6%95%B0%E7%BB%84)
   - [WeakMap](#weakmap)
     - [方法](#%E6%96%B9%E6%B3%95)
+  - [js正则表达式](#js%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 

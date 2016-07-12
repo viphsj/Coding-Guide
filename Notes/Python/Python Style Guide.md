@@ -16,6 +16,7 @@
     - [创建一个含N个列表的列表](#%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AA%E5%90%ABn%E4%B8%AA%E5%88%97%E8%A1%A8%E7%9A%84%E5%88%97%E8%A1%A8)
     - [使用列表来创建字符串](#%E4%BD%BF%E7%94%A8%E5%88%97%E8%A1%A8%E6%9D%A5%E5%88%9B%E5%BB%BA%E5%AD%97%E7%AC%A6%E4%B8%B2)
     - [在集合体（collection）中查找一个项（而不是列表中）](#%E5%9C%A8%E9%9B%86%E5%90%88%E4%BD%93%EF%BC%88collection%EF%BC%89%E4%B8%AD%E6%9F%A5%E6%89%BE%E4%B8%80%E4%B8%AA%E9%A1%B9%EF%BC%88%E8%80%8C%E4%B8%8D%E6%98%AF%E5%88%97%E8%A1%A8%E4%B8%AD%EF%BC%89)
+  - [代码美感](#%E4%BB%A3%E7%A0%81%E7%BE%8E%E6%84%9F)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -23,6 +24,7 @@
 
 - [Google开源项目风格指南](http://zh-google-styleguide.readthedocs.io/en/latest/google-python-styleguide/)
 - [Python最佳实践指南](http://pythonguidecn.readthedocs.io/zh/latest/)
+- [PEP 8 - Python 编码风格指南](http://damnever.github.io/2015/04/24/PEP8-style-guide-for-python-code/)
 
 (仅仅选取了一些值得注意的地方)
 
@@ -206,4 +208,33 @@ def lookup_set(s):
 def lookup_list(l):
     return 's' in l
 # 在集合中查找比在列表中查找要快速的多。当在列表中查找时，Python对查看每一项的值直到找到匹配的项。而在集合中，哈希值将会告诉Python在集合的哪里去查找匹配的项
+```
+
+### 代码美感
+
+```python
+# use
+my_list = [
+    1, 2, 3,
+    4, 5, 6,
+]
+# not
+my_list = [
+    1, 2, 3,
+    4, 5, 6,
+    ]
+```
+
+```python
+# 文档字符串
+
+# 单行文档
+# 对于单行的文档字符串，把结尾"""放在同一行
+"""单行文档字符串"""
+
+# 多行文档
+# 文档字符串的结尾"""应该放在单独的一行
+"""多行文档
+多行文档实例
+"""
 ```
