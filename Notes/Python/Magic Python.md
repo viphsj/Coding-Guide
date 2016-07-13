@@ -208,6 +208,7 @@ random.choice(foo)
 import string
 string.ascii_lowercase # abcdefghijklmnopqrstuvwxyz
 string.ascii_uppercase # ABCDEFGHIJKLMNOPQRSTUVWXYZ
+string.ascii_letters # abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
 string.digits # 0123456789
 ```
 
@@ -218,8 +219,8 @@ import string
 import random
 
 def id_generator(size=6, chars=None):
-	chars = chars if chars is not None else string.ascii_uppercase + string.digits + string.ascii_lowercase
-	return ''.join(random.choice(chars) for _ in range(size))
+	chars = chars if chars is not None else string.ascii_letters + string.digits
+	return ''.join([random.choice(chars) for _ in range(size)])
 
 id_generator() # 随机生成一个混合大小写和数字的六位码
 ```
@@ -253,8 +254,11 @@ b.isdigit()
 
 - [openpyxl--读写Excel](http://openpyxl.readthedocs.io/en/default/)
 - [xlrd--读取Excel](https://github.com/python-excel/xlrd)
+- [xlsxwriter](https://github.com/jmcnamara/XlsxWriter)
 
 > 注：openpyxl读取文件类型不支持xls但支持xlsx，可以使用xlrd库进行xls的读取，或者直接将xls转换为xlsx
+>
+> 墙裂推荐[xlsxwriter](http://xlsxwriter.readthedocs.io/index.html)
 
 - [untangle--xml转为Python对象](https://github.com/stchris/untangle)
 - [xmltodict--xml转为dict对象](https://github.com/martinblech/xmltodict)
