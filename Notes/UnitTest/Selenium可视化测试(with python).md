@@ -44,6 +44,7 @@ $ sudo pip3 install selenium
 配置 Chrome 驱动到环境变量
 
 - download [ChromeDriver](https://sites.google.com/a/chromium.org/chromedriver/downloads)
+- 或者在这里下载[ChromeDriver](https://npm.taobao.org/)
 - 解压缩文件，把所得文件扔到/usr/bin目录下
 
 ### quick start
