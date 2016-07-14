@@ -48,30 +48,43 @@ ChildFactory继承了FatherFactory，但并没有复写FatherFactory的print_som
 ### 观察者模式
 
 ```python
+# 创建一个被观察者基类
 class Subject(object):
 
     def __init__(self):
         self._observers = []
 
     def attach(self, observer):
+    	"""
+    	增加监听者
+    	"""
         if observer not in self._observers:
             self._observers.append(observer)
 
     def detach(self, observer):
+    	"""
+    	注销监听者
+    	"""
         try:
             self._observers.remove(observer)
         except ValueError:
             pass
 
     def notify(self, modifier=None):
+    	"""
+    	当自身有变化的时候，通知所有的监听者，并调用其update方法
+    	"""
         for observer in self._observers:
             if modifier != observer:
                 observer.update(self)
+```
 
-
-# Example usage
+```python
+# 实例化一个被观察者
 class Data(Subject):
-
+	"""
+	继承自基类，并在自身数据发生变化的时候调用notify方法通知所有的监听者
+	"""
     def __init__(self, name=''):
         Subject.__init__(self)
         self.name = name
@@ -85,70 +98,28 @@ class Data(Subject):
     def data(self, value):
         self._data = value
         self.notify()
+        print('data now is {}'.format(value))
+```
 
+```python
+# example
+class Listener:
+	def update(self):
+		print('data update')
 
-class HexViewer:
-
-    def update(self, subject):
-        print('HexViewer: Subject %s has data 0x%x' %
-              (subject.name, subject.data))
-
-
-class DecimalViewer:
-
-    def update(self, subject):
-        print('DecimalViewer: Subject %s has data %d' %
-              (subject.name, subject.data))
-
-
-# Example usage...
 def main():
-    data1 = Data('Data 1')
-    data2 = Data('Data 2')
-    view1 = DecimalViewer()
-    view2 = HexViewer()
-    data1.attach(view1)
-    data1.attach(view2)
-    data2.attach(view2)
-    data2.attach(view1)
-
-    print("Setting Data 1 = 10")
-    data1.data = 10
-    print("Setting Data 2 = 15")
-    data2.data = 15
-    print("Setting Data 1 = 3")
-    data1.data = 3
-    print("Setting Data 2 = 5")
-    data2.data = 5
-    print("Detach HexViewer from data1 and data2.")
-    data1.detach(view2)
-    data2.detach(view2)
-    print("Setting Data 1 = 10")
-    data1.data = 10
-    print("Setting Data 2 = 15")
-    data2.data = 15
-
+	listener = Listener()
+	data = Data('data1')
+	data.attach(listener)
+	data.data = 1
+	data.data = 2
 
 if __name__ == '__main__':
-    main()
+	main()
 
-### OUTPUT ###
-# Setting Data 1 = 10
-# DecimalViewer: Subject Data 1 has data 10
-# HexViewer: Subject Data 1 has data 0xa
-# Setting Data 2 = 15
-# HexViewer: Subject Data 2 has data 0xf
-# DecimalViewer: Subject Data 2 has data 15
-# Setting Data 1 = 3
-# DecimalViewer: Subject Data 1 has data 3
-# HexViewer: Subject Data 1 has data 0x3
-# Setting Data 2 = 5
-# HexViewer: Subject Data 2 has data 0x5
-# DecimalViewer: Subject Data 2 has data 5
-# Detach HexViewer from data1 and data2.
-# Setting Data 1 = 10
-# DecimalViewer: Subject Data 1 has data 10
-# Setting Data 2 = 15
-# DecimalViewer: Subject Data 2 has data 15
+# data update
+# data now is 1
+# data update
+# data now is 2
 ```
 

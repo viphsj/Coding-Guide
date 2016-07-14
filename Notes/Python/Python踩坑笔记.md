@@ -22,7 +22,6 @@
   - [杂记](#%E6%9D%82%E8%AE%B0)
     - [Do not use & when you use multiply int](#do-not-use-&-when-you-use-multiply-int)
     - [Python2中的编码错误](#python2%E4%B8%AD%E7%9A%84%E7%BC%96%E7%A0%81%E9%94%99%E8%AF%AF)
-  - [子类中扩展property](#%E5%AD%90%E7%B1%BB%E4%B8%AD%E6%89%A9%E5%B1%95property)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -363,44 +362,4 @@ else:
 import sys
 reload(sys)
 sys.setdefaultencoding('utf-8')
-```
-
-### 子类中扩展property
-
-在子类中扩展一个property可能会引起很多不易察觉的问题， 因为一个property其实是 getter、setter 和 deleter 方法的集合，而不是单个方法。 因此，但你扩展一个property的时候，你需要先确定你是否要重新定义所有的方法还是说只修改其中某一个
-
-```python
-# 父类
-class Person:
-    def __init__(self, name):
-        self.name = name
-
-    # Getter function
-    @property
-    def name(self):
-        return self._name
-
-    # Setter function
-    @name.setter
-    def name(self, value):
-        if not isinstance(value, str):
-            raise TypeError('Expected a string')
-        self._name = value
-```
-
-```python
-# 子类
-# 只扩展property的getter方法
-class SubPerson(Person):
-    @Person.name.getter
-    def name(self):
-        print('Getting name')
-        return super().name
-
-# 只扩展setter方法
-class SubPerson(Person):
-    @Person.name.setter
-    def name(self, value):
-        print('Setting name to', value)
-        super(SubPerson, SubPerson).name.__set__(self, value)
 ```

@@ -13,6 +13,14 @@
     - [os](#os)
     - [shutil](#shutil)
   - [beautifulsoup的技巧](#beautifulsoup%E7%9A%84%E6%8A%80%E5%B7%A7)
+  - [关于类](#%E5%85%B3%E4%BA%8E%E7%B1%BB)
+    - [创建大量对象时节省内存方法](#%E5%88%9B%E5%BB%BA%E5%A4%A7%E9%87%8F%E5%AF%B9%E8%B1%A1%E6%97%B6%E8%8A%82%E7%9C%81%E5%86%85%E5%AD%98%E6%96%B9%E6%B3%95)
+    - [简化数据结构的初始化](#%E7%AE%80%E5%8C%96%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E7%9A%84%E5%88%9D%E5%A7%8B%E5%8C%96)
+    - [属性的代理访问 -- 代理模式](#%E5%B1%9E%E6%80%A7%E7%9A%84%E4%BB%A3%E7%90%86%E8%AE%BF%E9%97%AE----%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F)
+    - [装饰器 -- 创建可管理的属性](#%E8%A3%85%E9%A5%B0%E5%99%A8----%E5%88%9B%E5%BB%BA%E5%8F%AF%E7%AE%A1%E7%90%86%E7%9A%84%E5%B1%9E%E6%80%A7)
+    - [装饰器 -- 子类中扩展property](#%E8%A3%85%E9%A5%B0%E5%99%A8----%E5%AD%90%E7%B1%BB%E4%B8%AD%E6%89%A9%E5%B1%95property)
+    - [描述器 -- 创建新的类或实例属性](#%E6%8F%8F%E8%BF%B0%E5%99%A8----%E5%88%9B%E5%BB%BA%E6%96%B0%E7%9A%84%E7%B1%BB%E6%88%96%E5%AE%9E%E4%BE%8B%E5%B1%9E%E6%80%A7)
+    - [描述器 -- 实现数据模型的类型约束](#%E6%8F%8F%E8%BF%B0%E5%99%A8----%E5%AE%9E%E7%8E%B0%E6%95%B0%E6%8D%AE%E6%A8%A1%E5%9E%8B%E7%9A%84%E7%B1%BB%E5%9E%8B%E7%BA%A6%E6%9D%9F)
   - [杂项](#%E6%9D%82%E9%A1%B9)
     - [从可迭代对象中随机选取元素](#%E4%BB%8E%E5%8F%AF%E8%BF%AD%E4%BB%A3%E5%AF%B9%E8%B1%A1%E4%B8%AD%E9%9A%8F%E6%9C%BA%E9%80%89%E5%8F%96%E5%85%83%E7%B4%A0)
     - [生成包含大写字母和数字的随机字符串](#%E7%94%9F%E6%88%90%E5%8C%85%E5%90%AB%E5%A4%A7%E5%86%99%E5%AD%97%E6%AF%8D%E5%92%8C%E6%95%B0%E5%AD%97%E7%9A%84%E9%9A%8F%E6%9C%BA%E5%AD%97%E7%AC%A6%E4%B8%B2)
@@ -188,6 +196,151 @@ content = soup.find('div', attr={"class": "demo"}).string
 ```python
 target_url = (soup.find('a') or {}).get('href')
 ```
+
+### 关于类
+
+####  [创建大量对象时节省内存方法](http://python3-cookbook.readthedocs.io/zh_CN/latest/c08/p04_save_memory_when_create_large_number_instances.html)
+
+添加`__slots__`属性，内部指明类的属性名
+
+```python
+__slots__ = ['year', 'month', 'day']
+```
+
+#### [简化数据结构的初始化](http://python3-cookbook.readthedocs.io/zh_CN/latest/c08/p11_simplify_initialization_of_data_structure.html)
+
+定义一个公用的基类，内部定义公用的`__init__`函数
+
+```python
+class Structure:
+    _fields = []
+
+    def __init__(self, *args):
+        if len(args) != len(self._fields):
+            raise TypeError('Expected {} arguments'.format(len(self._fields)))
+        # Set the arguments
+        for name, value in zip(self._fields, args):
+            setattr(self, name, value)
+```
+
+之后继承基类的其他子类可以避免写繁琐的`__init__`方法
+
+```python
+class Stock(Structure):
+    _fields = ['name', 'shares', 'price']
+```
+
+#### [属性的代理访问](http://python3-cookbook.readthedocs.io/zh_CN/latest/c08/p15_delegating_attribute_access.html) -- 代理模式
+
+#### 装饰器 -- [创建可管理的属性](http://python3-cookbook.readthedocs.io/zh_CN/latest/c08/p06_create_managed_attributes.html)
+
+- [5个理由告诉你为什么要学习使用Python装饰器](http://python.jobbole.com/85393/)
+
+```python
+class Person:
+	def __init__(self, name):
+		self.name = _name
+	@property
+	def name(self):
+		return self._name
+	@name.setter
+	def name(self, value):
+		if not isinstance(value, str):
+			raise TypeError('Expected a string')
+		self._name = value
+```
+
+为什么装饰器返回和设置的是`_name`而不是`name`？那是因为这样的话，可以在初始化的时候就触发`setter`来进行类型的检查。
+
+不要写没有做任何其他额外操作的property。 它会让你的代码变得很臃肿，运行起来变慢很多。
+
+#### 装饰器 -- [子类中扩展property](http://python3-cookbook.readthedocs.io/zh_CN/latest/c08/p08_extending_property_in_subclass.html)
+
+在子类中扩展一个property可能会引起很多不易察觉的问题， 因为一个property其实是 getter、setter 和 deleter 方法的集合，而不是单个方法。 因此，但你扩展一个property的时候，你需要先确定你是否要重新定义所有的方法还是说只修改其中某一个
+
+```python
+# 父类
+class Person:
+    def __init__(self, name):
+        self.name = name
+
+    # Getter function
+    @property
+    def name(self):
+        return self._name
+
+    # Setter function
+    @name.setter
+    def name(self, value):
+        if not isinstance(value, str):
+            raise TypeError('Expected a string')
+        self._name = value
+```
+
+```python
+# 子类
+# 只扩展property的getter方法
+class SubPerson(Person):
+    @Person.name.getter
+    def name(self):
+        print('Getting name')
+        return super().name
+
+# 只扩展setter方法
+class SubPerson(Person):
+    @Person.name.setter
+    def name(self, value):
+        print('Setting name to', value)
+        super(SubPerson, SubPerson).name.__set__(self, value)
+```
+
+#### 描述器 -- [创建新的类或实例属性](http://python3-cookbook.readthedocs.io/zh_CN/latest/c08/p09_create_new_kind_of_class_or_instance_attribute.html)
+
+- [Python描述符指南](https://harveyqing.gitbooks.io/python-read-and-write/content/python_advance/python_descriptor.html)
+- [Python描述器引导](http://pyzh.readthedocs.io/en/latest/Descriptor-HOW-TO-Guide.html)
+- [Descriptor HowTo Guide](https://docs.python.org/3.5/howto/descriptor.html)
+
+一个描述器就是一个实现了三个核心的属性访问操作(get, set, delete)的类， 分别为 `__get__()` 、`__set__()` 和 `__delete__()`
+
+```python
+# 定义一个描述器
+class CheckInteger:
+    def __init__(self, name):
+        self.name = name
+
+    def __get__(self, instance, cls):
+        if instance is None:
+            return self
+        else:
+            return instance.__dict__[self.name]
+
+    def __set__(self, instance, value):
+        if not isinstance(value, int):
+            raise TypeError('Expected an int')
+        instance.__dict__[self.name] = value
+
+    def __delete__(self, instance):
+        del instance.__dict__[self.name]
+```
+
+```python
+# 使用描述器
+# 需将这个描述器的实例作为类属性放到一个类的定义中
+class Point:
+    x = CheckInteger('x')
+    y = CheckInteger('y')
+
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+# 之后，所有对描述器属性(x或y)的访问会被 __get__() 、__set__() 和 __delete__() 方法捕获到
+
+point = Point(1, 2)
+point.x # 调用 Point.x.__get__(point, Point)
+point.x = '1' # TypeError('Expected an int')
+```
+
+#### 描述器 -- [实现数据模型的类型约束](http://python3-cookbook.readthedocs.io/zh_CN/latest/c08/p13_implementing_data_model_or_type_system.html)
 
 ### 杂项
 
