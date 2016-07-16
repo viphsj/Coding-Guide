@@ -178,7 +178,8 @@ plugins: [
 $ npm install jquery --save-dev
 
 # 安装 expose-loader
-$ npm install expose-loader --save
+$ npm install expose-loader --save-dev
+$ npm install exports-loader --save-dev
 ```
 
 ```js
