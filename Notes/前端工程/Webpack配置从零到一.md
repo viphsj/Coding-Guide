@@ -51,7 +51,7 @@ const MODULES_PATH = path.join(ROOT_PATH, './node_modules'); // node包目录
 const BUILD_PATH = path.join(ROOT_PATH, './public/assets'); // 最后输出放置公共资源的目录
 
 module.exports = {
-  context: path.join(__dirname, '../'), // 设置webpack配置中指向的默认目录为项目根目录
+  context: CURRENT_PATH, // 设置webpack配置中指向的默认目录为项目根目录
   entry: {
     index: './public/pages/index.js',
     public: './public/pages/public.js'
@@ -142,7 +142,7 @@ module.exports = {
 #### `ExtractTextPlugin`分离CSS
 
 > 行内插入一坨CSS是万恶之源 
-> 
+>
 > -- 我瞎扯的
 
 ```bash
@@ -178,7 +178,7 @@ plugins: [
 $ npm install jquery --save-dev
 
 # 安装 expose-loader
-$ sudo npm install expose-loader --save
+$ npm install expose-loader --save
 ```
 
 ```js
@@ -303,5 +303,18 @@ new webpack.DefinePlugin({
 然后就没问题了==
 
 ### end
+
+```bash
+# 运行
+$ webpack --config config/webpack.config.js -p --display-reasons --display-chunks --progress --colors --profile --display-modules
+```
+
+可以在package.json里面配置一下运行命令
+
+```json
+"scripts": {
+    "build": "webpack --config config/webpack.config.js -p --display-reasons --display-chunks --progress --colors --profile --display-modules"
+}
+```
 
 如果真的要玩的话，webpack可以有非常多的玩法（看看它插件就知道了）。但webpack终究是一个工具，所以也就没有特别深入探究它，知道怎么用，够用就好了。

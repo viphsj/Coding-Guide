@@ -7,10 +7,11 @@
   - [unittest](#unittest)
     - [功能测试](#%E5%8A%9F%E8%83%BD%E6%B5%8B%E8%AF%95)
     - [单元测试](#%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95)
+  - [bash](#bash)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
-## Django-01-setup/unittest
+## Django-01-setup&unittest
 
 ### setup
 
@@ -117,3 +118,21 @@ $ python3 manage.py test
 ```
 
 bingo!
+
+### bash
+
+```bash
+# 新建项目
+$ django-admin.py startproject my_django_app
+# 新建模块
+$ python3 manage.py startapp articles
+# 启动服务器
+$ python3 manage.py runserver
+# 更新数据库
+$ python3 manage.py migrate
+# 跑测试
+$ python3 manage.py test
+# 在shell内进行交互式操作
+$ python3 manage.py shell
+```
+
