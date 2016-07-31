@@ -7,6 +7,10 @@
     - [Counter Example：](#counter-example%EF%BC%9A)
     - [Input Example](#input-example)
     - [Update](#update)
+  - [混合实例](#%E6%B7%B7%E5%90%88%E5%AE%9E%E4%BE%8B)
+    - [注册表单](#%E6%B3%A8%E5%86%8C%E8%A1%A8%E5%8D%95)
+  - [Advance](#advance)
+    - [subscriptions & cmd](#subscriptions-&-cmd)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -163,3 +167,86 @@ update msg model =
     Change newContent ->
       { model | content = newContent } -- 更新record类型的model中的content key
 ```
+
+### 混合实例
+
+#### 注册表单
+
+```elm
+import Html exposing (..)
+import Html.App as App
+import Html.Attributes exposing (..)
+import Html.Events exposing (onInput)
+
+main =
+  App.beginnerProgram
+    { model = model
+    , view = view
+    , update = update
+    }
+
+-- MODEL
+
+-- 定义model别名为Model
+type alias Model =
+  { name : String
+  , password : String
+  , passwordAgain : String
+  }
+
+model : Model
+-- 调用Record生成一个实例
+-- {name = "", password = "", passwordAgain = ""}
+model =
+  Model "" "" ""
+
+-- UPDATE
+
+-- 定义Tag
+type Msg
+    = Name String
+    | Password String
+    | PasswordAgain String
+
+update : Msg -> Model -> Model
+update msg model =
+  case msg of
+    Name name ->
+      { model | name = name }
+
+    Password password ->
+      { model | password = password }
+
+    PasswordAgain password ->
+      { model | passwordAgain = password }
+
+
+
+-- VIEW
+
+view : Model -> Html Msg
+view model =
+  div []
+    [ input [ type' "text", placeholder "Name", onInput Name ] []
+    , input [ type' "password", placeholder "Password", onInput Password ] []
+    , input [ type' "password", placeholder "Re-enter Password", onInput PasswordAgain ] []
+    , viewValidation model
+    ]
+
+
+viewValidation : Model -> Html msg
+viewValidation model =
+  let
+    (color, message) =
+      if model.password == model.passwordAgain then
+        ("green", "OK")
+      else
+        ("red", "Passwords do not match!")
+  in
+    div [ style [("color", color)] ] [ text message ]
+```
+
+### Advance
+
+#### subscriptions & cmd
+

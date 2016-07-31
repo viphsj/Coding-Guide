@@ -11,6 +11,7 @@
     - [条件表达式](#%E6%9D%A1%E4%BB%B6%E8%A1%A8%E8%BE%BE%E5%BC%8F)
   - [more](#more)
     - [Func](#func)
+    - [let..in..](#letin)
     - [List](#list)
     - [tuple](#tuple)
     - [Record](#record)
@@ -118,6 +119,10 @@ fun 1 2 -- 3
 List.map (\a -> a * 2) [1..4] -- [2, 4, 6, 8]
 ```
 
+#### let..in..
+
+let 表达式的结果会被用在in表达式内
+
 ```elm
 volume {width, height, depth} =
   let
@@ -224,6 +229,16 @@ key = value组成的键值对
 ```
 
 与Object不同的是，Record不能使用自身不存在的键，且键值不能是undefined或者null
+
+**Record赋值：**
+
+```elm
+type alias Model = 
+  {a: Int, b: String}
+
+model = Model 1 "1" 
+-- {a = 1, b = "1"}
+```
 
 ```elm
 origin : { x : Float, y : Float, z : Float }
