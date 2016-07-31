@@ -16,6 +16,7 @@
   - [fullPage.js](#fullpagejs)
   - [Headroom.js](#headroomjs)
   - [iScroll](#iscroll)
+  - [glide](#glide)
 - [About media](#about-media)
   - [bLazy.js](#blazyjs)
   - [Vidage](#vidage)
@@ -39,6 +40,10 @@
   - [tinymce](#tinymce)
   - [Mditor](#mditor)
   - [clipboard.js](#clipboardjs)
+  - [MediumEditor](#mediumeditor)
+  - [Quill](#quill)
+  - [Medium.js](#mediumjs)
+  - [SimpleMDE](#simplemde)
 - [Other tools](#other-tools)
   - [UNDERSCORE.JS](#underscorejs)
   - [favico.js](#favicojs)
@@ -108,8 +113,12 @@
 #### [iScroll](https://iiunknown.gitbooks.io/iscroll-5-api-cn/content/index.html)
 
 > 处理页面滚动。
-> 
+>
 > 滚动，缩放，平移，无限滚动，视差滚动，旋转功能
+
+#### [glide](http://glide.jedrzejchalubek.com/)
+
+> 轻量级的简单的slider，用起来还行但是文档比较坑
 
 ### About media
 
@@ -226,6 +235,20 @@ before.to(after); // in a day 相对时间多久之后
 > 剪切板辅助js插件（一键复制什么的）
 >
 > IE 9+ ok, 然而不支持 Safari
+
+#### [MediumEditor](https://yabwe.github.io/medium-editor/)
+
+> 轻量级文本编辑器，没有通常的TextArea式的UI，而会随着用户选择的文字而出现
+
+#### [Quill](http://quilljs.com/)
+
+#### [Medium.js](http://jakiestfu.github.io/Medium.js/docs/)
+
+> 感觉挺新颖的，可以研究下
+
+#### [SimpleMDE](https://simplemde.com/)
+
+> 支持markdown的富文本编辑器
 
 ### Other tools
 
