@@ -39,11 +39,11 @@ a = 1 -- 注意在声明之后就需要赋值
 func: Int -> Int -- 接受一个Int，并返回一个Int
 fun: String -> Int -> String -- 接受一个String一个Int，并返回一个String
 
--- 复杂类型赋值声明
+-- 复杂类型设置别名
 a: {b: String, c: Int} -- a是一个类型较复杂的对象
 d: List {b: String, c: Int} -- d是a组成的List
 
--- 但可以通过先对类型赋值的方式，进行比较简单的声明
+-- 但可以通过先对类型设置别名的方式，进行比较简单的声明
 
 type alias A = {b: String, c: Int} -- 声明A的类型
 a: A
@@ -224,3 +224,18 @@ key = value组成的键值对
 ```
 
 与Object不同的是，Record不能使用自身不存在的键，且键值不能是undefined或者null
+
+```elm
+origin : { x : Float, y : Float, z : Float }
+origin =
+  { x = 0, y = 0, z = 0 }
+
+type alias Point3D =
+  { x : Float, y : Float, z : Float }
+
+otherOrigin : Point3D
+otherOrigin =
+  Point3D 0 0 0
+
+origin == otherOrigin -- True
+```
