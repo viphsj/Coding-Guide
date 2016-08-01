@@ -11,6 +11,8 @@
     - [注册表单](#%E6%B3%A8%E5%86%8C%E8%A1%A8%E5%8D%95)
   - [Advance](#advance)
     - [subscriptions & cmd](#subscriptions-&-cmd)
+    - [import & module](#import-&-module)
+    - [生成HTML](#%E7%94%9F%E6%88%90html)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -22,7 +24,7 @@ Elm的基本概念由Model, Update, View三者组成：
 
 > Model — the state of your application
 >
-> Update — a way to update your state
+> Update — a way to update your state. composed by messages & update
 >
 > iew — a way to view your state as HTML
 
@@ -41,7 +43,7 @@ initModel = 999
 
 -- update the way you can update your state
 
--- define update type
+-- define messages type
 type Msg = Increment | Decrement
 
 -- define update func
@@ -250,3 +252,154 @@ viewValidation model =
 
 #### subscriptions & cmd
 
+> using subscriptions is how your application can listen for external input. Some examples are: 
+> Keyboard events, 
+> Mouse movements, 
+> Browser locations changes, 
+> Websocket events
+
+在Elm中，使用`subscriptions`来监听应用的一些事件，例如键盘响应、鼠标移动、浏览器URL变化、websocket事件等等，并使用`Commands`对事件进行处理。
+
+> A Cmd can be one or a collection of things to do. We use commands to gather all the things that need to happen and hand them to the runtime. Then the runtime will execute them and feed the results back to the application
+
+`subscriptions`要和`cmd`搭配使用，在使用之后，之前的`MUV`结构变为`MSUV`结构。并且Update函数返回的不再仅仅是Model，是`Model + Cmd Msg`
+
+```elm
+-- MODEL
+type alias Model =
+  { ...
+  }
+
+-- SUBSCRIPTIONS
+-- subscriptions接受model作为参数，在内部声明了要监听的事件，并返回Msg Value，之后传入UPDATE方法
+subscriptions : Model -> Sub Msg
+subscriptions model =
+  ...
+
+-- UPDATE
+type Msg = Submit | ...
+
+update : Msg -> Model -> (Model, Cmd Msg)
+update msg model =
+  ...
+
+-- VIEW
+view : Model -> Html Msg
+view model =
+  ...
+
+-- INIT
+init : (Model, Cmd Msg)
+init =
+  ...
+```
+
+*example : *
+
+```elm
+import Html exposing (Html, div, text)
+import Html.App
+import Mouse
+import Keyboard
+
+-- MODEL
+type alias Model =
+    Int
+init : ( Model, Cmd Msg )
+init =
+    ( 0, Cmd.none )
+
+-- MESSAGES
+type Msg
+    = MouseMsg Mouse.Position
+    | KeyMsg Keyboard.KeyCode
+-- 监听两种消息MouseMsg、KeyMsg。会在鼠标/键盘操作的时候触发相应的监听事件
+
+-- UPDATE
+update : Msg -> Model -> ( Model, Cmd Msg )
+update msg model =
+    case msg of
+        MouseMsg position ->
+            ( model + 1, Cmd.none )
+        KeyMsg code ->
+            ( model + 2, Cmd.none )
+-- update函数必须多返回一个Cmd
+-- Cmd.none代表没有命令，什么也不需要做
+
+-- SUBSCRIPTIONS
+subscriptions : Model -> Sub Msg
+subscriptions model =
+    Sub.batch
+        [ Mouse.clicks MouseMsg
+        , Keyboard.presses KeyMsg
+        ]
+-- 声明要监听的事件。它们(Mouse.clicks/Keyboard.presses)接受Msg作为参数并返回
+-- 使用Sub.batch监听多个事件
+
+-- VIEW
+view : Model -> Html Msg
+view model =
+    div []
+        [ text (toString model) ]
+
+-- MAIN
+main : Program Never
+main =
+    Html.App.program
+        { init = init
+        , view = view
+        , update = update
+        , subscriptions = subscriptions
+        }
+```
+
+[Random案例](http://guide.elm-lang.org/architecture/effects/random.html)
+
+[http请求](http://guide.elm-lang.org/architecture/effects/http.html)
+
+#### import & module
+
+```elm
+import Html exposing (..)
+-- 把Html模块内的变量全部导入
+
+import Html.Events exposing (onClick)
+-- 只导入指定的变量
+
+-- 暴露module
+-- 在文件开头加入
+module Counter exposing (Model, initModel, Msg, update, view)
+-- exposing后是要暴露出去的变量名。使用(..)则暴露全部(不推荐)
+-- 变量名(Counter)要首字母大写
+-- 且该文件内不再有main变量
+```
+
+#### 生成HTML
+
+**非module的渲染文件中必须有main变量**
+
+> Front end applications in Elm start on a function called main. main is a function that returns an element to draw into the page. In this case it returns an Html element 
+
+```elm
+import Html exposing (..)
+import Html.App as App
+
+main = App.beginnerProgram {model = initModel, view = view, update = update}
+-- or
+main =
+  Html.program
+    { init = init
+    , view = view
+    , update = update
+    , subscriptions = subscriptions
+    }
+```
+
+**HTML渲染**
+
+```javascript
+-- 前端使用elm时的渲染方法
+const Elm = require('./example.elm');
+const mountNode = document.getElementById('example');
+let app = Elm.Main.embed(mountNode);
+```
