@@ -11,12 +11,12 @@
     - [注册表单](#%E6%B3%A8%E5%86%8C%E8%A1%A8%E5%8D%95)
   - [Advance](#advance)
     - [subscriptions](#subscriptions)
-      - [*example : *](#example--)
+      - [example :](#example-)
     - [Commands](#commands)
       - [example--生成随机数](#example--%E7%94%9F%E6%88%90%E9%9A%8F%E6%9C%BA%E6%95%B0)
     - [Tasks](#tasks)
     - [import & module](#import-&-module)
-    - [生成HTML](#%E7%94%9F%E6%88%90html)
+  - [生成HTML](#%E7%94%9F%E6%88%90html)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -298,7 +298,7 @@ init =
   ...
 ```
 
-##### *example : *
+##### example : 
 
 ```elm
 import Html exposing (Html, div, text)
@@ -535,14 +535,53 @@ import Html.Events exposing (onClick)
 -- 只导入指定的变量
 
 -- 暴露module
+
 -- 在文件开头加入
 module Counter exposing (Model, initModel, Msg, update, view)
 -- exposing后是要暴露出去的变量名。使用(..)则暴露全部(不推荐)
--- 变量名(Counter)要首字母大写
+-- module名(Counter)要首字母大写
+-- module名(Counter)与文件名要一致
 -- 且该文件内不再有main变量
+
+-- 暴露文件夹内部的module
+-- for example, 要暴露位于Players文件夹下的Utils.elm，即Players/Utils.elm
+module Players.Utils exposing (..)
+-- 引用这个module
+import Players.Utils
 ```
 
-#### 生成HTML
+### 生成HTML
+
+```elm
+-- 引入全部HTML组件
+import Html
+Html.div [] []
+
+-- or
+import Html exposing (..)
+div [] []
+
+-- 或者引入特定的组件
+import Html exposing (div)
+div [] []
+```
+
+```elm
+-- 调用方式
+div [] []
+-- 第一个[]内写入div的attr
+-- 第二个[]内写入div的子组件
+
+-- example
+import Html.Events exposing (onInput)
+import Html.Attributes exposing (..)
+import Html exposing (..)
+
+div [class "example", id "example"] [
+  span [] [text "hey world"]
+]
+input [onInput NewContent, placeholder "placeholder"] []
+```
 
 **非module的渲染文件中必须有main变量**
 
