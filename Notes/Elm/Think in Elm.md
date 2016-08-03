@@ -525,6 +525,20 @@ main =
 
 [http请求](http://guide.elm-lang.org/architecture/effects/http.html)
 
+*Task & unit type*
+
+上面已经说过，一个典型的Task有 errorValue 和 successValue：
+
+```elm
+Task errorValue successValue
+-- 如果想要忽略error
+Task () successValue
+-- 同理，忽略success
+Task errorValue ()
+-- 甚至
+Task () ()
+```
+
 #### import & module
 
 ```elm
