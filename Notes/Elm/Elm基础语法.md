@@ -5,6 +5,8 @@
 - [Elm基础语法](#elm%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95)
   - [基本](#%E5%9F%BA%E6%9C%AC)
     - [类型](#%E7%B1%BB%E5%9E%8B)
+    - [Type aliases](#type-aliases)
+    - [Union types](#union-types)
     - [字符串拼接](#%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%8B%BC%E6%8E%A5)
     - [算数](#%E7%AE%97%E6%95%B0)
     - [boolean](#boolean)
@@ -39,16 +41,65 @@ a = 1 -- 注意在声明之后就需要赋值
 -- 声明函数(接受类型和返回类型)
 func: Int -> Int -- 接受一个Int，并返回一个Int
 fun: String -> Int -> String -- 接受一个String一个Int，并返回一个String
+```
 
--- 复杂类型设置别名
+#### Type aliases
+
+```elm
+-- 类型设置别名
+type alias Id = Int
+type alias UserName = String
+
+-- 对于Records
+type alias User = {
+  id: Int,
+  name: String
+}
+
+-- 可以通过先对类型设置别名的方式，进行比较简单的声明
 a: {b: String, c: Int} -- a是一个类型较复杂的对象
 d: List {b: String, c: Int} -- d是a组成的List
-
--- 但可以通过先对类型设置别名的方式，进行比较简单的声明
 
 type alias A = {b: String, c: Int} -- 声明A的类型
 a: A
 d: List A
+```
+
+#### Union types
+
+对于一个不确定类型的变量，其类型可以用`|`间隔，每个类型叫作一个Tag
+
+```elm
+type Answer = Yes | No
+type Visibility = All | Active | Completed
+
+-- usage
+update visibility =
+	case visibility of
+		All ->
+			-- do something
+		Active ->
+			-- do something
+		Completed ->
+			-- do something
+```
+
+**Union type**里的Tag还可以是一个方法，后面要跟着它能接受的参数类型，且这个方法的返回值要跟目标type一样
+
+```elm
+type User = Anonymous | Named String
+
+Anonymous : User
+Named: String -> User
+
+-- example
+userPhoto : User -> String
+userPhoto user =
+  case user of
+    Anonymous ->
+      "anon.png"
+    Named name ->
+      "users/" ++ name ++ ".png"
 ```
 
 #### 字符串拼接
@@ -212,7 +263,7 @@ volume { width = 3, height = 2, depth = 7 } -- 42
 
 #### List
 
-[List](http://package.elm-lang.org/packages/elm-lang/core/3.0.0/List)
+[elm-lang - core - List](http://package.elm-lang.org/packages/elm-lang/core/3.0.0/List)
 
 ```elm
 import List
