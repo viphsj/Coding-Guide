@@ -104,6 +104,42 @@ elpmaxa = {key: value for value, key in example.items()}
 # {1: 'a', 2: 'b', 3: 'c'}
 ```
 
+### 合并多个字典
+
+> 摘自
+> 
+> 编程派 -- [怎样合并字典最符合Python语言习惯？](http://codingpy.com/article/the-idiomatic-way-to-merge-dicts-in-python)
+
+```python
+default = {...} # dict 1
+info = {...} # dict 2
+
+# method 1
+# 手动更新较麻烦
+dict_example = default.copy()
+dict_example.update(info)
+
+# method 2
+# 稍有重复
+from itertools import chain
+dict_example = dict(chain(default.items(), info.items()))
+
+# method 3
+# ChainMap是按照顺序检索字典的，所以info会在default之前返回匹配的值
+# 返回值不是字典，而是类似字典的映射
+from collections import ChainMap
+dict_example = ChainMap({}, info, default)
+
+# method 4
+# method 3结果转换为dict
+from collections import ChainMap
+dict_example = dict(ChainMap({}, info, default))
+
+# method 5
+# 最优解
+dict_example = {**default, **info}
+```
+
 ### 命名元组
 
 ```python

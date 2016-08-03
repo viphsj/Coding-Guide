@@ -237,12 +237,15 @@ increment(1); // 2
 
 ```elm
 -- elm里的curry很自由
+-- 不需要特地返回一函数
 add: Int -> Int -> Int
 add x y =
 	x + y
 
 add2 = add 2
 add2 3 -- 5
+-- 即
+add (Int Int) == add (Int) (Int)
 ```
 
 **其他参数类型**
