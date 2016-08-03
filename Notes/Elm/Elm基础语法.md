@@ -4,9 +4,10 @@
 
 - [Elm基础语法](#elm%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95)
   - [基本](#%E5%9F%BA%E6%9C%AC)
-    - [类型](#%E7%B1%BB%E5%9E%8B)
-    - [Type aliases](#type-aliases)
-    - [Union types](#union-types)
+    - [Type](#type)
+      - [Type aliases](#type-aliases)
+      - [Union types](#union-types)
+      - [unit type](#unit-type)
     - [字符串拼接](#%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%8B%BC%E6%8E%A5)
     - [算数](#%E7%AE%97%E6%95%B0)
     - [boolean](#boolean)
@@ -26,7 +27,7 @@
 
 ### 基本
 
-#### 类型
+#### Type
 
 [How to Read a Type Annotation](https://github.com/elm-guides/elm-for-js/blob/master/How%20to%20Read%20a%20Type%20Annotation.md)
 
@@ -43,7 +44,7 @@ func: Int -> Int -- 接受一个Int，并返回一个Int
 fun: String -> Int -> String -- 接受一个String一个Int，并返回一个String
 ```
 
-#### Type aliases
+##### Type aliases
 
 ```elm
 -- 类型设置别名
@@ -65,7 +66,7 @@ a: A
 d: List A
 ```
 
-#### Union types
+##### Union types
 
 对于一个不确定类型的变量，其类型可以用`|`间隔，每个类型叫作一个Tag
 
@@ -100,6 +101,29 @@ userPhoto user =
       "anon.png"
     Named name ->
       "users/" ++ name ++ ".png"
+```
+
+##### unit type
+
+在Elm里，空tuple`()`叫作`unit type`，经常被当做占位符使用。
+
+```elm
+-- 举个栗子
+-- 定义一个Message，这个别名接受一个参数并返回一个Record
+type alias Message a =
+    { code : String
+    , body : a
+    }
+
+-- 定义一个func，接受Message作为参数，同时函数内部Message必须接受一个String
+readMessage : Message String -> String
+readMessage message =
+    ...
+
+-- 但是如果Message在readMessage方法内不需要接受参数，则使用空tuple作为参数
+readMessage : Message () -> String
+readMessage message =
+    ...
 ```
 
 #### 字符串拼接
