@@ -22,6 +22,8 @@
 
 ## Think in Elm
 
+![Elm Application Flow](../../image/elm-application-flow.png)
+
 ### 基础组成
 
 Elm的基本概念由Model, Update, View三者组成：
@@ -31,6 +33,8 @@ Elm的基本概念由Model, Update, View三者组成：
 > Update — a way to update your state. composed by messages & update
 >
 > iew — a way to view your state as HTML
+
+[Elm structure](http://www.elm-tutorial.org/en/02-elm-arch/02-structure.html)
 
 #### Counter Example：
 

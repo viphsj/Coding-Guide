@@ -220,20 +220,23 @@ Int -> Int -> Int
 (Int, Int) -> Int
 ```
 
-你可能会问，为什么参数类型表示的是使用连续的箭头链接？这给人的直观感觉是，函数接受第一个参数后，返回一个函数，接受第二个参数，然后不断返回接受一个参数的函数直至最后返回一个结果。其实差不多就是这样。Elm是一门FP语言，而这样的函数就展现了代码组合（compose）的思想。
+你可能会问，为什么参数类型表示的是使用连续的箭头链接？这给人的直观感觉是，函数接受第一个参数后，返回一个函数，接受第二个参数，然后不断返回接受一个参数的函数直至最后返回一个结果。其实差不多就是这样。Elm是一门FP语言，而这样的函数就展现了柯里化（curry）的思想。
 
-**compose**
+**curry**
 
 ```javascript
-const compose = (f,g) => {
-  return function(x) {
-    return f(g(x));
+const add = (x) => {
+  return (y) => {
+    return x + y;
   };
 };
+
+const increment = add(1);
+increment(1); // 2
 ```
 
 ```elm
--- elm里的compose很自由
+-- elm里的curry很自由
 add: Int -> Int -> Int
 add x y =
 	x + y
@@ -275,6 +278,8 @@ map convertBoolToInt [True, False]
 #### let..in..
 
 let 表达式的结果会被用在in表达式内
+
+> `let` defines local variables for `in`
 
 ```elm
 volume {width, height, depth} =
