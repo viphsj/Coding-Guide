@@ -105,6 +105,8 @@ case List.head aList of
 
 #### Func
 
+**类型的定义**
+
 ```elm
 -- 以空格表示参数的接受和定义
 fun: Int -> Int -> Int
@@ -117,6 +119,82 @@ fun 1 2 -- 3
 ```elm
 -- 使用\表示匿名函数
 List.map (\a -> a * 2) [1..4] -- [2, 4, 6, 8]
+```
+
+```elm
+-- 在表示函数的参数和返回值的类型时，使用箭头链接
+fun: Int -> Int -> Int
+-- 代表
+fun a b =
+	-- 只返回一个Int类型
+	a + b
+
+fun: Int -> Int -> Int -> Int
+-- 代表
+fun a b c=
+	-- 只返回一个Int类型
+	a + b + c
+```
+
+**why ?**
+
+```elm
+-- why 
+Int -> Int -> Int
+-- not
+(Int, Int) -> Int
+```
+
+你可能会问，为什么参数类型表示的是使用连续的箭头链接？这给人的直观感觉是，函数接受第一个参数后，返回一个函数，接受第二个参数，然后不断返回接受一个参数的函数直至最后返回一个结果。其实差不多就是这样。Elm是一门FP语言，而这样的函数就展现了代码组合（compose）的思想。
+
+**compose**
+
+```javascript
+const compose = (f,g) => {
+  return function(x) {
+    return f(g(x));
+  };
+};
+```
+
+```elm
+-- elm里的compose很自由
+add: Int -> Int -> Int
+add x y =
+	x + y
+
+add2 = add 2
+add2 3 -- 5
+```
+
+**其他参数类型**
+
+```elm
+-- 接收/返回多个变量
+switch: (a, b) -> (b, a)
+switch (x, y) =
+	(y, x)
+
+-- 函数作为参数
+convertIntToString: Int -> String
+	toString Int
+
+map: (Int -> String) -> List Int -> List String
+map convertIntToString [1, 2, 3] -- ["1", "2", "3"]
+
+-- 但有时候我们可以不用特指参数类型
+map: (a -> b) -> List a -> List b
+
+-- 这样只要第一个函数的参数/返回值和List a/b的类型相同就行了
+-- 因此下面这些函数都是可行的
+convertStringToInt : String -> Int
+convertIntToString : Int -> String
+convertBoolToInt : Bool -> Int
+
+-- example
+map convertStringToInt ["Hello", "1"]
+map convertIntToString [1, 2]
+map convertBoolToInt [True, False]
 ```
 
 #### let..in..
