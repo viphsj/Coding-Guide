@@ -10,7 +10,11 @@
   - [混合实例](#%E6%B7%B7%E5%90%88%E5%AE%9E%E4%BE%8B)
     - [注册表单](#%E6%B3%A8%E5%86%8C%E8%A1%A8%E5%8D%95)
   - [Advance](#advance)
-    - [subscriptions & cmd](#subscriptions-&-cmd)
+    - [subscriptions](#subscriptions)
+      - [*example : *](#example--)
+    - [Commands](#commands)
+      - [example--生成随机数](#example--%E7%94%9F%E6%88%90%E9%9A%8F%E6%9C%BA%E6%95%B0)
+    - [Tasks](#tasks)
     - [import & module](#import-&-module)
     - [生成HTML](#%E7%94%9F%E6%88%90html)
 
@@ -250,7 +254,7 @@ viewValidation model =
 
 ### Advance
 
-#### subscriptions & cmd
+#### subscriptions
 
 > using subscriptions is how your application can listen for external input. Some examples are: 
 > Keyboard events, 
@@ -294,7 +298,7 @@ init =
   ...
 ```
 
-*example : *
+##### *example : *
 
 ```elm
 import Html exposing (Html, div, text)
@@ -354,6 +358,170 @@ main =
 ```
 
 [Random案例](http://guide.elm-lang.org/architecture/effects/random.html)
+
+#### Commands
+
+> commands (Cmd) are how we tell the runtime to execute things that involve side effects
+
+我们使用cmd来处理需要在程序中运行并需要被处理的事件。在处理完成之后程序会将结果返还给应用。
+
+例如：
+- 生成随机数
+- http请求
+- 储存数据
+
+##### example--生成随机数
+
+```elm
+module Main exposing (..)
+
+import Html exposing (Html, div, button, text)
+import Html.Events exposing (onClick)
+import Html.App
+import Random
+
+-- MODEL
+type alias Model =
+    Int
+init : ( Model, Cmd Msg )
+init =
+    ( 1, Cmd.none )
+
+-- MESSAGES
+type Msg
+    = Roll
+    | OnResult Int
+-- OnResult 用来从Random库中获取一个随机数
+    
+-- VIEW
+view : Model -> Html Msg
+view model =
+    div []
+        [ button [ onClick Roll ] [ text "Roll" ]
+        , text (toString model)
+        ]
+
+-- UPDATE
+update : Msg -> Model -> ( Model, Cmd Msg )
+update msg model =
+    case msg of
+        Roll ->
+            ( model, Random.generate OnResult (Random.int 1 6) )
+        OnResult res ->
+            ( res, Cmd.none )
+
+-- MAIN
+main : Program Never
+main =
+    Html.App.program
+        { init = init
+        , view = view
+        , update = update
+        , subscriptions = (always Sub.none)
+        }
+```
+
+**IMPORTANT**
+
+> But commands don't have a concept of success or failure. They also don't have the concept of sequencing. Commands are just bags of things to do.
+
+#### Tasks
+
+鉴于commands并不知道任务返回的结果是成功还是失败，而且也没有对立的概念。因此，我们使用task来进行异步操作，它就像是js中的Promise
+
+task的signature：
+
+```elm
+import Task
+
+-- 第一个参数代表失败值，第二个参数代表成功时的回调
+Task errorValue successValue
+
+-- example
+-- fails with an Http.Error or succeeds with a String
+Task Http.Error String
+
+-- a task that never fails, and always succeeds with a Result
+Task Never Result
+```
+
+*举个栗子：*
+
+```elm
+module Main exposing (..)
+
+import Html exposing (Html, div, button, text)
+import Html.Events exposing (onClick)
+import Html.App
+import Http
+import Task exposing (Task)
+import Json.Decode as Decode
+
+
+-- MODEL
+type alias Model =
+    String
+init : ( Model, Cmd Msg )
+init =
+    ( "", Cmd.none )
+
+
+-- MESSAGES
+type Msg
+    = Fetch
+    | FetchSuccess String
+    | FetchError Http.Error
+
+
+-- VIEW
+view : Model -> Html Msg
+view model =
+    div []
+        [ button [ onClick Fetch ] [ text "Fetch" ]
+        , text model
+        ]
+
+decode : Decode.Decoder String
+decode =
+    Decode.at [ "name" ] Decode.string
+
+url : String
+url =
+    "http://swapi.co/api/planets/1/?format=json"
+
+-- fetchTask: takes a decoder and a url and returns a task.
+fetchTask : Task Http.Error String
+fetchTask =
+    Http.get decode url
+
+-- use Task.perform to transform a task into a command
+fetchCmd : Cmd Msg
+fetchCmd =
+    Task.perform FetchError FetchSuccess fetchTask
+
+
+-- UPDATE
+update : Msg -> Model -> ( Model, Cmd Msg )
+update msg model =
+    case msg of
+        Fetch ->
+            ( model, fetchCmd )
+        FetchSuccess name ->
+            ( name, Cmd.none )
+        FetchError error ->
+            ( toString error, Cmd.none )
+
+
+-- MAIN
+main : Program Never
+main =
+    Html.App.program
+        { init = init
+        , view = view
+        , update = update
+        , subscriptions = (always Sub.none)
+        }
+```
 
 [http请求](http://guide.elm-lang.org/architecture/effects/http.html)
 
