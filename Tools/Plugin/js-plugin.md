@@ -29,6 +29,8 @@
 - [About Data](#about-data)
   - [Cal-heatmap](#cal-heatmap)
   - [Chart.js](#chartjs)
+  - [sigmajs](#sigmajs)
+  - [chartist](#chartist)
   - [DataTables](#datatables)
   - [tablesorter](#tablesorter)
   - [List.js](#listjs)
@@ -177,6 +179,10 @@
 > Simple, clean and engaging charts for designers and developers
 >
 > 简洁清晰的js chart图表库
+
+#### [sigmajs](http://sigmajs.org/)
+
+#### [chartist](https://gionkunz.github.io/chartist-js/)
 
 #### [DataTables](https://datatables.net/)
 
