@@ -1,4 +1,18 @@
-## [PostCSS](https://github.com/postcss/postcss)
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [PostCSS配置指北(with webpack)](#postcss%E9%85%8D%E7%BD%AE%E6%8C%87%E5%8C%97with-webpack)
+  - [Use with webpack](#use-with-webpack)
+  - [autoprefixer](#autoprefixer)
+  - [Use stylelint](#use-stylelint)
+    - [1. use with webpack](#1-use-with-webpack)
+    - [2. add  configuration](#2-add--configuration)
+    - [3. StyleLintPlugin config options](#3-stylelintplugin-config-options)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
+## [PostCSS](https://github.com/postcss/postcss)配置指北(with webpack)
 
 一个类似于webpack的工具，组成CSS编译/lint/autoprefixer的生态环境。
 
@@ -11,8 +25,11 @@
 npm install postcss-loader --save-dev
 ```
 
+**基本配置**
+
 ```javascript
 // 配置webpack.config.js
+// ...
 module: {
   loaders: [
     {
@@ -25,30 +42,64 @@ module: {
   ]
 },
 postcss: function () {
+	return [ // 里面是我们要用的插件
+	];
+}
+```
+
+**使用插件**
+
+```bash
+# cssnext可以让你写CSS4的语言，并能配合autoprefixer进行浏览器兼容的不全，而且还支持嵌套语法
+npm install postcss-cssnext --save-dev
+# 浏览器兼容补全
+npm install autoprefixer --save-dev
+
+# 类似scss的语法，实际上如果只是想用嵌套的话有cssnext就够了
+npm install precss --save-dev
+
+# 在@import css文件的时候让webpack监听并编译
+npm install postcss-import --save-dev
+```
+
+```javascript
+// 配置webpack.config.js
+const postcssImport = require('postcss-import');
+const cssnext = require('postcss-cssnext');
+
+// ...
+postcss: function () {
 	return [
-		// 假设我们使用下列插件
-		// cssnext可以让你写CSS4的语言，并能配合autoprefixer进行浏览器兼容的不全
-		// 也可以直接在列表中加入 autoprefixer
 		cssnext({autoprefixer: {browsers: "ie >= 10, ..."}}),
-		// precss有着类似scss的语法
-		precss,
-		// 在@import css文件的时候让webpack监听并编译
 		postcssImport({ addDependencyTo: webpack })
 	];
 }
 ```
 
-以上插件的安装：
+### [autoprefixer](https://github.com/postcss/autoprefixer)
 
-```bash
-npm install postcss-cssnext --save-dev
+- autoprefixer可以单独配置使用
 
-npm install autoprefixer --save-dev
-
-npm install precss --save-dev
-
-npm install postcss-import --save-dev
+```javascript
+// webpack.config.js
+const autoprefixer = require('autoprefixer');
+// ...
+postcss: function(){
+  return [autoprefixer({ browsers: ['last 2 versions'] })]
+}
 ```
+
+- 或者与[postcss-cssnext](https://github.com/MoOx/postcss-cssnext)一起使用，但`autoprefixer`都要进行安装
+
+```javascript
+const cssnext = require('postcss-cssnext');
+
+postcss: function(){
+  return [cssnext({autoprefixer: {browsers: "ie >= 10, ..."}})]
+}
+```
+
+[`autoprefixer`的配置](https://github.com/postcss/autoprefixer#options)
 
 ### Use stylelint
 
