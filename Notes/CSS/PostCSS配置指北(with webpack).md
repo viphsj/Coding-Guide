@@ -9,6 +9,10 @@
     - [1. use with webpack](#1-use-with-webpack)
     - [2. add  configuration](#2-add--configuration)
     - [3. StyleLintPlugin config options](#3-stylelintplugin-config-options)
+  - [资源](#%E8%B5%84%E6%BA%90)
+    - [postcss & loader](#postcss-&-loader)
+    - [autoprefixer & cssnext](#autoprefixer-&-cssnext)
+    - [stylelint](#stylelint)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -153,3 +157,22 @@ plugins: [
 - files：要匹配的文件。默认为`['**/*.s?(a|c)ss']`
 - failOnError：错误时是否停止编译。默认`false`
 - quiet：在console中不打印错误信息。默认`false`
+
+### 资源
+
+#### postcss & loader
+
+- [postcss](https://github.com/postcss/postcss)
+- [postcss-loader](https://github.com/postcss/postcss-loader)
+
+#### autoprefixer & cssnext
+
+- [cssnext](http://cssnext.io/)
+- [autoprefixer](https://github.com/postcss/autoprefixer)
+- [browserslist](https://github.com/ai/browserslist)
+
+#### stylelint
+
+- [stylelint](https://github.com/stylelint/stylelint)
+- [stylelint-webpack-plugin](https://github.com/vieron/stylelint-webpack-plugin)
+- [stylelint-config-standard](https://github.com/stylelint/stylelint-config-standard)
