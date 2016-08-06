@@ -26,9 +26,11 @@
 
 ## [PostCSS](https://github.com/postcss/postcss)配置指北(with webpack)
 
-一个类似于webpack的工具，组成CSS编译/lint/autoprefixer的生态环境。
+![euil martians](../../image/euil martians.svg)
 
-具体的插件，可以根据自己的需要进行安装，而不是像less或者scss一样的全家桶
+一个类似于webpack的工具，组成CSS编译/lint/autoprefixer的生态环境。它的作者是[Euil Martians](https://evilmartians.com/)，一家致力于技术研究与网站外包开发的公司。其后端技术栈偏重于Ruby，而前端从React到Node都有涉猎。
+
+PostCSS的一大特点是，具体的编译插件甚至是CSS书写风格，可以根据自己的需要进行安装，而不是像less或者scss一样的全家桶。
 
 ### Use with webpack
 
@@ -224,12 +226,16 @@ frontend/vendor/
 $ npm install stylelint-config-standard --save-dev
 ```
 
-在配置文件中指明我们的检测语法扩展自该插件
+在配置文件中指明我们的检测语法扩展自该插件：
+
+- [User guide](https://github.com/stylelint/stylelint/blob/master/docs/user-guide.md)
+- [rules](https://github.com/stylelint/stylelint/blob/master/docs/user-guide/rules.md)
 
 ```javascript
 // 常用配置
 module.exports = {
   extends: "stylelint-config-standard",
+  // 各rules的具体作用见上面链接
   rules: {
     "block-no-empty": null,
     "color-no-invalid-hex": true,
