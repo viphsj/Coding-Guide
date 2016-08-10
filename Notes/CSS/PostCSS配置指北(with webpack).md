@@ -92,6 +92,10 @@ postcss: function () {
 
 ### [autoprefixer](https://github.com/postcss/autoprefixer)
 
+```bash
+$ npm install autoprefixer --save-dev
+```
+
 - autoprefixer可以单独配置使用
 
 ```javascript
