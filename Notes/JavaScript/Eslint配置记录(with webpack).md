@@ -108,7 +108,7 @@ $ npm install babel-eslint --save-dev
 }
 ```
 
-在使用React的时候，如果Eslint里配置了`no-var`的规则，那么在检查代码的时候会报错，提示import的组件没有被调用(实际上使用了)：
+在使用React的时候，如果Eslint里配置了`no-unused-vars`的规则，那么在检查代码的时候会报错，提示import的组件没有被调用(实际上使用了)：
 
 ```bash
 React is defined but never used no-ununsed-vars
@@ -147,7 +147,7 @@ $ npm install eslint-plugin-react --save-dev
 
 - [eslint-plugin-import](https://github.com/benmosher/eslint-plugin-import)
 
-> ESLint plugin with rules that help validate proper imports.
+> 检查import是否合法的插件
 
 ```bash
 $ npm install eslint-plugin-import --save-dev
@@ -161,9 +161,24 @@ $ npm install eslint-plugin-import --save-dev
     "import"
   ],
   "rules": {
+  	// 检查引用的路径是否有误
+  	// 通过{"commonjs": true, "amd": true}来支持commonjs和amd方式的require
+  	"import/no-unresolved": [2, {"commonjs": true, "amd": true}]
     "import/namespace": 2,
   	"import/default": 2,
   	"import/export": 2
+  },
+  "settings": {
+  	// 如果我们通过webpack配置忽略了js文件后缀，在正常情况下eslint会因为找不到文件而报错。因此需要在settings里配置可省略的后缀名
+    "import/resolver": {
+      "node": {
+        "extensions": [".coffee", ".js", ".jsx"]
+      }
+    },
+    // 哪些import是不去检查的
+    // node_modules为默认值
+    // 还可以配置带有指定文件后缀不检查，如\.coffee$ 
+    "import/ignore": ["node_modules"]
   }
 }
 ```
@@ -173,6 +188,7 @@ $ npm install eslint-plugin-import --save-dev
 - [eslint-plugin-standard](https://github.com/xjamundx/eslint-plugin-standard)
 - [eslint-plugin-babel](https://github.com/babel/eslint-plugin-babel)
 - [eslint-plugin-promise](https://github.com/xjamundx/eslint-plugin-promise/)
+- [eslint-import-resolver-webpack](https://www.npmjs.com/package/eslint-import-resolver-webpack)
 
 ### 资料
 
