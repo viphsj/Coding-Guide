@@ -27,6 +27,7 @@
   - [Cropper](#cropper)
   - [Filterizr](#filterizr)
 - [About Data](#about-data)
+  - [Sortable](#sortable)
   - [Cal-heatmap](#cal-heatmap)
   - [Chart.js](#chartjs)
   - [sigmajs](#sigmajs)
@@ -40,12 +41,19 @@
   - [*[Store.js](https://github.com/marcuswestin/store.js)*](#storejshttpsgithubcommarcuswestinstorejs)
 - [About Writer](#about-writer)
   - [tinymce](#tinymce)
-  - [Mditor](#mditor)
+  - [Caret.js和At.js](#caretjs%E5%92%8Catjs)
   - [clipboard.js](#clipboardjs)
   - [MediumEditor](#mediumeditor)
   - [Quill](#quill)
   - [Medium.js](#mediumjs)
   - [SimpleMDE](#simplemde)
+- [markdown解析](#markdown%E8%A7%A3%E6%9E%90)
+  - [marked](#marked)
+  - [marky-markdown](#marky-markdown)
+  - [Mditor(不推荐)](#mditor%E4%B8%8D%E6%8E%A8%E8%8D%90)
+  - [editor](#editor)
+  - [markdown-it](#markdown-it)
+  - [to-markdown](#to-markdown)
 - [Other tools](#other-tools)
   - [UNDERSCORE.JS](#underscorejs)
   - [favico.js](#favicojs)
@@ -59,6 +67,8 @@
   - [*[Feature.js](http://featurejs.com/)*](#featurejshttpfeaturejscom)
   - [Hilo](#hilo)
   - [jQuery WeUI](#jquery-weui)
+  - [KeyboardJS](#keyboardjs)
+  - [hammerjs](#hammerjs)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -168,6 +178,12 @@
 
 ### About Data
 
+#### [Sortable](http://rubaxa.github.io/Sortable/)
+
+> 拖拽排序，非常非常非常方便！
+>
+> NPM包在这儿：[sortablejs](https://www.npmjs.com/package/sortablejs)
+
 #### [Cal-heatmap](http://cal-heatmap.com/)
 
 > 是否还记得github/gitlab上[个人中心里记录自己每日push贡献次数的日历表格](https://github.com/ecmadao)？
@@ -232,9 +248,9 @@ before.to(after); // in a day 相对时间多久之后
 
 > 文本编辑器插件
 
-#### [Mditor](http://bh-lay.github.io/mditor/)
+#### [Caret.js](https://github.com/ichord/Caret.js)和[At.js](https://github.com/ichord/At.js)
 
-> 轻量级的Markdown预览插件
+> 可用于控制textarea光标位置和数据插入，比较方便
 
 #### [clipboard.js](https://clipboardjs.com/)
 
@@ -248,6 +264,8 @@ before.to(after); // in a day 相对时间多久之后
 
 #### [Quill](http://quilljs.com/)
 
+> rich text editor
+
 #### [Medium.js](http://jakiestfu.github.io/Medium.js/docs/)
 
 > 感觉挺新颖的，可以研究下
@@ -255,6 +273,32 @@ before.to(after); // in a day 相对时间多久之后
 #### [SimpleMDE](https://simplemde.com/)
 
 > 支持markdown的富文本编辑器
+
+### markdown解析
+
+#### [marked](https://github.com/chjj/marked)
+
+> 老牌markdown解析器
+
+#### [marky-markdown](https://github.com/npm/marky-markdown)
+
+> npm官方的markdown解析插件
+
+#### [Mditor(不推荐)](http://bh-lay.github.io/mditor/)
+
+> 轻量级的Markdown预览插件
+
+#### [editor](https://github.com/lepture/editor)
+
+> 还不错的markdown编辑器
+
+#### [markdown-it](https://github.com/markdown-it/markdown-it)
+
+> Markdown parser done right. Fast and easy to extend.
+
+#### [to-markdown](https://github.com/domchristie/to-markdown)
+
+> html转markdown
 
 ### Other tools
 
@@ -322,3 +366,11 @@ before.to(after); // in a day 相对时间多久之后
 > jQuery WeUI 中使用的是官方WeUI的CSS代码，并提供了jQuery/Zepto版本的API实现。因为直接使用了官方的CSS，所以你不用担心跟官方版本的冲突。实际上 jQuery WeUI == WeUI + jQuery插件
 >
 > 同时兼容 jQuery 和 Zepto
+
+#### [KeyboardJS](https://github.com/RobertWHurst/KeyboardJS)
+
+> 绑定键盘事件的库，不依赖于jQuery
+
+#### [hammerjs](http://hammerjs.github.io/)
+
+> 手势解析库
