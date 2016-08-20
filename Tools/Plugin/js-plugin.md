@@ -54,6 +54,11 @@
   - [editor](#editor)
   - [markdown-it](#markdown-it)
   - [to-markdown](#to-markdown)
+  - [embed.js](#embedjs)
+- [Hotkeys](#hotkeys)
+  - [keyboardJS](#keyboardjs)
+  - [Keypress](#keypress)
+  - [jquery.hotkeys](#jqueryhotkeys)
 - [Other tools](#other-tools)
   - [UNDERSCORE.JS](#underscorejs)
   - [favico.js](#favicojs)
@@ -299,6 +304,24 @@ before.to(after); // in a day 相对时间多久之后
 #### [to-markdown](https://github.com/domchristie/to-markdown)
 
 > html转markdown
+
+#### [embed.js](https://github.com/ritz078/embed.js)
+
+> 没用过不太好说。。
+
+### Hotkeys
+
+#### [keyboardJS](https://github.com/RobertWHurst/KeyboardJS)
+
+> 算是比较方便的一个键盘按键监听库，不依赖于jquery好评
+
+#### [Keypress](https://dmauro.github.io/Keypress/)
+
+> A robust Javascript library for capturing keyboard input
+
+#### [jquery.hotkeys](https://github.com/jeresig/jquery.hotkeys)
+
+> 平心而论github star数目还是挺多的，然而没用过
 
 ### Other tools
 

@@ -129,6 +129,7 @@ $ python3 manage.py startapp articles
 # 启动服务器
 $ python3 manage.py runserver
 # 更新数据库
+$ python3 manage.py makemigrations
 $ python3 manage.py migrate
 # 跑测试
 $ python3 manage.py test
