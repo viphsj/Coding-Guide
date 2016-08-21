@@ -76,12 +76,12 @@ export default Ember.Route.extend({
 
 ```bash
 $ ember g model example
-# create app/models/about.js
-# create tests/unit/models/about-test.js
+# create app/models/example.js
+# create tests/unit/models/example-test.js
 ```
 
 ```javascript
-// app/models/about.js
+// app/models/example.js
 import DS from 'ember-data';
 
 export default DS.Model.extend({
@@ -141,6 +141,12 @@ $ ember g component example-component
 # create tests/integration/components/example-component-test.js
 ```
 
+> 组件应该由两部分构成:
+> 
+> 1. A template that defines how it will look (app/templates/components/xxx.hbs)
+> 
+> 2. A JavaScript source file (app/components/xxx.js) that defines how it will behave.
+
 ```html
 <!-- app/templates/components/example-component.hbs -->
 
@@ -152,9 +158,16 @@ $ ember g component example-component
 </ul>
 ```
 
+```javascript
+import Ember from 'ember';
+
+export default Ember.Component.extend({
+});
+```
+
 ```html
 <!-- app/templates/example.hbs -->
-
+<!-- 使用component template -->
 {{example-component title="List of Examples" examples=model}}
 ```
 
