@@ -35,6 +35,35 @@ $ npm install -g ember-cli
 
 ![ember core concept](../../image/ember/ember-core-concepts.png)
 
+#### initial app
+
+```bash
+# 新建应用
+$ ember new app-name
+```
+
+会自动帮你加入bower/npm module依赖，建立`bower.json`和`package.json`，init git并配置`.gitignore`，增加`jshint`、`watchman`甚至是`.travis.yml`
+
+生成文件结构：
+
+```bash
+|--app (models, components, routes, templates, styles...)
+|--bower_components (ember-cli dependency)
+|--config (environment.js)
+|--dist (build output)
+|--node_modules (node dependency)
+|--public (assets such as images/fonts)
+|--tests (Automated tests)
+|--tmp (Ember CLI temporary files)
+|--vendor (third-party front-end dependencies)
+
+bower.json
+ember-cli-build.js
+package.json
+README.md
+testem.js
+```
+
 #### router & route handler
 
 `app/router.js`文件根据不同路由，选择`app/routes/`里的不同文件（`route handler`）。每个`route handler`文件的基本构成：
@@ -174,31 +203,6 @@ export default Ember.Component.extend({
 DONE.
 
 ### ember command line
-
-```bash
-# 新建应用
-$ ember new app-name
-```
-
-文件结构：
-
-```bash
-|--app (models, components, routes, templates, styles...)
-|--bower_components (ember-cli dependency)
-|--config (environment.js)
-|--dist (build output)
-|--node_modules (node dependency)
-|--public (assets such as images/fonts)
-|--tests (Automated tests)
-|--tmp (Ember CLI temporary files)
-|--vendor (third-party front-end dependencies)
-
-bower.json
-ember-cli-build.js
-package.json
-README.md
-testem.js
-```
 
 ```bash
 # $ ember generate XXX
