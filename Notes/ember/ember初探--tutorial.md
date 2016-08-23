@@ -41,7 +41,7 @@ $ ember server
 # $ ember s
 ```
 
-then visit[ember tutorial](http://localhost:4200)
+然后访问[ember tutorial](http://localhost:4200)
 
 ### 测试先行
 
@@ -301,6 +301,7 @@ $ ember g template application
 当`application.hbs`创建好之后，每个页面都会渲染它：
 
 ```html
+<!-- app/templates/application.hbs -->
 <div class="container">
   <div class="menu">
     {{#link-to 'index'}}
@@ -323,7 +324,7 @@ $ ember g template application
 </div>
 ```
 
-需要注意的是，`{{outlet}}`是各页面将对应route handler渲染的template组合进`application`的位置。
+> 需要注意的是，`{{outlet}}`是各页面将对应route handler渲染的template组合进`application`的位置。
 
 ### Model
 
@@ -371,17 +372,8 @@ export default Ember.Route.extend({
 之后当用户进入`index`页面的时候就会调用model钩子，并返回我们虚构的数据。紧接着，就会把数据渲染在模板上：
 
 ```html
-<div class="jumbo">
-  <div class="right tomster"></div>
-  <h2>Welcome!</h2>
-  <p>
-    We hope you find exactly what you're looking for in a place to stay.
-    <br>Browse our listings, or use the search box below to narrow your search.
-  </p>
-  {{#link-to 'about' class="button"}}
-    About Us
-  {{/link-to}}
-</div>
+<!-- app/templates/index.hbs -->
+<!-- 忽略 -->
 
 {{#each model as |rental|}}
   <article class="listing">
@@ -557,9 +549,11 @@ $ ember g component rental-listing
 #   create tests/integration/components/rental-listing-test.js
 ```
 
-要注意的是。`-`在组件名里必不可缺，它用来方式组件名和HTML元素名发生冲突。因此`rental-listing`这个名字ok而`rental`不行。
+> 要注意的是。`-`在组件名里必不可缺，它用来方式组件名和HTML元素名发生冲突。因此`rental-listing`这个名字ok而`rental`不行。
 
 下一步，测试先行：
+
+我们期望在组件render的时候没有`wide`这个class名，而点击`.image`的时候则可以切换`wide`class。
 
 ```javascript
 import { moduleForComponent, test } from 'ember-qunit';
@@ -589,3 +583,183 @@ test('should toggle wide class on click', function(assert) {
   assert.equal(this.$('.image.wide').length, 0, 'rendered small after second click');
 });
 ```
+
+> 值得注意的是，在测试中使用了jQuery选择器来获取目标元素。
+
+#### 组件的组成
+
+组件由两部分组成（除去组件对应的测试文件）：
+
+- 模板文件来决定组件的样式（`app/templates/components/rental-listing.hbs`）
+- js文件来决定组件的行为（`app/components/rental-listing.js`）
+
+我们把之前`app/templates/index.hbs`里的列表元素转移到`app/templates/components/rental-listing.hbs`里，并新增`img`标签：
+
+```html
+<!-- app/templates/components/rental-listing.hbs -->
+<article class="listing">
+  <img src="{{rental.image}}" alt="">
+  <h3>{{rental.title}}</h3>
+  <div class="detail owner">
+    <span>Owner:</span> {{rental.owner}}
+  </div>
+  <div class="detail type">
+    <span>Type:</span> {{rental.type}}
+  </div>
+  <div class="detail location">
+    <span>Location:</span> {{rental.city}}
+  </div>
+  <div class="detail bedrooms">
+    <span>Number of bedrooms:</span> {{rental.bedrooms}}
+  </div>
+</article>
+```
+
+而在`app/templates/index.hbs`文件中，使用一个循环来替代之前的列表：
+
+```html
+<!-- app/templates/index.hbs -->
+
+<!-- 忽略 -->
+
+{{#each model as |rentalUnit|}}
+  {{rental-listing rental=rentalUnit}}
+{{/each}}
+```
+
+在`index.hbs`里，通过`rental-listing`这个名词来引用对应的组件，并将数据遍历中的每组数据命名为`rentalUnit`传递给`rental-listing.hbs`组件。
+
+#### 放大/缩小图片
+
+现在我们来处理用户对图片的点击事件。
+
+首先，需要使用`{{#if}}`这个辅助方法来确定是否要把`wide`class名赋给对应的标签：
+
+```html
+<!-- app/templates/components/rental-listing.hbs -->
+
+<!-- 忽略 -->
+  <a class="image {{if isWide "wide"}}">
+    <img src="{{rental.image}}" alt="">
+    <small>View Larger</small>
+  </a>
+<!-- 忽略 -->
+```
+
+其中，`isWide`这个值来源自组件的js文件。鉴于我们期望组件在初次渲染时只是小图，可以在js里把`isWide`赋值为`false`：
+
+```javascript
+// app/components/rental-listing.js
+import Ember from 'ember';
+
+export default Ember.Component.extend({
+  isWide: false
+});
+```
+
+接下来就是事件的绑定。为了让用户可以切换`isWide`的值，我们需要在标签上绑定点击事件：
+
+```html
+<!-- app/templates/components/rental-listing.hbs -->
+
+<!-- 忽略 -->
+  <a {{action 'toggleImageSize'}} class="image {{if isWide "wide"}}">
+    <img src="{{rental.image}}" alt="">
+    <small>View Larger</small>
+  </a>
+<!-- 忽略 -->
+```
+
+```javascript
+// app/components/rental-listing.js
+import Ember from 'ember';
+
+export default Ember.Component.extend({
+  isWide: false,
+  actions: {
+    toggleImageSize() {
+      this.toggleProperty('isWide');
+    }
+  }
+});
+```
+
+当点击a标签的时候，会给组件的js文件发送这个action，组件接受这个action，触发对应的事件（`toggleImageSize`），最终调用`toggleProperty`方法切换`isWide`属性。
+
+最终当我们点击图片的时候，效果如图：
+
+![](../../image/ember_tutorial/styled-rental-listings.png)
+
+### 建立Handlebars Helper
+
+目前为止，App渲染的数据都是从Ember Data里直接取出的。如果我们的应用增长的很大有很多数据，想要在渲染时改变一些数据的话，就要借助`Handlebars Helper`，在hbs文件中对数据进行修饰。
+
+现在来建立一个Handlebars Helper，帮助用户快速的分辨列表中的各条目是"Standalone"还是"Community"。
+
+```bash
+$ ember g helper rental-property-type
+
+# installing helper
+#   create app/helpers/rental-property-type.js
+# installing helper-test
+#   create tests/unit/helpers/rental-property-type-test.js
+```
+
+初始化的helper，从hbs中引用并接受参数，然后返回这个参数。
+
+需要注意的是，`rentalPropertyType`的参数`params`是个Array
+
+```javascript
+// app/helpers/rental-property-type.js
+import Ember from 'ember';
+
+export function rentalPropertyType(params/*, hash*/) {
+  return params;
+}
+
+export default Ember.Helper.helper(rentalPropertyType);
+```
+
+更新`rental-listing.hbs`文件：
+
+```html
+<!-- app/templates/components/rental-listing.hbs -->
+
+<!-- 忽略 -->
+
+<!-- 替换了 {{rental.type}} -->
+<div class="detail type">
+    <span>Type:</span> {{rental-property-type rental.type}} - {{rental.type}}
+</div>
+<!-- 忽略 -->
+```
+
+> `rental-property-type`后可跟多个参数，因此实际传入的参数会被转换为一个Array
+
+然后更新`rental-property-type.js`文件，让它对`rental.type`进行判断，返回不同的值：
+
+```javascript
+// app/helpers/rental-property-type.js
+import Ember from 'ember';
+
+const communityPropertyTypes = [
+  'Condo',
+  'Townhouse',
+  'Apartment'
+];
+
+export function rentalPropertyType([type]/*, hash*/) {
+  if (communityPropertyTypes.contains(type)) {
+    return 'Community';
+  }
+
+  return 'Standalone';
+}
+
+export default Ember.Helper.helper(rentalPropertyType);
+```
+
+因为`Handlebars Helper`会把参数转为Array，所以我们在`rentalPropertyType`中通过`[type]`来获取第一个参数，也就是我们传进去的`rental.type`。
+
+刷新页面，可以看见列表的前两个是Standalone，其他的是Community
+
