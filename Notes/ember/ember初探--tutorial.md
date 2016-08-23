@@ -763,3 +763,257 @@ export default Ember.Helper.helper(rentalPropertyType);
 
 刷新页面，可以看见列表的前两个是Standalone，其他的是Community
 
+### 建立复杂组件
+
+基础功能完成了，我们接下来给App增加筛选功能，为此需要新建一个名为`list-filter`的组件。
+
+```bash
+$ ember g component list-filter
+
+# installing component
+#   create app/components/list-filter.js
+#   create app/templates/components/list-filter.hbs
+# installing component-test
+#   create tests/integration/components/list-filter-test.js
+```
+
+像之前那样，测试先行，以便帮助我们更好的思考自己要做的事情：
+
+- filter component应该能够渲染出一个筛选后的列表
+- 当没有筛选的时候它应该渲染全部的列表
+- 有的话则渲染根据城市筛选出的列表
+
+在初步测试里，我们只要简单的验证所有的城市都被渲染并可得就可以了。因为使用了Ember Data作为数据储存，我们需要异步的拿取数据，并使用`wait`方法等待所有的异步完成。（异步返回promise）：
+
+```javascript
+// tests/integration/components/list-filter-test.js
+
+import { moduleForComponent, test } from 'ember-qunit';
+import hbs from 'htmlbars-inline-precompile';
+import wait from 'ember-test-helpers/wait';
+import RSVP from 'rsvp';
+
+moduleForComponent('list-filter', 'Integration | Component | filter listing', {
+  integration: true
+});
+
+const ITEMS = [{city: 'San Francisco'}, {city: 'Portland'}, {city: 'Seattle'}];
+const FILTERED_ITEMS = [{city: 'San Francisco'}];
+
+test('should initially load all listings', function (assert) {
+  // action异步获取数据并返回promise
+  this.on('filterByCity', (val) => {
+    if (val === '') {
+      return RSVP.resolve(ITEMS);
+    } else {
+      return RSVP.resolve(FILTERED_ITEMS);
+    }
+  });
+
+  // 你可以像hbs里那样使用你的组件，来模拟组件的渲染
+  this.render(hbs`
+    {{#list-filter filter=(action 'filterByCity') as |results|}}
+      <ul>
+      {{#each results as |item|}}
+        <li class="city">
+          {{item.city}}
+        </li>
+      {{/each}}
+      </ul>
+    {{/list-filter}}
+  `);
+
+  // wait function会等待所有的promise和xhr请求结束，并返回一个promise 
+  return wait().then(() => {
+    assert.equal(this.$('.city').length, 3);
+    assert.equal(this.$('.city').first().text().trim(), 'San Francisco');
+  });
+});
+```
+
+下一步，我们要在输入框中输入一些文字，监听键盘keyup事件并调用filter action，而且期待列表被筛选后只有一个条目被render：
+
+```javascript
+// tests/integration/components/list-filter-test.js
+
+// 忽略
+
+test('should update with matching listings', function (assert) {
+  this.on('filterByCity', (val) => {
+    if (val === '') {
+      return RSVP.resolve(ITEMS);
+    } else {
+      return RSVP.resolve(FILTERED_ITEMS);
+    }
+  });
+
+  this.render(hbs`
+    {{#list-filter filter=(action 'filterByCity') as |results|}}
+      <ul>
+      {{#each results as |item|}}
+        <li class="city">
+          {{item.city}}
+        </li>
+      {{/each}}
+      </ul>
+    {{/list-filter}}
+  `);
+
+  // keyup 事件应该触发列表被筛选的事件
+  this.$('.list-filter input').val('San').keyup();
+
+  return wait().then(() => {
+    assert.equal(this.$('.city').length, 1);
+    assert.equal(this.$('.city').text().trim(), 'San Francisco');
+  });
+});
+```
+
+之后处理模板。我们在`app/templates/index.hbs`中要像测试里写的那样调用组价：
+
+```html
+<!-- app/templates/index.hbs -->
+
+<!-- 上面的忽略 -->
+
+{{#list-filter
+   filter=(action 'filterByCity')
+   as |rentals|}}
+  <ul class="results">
+    {{#each rentals as |rentalUnit|}}
+      <li>{{rental-listing rental=rentalUnit}}</li>
+    {{/each}}
+  </ul>
+{{/list-filter}}
+```
+
+并且在`list-filter.hbs`中增加input：
+
+```html
+<!-- app/templates/components/list-filter.hbs -->
+{{input value=value key-up=(action 'handleFilterEntry') class="light" placeholder="Filter By City"}}
+{{yield results}}
+```
+
+在这里我们使用了`{{input}}` helper来render一个input，而input的`value`和`key-up`事件都由这个component对应的js提供：
+
+```javascript
+// app/components/list-filter.js
+import Ember from 'ember';
+
+export default Ember.Component.extend({
+  classNames: ['list-filter'],
+  value: '',
+
+  init() {
+    this._super(...arguments);
+    // 初始化
+    this.get('filter')('').then((results) => this.set('results', results));
+  },
+
+  actions: {
+    handleFilterEntry() {
+      let filterInputValue = this.get('value'); // input的value
+      let filterAction = this.get('filter'); // 在index.hbs中传入，为filterByCity
+      // 筛选过后把结果赋值给result
+      // filter=(action 'filterByCity') as |rentals| 即 result as |rentals|
+      filterAction(filterInputValue).then((filterResults) => this.set('results', filterResults));
+    }
+  }
+
+});
+```
+
+现在我们需要一个controller，来运行筛选的方法：
+
+```bash
+$ ember g controller index
+```
+
+```javascript
+// app/controllers/index.js
+import Ember from 'ember';
+
+export default Ember.Controller.extend({
+  actions: {
+    filterByCity(param) {
+      if (param !== '') {
+        return this.get('store').query('rental', { city: param });
+      } else {
+        return this.get('store').findAll('rental');
+      }
+    }
+  }
+});
+```
+
+当用户在搜索框敲入字符的时候，就会调用filterByCity方法。该方法根据传入参数的不同调用不同的查询语句来达到搜索的效果。所以我们还需要修改之前的那个`mirage/config.js`文件：
+
+```javascript
+// mirage/config.js
+export default function() {
+  this.get('/rentals', function(db, request) {
+    let rentals = [{
+        type: 'rentals',
+        id: 1,
+        attributes: {
+          title: 'Grand Old Mansion',
+          owner: 'Veruca Salt',
+          city: 'San Francisco',
+          type: 'Estate',
+          bedrooms: 15,
+          image: 'https://upload.wikimedia.org/wikipedia/commons/c/cb/Crane_estate_(5).jpg'
+        }
+      }, {
+        type: 'rentals',
+        id: 2,
+        attributes: {
+          title: 'Urban Living',
+          owner: 'Mike Teavee',
+          city: 'Seattle',
+          type: 'Condo',
+          bedrooms: 1,
+          image: 'https://upload.wikimedia.org/wikipedia/commons/0/0e/Alfonso_13_Highrise_Tegucigalpa.jpg'
+        }
+      }, {
+        type: 'rentals',
+        id: 3,
+        attributes: {
+          title: 'Downtown Charm',
+          owner: 'Violet Beauregarde',
+          city: 'Portland',
+          type: 'Apartment',
+          bedrooms: 3,
+          image: 'https://upload.wikimedia.org/wikipedia/commons/f/f7/Wheeldon_Apartment_Building_-_Portland_Oregon.jpg'
+        }
+      }];
+
+    if(request.queryParams.city !== undefined) {
+      let filteredRentals = rentals.filter(function(i) {
+        return i.attributes.city.toLowerCase().indexOf(request.queryParams.city.toLowerCase()) !== -1;
+      });
+      return { data: filteredRentals };
+    } else {
+      return { data: rentals };
+    }
+  });
+}
+```
+
+完成以后如下图所示：
+
+![](../../image/ember_tutorial/styled-super-rentals-filter.png)
+
+### Services and Utilities
+
+### 部署
+
+打包代码：
+
+```bash
+$ ember build
+# 建议以生产环境运行：
+$ ember build --environment=development
+```
+
+会将生成好的代码全部打包在`dist/`文件夹下，之后怎么用就是自己的事喽
