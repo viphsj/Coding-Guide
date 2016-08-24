@@ -695,3 +695,153 @@ user.set('fullName', 'Krang Gates');
 userComponent.set('userName', 'Truckasaurus Gates');
 user.get('fullName'); // "Krang Gates"
 ```
+
+### 可枚举对象
+
+在Ember中，可枚举对象是指包含了多个子对象，并可以通过`Ember.Enumerable`API进行调研的对象。
+
+Ember提供了便捷的方法来操作可枚举对象。
+
+#### 使用观察者方法和属性
+
+为了能够让观察者监听到可枚举对象的变化，你需要使用`Ember.Enumerable`提供的特殊方法。例如，在JS中我们可以利用`push()`方法给Array增加元素，而对应的观察者的监听方法则是叫作`pushObject()`。
+
+标准的JS Array方法和观察者监听方法对应如下：
+
+Standard Method --> Observable Equivalent
+pop --> popObject
+push --> pushObject
+reverse --> reverseObjects
+shift --> shiftObject
+unshift --> unshiftObject
+
+除此以外，为了获取观察者模式下Array中最后和第一个元素，可以使用`myArray.get('firstObject')`和`myArray.get('lastObject')`方法、
+
+#### API概览
+
+更多详细的API可以查阅[Ember.Enumerable API reference documentation](http://emberjs.com/api/classes/Ember.Enumerable.html)
+
+##### 遍历可枚举对象
+
+```javascript
+let food = ['Poi', 'Ono', 'Adobo Chicken'];
+
+food.forEach((item, index) => {
+  console.log(`Menu Item ${index+1}: ${item}`);
+});
+
+// Menu Item 1: Poi
+// Menu Item 2: Ono
+// Menu Item 3: Adobo Chicken
+```
+
+##### 第一个和最后一个元素
+
+```javascript
+let animals = ['rooster', 'pig'];
+
+animals.get('lastObject');
+//=> "pig"
+
+animals.pushObject('peacock');
+
+animals.get('lastObject');
+//=> "peacock"
+```
+
+##### map
+
+```javascript
+let words = ['goodbye', 'cruel', 'world'];
+
+let emphaticWords = words.map(item => `${item}!`);
+//=> ["goodbye!", "cruel!", "world!"]
+```
+
+对于由对象组成的可枚举对象，可以使用`mapBy()`方法来指明用于`map`的属性：
+
+```javascript
+let hawaii = Ember.Object.create({
+  capital: 'Honolulu'
+});
+
+let california = Ember.Object.create({
+  capital: 'Sacramento'
+});
+
+let states = [hawaii, california];
+
+states.mapBy('capital');
+//=> ["Honolulu", "Sacramento"]
+```
+
+##### filter
+
+```javascript
+let arr = [1, 2, 3, 4, 5];
+
+arr.filter((item, index, self) => item < 4);
+
+//=> [1, 2, 3]
+```
+
+当Array由对象组成的时候，则可以使用`filterBy()`来指定筛选的属性：
+
+`filterBy(property, targetValue)`接收两个参数，第一个是要筛选的属性，第二个是期望值
+
+```javascript
+Todo = Ember.Object.extend({
+  title: null,
+  isDone: false
+});
+
+let todos = [
+  Todo.create({ title: 'Write code', isDone: true }),
+  Todo.create({ title: 'Go to sleep' })
+];
+
+todos.filterBy('isDone', true);
+
+// returns an Array containing only items with `isDone == true`
+```
+
+##### find
+
+`find()`方法和`filter()`类似，都会对可枚举对象进行筛选。但`find()`方法返回第一个匹配的对象。
+
+类似的。也有`findBy(property, targetValue)`方法
+
+##### Every or Any
+
+使用`every()`来验证可枚举对象中的每个值是否都符合条件。只要有一个不符合就返回false：
+
+```javascript
+Person = Ember.Object.extend({
+  name: null,
+  isHappy: false
+});
+
+let people = [
+  Person.create({ name: 'Yehuda', isHappy: true }),
+  Person.create({ name: 'Majd', isHappy: false })
+];
+
+people.every((person, index, self) => person.get('isHappy'));
+
+//=> false
+```
+
+使用`any()`来验证可枚举对象中至少有一个值符合条件。只要有一个符合就返回true：
+
+```javascript
+people.any((person, index, self) => person.get('isHappy'));
+
+//=> true
+```
+
+类似的，也有`isEvery()`和`isAny()`方法
+
+```javascript
+people.isEvery('isHappy', true); // false
+people.isAny('isHappy', true);  // true
+```
