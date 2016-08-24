@@ -529,3 +529,113 @@ const Hamster = Ember.Object.extend({
 });
 ```
 
+### 观察者
+
+Ember支持监听任意属性，包括计算属性。
+
+观察者应该拥有“能对其他属性的变化做出反应”的行为。它在要求针对变化同步表现出行为的场景下很有用。但观察者经常被Ember新手过度的使用。Ember框架内部确实使用了很多的观察者模式，但有时对于你的开发需求而言，使用计算属性就可以了。
+
+使用`Ember.Observer`建立观察者：
+
+```javascript
+Person = Ember.Object.extend({
+  // these will be supplied by `create`
+  firstName: null,
+  lastName: null,
+
+  fullName: Ember.computed('firstName', 'lastName', function() {
+    return `${this.get('firstName')} ${this.get('lastName')}`;
+  }),
+
+  fullNameChanged: Ember.observer('fullName', function() {
+    // 针对变化做出反应
+    console.log(`fullName changed to: ${this.get('fullName')}`);
+  })
+});
+
+var person = Person.create({
+  firstName: 'Yehuda',
+  lastName: 'Katz'
+});
+
+// get属性时观察者不会有反应
+person.get('fullName'); // "Yehuda Katz"
+person.set('firstName', 'Brohuda'); // 当属性被改变时观察者被调用
+```
+
+#### 观察者和异步
+
+Ember中的大部分观察者是同步的。这以为着当他们监听的属性发生变化时观察者会被立即调用。因而这有可能会在非异步行为里引入bug：
+
+```javascript
+Person.reopen({
+  lastNameChanged: Ember.observer('lastName', function() {
+    // 这个观察者观察lastName，但会输出fullName。当lastName被改变时，观察者立即调用，但此时fullName还没改变，因此观察者的输出会是改变之前的旧的fullName
+    console.log(this.get('fullName'));
+  })
+});
+```
+
+而且，当有大量属性改变时，同步的观察者也会相应的被调用非常多次：
+
+```javascript
+Person.reopen({
+  partOfNameChanged: Ember.observer('firstName', 'lastName', function() {
+    // 观察者同时观察firstName和lastName，因此在任意一个改变时都会被调用
+  })
+});
+
+person.set('firstName', 'John');
+person.set('lastName', 'Smith');
+```
+
+为了避免这个问题，可以使用`Ember.run.once()`。它会保证有关的观察者只会在属性变化完成之后调用一次：
+
+```javascript
+Person.reopen({
+  partOfNameChanged: Ember.observer('firstName', 'lastName', function() {
+    Ember.run.once(this, 'processFullName');
+  }),
+
+  processFullName() {
+    // This will only fire once if you set two properties at the same time, and
+    // will also happen in the next run loop once all properties are synchronized
+    console.log(this.get('fullName'));
+  }
+});
+
+person.set('firstName', 'John');
+person.set('lastName', 'Smith');
+```
+
+#### 观察者和对象初始化
+
+观察者只会在对象初始化完成只会运行。如果你需要把观察者作为初始化的一部分，则需要使用`Ember.on()`：
+
+```javascript
+Person = Ember.Object.extend({
+  init() {
+    this.set('salutation', 'Mr/Ms');
+  },
+
+  salutationDidChange: Ember.on('init', Ember.observer('salutation', function() {
+    // some side effect of salutation changing
+  }))
+});
+```
+
+#### 未使用过的计算属性不会触发观察者
+
+如果你从未对计算属性调用`get`方法，那么即便计算属性依赖的属性发生了改变，观察者也不会被触发。
+
+实际上这个不会造成什么问题，因为当计算属性被获取时，它总是保持着被监听。
+
+#### 在class外定义
+
+可以在类的外面定义观察者：
+
+```javascript
+person.addObserver('fullName', function() {
+  // deal with the change
+});
+```
