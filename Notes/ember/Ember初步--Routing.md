@@ -339,3 +339,85 @@ export default Ember.Route.extend({
 });
 ```
 
+### 重定向
+
+在route内调用`transitionTo()`方法，或者在controller内调用`transitionToRoute()`方法，都会立即停止当前的渲染，并开始一个新的。
+
+#### Transitioning Before the Model is Known
+
+如果你想在路由中进行重定向，则可以在`beforeModel()`钩子中进行处理：
+
+```javascript
+// app/router.js
+Router.map(function() {
+  this.route('posts');
+});
+```
+
+```javascript
+// app/routes/index.js
+import Ember from 'ember';
+
+export default Ember.Route.extend({
+  beforeModel() {
+    this.transitionTo('posts');
+  }
+});
+```
+
+#### Transitioning After the Model is Known
+
+如果你为了获取重定向相关的信息，而需要等待model载入的话，可以在`afterModel()`钩子里处理逻辑。
+
+`afterModel()`方法将resolved的model作为第一个参数，将`transition`作为第二个参数：
+
+```javascript
+// app/router.js
+Router.map(function() {
+  this.route('posts');
+  this.route('post', { path: '/post/:post_id' });
+});
+```
+
+```javascript
+// app/routes/posts.js
+import Ember from 'ember';
+
+export default Ember.Route.extend({
+  afterModel(model, transition) {
+    if (model.get('length') === 1) {
+      this.transitionTo('post', model.get('firstObject'));
+    }
+  }
+});
+```
+
+#### 子路由
+
+修改下上面的路由关系，改成：
+
+```javascript
+// app/router.js
+Router.map(function() {
+  this.route('posts', function() {
+    this.route('post', { path: ':post_id' });
+  });
+});
+```
+
+如果我们在`afterModel()`中重定向到了`posts.post`，那么会因为参数错误而再次发起重定向。
+
+`redirect()`方法可以解决这个问题，它保证父route的钩子事件不会再次被调用：
+
+```javascript
+// app/routes/posts.js
+import Ember from 'ember';
+
+export default Ember.Route.extend({
+  redirect(model, transition) {
+    if (model.get('length') === 1) {
+      this.transitionTo('posts.post', model.get('firstObject'));
+    }
+  }
+});
+```
