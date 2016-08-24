@@ -639,3 +639,59 @@ person.addObserver('fullName', function() {
   // deal with the change
 });
 ```
+
+### 事件绑定
+
+在Ember中事件绑定可以被用在任意对象上。最常用的领域是Ember框架内部。而Ember开发者面对的大多数问题，都可以用计算属性来很好的解决。
+
+#### 双向绑定
+
+创建双向绑定的最快方法是使用`computed.alias()`：
+
+```javascript
+wife = Ember.Object.create({
+  householdIncome: 80000
+});
+
+Husband = Ember.Object.extend({
+  householdIncome: Ember.computed.alias('wife.householdIncome')
+});
+
+husband = Husband.create({
+  wife: wife
+});
+
+husband.get('householdIncome'); // 80000
+
+// Someone gets raise.
+wife.set('householdIncome', 90000);
+husband.get('householdIncome'); // 90000
+```
+
+> 要注意的是绑定事件不会立即调用，而是等到同步的代码运行完成之后。所以你可以随心所欲的多次改变属性
+
+#### 单向绑定
+
+单向绑定只会往一个方向传递变化。它的使用方式是通过`computed.oneWay()`。通常情况下，单向绑定是最佳实践，你可以通过只向一个方向传递变化的双向绑定来达到这种效果。有时候单向绑定在一些事件上表现的特别给力，比如有映射关系的两个值（A和B），改变A会改变B，但是改变B不会改变A。
+
+```javascript
+user = Ember.Object.create({
+  fullName: 'Kara Gates'
+});
+
+UserComponent = Ember.Component.extend({
+  userName: Ember.computed.oneWay('user.fullName')
+});
+
+userComponent = UserComponent.create({
+  user: user
+});
+
+// 改变user对象的name会影响它单向绑定的userComponent
+user.set('fullName', 'Krang Gates');
+// userComponent.userName 此时是 "Krang Gates"
+
+// 但是改变userComponent却不会改变user
+userComponent.set('userName', 'Truckasaurus Gates');
+user.get('fullName'); // "Krang Gates"
+```
