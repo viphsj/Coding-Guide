@@ -344,3 +344,59 @@ captainAmerica.get('description'); // "Steve Rogers; Age: 80; Country: USA"
 
 #### 动态更新
 
+计算属性监听着可以改变他们计算结果的属性。因此在改变那些属性的时候，动态属性的计算结果也会被改变：
+
+```javascript
+captainAmerica.set('firstName', 'William');
+
+captainAmerica.get('description'); // "William Rogers; Age: 80; Country: USA"
+```
+
+#### 改变计算属性
+
+你可以自定义计算属性被set时的行为，但需要提供key-value键值对，以便Ember确定你更改了对象的哪个属性：
+
+```javascript
+Person = Ember.Object.extend({
+  firstName: null,
+  lastName: null,
+
+  fullName: Ember.computed('firstName', 'lastName', {
+    get(key) {
+      return `${this.get('firstName')} ${this.get('lastName')}`;
+    },
+    set(key, value) {
+      let [firstName, lastName] = value.split(/\s+/);
+      this.set('firstName', firstName);
+      this.set('lastName',  lastName);
+      return value;
+    }
+  })
+});
+
+
+let captainAmerica = Person.create();
+captainAmerica.set('fullName', 'William Burnside');
+captainAmerica.get('firstName'); // William
+captainAmerica.get('lastName'); // Burnside
+```
+
+#### 计算属性宏
+
+Ember提供了一些属性可以让我们的操作更便捷：
+
+```javascript
+Person = Ember.Object.extend({
+  fullName: 'Tony Stark',
+
+  isIronManLongWay: Ember.computed('fullName', function() {
+    return this.get('fullName') === 'Tony Stark';
+  }),
+
+  isIronManShortWay: Ember.computed.equal('fullName', 'Tony Stark')
+});
+```
+
+上面这个例子里，`isIronManLongWay`和`isIronManShortWay`完全等价，但是利用Ember的`Ember.computed.equal()`方法则更加简洁。
+
+更多的自带方法可以参考[Ember API文档](http://emberjs.com/api/classes/Ember.computed.html)
