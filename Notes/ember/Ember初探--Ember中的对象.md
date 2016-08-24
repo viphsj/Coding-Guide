@@ -400,3 +400,132 @@ Person = Ember.Object.extend({
 上面这个例子里，`isIronManLongWay`和`isIronManShortWay`完全等价，但是利用Ember的`Ember.computed.equal()`方法则更加简洁。
 
 更多的自带方法可以参考[Ember API文档](http://emberjs.com/api/classes/Ember.computed.html)
+
+#### 计算属性和数据汇总
+
+有时候你的计算属性的值可能依赖于一个数组中的值。举个例子，有一个Array里面是ToDo Items，现在需要用一个计算属性通过每个ToDo Item `isDone`的属性，来得到没有完成的ToDo列表：
+
+```javascript
+// app/components/todo-list.js
+export default Ember.Component.extend({
+  todos: [
+    Ember.Object.create({ isDone: true }),
+    Ember.Object.create({ isDone: false }),
+    Ember.Object.create({ isDone: true })
+  ],
+  // 使用Ember的@each关键字
+  incomplete: Ember.computed('todos.@each.isDone', function() {
+    var todos = this.get('todos');
+    return todos.filterBy('isDone', false);
+  })
+});
+```
+
+这样，Array中的每个Item的isDone属性被传入计算属性，使其对Array进行如下的监听：
+
+1. `todos`列表中的任意一个item的`isDone`发生变化
+2. 一个新ToDo被添加到`todos`里
+3. 一个ToDo从`todos`里移除
+4. 组件里的`todos`属性变成了不同的Array
+
+Ember还提供了一个便捷的`computed.filterBy`方法对Array进行筛选：
+
+```javascript
+// app/components/todo-list.js
+export default Ember.Component.extend({
+  todos: [
+    Ember.Object.create({ isDone: true }),
+    Ember.Object.create({ isDone: false }),
+    Ember.Object.create({ isDone: true })
+  ],
+
+  incomplete: Ember.computed.filterBy('todos', 'isDone', false)
+});
+```
+
+在上面两个例子里，`incomplete`计算属性返回的都是一个有着未完成的ToDo的Array：
+
+```javascript
+import TodoListComponent from 'app/components/todo-list';
+
+let todoListComponent = TodoListComponent.create();
+todoListComponent.get('incomplete.length');
+// 1
+```
+
+当我们改变ToDo的isDone属性时，`incomplete`会自动进行更新：
+
+```javascript
+let todos = todoListComponent.get('todos');
+let todo = todos.objectAt(1);
+todo.set('isDone', true);
+
+todoListComponent.get('incomplete.length');
+// 0
+
+todo = Ember.Object.create({ isDone: false });
+todos.pushObject(todo);
+
+todoListComponent.get('incomplete.length');
+// 1
+```
+
+> 需要注意的是，`@each`方法只能获取到Array元素的第一层。也就是说如果Array里面是层层包裹的Object，而@each就无法获取到Object的底层属性了。
+> 
+> 例如，无法这样：
+> 
+> `todos.@each.owner.name` or `todos.@each.owner.@each.name`
+
+有时候你不想关心列表中元素的属性变化。此时应该使用`[]`而不是`@each`。当使用`[]`关键字的时候，计算属性只会关心Array中是否有元素被加入或移除，或者Array的属性被设置成了其他的Array。例如：
+
+```javascript
+// app/components/todo-list.js
+export default Ember.Component.extend({
+  todos: [
+    Ember.Object.create({ isDone: true }),
+    Ember.Object.create({ isDone: false }),
+    Ember.Object.create({ isDone: true })
+  ],
+
+  selectedTodo: null,
+  // 接受selectedTodo属性，只关心todos这个Array
+  indexOfSelectedTodo: Ember.computed('selectedTodo', 'todos.[]', function() {
+    return this.get('todos').indexOf(this.get('selectedTodo'));
+  })
+});
+```
+
+这样，计算属性`indexOfSelectedTodo`只收到`todos`长度大小的影响，而ToDo的isDone改变时不会有影响。
+
+一些[Ember.computed](http://emberjs.com/api/classes/Ember.computed.html)宏指令利用了`[]`关键字，例如，遍历一个Array，自己写的话可能是下面这样：
+
+```javascript
+const Hamster = Ember.Object.extend({
+  excitingChores: Ember.computed('chores.[]', function() {
+    return this.get('chores').map(function(chore, index) {
+      return `CHORE ${index}: ${chore.toUpperCase()}!`;
+    });
+  })
+});
+
+const hamster = Hamster.create({
+  chores: ['clean', 'write more unit tests']
+});
+
+hamster.get('excitingChores'); // ['CHORE 1: CLEAN!', 'CHORE 2: WRITE MORE UNIT TESTS!']
+hamster.get('chores').pushObject('review code');
+hamster.get('excitingChores'); // ['CHORE 1: CLEAN!', 'CHORE 2: WRITE MORE UNIT TESTS!', 'CHORE 3: REVIEW CODE!']
+```
+
+而我们使用自带的命令的话：
+
+```javascript
+// Ember.computed.map实际上利用了[]，帮我们封装好了方法
+// 这个方法本身就期待传入一个Array，所以也没必要再使用[]关键字
+const Hamster = Ember.Object.extend({
+  excitingChores: Ember.computed.map('chores', function(chore, index) {
+    return `CHORE ${index}: ${chore.toUpperCase()}!`;
+  })
+});
+```
+
