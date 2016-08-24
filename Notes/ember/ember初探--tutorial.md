@@ -1,4 +1,4 @@
-## ember初探--tutorial
+## Ember初探--Tutorial
 
 ### 创建新的应用
 
