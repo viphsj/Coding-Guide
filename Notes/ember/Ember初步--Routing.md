@@ -310,3 +310,32 @@ export default Ember.Route.extend({
   {{/each}}
 </ul>
 ```
+
+### 渲染模板
+
+在默认情况下，route handler会渲染和它同名的模板：
+
+```javascript
+// app/router.js
+Router.map(function() {
+  this.route('posts', function() {
+    this.route('new');
+  });
+});
+```
+
+`posts`路由渲染`posts.hbs`模板，而`posts.new`路由渲染`posts/new.hbs`模板。
+
+每个模板都会在加载其对应的controller数据之后，作为父模板的`{{outlet}}`渲染。
+
+如果你不想用默认的方式渲染一样名称的模板，则需要设置`templateName`属性：
+
+```javascript
+// app/routes/posts.js
+import Ember from 'ember';
+
+export default Ember.Route.extend({
+  templateName: 'posts/favorite-posts'
+});
+```
+
