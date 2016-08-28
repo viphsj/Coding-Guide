@@ -421,3 +421,412 @@ export default Ember.Route.extend({
   }
 });
 ```
+
+### 阻止和重试路由跳转
+
+- `transition.abort()`立即阻止路由跳转
+- `transition.retry()`重试路由跳转
+
+#### 通过`willTransition`阻止路由跳转
+
+当Ember试图通过`{{lin-to}}`、`transitionTo`，或者URL变化来进行路由跳转时，会触发当前路由的`willTransition`行为，使得它可以决定是否继续进行路由改变的行为。
+
+假设你有一个路由，渲染出一个表单。当用户填写表单的时候不小心后退了。除非我们阻止了用户的回退，否则他的填写都前功尽弃了：
+
+```javascript
+// app/routes/form.js
+export default Ember.Route.extend({
+  actions: {
+    willTransition(transition) {
+      if (this,controller.get('userHasEnteredData') &&
+          !confirm('Are you sure you want to abandon progress?')) {
+        transition.abort();
+      } else {
+        return true;
+      }
+    }
+  }
+});
+```
+
+当用户点击`{{link-to}}`，或者通过`transitionTo`方法改变路由的时候，利用上面的方法我们可以成功的阻止他的跳转。但是如果他使用了浏览器的后退键，调用`route:from`，或者人为的改变URL的时候，则会在`willTransition`方法调用之前就被定向到了新的URL。此时上面的方法无效。
+
+#### 通过model内的`beforeModel`和`afterModel`方法阻止跳转
+
+我们将要在[异步路由](https://guides.emberjs.com/v2.7.0/routing/asynchronous-routing)里说到的`beforeModel`和`afterModel`钩子，接收`transition`作为参数被调用。它会在目的路由的route-handler中被调用：
+
+```javascript
+// app/routes/disco.js
+export default Ember.Route.extend({
+  beforeModel(transition) {
+    if (new Date() > new Date('January 1, 1980')) {
+      alert('Sorry, you need a time mechine to enter this route');
+      transition.abort();
+    }
+  }
+});
+```
+
+#### 储存/重试路由转变
+
+阻止了路由转变之后，可以在稍后进行重试。它的常用场景是一个需要用户认证的路由，把没有认证的用户重定向到了登录页面，等到用户登录完成之后再重新回到之前的路由：
+
+```javascript
+// app/routes/some-authonticated.js
+export default Ember.Route.extend({
+  beforeModel(transition) {
+    if (!this.controllerFor('auth').get('userIsLoggedIn')) {
+      var loginCOntroller = this.controllerFor('login');
+      loginController.get('previousTransition', transition);
+      this.transitionTo('login');
+    }
+  }
+});
+```
+
+```javascript
+// app/controllers/login.js
+import Ember from 'ember';
+
+export default Ember.Controller.extend({
+  actions: {
+    login() {
+      var previousTransitoin = this.get('previousTransition');
+      if (previousTransition) {
+        this.set('previousTransition', null);
+        previousTransition.retry();
+      } else {
+        this.transitionToRoute('index');
+      }
+    }
+  }
+});
+```
+
+### Loading/Error状态
+
+#### `loading`状态
+
+##### 加载loading模板
+
+route-handler在加载路由的时候，会因为各个方法而阻塞，直到所有的Promise全部完成。举个栗子：
+
+```javascript
+// app/router.js
+Router.map(function() {
+  this.route('slow-model');
+});
+```
+
+```javascript
+// app/routes/slow-model.js
+import Ember from 'ember';
+
+export default Ember.Route.extend({
+  model() {
+    return this.get('store').findAll('slow-model');
+  }
+});
+```
+
+当你访问`slow-model`的时候，`model`需要很长的时候获取到需要的数据。在这段时间里，如果什么也不做的话，在UI上就没有任何变化，直至数据加载完成，然后页面突然呈现。这太糟糕了。我们该如何避免？
+
+定义一个叫做`loading`或者类似名称的模板，并且将路由设计成嵌套的形式：
+
+```javascript
+// app/router.js
+Router.map(function() {
+  this.route('foo', function() {
+    this.route('bar', function() {
+      this.route('slow-model');
+    });
+  });
+});
+```
+
+当试图加载`foo.bar.slow-model`路由的时候，Ember会试着不断获取`routeName-loading`或者上层的loading模板：
+
+- `foo.bar.slow-model-loading`
+- `foo.bar.loading`或者`foo.bar-loading`
+- `foo.loading`或者`foo-loading`
+- `loading`或者`application-loading`
+
+要注意的是，Ember不会寻找`slow-model.loading`模板
+
+而当路由指向`foo.bar`的时候，Ember会寻找：
+
+- `foo.bar-loading`
+- `foo.loading`或者`foo-loading`
+- `loading`或者`application-loading`
+
+在这个情况下，Ember不再寻找`foo.bar.loading`模板
+
+##### loading事件
+
+如果`beforeModel`/`model`/`afterModel`方法没有立刻返回，`loading`方法就会自动调用：
+
+```javascript
+// app/routes/foo-slow-model.js
+import Ember from 'ember';
+
+export default Ember.Route.extend({
+  model() {
+    return this.get('store').findAll('slow-model');
+  },
+  actions: {
+    loading(transition, originRoute) {
+      let controller = this.controllerFor('foo');
+      controller.set('currentlyLoading', true);
+    }
+  }
+});
+```
+
+如果在当前的route-handler里没有定义`loading`方法，那么它会继续向上冒泡，寻找父路由的`loading`方法。
+
+当使用`loading`方法的时候，我们可以通过`transition`的`promise`来确定什么时候loading完毕：
+
+```javascript
+// app/routes/foo-slow-model.js
+
+import Ember from 'ember';
+
+export default Ember.Route.extend({
+  // ...
+  actions: {
+    loading(transition, originRoute) {
+      let controller = this.controllerFor('foo');
+      controller.set('currentlyLoading', true);
+      transition.promise.finally(function() {
+        controller.set('currentlyLoading', false);
+      });
+    }
+  }
+});
+```
+
+#### `error`状态
+
+##### error模板
+
+通过抛出一个错误，或者promise返回reject，都可以出发error状态。例如如下路由：
+
+```javascript
+// app/router.js
+Route.map(function() {
+  this.route('articles', function() {
+    this.route('overview');
+  });
+});
+```
+
+当抛出错误的时候，会类似于loading机制一样寻找error模板：
+
+- `articles.overview-error`
+- `articles.error`或者`articles-error`
+- `error`或者`application-error`
+
+##### error事件
+
+当触发error状态的时候，`error`方法会被调用：
+
+```javascript
+// app/routes/articles-overview.js
+import Ember from 'ember';
+
+export default Ember.Route.extend({
+  model(params) {
+    return this.get('store').findAll('problematic-model');
+  },
+  actions: {
+    error(error, transition) {
+      if (error) {
+        return this.transitionTo('error-page');
+      }
+    }
+  }
+});
+```
+
+类似于`loading`事件，你可以让`error`事件的处理向上传递，来避免写重复的代码。
+
+### URL参数
+
+#### 特定的URL参数
+
+特定的参数必须定义在route对应的controller里。例如，为了获取`articles`理由里的URL参数，必须在`controller:articles`里声明：
+
+```javascript
+// app/controllers/articles.js
+import Ember from 'ember';
+
+export default Ember.Controller.extend({
+  // 定义category参数
+  queryParams: ['category'],
+  category: null
+});
+```
+
+因此，在`articles`路由加载好之后，任何`category`参数的变化都会被监听，我们也就可以以此来更新数据：
+
+```javascript
+// app/controllers/articles.js
+import Ember from 'ember';
+
+export default Ember.Controller.extend({
+  queryParams: ['category'],
+  category: null,
+
+  filteredArticles: Ember.computed('category', 'model', function() {
+    var category = this.get('category');
+    var articles = this.get('model');
+
+    if (category) {
+      return articles.filterBy('category', category);
+    } else {
+      return articles;
+    }
+  })
+});
+```
+
+#### 通过`link-to`helper给URL带上参数
+
+```html
+<!-- 设置一个特定的参数 -->
+{{#link-to "posts" (query-params direction="asc")}}Sort{{/link-to}}
+
+<!-- 或者绑定一个变量 -->
+{{#link-to "posts" (query-params direction=otherDirection)}}Sort{{/link-to}}
+```
+
+#### 通过`transitionTo`加参数
+
+`Router#transitionTo`和`Controller#transitionToRoute`都可以接受一个参数，且该参数要有`queryParams`键值对：
+
+```javascript
+// app/routes/some-route.js
+this.transitionTo('post', object, { queryParams: { showDetails: true }});
+this.transitionTo('posts', { queryParams: { sort: 'title' }});
+
+// if you want to transition the query parameters without changing the route
+this.transitionTo({ queryParams: { direction: 'asc' }});
+```
+
+也可以直接把带有参数的URL传递给`transitionTo`方法：
+
+```javascript
+this.transitionTo('/posts/1?sort=date&showDetails=true');
+```
+
+#### Opting into a full transition
+
+由`transitionTo`或者`link-to`提供的参数，只会让Ember相应其参数的变化，使得在改变参数的时候不会有数据查询结果的变化，而不会再调用`model`或者`setupController`方法。如果我们想强制性刷新页面，确保方法的再次调用，则需要在`controller`对应的路由中配置`queryParams`对象，在某个特定参数下添加`refreshModel`字段并设置为`true`：
+
+```javascript
+// app/routes/articles.js
+import Ember from 'ember';
+
+export default Ember.Route.extend({
+  queryParams: {
+    category: {
+      // 当category参数改变时会强制刷新model
+      refreshModel: true
+    }
+  },
+  model(params) {
+    // This gets called upon entering 'articles' route
+    // for the first time, and we opt into refiring it upon
+    // query param changes by setting `refreshModel:true` above.
+
+    // params has format of { category: "someValueOrJustNull" },
+    // which we can forward to the server.
+    return this.get('store').query('article', params);
+  }
+});
+```
+
+```javascript
+// app/controllers/articles.js
+
+import Ember from 'ember';
+
+export default Ember.Controller.extend({
+  queryParams: ['category'],
+  category: null
+});
+```
+
+#### 使用`replaceState`更新路由
+
+在默认情况下，Ember使用`pushState`来跟新URL。如果你乐意也可以使用`replaceState`更新URL：
+
+```javascript
+// app/routes/articles.js
+import Ember from 'ember';
+
+export default Ember.Route.extend({
+  queryParams: {
+    category: {
+      replace: true
+    }
+  }
+});
+```
+
+#### 参数名映射
+
+在默认情况下，URL中的传入的参数和我们之前定义的参数名一一映射。例如，在`queryParams`中定义了一个名为`foo`的参数，所以在URL里含有例如`?foo=1`时，就能拿到参数对应的值了。但我们也可以手动改变参数名的一一对应关系，设置别名：
+
+```javascript
+// app/controllers/articles.js
+import Ember from 'ember';
+
+export default Ember.Controller.extend({
+  queryParams: {
+    category: 'articles_category'
+  },
+  category: null
+});
+```
+
+在这之后，URL中传入`articles_category`参数，会作为controller中的`category`变量。
+
+如果我们有多个参数：
+
+```javascript
+// app/controllers/articles.js
+import Ember from 'ember';
+
+export default Ember.Controller.extend({
+  queryParams: ['page', 'filter', {
+    category: 'articles_category'
+  }],
+  category: null,
+  page: 1,
+  filter: 'recent'
+});
+```
+
+#### 默认值和反序列化
+
+例如下面的例子，`page`参数被设置为默认是1：
+
+```javascript
+// app/controllers/articles.js
+import Ember from 'ember';
+
+export default Ember.Controller.extend({
+  queryParams: 'page',
+  page: 1
+});
+```
+
+- 查询到的page的值会根据默认值的类型进行转化。因为定义了默认值为1，所以之后查询到的所有值都会被转化为int类型
+- 当参数为`?page=1`的时候，路由会被转化为`/articles`，为2时则是`/articles?page=2`，依次类推
+
+#### [粘性参数](https://guides.emberjs.com/v2.7.0/routing/query-params/#toc_sticky-query-param-values)
+
+默认情况下，在Ember中查询参数是粘性的，即当你改变了查询参数，或者是离开页面之后又退回来，参数会默认在URL上，而不会自动清除
+
+### [异步路由](https://guides.emberjs.com/v2.7.0/routing/asynchronous-routing/)
