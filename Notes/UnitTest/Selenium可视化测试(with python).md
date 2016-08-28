@@ -136,6 +136,9 @@ element = driver.find_element_by_xpath("//input[@id='passwd-id']")
 # 对于含有text的DOM元素，还可以：
 element = driver.find_element_by_text(text)
 # 但这个方式只能获取到精准匹配text的元素，否则抛出NoSuchElementException错误
+
+element = driver.find_element_by_class_name(classname) # 返回首个class匹配的元素
+element = driver.find_elements_by_class_name(classname) # 返回所有class匹配的元素，是个Array，可以通过[0],[1]等形式获取单个元素
 ```
 
 ##### 键盘操作
