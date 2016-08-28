@@ -371,3 +371,302 @@ Router.map(function() {
 但设置了`replace=true`，则在点击之后历史记录为：
 
 [..., A.html, about.html]
+
+### Action Helper
+
+当你给任意HTML DOM元素添加`{{action}}`helper的时候，都会触发通过action绑定在DOM上的事件，而那个事件是由template对应的component或者controller所提供：
+
+```html
+<!-- app/templates/components/single-post.hbs -->
+<h3><button {{action "toggleBody"}}>{{title}}</button></h3>
+{{#if isShowingBody}}
+  <p>{{{body}}}</p>
+{{/if}}
+```
+
+```javascript
+// app/components/single-post.js
+import Ember from 'ember';
+
+export default Ember.Component.extend({
+  actions: {
+    toggleBody() {
+      this.toggleProperty('isShowingBody');
+    }
+  }
+});
+```
+
+#### action的参数
+
+如果action需要接收参数，则调用方法为`{{action actionName params}}`：
+
+```html
+<p><button {{action "select" post}}>✓</button> {{post.title}}</p>
+```
+
+```javascript
+// app/components/single-post.js
+import Ember from 'ember';
+
+export default Ember.Component.extend({
+  actions: {
+    select(post) {
+      console.log(post.get('title'));
+    }
+  }
+});
+```
+
+#### 由特定的事件触发action
+
+在默认情况下，点击事件会触发action。但可以通过设置`on="XXX"`来指定事件的触发：
+
+```html
+<!-- 只有mouse up的时候才会触发事件 -->
+<p>
+  <button {{action "select" post on="mouseUp"}}>✓</button>
+  {{post.title}}
+</p>
+```
+
+#### 由特定按键触发事件
+
+可以通过`allowedKey`来指定触发事件啊按键：
+
+```html
+<!-- 只有alt才能触发 -->
+<button {{action "anActionName" allowedKeys="alt"}}>
+  click me
+</button>
+```
+
+#### 处理浏览器默认行为
+
+在默认情况下。action会阻止浏览器的默认行为，即起到`e.preventDafault`的作用。如果不想阻止默认行为，则要手动添加`preventDefault=false`：
+
+```html
+<a href="newPage.htm" {{action "logClick" preventDefault=false}}>Go</a>
+```
+
+即：
+
+- 当没有`preventDefault=false`的时候，点击链接会触发action事件，而不会导航到新的链接
+- 当存在`preventDefault=false`的时候，点击链接则正常导航到新链接
+
+#### 单向数据绑定
+
+```html
+<label>What's your favorite band?</label>
+<input type="text" value={{favoriteBand}} onblur={{action "bandDidChange" value="target.value"}} />
+```
+
+```javascript
+actions: {
+  bandDidChange(newValue) {
+    console.log(newValue);
+  }
+}
+```
+
+### [Input Helper](https://guides.emberjs.com/v2.7.0/templates/input-helpers/)
+
+`{{input}}`和`{{textarea}}`两个方法是Ember提供的便捷helper。`{{input}}`封装了`Ember.TextField`和`Ember.Checkbox`，而`{{textarea}}`方法则是封装了`Ember.TextArea`
+
+关于他们的具体使用可戳标题链接或者[这里](https://guides.emberjs.com/v2.7.0/templates/input-helpers/)
+
+### Development Helper
+
+#### log
+
+```html
+{{log XXXX}}
+```
+
+效果相当于`console.log()`
+
+#### debug
+
+```html
+{{debugger}}
+```
+
+### 写自己的helper
+
+通过建立自己的helper，我们可以在template里便捷的引用并获得想要的结果。
+
+> helper 接受Array作为参数
+
+例如，创建一个格式化金额显示的helper
+
+```bahs
+$ ember g helper format-currency
+```
+
+```javascript
+// app/helpers/format-currency.js
+import Ember from 'ember';
+
+export function formatCurrency([value, ...rest]) {
+  let dollars = Math.floor(value / 100);
+  let cents = value % 100;
+  let sign = '$';
+
+  if (cents.toString().length === 1) { cents = '0' + cents; }
+  return `${sign}${dollars}.${cents}`;
+}
+
+export default Ember.Helper.helper(formatCurrency);
+```
+
+usage:
+
+```html
+<span>total cost: {{format-currency 250}}</span>
+
+<!-- output -->
+<span>total cost: $2.50</span>
+```
+
+#### helper命名
+
+component的名称要求多个单词组成，单词中间带有`-`，而helper则没有命名限制，一个或多个单词都可以。但多个单词间要以`-`链接
+
+#### helper的参数
+
+在template中，你可以给helper传递一个或多个参数。因此helper方法本身接受一个Array作为参数：
+
+```html
+{{my-helper "hello" "world"}}
+```
+
+```javascript
+// app/helpers/my-helper.js
+import Ember from 'ember';
+
+export default Ember.Helper.helper(function(params) {
+  let [arg1, arg2] = params;
+
+  console.log(arg1); // => "hello"
+  console.log(arg2); // => "world"
+});
+```
+
+#### 命名参数
+
+helper可以指定参数的名称，因此在调用的时候可以打乱参数顺序：
+
+> 命名参数全部合在一起作为一个Object传给helper方法
+
+```javascript
+// app/helpers/format-currency.js
+import Ember from 'ember';
+
+export default Ember.Helper.helper(function([value, ...rest], namedArgs) {
+    let dollars = Math.floor(value / 100);
+    let cents = value % 100;
+    let sign = namedArgs.sign === undefined ? '$' : namedArgs.signp;
+
+    if (cents.toString().length === 1) { cents = '0' + cents; }
+    return `${sign}${dollars}.${cents}`;
+});
+```
+
+```html
+{{format-currency 350 sign="￥"}}
+<!-- output -->
+￥3.5
+```
+
+注意，命名参数在helper内，是作为一个整体的Object：
+
+```html
+{{my-helper option1="hello" option2="world" option3="goodbye cruel world"}}
+```
+
+```javascript
+// app/helpers/my-helper.js
+import Ember from 'ember';
+
+export default Ember.Helper.helper(function(params, namedArgs) {
+  console.log(namedArgs.option1); // => "hello"
+  console.log(namedArgs.option2); // => "world"
+  console.log(namedArgs.option3); // => "goodbye cruel world"
+});
+```
+
+或者你也可以这样：
+
+```javascript
+// app/helpers/my-helper.j
+import Ember from 'ember';
+
+export default Ember.Helper.helper(function(params, { option1, option2, option3 }) {
+  console.log(option1); // => "hello"
+  console.log(option2); // => "world"
+  console.log(option3); // => "goodbye cruel world"
+});
+```
+
+### 过滤helper里返回的HTML
+
+来创建一个生成`<b>`标签的helper：
+
+```javascript
+// app/helpers/make-bold.js
+import Ember from 'ember';
+
+export default Ember.Helper.helper(function([param, ...rest]) {
+    return `<b>${param}</b>`;
+});
+```
+
+然后调用它：
+
+```html
+{{make-bold "Hello World"}}
+```
+
+结果
+
+```html
+&lt;b&gt;Hello World&lt;/b&gt;
+```
+
+这是因为Ember禁止直接从方法里返回并插入一段HTML代码，以防止跨域的脚本攻击。想要成功的插入HTML，需要使用Ember的`htmlSafe`方法，将其转化为安全的形式：
+
+```javascript
+// app/helpers/make-bold.js
+import Ember from 'ember';
+
+export default Ember.Helper.helper(function([param, ...rest]) {
+  return Ember.String.htmlSafe(`<b>${param}</b>`);
+});
+```
+
+但需要重视的是，即便我们是通过`htmlSafe`返回了`SafeString`，也有可能受到XSS攻击。比如，一段聊天室的代码是这样的：
+
+```html
+Welcome back! {{make-bold model.firstName}} has joined the channel.
+```
+
+此时，一个恶意的用户或许可以把他的`firstName`写成是一段以`<script>`包含的代码，被我们的方法调用之后，就相当于往DOM里插入了一段JS。所以说，不建议通过这种形式在HTML里面插入DOM，如果想做，可以通过component来完成。
+
+但如果你真的真的非常想还是使用这样的方式插入DOM的话，则要确保自己已经将那些不可信的内容过滤过：
+
+```javascript
+// app/helpers/make-bold.js
+import Ember from 'ember';
+
+export default Ember.Helper.helper(function([param, ...rest]) {
+  let value = Ember.Handlebars.Utils.escapeExpression(param);
+  return Ember.String.htmlSafe(`<b>${value}</b>`);
+});
+```
+
+现在在把一段被`<script>`标签包裹的代码代入进去，会发现`<script>`被过滤掉了：
+
+```html
+Welcome back! <b>&lt;script
+type="javascript"&gt;alert('pwned!');&lt;/script&gt;</b> has joined the channel.
+```
