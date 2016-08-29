@@ -717,3 +717,228 @@ HTML5拖拽事件：
 - `dragOver`
 - `dragEnd`
 - `drop`
+
+### 事件触发
+
+组件类似于一个独立的黑箱。目前为止，我们已经接触了从父组件把属性传递给子组件的过程，但如果是反响的数据流呢？在Ember中，可以通过触发action来进行数据的反馈。举个栗子。
+
+#### 创建组件
+
+```bash
+$ ember g component button-with-confirm
+```
+
+我们想要能够这样：
+
+```html
+<!-- app/templates/components/user-profile.hbs -->
+{{button-with-confirm text="点击OK将删除账户"}}
+```
+
+或者这样
+
+```html
+<!-- app/templates/components/send-message.hbs -->
+{{button-with-confirm text="点击OK将发送信息"}}
+```
+
+- 在父组件里，决定事件的处理方式。比如删除账户或者发送消息
+- 在子组件里，决定什么时候事件被处罚。除此以外，我们还想在外层事件处理完成之后进行追踪
+
+#### 父组件的action
+
+在Ember中，每个组件都可以有一个叫作`actions`的属性，应该把你的事件定义在这里面。
+
+先来看下父组件的js文件。假设我们有一个叫做`user-profile`的父组件：
+
+```javascript
+// app/components/user-profile.js
+import Ember from 'ember';
+
+export default Ember.Component.extend({
+  login: Ember.inject.service(),
+
+  actions: {
+    userDidDeleteAccount() {
+      this.get('login').deleteUser();
+    }
+  }
+});
+```
+
+#### 设计子组件的action
+
+```javascript
+// app/components/button-with-confirmation.js
+import Ember from 'ember';
+
+export default Ember.Component.extend({
+
+  actions: {
+    launchConfirmDialog() {
+      this.set('confirmShown', true);
+    },
+
+    submitConfirm() {
+      // trigger action on parent component
+      this.set('confirmShown', false);
+    },
+
+    cancelConfirm() {
+      this.set('confirmShown', false);
+    }
+  }
+});
+```
+
+并且在组件的模板中这样调用方法：
+
+```html
+<!-- app/templates/components/button-with-confirmation.hbs -->
+<button {{action "launchConfirmDialog"}}>{{text}}</button>
+{{#if confirmShown}}
+  <div class="confirm-dialog">
+    <button class="confirm-submit" {{action "submitConfirm"}}>OK</button>
+    <button class="confirm-cancel" {{action "cancelConfirm"}}>Cancel</button>
+  </div>
+{{/if}}
+```
+
+#### 组件的事件传递
+
+现在，我们要做的就是在触发子组件的`submitConfirm`方法时，能够触发外层传递给子组件的方法。
+
+```html
+<!-- app/templates/components/user-profile.hbs -->
+{{button-with-confirmation text="Click here to delete your account." onConfirm=(action "userDidDeleteAccount")}}
+```
+
+```html
+<!-- app/templates/components/send-message.hbs -->
+{{button-with-confirmation text="Click to send your message." onConfirm=(action "sendMessage")}}
+```
+
+然后修改子组件的事件处理：
+
+```javascript
+// app/components/button-with-confirmation.js
+import Ember from 'ember';
+
+export default Ember.Component.extend({
+
+  actions: {
+    launchConfirmDialog() {
+      this.set('confirmShown', true);
+    },
+
+    submitConfirm() {
+      //call the onConfirm property to invoke the passed in action
+      this.get('onConfirm')();
+    },
+
+    cancelConfirm() {
+      this.set('confirmShown', false);
+    }
+  }
+});
+```
+
+#### 异步事件
+
+让父组件的异步事件返回Promise，则子组件可以在父组件事件完成之后再触发一些方法：
+
+```javascript
+// app/components/button-with-confirmation.js
+import Ember from 'ember';
+
+export default Ember.Component.extend({
+  actions: {
+    launchConfirmDialog() {
+      this.set('confirmShown', true);
+    },
+
+    submitConfirm() {
+      //call onConfirm with the value of the input field as an argument
+      const promise = this.get('onConfirm')();
+      promise.then(() => {
+        this.set('confirmShown', false);
+      });
+    },
+
+    cancelConfirm() {
+      this.set('confirmShown', false);
+    }
+  }
+});
+```
+
+#### 事件传递参数
+
+sendMessage方法期待接受一个参数：
+
+```html
+<!-- app/templates/components/send-message.hbs -->
+{{button-with-confirmation text="Click to send your message." onConfirm=(action "sendMessage" "info")}}
+```
+
+为了能够实现参数的传递：
+
+```html
+<!-- app/templates/components/button-with-confirmation.hbs -->
+<button {{action "launchConfirmDialog"}}>{{text}}</button>
+{{#if confirmShown}}
+  <div class="confirm-dialog">
+    {{yield confirmValue}}
+    <button class="confirm-submit" {{action "submitConfirm"}}>OK</button>
+    <button class="confirm-cancel" {{action "cancelConfirm"}}>Cancel</button>
+  </div>
+{{/if}}
+```
+
+```html
+<!-- app/templates/components/send-message.hbs -->
+{{#button-with-confirmation
+    text="Click to send your message."
+    onConfirm=(action "sendMessage" "info")
+    as |confirmValue|}}
+  {{input value=confirmValue}}
+{{/button-with-confirmation}}
+```
+
+```javascript
+// app/components/button-with-confirmation.js
+import Ember from 'ember';
+
+export default Ember.Component.extend({
+  actions: {
+    launchConfirmDialog() {
+      this.set("confirmShown", true);
+    },
+
+    submitConfirm() {
+      //call onConfirm with the value of the input field as an argument
+      const promise = this.get('onConfirm')(this.get('confirmValue'));
+      promise.then(() => {
+        this.set('confirmShown', false);
+      });
+    },
+
+    cancelConfirm() {
+      this.set('confirmShown', false);
+    }
+  }
+});
+```
+
+```javascript
+// app/components/send-message.js
+import Ember from 'ember';
+
+export default Ember.Component.extend({
+  actions: {
+    sendMessage(messageType, messageText) {
+      //send message here and return a promise
+    }
+  }
+});
+```
