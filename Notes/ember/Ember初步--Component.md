@@ -571,3 +571,149 @@ export default Ember.Component.extend({
 ```
 
 ### 使用块参数
+
+组件不仅可以传入参数然后渲染在DOM里，也可以作为返回值用在模板的块状表达式中。
+
+```html
+<!-- app/templates/index.hbs -->
+{{{blog-post post=model}}}
+```
+
+组件内通过`yield`来返回值
+
+```html
+<!-- app/templates/components/blog-post.hbs -->
+{{yield post.title post.body post.author}}
+```
+
+### 处理事件
+
+组件可以处理例如单击、双击、hover、key-press这样的事件
+
+#### 组件处理内部事件
+
+新建一个组件：
+
+```bash
+$ ember g component event-example
+```
+
+为了演示，组件的hbs模板可以不做改动。
+
+修改组件的js文件：
+
+```javascript
+// app/components/enevt-example.js
+import Ember from 'ember';
+
+export default Ember.Component.extend({
+  click() {
+    alert('click');
+  },
+  mouseEnter() {
+    Ember.Logger.info("mouseEnter");
+  }
+});
+```
+
+然后在模板里使用它：
+
+```html
+<!-- app/templates/index.hbs -->
+{{#event-example}}
+  hover or click here
+{{/event-example}}
+```
+
+#### 组件与外部的事件传递
+
+接着上面的栗子。假设`index.hbs`所属的`controllers/index.js`中有如下事件：
+
+```javascript
+// app/controllers/index.js
+import Ember from 'ember';
+
+export default Ember.Controller.extend({
+  actions: {
+    handleClickAction(value) {
+      alert(value);
+    }
+  }
+});
+```
+
+我们可以在`index.hbs`中把该事件传递给组件：
+
+```html
+<!-- app/templates/index.hbs -->
+{{#event-example handleClic=(action "handleClickAction")}}
+  hover or click here
+{{/event-example}}
+```
+
+而在组件js文件中：
+
+```javascript
+// app/components/enevt-example.js
+import Ember from 'ember';
+
+export default Ember.Component.extend({
+  click() {
+    // 通过sendAction来进行回调
+    this.sendAction('handleClic', 'click');
+  },
+  mouseEnter() {
+    Ember.Logger.info("mouseEnter");
+  }
+});
+```
+
+最终效果跟之前一样，在点击组件内元素的时候弹窗，内容为"click"。
+
+#### 事件名称
+
+参见：[可处理的事件名称](https://guides.emberjs.com/v2.7.0/components/handling-events/#toc_event-names)
+
+触摸事件：
+
+- `touchStart`
+- `touchMove`
+- `touchEnd`
+- `touchCancel`
+
+键盘事件：
+
+- `keyDown`
+- `keyUp`
+- `keyPress`
+
+鼠标事件：
+
+- `mouseDown`
+- `mouseUp`
+- `mouseMove`
+- `mouseEnter`
+- `mouseLeave`
+- `contextMenu`
+- `click`
+- `doubleClick`
+- `focusIn`
+- `focusOut`
+
+表单事件：
+
+- `submit`
+- `change`
+- `focusIn`
+- `focusOut`
+- `input`
+
+HTML5拖拽事件：
+
+- `drag`
+- `dragStart`
+- `dragEnter`
+- `dragLeave`
+- `dragOver`
+- `dragEnd`
+- `drop`
