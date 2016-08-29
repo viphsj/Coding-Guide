@@ -942,3 +942,32 @@ export default Ember.Component.extend({
   }
 });
 ```
+
+#### 在层层嵌套的组件中传递事件
+
+我们已经在`button-with-confirmation.hbs`组件中处理了点击事件，然后向上传递给了`user-profile.hbs`组件。现在假设删除账户的事件还要继续向上传递，交给`system-preferences-editor.hbs`组件进行处理。
+
+```html
+<!-- app/templates/components/user-profile.hbs -->
+{{button-with-confirmation onConfirm=(action deleteCurrentUser)
+  text="Click OK to delete your account."}}
+```
+
+```html
+<!-- app/templates/components/system-preferences-editor.hbs -->
+{{user-profile deleteCurrentUser=(action 'deleteUser' login.currentUser.id)}}
+```
+
+```javascript
+// app/components/system-preferences-editor.js
+import Ember from 'ember';
+
+export default Ember.Component.extend({
+  login: Ember.inject.service(),
+  actions: {
+    deleteUser(idStr) {
+      return this.get('login').deleteUserAccount(idStr);
+    }
+  }
+});
+```
