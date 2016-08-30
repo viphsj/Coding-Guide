@@ -221,6 +221,10 @@ export default DS.Model.extend({
 });
 ```
 
+### store对象
+
+可以在`controller`或者`route-handler`中通过`this.get('store')`来获取store对象
+
 ### 查询
 
 #### 查询单条数据
@@ -257,6 +261,151 @@ var blogPosts = this.get('store').peekAll('blog-post'); // => no network request
 
 #### 通过查询参数获取多数据
 
-调用`store.query()`会发送一个`GET`请求。
+调用`store.query()`会发送一个`GET`请求，并把获取的Object作为查询参数传入。该方法和`findAll`一样返回`DS.PromiseArray`。
+
+例如，下面这段代码会筛选出名字是Peter的人：
+
+```javascript
+// GET to /persons?filter[name]=Peter
+this.get('store').query('person', {
+  filter: {
+    name: 'Peter'
+  }
+}).then(function(peters) {
+  // Do something with `peters`
+});
+
+
+```
 
 #### 通过查询参数获取单数据
+
+调用`store.queryRecord()`会发送一个`GET`请求，并把获取的Object作为查询参数传入。该方法返回一个Promise，最终获取到一个查询对象：
+
+```javascript
+// GET to /persons?filter[email]=tomster@example.com
+this.get('store').queryRecord('person', {
+  filter: {
+    email: 'tomster@example.com'
+  }
+}).then(function(tomster) {
+  // do something with `tomster`
+});
+```
+
+### 创建/更新/删除 数据
+
+#### 创建一条数据
+
+`createRecord()`
+
+```javascript
+this.get('store').createRecord('post', {
+  title: 'Rails is Omakase',
+  body: 'Lorem ipsum'
+});
+```
+
+#### 更新数据
+
+```javascript
+this.get('store').findRecord('person', 1).then(function(tyrion) {
+  // ...after the record has loaded
+  tyrion.set('firstName', "Yollo");
+});
+```
+
+#### 持久储存
+
+当你对`DS.Model`的实例调用`save()`方法的时候，会发起一个http请求。
+
+在默认情况下，当创建一个新的数据的时候，Ember Data会发送一条`POST`请求：
+
+```javascript
+var post = store.createRecord('post', {
+  title: 'Rails is Omakase',
+  body: 'Lorem ipsum'
+});
+
+post.save(); // => POST to '/posts'
+```
+
+而更新一条已经存在的数据则会发送`PATCH`请求：
+
+```javascript
+store.findRecord('post', 1).then(function(post) {
+  post.get('title'); // => "Rails is Omakase"
+
+  post.set('title', 'A new post');
+
+  post.save(); // => PATCH to '/posts/1'
+});
+```
+
+当你改变数据某属性的值，而还没有保存时，可以通过数据的`hasDirtyAttributes`属性来分辨它是否被改变，而且还可以通过`changedAttributes()`方法获取数据被改变的属性，以及改变前后的属性值的对比`[oldValue, newValue]`：
+
+```javascript
+person.get('isAdmin');            //=> false
+person.get('hasDirtyAttributes'); //=> false
+person.set('isAdmin', true);
+person.get('hasDirtyAttributes'); //=> true
+person.changedAttributes();       //=> { isAdmin: [false, true] 
+```
+
+在这个时候（改变数据但还没save），你可以选择使用`save()`来保存变动，也可以使用`rollbackAttributes()`回滚到改动之前的状态。
+
+> 如果这个数据是刚刚建立的，那么使用`rollbackAttributes()`则会将它从store中去除。
+
+```javascript
+person.get('hasDirtyAttributes'); //=> true
+person.changedAttributes();       //=> { isAdmin: [false, true] }
+
+person.rollbackAttributes();
+
+person.get('hasDirtyAttributes'); //=> false
+person.get('isAdmin');            //=> false
+person.changedAttributes();       //=> {}
+```
+
+#### Promise
+
+`save()`方法会返回一个promise：
+
+```javascript
+var post = store.createRecord('post', {
+  title: 'Rails is Omakase',
+  body: 'Lorem ipsum'
+});
+
+var self = this;
+
+function transitionToPost(post) {
+  self.transitionToRoute('posts.show', post);
+}
+
+function failure(reason) {
+  // handle the error
+}
+
+post.save().then(transitionToPost).catch(failure);
+
+// => POST to '/posts'
+// => transitioning to posts.show route
+```
+
+#### 删除记录
+
+对一条记录调用`deleteRecord()`之后，会将它标记为`isDeleted`，之后再通过`save()`方法就能将它删除。或者你也可以使用`destroyRecord()`来直接删除它：
+
+```javascript
+store.findRecord('post', 1, { backgroundReload: false }).then(function(post) {
+  post.deleteRecord();
+  post.get('isDeleted'); // => true
+  post.save(); // => DELETE to /posts/1
+});
+
+// OR
+store.findRecord('post', 2, { backgroundReload: false }).then(function(post) {
+  post.destroyRecord(); // => DELETE to /posts/2
+});
+```
