@@ -1,3 +1,42 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [Ember初步--Template](#ember%E5%88%9D%E6%AD%A5--template)
+  - [内建的helper方法](#%E5%86%85%E5%BB%BA%E7%9A%84helper%E6%96%B9%E6%B3%95)
+    - [`get`方法](#get%E6%96%B9%E6%B3%95)
+    - [`concat`方法](#concat%E6%96%B9%E6%B3%95)
+  - [条件语句](#%E6%9D%A1%E4%BB%B6%E8%AF%AD%E5%8F%A5)
+    - [if](#if)
+    - [unless](#unless)
+  - [列表](#%E5%88%97%E8%A1%A8)
+  - [显示对象的键](#%E6%98%BE%E7%A4%BA%E5%AF%B9%E8%B1%A1%E7%9A%84%E9%94%AE)
+    - [重新渲染](#%E9%87%8D%E6%96%B0%E6%B8%B2%E6%9F%93)
+    - [序列](#%E5%BA%8F%E5%88%97)
+    - [空列表](#%E7%A9%BA%E5%88%97%E8%A1%A8)
+  - [绑定元素属性](#%E7%BB%91%E5%AE%9A%E5%85%83%E7%B4%A0%E5%B1%9E%E6%80%A7)
+  - [Link](#link)
+    - [带有变量的`link-to`](#%E5%B8%A6%E6%9C%89%E5%8F%98%E9%87%8F%E7%9A%84link-to)
+    - [给link设置查询参数](#%E7%BB%99link%E8%AE%BE%E7%BD%AE%E6%9F%A5%E8%AF%A2%E5%8F%82%E6%95%B0)
+    - [replace history entries](#replace-history-entries)
+  - [Action Helper](#action-helper)
+    - [action的参数](#action%E7%9A%84%E5%8F%82%E6%95%B0)
+    - [由特定的事件触发action](#%E7%94%B1%E7%89%B9%E5%AE%9A%E7%9A%84%E4%BA%8B%E4%BB%B6%E8%A7%A6%E5%8F%91action)
+    - [由特定按键触发事件](#%E7%94%B1%E7%89%B9%E5%AE%9A%E6%8C%89%E9%94%AE%E8%A7%A6%E5%8F%91%E4%BA%8B%E4%BB%B6)
+    - [处理浏览器默认行为](#%E5%A4%84%E7%90%86%E6%B5%8F%E8%A7%88%E5%99%A8%E9%BB%98%E8%AE%A4%E8%A1%8C%E4%B8%BA)
+    - [单向数据绑定](#%E5%8D%95%E5%90%91%E6%95%B0%E6%8D%AE%E7%BB%91%E5%AE%9A)
+  - [Input Helper](#input-helper)
+  - [Development Helper](#development-helper)
+    - [log](#log)
+    - [debug](#debug)
+  - [写自己的helper](#%E5%86%99%E8%87%AA%E5%B7%B1%E7%9A%84helper)
+    - [helper命名](#helper%E5%91%BD%E5%90%8D)
+    - [helper的参数](#helper%E7%9A%84%E5%8F%82%E6%95%B0)
+    - [命名参数](#%E5%91%BD%E5%90%8D%E5%8F%82%E6%95%B0)
+  - [过滤helper里返回的HTML](#%E8%BF%87%E6%BB%A4helper%E9%87%8C%E8%BF%94%E5%9B%9E%E7%9A%84html)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 ## Ember初步--Template
 
 Ember使用[Handlebars](http://www.handlebarsjs.com/)作为模板引擎，并使用`{{}}`的方式来渲染变量。

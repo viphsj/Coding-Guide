@@ -1,3 +1,42 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [Ember初步--Component](#ember%E5%88%9D%E6%AD%A5--component)
+  - [定义一个Component](#%E5%AE%9A%E4%B9%89%E4%B8%80%E4%B8%AAcomponent)
+    - [新建component](#%E6%96%B0%E5%BB%BAcomponent)
+    - [定义component类](#%E5%AE%9A%E4%B9%89component%E7%B1%BB)
+  - [component的生命周期](#component%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F)
+    - [生命周期回调函数的调用顺序](#%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E5%9B%9E%E8%B0%83%E5%87%BD%E6%95%B0%E7%9A%84%E8%B0%83%E7%94%A8%E9%A1%BA%E5%BA%8F)
+    - [Examples](#examples)
+      - [当组件的属性被改变时会触发`didUpdateAttrs`方法](#%E5%BD%93%E7%BB%84%E4%BB%B6%E7%9A%84%E5%B1%9E%E6%80%A7%E8%A2%AB%E6%94%B9%E5%8F%98%E6%97%B6%E4%BC%9A%E8%A7%A6%E5%8F%91didupdateattrs%E6%96%B9%E6%B3%95)
+      - [通过`didReceiveAttrs`来统一属性的格式](#%E9%80%9A%E8%BF%87didreceiveattrs%E6%9D%A5%E7%BB%9F%E4%B8%80%E5%B1%9E%E6%80%A7%E7%9A%84%E6%A0%BC%E5%BC%8F)
+      - [通过`didInsertElement`融入第三方组件](#%E9%80%9A%E8%BF%87didinsertelement%E8%9E%8D%E5%85%A5%E7%AC%AC%E4%B8%89%E6%96%B9%E7%BB%84%E4%BB%B6)
+      - [更新DOM之后触发`didRender`](#%E6%9B%B4%E6%96%B0dom%E4%B9%8B%E5%90%8E%E8%A7%A6%E5%8F%91didrender)
+      - [在`willDestroyElement`中卸载组件](#%E5%9C%A8willdestroyelement%E4%B8%AD%E5%8D%B8%E8%BD%BD%E7%BB%84%E4%BB%B6)
+  - [给组件传递属性](#%E7%BB%99%E7%BB%84%E4%BB%B6%E4%BC%A0%E9%80%92%E5%B1%9E%E6%80%A7)
+    - [组件的位置参数](#%E7%BB%84%E4%BB%B6%E7%9A%84%E4%BD%8D%E7%BD%AE%E5%8F%82%E6%95%B0)
+  - [拿组件来包裹DOM（给组件传入DOM）](#%E6%8B%BF%E7%BB%84%E4%BB%B6%E6%9D%A5%E5%8C%85%E8%A3%B9dom%EF%BC%88%E7%BB%99%E7%BB%84%E4%BB%B6%E4%BC%A0%E5%85%A5dom%EF%BC%89)
+  - [自定义包裹组件的HTML标签](#%E8%87%AA%E5%AE%9A%E4%B9%89%E5%8C%85%E8%A3%B9%E7%BB%84%E4%BB%B6%E7%9A%84html%E6%A0%87%E7%AD%BE)
+    - [定义包裹组件的标签](#%E5%AE%9A%E4%B9%89%E5%8C%85%E8%A3%B9%E7%BB%84%E4%BB%B6%E7%9A%84%E6%A0%87%E7%AD%BE)
+    - [定义包裹组件的标签的类名](#%E5%AE%9A%E4%B9%89%E5%8C%85%E8%A3%B9%E7%BB%84%E4%BB%B6%E7%9A%84%E6%A0%87%E7%AD%BE%E7%9A%84%E7%B1%BB%E5%90%8D)
+    - [自定义绑定包裹标签的其他属性](#%E8%87%AA%E5%AE%9A%E4%B9%89%E7%BB%91%E5%AE%9A%E5%8C%85%E8%A3%B9%E6%A0%87%E7%AD%BE%E7%9A%84%E5%85%B6%E4%BB%96%E5%B1%9E%E6%80%A7)
+  - [使用块参数](#%E4%BD%BF%E7%94%A8%E5%9D%97%E5%8F%82%E6%95%B0)
+  - [处理事件](#%E5%A4%84%E7%90%86%E4%BA%8B%E4%BB%B6)
+    - [组件处理内部事件](#%E7%BB%84%E4%BB%B6%E5%A4%84%E7%90%86%E5%86%85%E9%83%A8%E4%BA%8B%E4%BB%B6)
+    - [组件与外部的事件传递](#%E7%BB%84%E4%BB%B6%E4%B8%8E%E5%A4%96%E9%83%A8%E7%9A%84%E4%BA%8B%E4%BB%B6%E4%BC%A0%E9%80%92)
+    - [事件名称](#%E4%BA%8B%E4%BB%B6%E5%90%8D%E7%A7%B0)
+  - [事件触发](#%E4%BA%8B%E4%BB%B6%E8%A7%A6%E5%8F%91)
+    - [创建组件](#%E5%88%9B%E5%BB%BA%E7%BB%84%E4%BB%B6)
+    - [父组件的action](#%E7%88%B6%E7%BB%84%E4%BB%B6%E7%9A%84action)
+    - [设计子组件的action](#%E8%AE%BE%E8%AE%A1%E5%AD%90%E7%BB%84%E4%BB%B6%E7%9A%84action)
+    - [组件的事件传递](#%E7%BB%84%E4%BB%B6%E7%9A%84%E4%BA%8B%E4%BB%B6%E4%BC%A0%E9%80%92)
+    - [异步事件](#%E5%BC%82%E6%AD%A5%E4%BA%8B%E4%BB%B6)
+    - [事件传递参数](#%E4%BA%8B%E4%BB%B6%E4%BC%A0%E9%80%92%E5%8F%82%E6%95%B0)
+    - [在层层嵌套的组件中传递事件](#%E5%9C%A8%E5%B1%82%E5%B1%82%E5%B5%8C%E5%A5%97%E7%9A%84%E7%BB%84%E4%BB%B6%E4%B8%AD%E4%BC%A0%E9%80%92%E4%BA%8B%E4%BB%B6)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 ## Ember初步--Component
 
 ### 定义一个Component

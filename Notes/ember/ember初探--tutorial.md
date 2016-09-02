@@ -1,3 +1,35 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [Ember初探--Tutorial](#ember%E5%88%9D%E6%8E%A2--tutorial)
+  - [创建新的应用](#%E5%88%9B%E5%BB%BA%E6%96%B0%E7%9A%84%E5%BA%94%E7%94%A8)
+    - [初始化应用](#%E5%88%9D%E5%A7%8B%E5%8C%96%E5%BA%94%E7%94%A8)
+    - [目录结构](#%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84)
+    - [start server](#start-server)
+  - [测试先行](#%E6%B5%8B%E8%AF%95%E5%85%88%E8%A1%8C)
+  - [Routes & Templates](#routes-&-templates)
+    - [新建about路由](#%E6%96%B0%E5%BB%BAabout%E8%B7%AF%E7%94%B1)
+    - [新建contact路由](#%E6%96%B0%E5%BB%BAcontact%E8%B7%AF%E7%94%B1)
+    - [使用`{{link-to}}`编写导航](#%E4%BD%BF%E7%94%A8link-to%E7%BC%96%E5%86%99%E5%AF%BC%E8%88%AA)
+    - [增加首页](#%E5%A2%9E%E5%8A%A0%E9%A6%96%E9%A1%B5)
+    - [各页面使用通用的导航栏](#%E5%90%84%E9%A1%B5%E9%9D%A2%E4%BD%BF%E7%94%A8%E9%80%9A%E7%94%A8%E7%9A%84%E5%AF%BC%E8%88%AA%E6%A0%8F)
+  - [Model](#model)
+  - [安装附加插件](#%E5%AE%89%E8%A3%85%E9%99%84%E5%8A%A0%E6%8F%92%E4%BB%B6)
+    - [ember-cli-tutorial-style](#ember-cli-tutorial-style)
+    - [ember-cli-mirage](#ember-cli-mirage)
+  - [使用Ember Data](#%E4%BD%BF%E7%94%A8ember-data)
+    - [更新Model Hook（route handler）](#%E6%9B%B4%E6%96%B0model-hook%EF%BC%88route-handler%EF%BC%89)
+  - [建立简单的组件](#%E5%BB%BA%E7%AB%8B%E7%AE%80%E5%8D%95%E7%9A%84%E7%BB%84%E4%BB%B6)
+    - [组件的组成](#%E7%BB%84%E4%BB%B6%E7%9A%84%E7%BB%84%E6%88%90)
+    - [放大/缩小图片](#%E6%94%BE%E5%A4%A7%E7%BC%A9%E5%B0%8F%E5%9B%BE%E7%89%87)
+  - [建立Handlebars Helper](#%E5%BB%BA%E7%AB%8Bhandlebars-helper)
+  - [建立复杂组件](#%E5%BB%BA%E7%AB%8B%E5%A4%8D%E6%9D%82%E7%BB%84%E4%BB%B6)
+  - [Services and Utilities](#services-and-utilities)
+  - [部署](#%E9%83%A8%E7%BD%B2)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 ## Ember初探--Tutorial
 
 ### 创建新的应用

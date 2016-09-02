@@ -1,3 +1,11 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [Ember初步--Controller](#ember%E5%88%9D%E6%AD%A5--controller)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 ## Ember初步--Controller
 
 Controller就像是一个特殊的Component，由route-handler来进行处理，并作为最终`model()`的返回值。

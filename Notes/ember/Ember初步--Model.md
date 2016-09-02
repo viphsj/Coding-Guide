@@ -1,3 +1,40 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [Ember初步--Model](#ember%E5%88%9D%E6%AD%A5--model)
+  - [Model概览](#model%E6%A6%82%E8%A7%88)
+    - [Model](#model)
+    - [Records](#records)
+    - [Adapter](#adapter)
+    - [Caching](#caching)
+    - [架构一览](#%E6%9E%B6%E6%9E%84%E4%B8%80%E8%A7%88)
+  - [定义Model](#%E5%AE%9A%E4%B9%89model)
+    - [创建model](#%E5%88%9B%E5%BB%BAmodel)
+    - [定义Attributes](#%E5%AE%9A%E4%B9%89attributes)
+    - [指定类型](#%E6%8C%87%E5%AE%9A%E7%B1%BB%E5%9E%8B)
+      - [基本类型](#%E5%9F%BA%E6%9C%AC%E7%B1%BB%E5%9E%8B)
+      - [自定义类型](#%E8%87%AA%E5%AE%9A%E4%B9%89%E7%B1%BB%E5%9E%8B)
+    - [Options](#options)
+  - [store对象](#store%E5%AF%B9%E8%B1%A1)
+  - [查询](#%E6%9F%A5%E8%AF%A2)
+    - [查询单条数据](#%E6%9F%A5%E8%AF%A2%E5%8D%95%E6%9D%A1%E6%95%B0%E6%8D%AE)
+    - [查询多条数据](#%E6%9F%A5%E8%AF%A2%E5%A4%9A%E6%9D%A1%E6%95%B0%E6%8D%AE)
+    - [通过查询参数获取多数据](#%E9%80%9A%E8%BF%87%E6%9F%A5%E8%AF%A2%E5%8F%82%E6%95%B0%E8%8E%B7%E5%8F%96%E5%A4%9A%E6%95%B0%E6%8D%AE)
+    - [通过查询参数获取单数据](#%E9%80%9A%E8%BF%87%E6%9F%A5%E8%AF%A2%E5%8F%82%E6%95%B0%E8%8E%B7%E5%8F%96%E5%8D%95%E6%95%B0%E6%8D%AE)
+  - [创建/更新/删除 数据](#%E5%88%9B%E5%BB%BA%E6%9B%B4%E6%96%B0%E5%88%A0%E9%99%A4-%E6%95%B0%E6%8D%AE)
+    - [创建一条数据](#%E5%88%9B%E5%BB%BA%E4%B8%80%E6%9D%A1%E6%95%B0%E6%8D%AE)
+    - [更新数据](#%E6%9B%B4%E6%96%B0%E6%95%B0%E6%8D%AE)
+    - [持久储存](#%E6%8C%81%E4%B9%85%E5%82%A8%E5%AD%98)
+    - [Promise](#promise)
+    - [删除记录](#%E5%88%A0%E9%99%A4%E8%AE%B0%E5%BD%95)
+  - [数据关系](#%E6%95%B0%E6%8D%AE%E5%85%B3%E7%B3%BB)
+    - [One-to-One](#one-to-one)
+    - [One-to-Many](#one-to-many)
+    - [Many-to-Many](#many-to-many)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 ## Ember初步--Model
 
 model相当于应用的数据结构。它应该是可持续化的。这意味着当用户离开当前窗口时，不期望会有数据丢失的情况发生。因此，当用户对model的数据做出改变的时候，你需要把它在什么地方储存起来。
@@ -407,5 +444,69 @@ store.findRecord('post', 1, { backgroundReload: false }).then(function(post) {
 // OR
 store.findRecord('post', 2, { backgroundReload: false }).then(function(post) {
   post.destroyRecord(); // => DELETE to /posts/2
+});
+```
+
+### 数据关系
+
+#### One-to-One
+
+通过`DS.belongsTo`来定义一对一的数据关系：
+
+```javascript
+// app/models/user.js
+import DS from 'ember-data';
+
+export default DS.Model.extend({
+  profile: DS.belongsTo('profile')
+});
+```
+
+```javascript
+// app/models/profile.js
+import DS from 'ember-data';
+
+export default DS.Model.extend({
+  user: DS.belongsTo('user')
+});
+```
+
+#### One-to-Many
+
+```javascript
+// app/models/blog-post.js
+import DS from 'ember-data';
+
+export default DS.Model.extend({
+  comments: DS.hasMany('comment')
+});
+```
+
+```javascript
+// app/models/comment.js
+import DS from 'ember-data';
+
+export default DS.Model.extend({
+  blogPost: DS.belongsTo('blog-post')
+});
+```
+
+#### Many-to-Many
+
+```javascript
+// app/models/blog-post.js
+import DS from 'ember-data';
+
+export default DS.Model.extend({
+  tags: DS.hasMany('tag')
+});
+```
+
+```javascript
+// app/models/tag.js
+import DS from 'ember-data';
+
+export default DS.Model.extend({
+  blogPosts: DS.hasMany('blog-post')
 });
 ```

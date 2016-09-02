@@ -1,3 +1,48 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [Ember初步--Routing](#ember%E5%88%9D%E6%AD%A5--routing)
+  - [定义路由](#%E5%AE%9A%E4%B9%89%E8%B7%AF%E7%94%B1)
+    - [基本路由](#%E5%9F%BA%E6%9C%AC%E8%B7%AF%E7%94%B1)
+    - [Nested Routes](#nested-routes)
+    - [application route](#application-route)
+    - [index route](#index-route)
+    - [动态片段](#%E5%8A%A8%E6%80%81%E7%89%87%E6%AE%B5)
+    - [全局路由/多URL匹配的路由](#%E5%85%A8%E5%B1%80%E8%B7%AF%E7%94%B1%E5%A4%9Aurl%E5%8C%B9%E9%85%8D%E7%9A%84%E8%B7%AF%E7%94%B1)
+  - [Route Model](#route-model)
+    - [静态model](#%E9%9D%99%E6%80%81model)
+    - [动态model](#%E5%8A%A8%E6%80%81model)
+    - [多model](#%E5%A4%9Amodel)
+  - [渲染模板](#%E6%B8%B2%E6%9F%93%E6%A8%A1%E6%9D%BF)
+  - [重定向](#%E9%87%8D%E5%AE%9A%E5%90%91)
+    - [Transitioning Before the Model is Known](#transitioning-before-the-model-is-known)
+    - [Transitioning After the Model is Known](#transitioning-after-the-model-is-known)
+    - [子路由](#%E5%AD%90%E8%B7%AF%E7%94%B1)
+  - [阻止和重试路由跳转](#%E9%98%BB%E6%AD%A2%E5%92%8C%E9%87%8D%E8%AF%95%E8%B7%AF%E7%94%B1%E8%B7%B3%E8%BD%AC)
+    - [通过`willTransition`阻止路由跳转](#%E9%80%9A%E8%BF%87willtransition%E9%98%BB%E6%AD%A2%E8%B7%AF%E7%94%B1%E8%B7%B3%E8%BD%AC)
+    - [通过model内的`beforeModel`和`afterModel`方法阻止跳转](#%E9%80%9A%E8%BF%87model%E5%86%85%E7%9A%84beforemodel%E5%92%8Caftermodel%E6%96%B9%E6%B3%95%E9%98%BB%E6%AD%A2%E8%B7%B3%E8%BD%AC)
+    - [储存/重试路由转变](#%E5%82%A8%E5%AD%98%E9%87%8D%E8%AF%95%E8%B7%AF%E7%94%B1%E8%BD%AC%E5%8F%98)
+  - [Loading/Error状态](#loadingerror%E7%8A%B6%E6%80%81)
+    - [`loading`状态](#loading%E7%8A%B6%E6%80%81)
+      - [加载loading模板](#%E5%8A%A0%E8%BD%BDloading%E6%A8%A1%E6%9D%BF)
+      - [loading事件](#loading%E4%BA%8B%E4%BB%B6)
+    - [`error`状态](#error%E7%8A%B6%E6%80%81)
+      - [error模板](#error%E6%A8%A1%E6%9D%BF)
+      - [error事件](#error%E4%BA%8B%E4%BB%B6)
+  - [URL参数](#url%E5%8F%82%E6%95%B0)
+    - [特定的URL参数](#%E7%89%B9%E5%AE%9A%E7%9A%84url%E5%8F%82%E6%95%B0)
+    - [通过`link-to`helper给URL带上参数](#%E9%80%9A%E8%BF%87link-tohelper%E7%BB%99url%E5%B8%A6%E4%B8%8A%E5%8F%82%E6%95%B0)
+    - [通过`transitionTo`加参数](#%E9%80%9A%E8%BF%87transitionto%E5%8A%A0%E5%8F%82%E6%95%B0)
+    - [Opting into a full transition](#opting-into-a-full-transition)
+    - [使用`replaceState`更新路由](#%E4%BD%BF%E7%94%A8replacestate%E6%9B%B4%E6%96%B0%E8%B7%AF%E7%94%B1)
+    - [参数名映射](#%E5%8F%82%E6%95%B0%E5%90%8D%E6%98%A0%E5%B0%84)
+    - [默认值和反序列化](#%E9%BB%98%E8%AE%A4%E5%80%BC%E5%92%8C%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96)
+    - [粘性参数](#%E7%B2%98%E6%80%A7%E5%8F%82%E6%95%B0)
+  - [异步路由](#%E5%BC%82%E6%AD%A5%E8%B7%AF%E7%94%B1)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 ## Ember初步--Routing
 
 Ember中的Router会把URL交给`route handler`来处理，每个Route Handler可以做如下的事情：

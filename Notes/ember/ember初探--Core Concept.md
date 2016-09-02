@@ -4,6 +4,7 @@
 
 - [Ember初探--Core Concept](#ember%E5%88%9D%E6%8E%A2--core-concept)
   - [core concept](#core-concept)
+    - [initial app](#initial-app)
     - [router & route handler](#router-&-route-handler)
     - [model & template](#model-&-template)
     - [component](#component)

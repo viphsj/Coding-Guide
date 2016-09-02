@@ -1,3 +1,42 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [Ember初探--Ember中的对象](#ember%E5%88%9D%E6%8E%A2--ember%E4%B8%AD%E7%9A%84%E5%AF%B9%E8%B1%A1)
+  - [类和实例](#%E7%B1%BB%E5%92%8C%E5%AE%9E%E4%BE%8B)
+    - [定义类](#%E5%AE%9A%E4%B9%89%E7%B1%BB)
+    - [复写父类的方法](#%E5%A4%8D%E5%86%99%E7%88%B6%E7%B1%BB%E7%9A%84%E6%96%B9%E6%B3%95)
+    - [创建实例](#%E5%88%9B%E5%BB%BA%E5%AE%9E%E4%BE%8B)
+    - [初始化实例](#%E5%88%9D%E5%A7%8B%E5%8C%96%E5%AE%9E%E4%BE%8B)
+    - [获取对象的属性](#%E8%8E%B7%E5%8F%96%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%B1%9E%E6%80%A7)
+  - [Reopen 类和实例](#reopen-%E7%B1%BB%E5%92%8C%E5%AE%9E%E4%BE%8B)
+  - [计算属性](#%E8%AE%A1%E7%AE%97%E5%B1%9E%E6%80%A7)
+    - [计算属性实例](#%E8%AE%A1%E7%AE%97%E5%B1%9E%E6%80%A7%E5%AE%9E%E4%BE%8B)
+    - [链式计算属性](#%E9%93%BE%E5%BC%8F%E8%AE%A1%E7%AE%97%E5%B1%9E%E6%80%A7)
+    - [动态更新](#%E5%8A%A8%E6%80%81%E6%9B%B4%E6%96%B0)
+    - [改变计算属性](#%E6%94%B9%E5%8F%98%E8%AE%A1%E7%AE%97%E5%B1%9E%E6%80%A7)
+    - [计算属性宏](#%E8%AE%A1%E7%AE%97%E5%B1%9E%E6%80%A7%E5%AE%8F)
+    - [计算属性和数据汇总](#%E8%AE%A1%E7%AE%97%E5%B1%9E%E6%80%A7%E5%92%8C%E6%95%B0%E6%8D%AE%E6%B1%87%E6%80%BB)
+  - [观察者](#%E8%A7%82%E5%AF%9F%E8%80%85)
+    - [观察者和异步](#%E8%A7%82%E5%AF%9F%E8%80%85%E5%92%8C%E5%BC%82%E6%AD%A5)
+    - [观察者和对象初始化](#%E8%A7%82%E5%AF%9F%E8%80%85%E5%92%8C%E5%AF%B9%E8%B1%A1%E5%88%9D%E5%A7%8B%E5%8C%96)
+    - [未使用过的计算属性不会触发观察者](#%E6%9C%AA%E4%BD%BF%E7%94%A8%E8%BF%87%E7%9A%84%E8%AE%A1%E7%AE%97%E5%B1%9E%E6%80%A7%E4%B8%8D%E4%BC%9A%E8%A7%A6%E5%8F%91%E8%A7%82%E5%AF%9F%E8%80%85)
+    - [在class外定义](#%E5%9C%A8class%E5%A4%96%E5%AE%9A%E4%B9%89)
+  - [事件绑定](#%E4%BA%8B%E4%BB%B6%E7%BB%91%E5%AE%9A)
+    - [双向绑定](#%E5%8F%8C%E5%90%91%E7%BB%91%E5%AE%9A)
+    - [单向绑定](#%E5%8D%95%E5%90%91%E7%BB%91%E5%AE%9A)
+  - [可枚举对象](#%E5%8F%AF%E6%9E%9A%E4%B8%BE%E5%AF%B9%E8%B1%A1)
+    - [使用观察者方法和属性](#%E4%BD%BF%E7%94%A8%E8%A7%82%E5%AF%9F%E8%80%85%E6%96%B9%E6%B3%95%E5%92%8C%E5%B1%9E%E6%80%A7)
+    - [API概览](#api%E6%A6%82%E8%A7%88)
+      - [遍历可枚举对象](#%E9%81%8D%E5%8E%86%E5%8F%AF%E6%9E%9A%E4%B8%BE%E5%AF%B9%E8%B1%A1)
+      - [第一个和最后一个元素](#%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%92%8C%E6%9C%80%E5%90%8E%E4%B8%80%E4%B8%AA%E5%85%83%E7%B4%A0)
+      - [map](#map)
+      - [filter](#filter)
+      - [find](#find)
+      - [Every or Any](#every-or-any)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 ## Ember初探--Ember中的对象
 
 你或许已经发现，虽然Ember已经支持了ES6，但JS中的class和ES2015的class还没有在Ember中得到广泛运用。而原生的JS对象并不对属性改变进行监听，所以，在Ember中大量使用的是一种名为`Ember.Object`的对象。
