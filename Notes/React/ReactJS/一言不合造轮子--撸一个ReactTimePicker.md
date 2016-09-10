@@ -72,9 +72,9 @@ UI方面没得说，我是妥妥的`Material Design`党。这次也是着急动�
 
 这样有哪些好处呢？举个栗子：
 
-1. 我们在做组件的时候，先做了小时的选择，然后做分钟的选择。但两个picker的UI不同点主要集中在数字在表盘的布局上，以及一些选择的代码逻辑。这样的话我们就可以保持大体框架不变，只改变表盘中心渲染的数字布局即可。
+- 我们在做组件的时候，先做了小时的选择，然后做分钟的选择。但两个picker的UI不同点主要集中在数字在表盘的布局上，以及一些选择的代码逻辑。这样的话我们就可以保持大体框架不变，只改变表盘中心渲染的数字布局即可。
 
-假设下图是小时选择器：
+假设下图是小时选择器：（请原谅我可怜的绘图）
 
 ![hour-picker](../../../image/timepicker/hour-picker.png)
 
@@ -82,7 +82,7 @@ UI方面没得说，我是妥妥的`Material Design`党。这次也是着急动�
 
 ![minute-picker](../../../image/timepicker/minute-picker.png)
 
-2. 而我们按照这样的架构撸完代码之后，如果想额外做一些其他的东西，比如支持12小时制，那么小时和分钟的选择则应该集中在一个表盘modal上（也就是长得和正常是时钟一样）。在这样的需求下，我们需要在一个表盘里同时渲染小时和分钟的数字布局，而其他的东西，比如说modal啊，指针啊依旧保持原样（一样的指针组件，只不过渲染了两个）。
+- 而我们按照这样的架构撸完代码之后，如果想额外做一些其他的东西，比如支持12小时制，那么小时和分钟的选择则应该集中在一个表盘modal上（也就是长得和正常是时钟一样）。在这样的需求下，我们需要在一个表盘里同时渲染小时和分钟的数字布局，而其他的东西，比如说modal啊，指针啊依旧保持原样（一样的指针组件，只不过渲染了两个）。
 
 ![24hours mode](../../../image/timepicker/24HoursMode.png)
 
@@ -582,6 +582,7 @@ render() {
   let {time} = this.props;
   let {draging, height, top, pointerRotate} = this.state;
   let pickerPointerClass = draging ? "picker_pointer" : "picker_pointer animation";
+
   // handleMouseDown事件绑定在了“pointer_drag”上，它位于指针最顶端的位置
   return (
     <div className="picker_handler">
@@ -601,3 +602,120 @@ render() {
   )
 }
 ```
+
+> 至此，我们的工作就已经完成了（才没有）。但这其实离一个合格的NPM包还有一段距离。除了基本的代码编写，我们还需要有单元测试，需要对包进行编译和发布。
+
+### 测试
+
+使用`mocha`+`chai`和`enzyme`来进行React组件的单元测试：
+
+```bash
+$ npm i mocha --save-dev
+$ npm i chai --save-dev
+$ npm i enzyme --save-dev
+$ npm i react-addons-test-utils --save-dev
+
+# 除此之外，为了模拟React中的事件，还需要安装：
+$ npm i sinon --save-dev
+$ npm i sinon-sandbox --save-dev
+```
+
+然后配置`package.json`：
+
+```json
+"scripts": {
+  "mocha": "./node_modules/mocha/bin/mocha --compilers js:babel-register,jsx:babel-register",
+  "test": "npm run mocha test"
+}
+```
+
+请注意，为了能够检查ES6和React，确保自己安装了需要的babel插件：
+
+```bash
+$ npm i babel-register --save-dev
+$ npm i babel-preset-react --save-dev
+$ npm i babel-preset-es2015 --save-dev
+```
+
+并在项目根目录下配置了`.babelrc`文件：
+
+```
+{
+  "presets": ["react", "es2015"]
+}
+```
+
+然后在项目根目录下新建`test`文件夹，开始编写测试。
+
+编写`TimePicker`组件的测试：
+
+```javascript
+// test/TimePicker_init_spec.jsx
+
+import React from 'react';
+import {expect} from 'chai';
+import {shallow} from 'enzyme';
+import moment from 'moment';
+
+import OutsideClickHandler from '../../src/components/OutsideClickHandler';
+import TimePickerModal from '../../src/components/TimePickerModal';
+
+describe('TimePicker initial', () => {
+  it('should be wrappered by div.time_picker_container', () => {
+    // 检查组件是否被正确的渲染。期待检测到组件最外层div的class
+    const wrapper = shallow(<TimePicker />);
+    expect(wrapper.is('.time_picker_container')).to.equal(true);
+  });
+
+  it('renders an OutsideClickHandler', () => {
+    // 期待渲染出来的组件中含有OutsideClickHandler组件
+    const wrapper = shallow(<TimePicker />);
+    expect(wrapper.find(OutsideClickHandler)).to.have.lengthOf(1);
+  });
+
+  it('should rendered with default time in child props', () => {
+    // 提供默认time，期待TimePickerModal能够获取正确的hour和minute
+    const wrapper = shallow(<TimePicker defaultTime="22:23" />);
+    expect(wrapper.find(TimePickerModal).props().hour).to.equal("22");
+    expect(wrapper.find(TimePickerModal).props().minute).to.equal("23");
+  });
+
+  it('should rendered with current time in child props', () => {
+    // 在没有默认时间的情况下，期待TimePickerModal获取的hour和minute与当前的小时和分钟相同
+    const wrapper = shallow(<TimePicker />);
+    const [hour, minute] = moment().format("HH:mm").split(':');
+    expect(wrapper.find(TimePickerModal).props().hour).to.equal(hour);
+    expect(wrapper.find(TimePickerModal).props().minute).to.equal(minute);
+  });
+})
+```
+
+```javascript
+// test/TimePicker_func_spec.jsx
+import React from 'react';
+import {expect} from 'chai';
+import {shallow} from 'enzyme';
+import sinon from 'sinon-sandbox';
+import TimePicker from '../../src/components/TimePicker';
+
+describe('handle focus change func', () => {
+  it('should focus', () => {
+    const wrapper = shallow(<TimePicker />);
+    // 通过wrapper.instance()获取组件实例
+    // 并调用了它的方法onFocus，并期待该方法能够改变组件的focused状态
+    wrapper.instance().onFocus();
+    expect(wrapper.state().focused).to.equal(true);
+  });
+
+  it('should change callback when hour change', () => {
+    // 给组件传入onHourChangeStub方法作为onHourChange时的回调
+    // 之后手动调用onHourChange方法，并期待onHourChangeStub方法被调用了一次
+    const onHourChangeStub = sinon.stub();
+    const wrapper = shallow(<TimePicker onHourChange={onHourChangeStub}/ />);
+    wrapper.instance().handleHourChange(1);
+    expect(onHourChangeStub.callCount).to.equal(1);
+  });
+})
+```
+
+
