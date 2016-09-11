@@ -4,6 +4,10 @@
 
 > 文章记录了一次创建独立React组件并做成NPM包的过程，将会涉及到React开发、单页测试、Webpack等内容。
 
+先看下最终的效果~
+
+![react-times.gif](../../../image/timepicker/react-times.gif)
+
 ### 起因
 
 因为我司的业务需求，需要有一个日期和时间的选择器。最开始我们使用的是[`pickadate`](http://amsul.ca/pickadate.js/)，一个基于jQuery的比较老牌的时间日期选择器。在页面上大致长这样：
