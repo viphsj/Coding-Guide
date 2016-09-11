@@ -445,10 +445,10 @@ export const mousePosition = (e) => {
 
 然后需要明确的是，我们在处理拖拽事件过程中，需要记录的数据有：
 
-- this.originX/this.originY 旋转所环绕的中心坐标。在`componentDidMount`事件中记录并保存
-- this.startX/this.startY 每次拖拽事件开始时的坐标。在`onMouseDown`事件中记录并保存
-- dragX/dragY 移动过程中的坐标，随着移动而不断改变。在`onMouseMove`事件中记录并保存
-- endX/endY 移动结束时的坐标。在`onMouseUp`事件中进行处理，并获取最后的角度degree，算出指针停止时对准的时间time，并将time和degree通过callback向父层组件传递。
+- `this.originX`/`this.originY` 旋转所环绕的中心坐标。在`componentDidMount`事件中记录并保存
+- `this.startX`/`this.startY` 每次拖拽事件开始时的坐标。在`onMouseDown`事件中记录并保存
+- `dragX`/`dragY` 移动过程中的坐标，随着移动而不断改变。在`onMouseMove`事件中记录并保存
+- `endX`/`endY` 移动结束时的坐标。在`onMouseUp`事件中进行处理，并获取最后的角度degree，算出指针停止时对准的时间time，并将time和degree通过callback向父层组件传递。
 
 ```javascript
 // 处理onMouseDown
@@ -618,6 +618,12 @@ render() {
 > 至此，我们的工作就已经完成了（才没有）。其实除了控制旋转角度以外，还有指针的坐标、长度等需要进行计算和控制。但即便完成这些，离一个合格的NPM包还有一段距离。除了基本的代码编写，我们还需要有单元测试，需要对包进行编译和发布。
 
 ### 测试
+
+> 关于更多的React测试介绍，可以戳这两篇文章入个门：
+> 
+> [UI Testing in React](https://voice.kadira.io/ui-testing-in-react-74fd90a5d58b)
+> 
+> [React Unit Testing with Mocha and Enzyme](https://medium.freecodecamp.com/react-unit-testing-with-mocha-and-enzyme-77d18b6875cb)
 
 使用`mocha`+`chai`和`enzyme`来进行React组件的单元测试：
 
@@ -832,11 +838,11 @@ function(context, request, callback) {
   callback();
 }
 ```
-所以，我们可以在webpack配置中加上自己定义的`externals`：
+所以，就可以解释一下我们自己在webpack配置中的`externals`：
 
 ```javascript
 externals(context, request, callback) {
-  // 如果这个依赖存在于files中，也就是在./src/components/文件夹下，说明这是我们自己编译的文件，妥妥的要打包
+  // 如果这个依赖存在于files中，也就是在./src/components/文件夹下，说明这是我们自己编写的文件，妥妥的要打包
   if (files.indexOf(request) > -1) {
     return callback(null, false);
   }
