@@ -1,8 +1,8 @@
 ## 一言不合造轮子--撸一个ReactTimePicker
 
-> 本文的源码全部位于github项目仓库[`react-times`](https://github.com/ecmadao/react-times)，如果有差异请以github为准。
+> 本文的源码全部位于github项目仓库[`react-times`](https://github.com/ecmadao/react-times)，如果有差异请以github为准。最终线上DEMO可见[react-times github page](https://ecmadao.github.io/react-times/)
 
-> 文章记录了一次创建独立React组件并做成NPM包的过程，将会涉及到React开发、Webpack、NPM命令和包发布，以及单页测试等内容。
+> 文章记录了一次创建独立React组件并做成NPM包的过程，将会涉及到React开发、单页测试、Webpack等内容。
 
 ### 起因
 
@@ -48,6 +48,7 @@ UI方面没得说，我是妥妥的`Material Design`党。这次也是着急动�
 - 点击代表时间的数字，应该改变外层按钮里对应的小时/分钟，同时指针改变旋转角度，指向点击的时间
 - 拖拽指针，可以环绕中心旋转。当放开指针时，它应该自动指向距离最近的小时或者分钟
 - 拖拽指针并松开，指针停止之后，当前选择的时间和外层按钮上显示的时间应该被改变
+- 拖拽指针到两个整数数字之间并放开时，指针应该自动旋转到距离最近的时间上
 
 #### 代码设计
 
@@ -84,7 +85,11 @@ UI方面没得说，我是妥妥的`Material Design`党。这次也是着急动�
 
 - 而我们按照这样的架构撸完代码之后，如果想额外做一些其他的东西，比如支持12小时制，那么小时和分钟的选择则应该集中在一个表盘modal上（也就是长得和正常是时钟一样）。在这样的需求下，我们需要在一个表盘里同时渲染小时和分钟的数字布局，而其他的东西，比如说modal啊，指针啊依旧保持原样（一样的指针组件，只不过渲染了两个）。
 
+下图是24小时制，点击modal上的小时/分钟来切换不同表盘：
+
 ![24hours mode](../../../image/timepicker/24HoursMode.png)
+
+下图是12小时制，在同一个表盘上显示小时和分钟：
 
 ![12hours mode](../../../image/timepicker/12HoursMode.png)
 
@@ -125,9 +130,9 @@ module.exports = TimePicker;
 
 既然是写一个独立的React组件，那它的开发则和我们项目的开发相互独立。
 
-那么问题来了：该如何搭建开发和测试环境呢？这个组件我想使用`React`和`ES6`的语法，而单元测试则使用`mocha`+`chai`和Airbnb的`enzyme`（再次感谢业界良心）。那么在发布之前，应该使用构建工具将其初步打包。针对于这点我选用webpack。
+那么问题来了：该如何搭建开发和测试环境呢？这个组件我想使用`React`和`ES6`的语法，而单元测试则使用`mocha`+`chai`和Airbnb的`enzyme`（再次感谢业界良心）。那么在发布之前，应该使用构建工具将其初步打包，针对于这点我选用了`webpack。
 
-而在开发过程中，则需要能够启动一个server以便能在网页上渲染出组件，进行调试。因此，使用[`react-storybook`](https://github.com/kadirahq/react-storybook)这个库，它允许我们启动一个server，把自己的组件渲染在页面上，并支持webpack进行编译。具体的使用大家可以去看[storybook文档](https://getstorybook.io/)，非常简单易懂，便于配置。
+而在开发过程中，需要能够启动一个server，以便能在网页上渲染出组件，进行调试。因此，可以使用[`react-storybook`](https://github.com/kadirahq/react-storybook)这个库，它允许我们启动一个server，把自己的组件渲染在页面上，并支持webpack进行编译。具体的使用大家可以去看[storybook文档](https://getstorybook.io/)，非常简单易懂，便于配置。
 
 那么进入正题，组件的编写。
 
@@ -146,6 +151,7 @@ module.exports = TimePicker;
 
 ```javascript
 // src/components/TimePicker.jsx
+// 省略了一些方法的具体内容和组件属性的传递
 import React, {PropTypes} from 'react';
 import moment from 'moment';
 
@@ -211,6 +217,7 @@ export default class TimePicker extends React.Component {
             {times}
           </div>
         </div>
+        {/*OutsideClickHandler 就是上面说到了，专门用于处理modal外点击事件，来关闭modal的组件*/}
         <OutsideClickHandler onOutsideClick={this.onClearFocus}>
           {this.renderTimePickerModal()}
         </OutsideClickHandler>
@@ -267,7 +274,8 @@ export default class OutsideClickHandler extends React.Component {
 
   onOutsideClick(e) {
     // 如果点击区域不在该组件内部，则调用关闭modal的方法
-    const isDescendantOfRoot = ReactDOM.findDOMNode(this.refs.childNode).contains(e.target);
+    // 通过ReactDOM.findDOMNode来拿到原生的DOM，避免额外的jQuery依赖
+    const isDescendantOfRoot = ReactDOM.findDOMNode(this.childNode).contains(e.target);
     if (!isDescendantOfRoot) {
       let {onOutsideClick} = this.props;
       onOutsideClick && onOutsideClick(e);
@@ -276,9 +284,9 @@ export default class OutsideClickHandler extends React.Component {
 
   render() {
     return (
-      <div ref="childNode">
+      <div ref={(c) => this.childNode = c}>
         {this.props.children}
-      </div>/
+      </div>
     )
   }
 }
@@ -529,7 +537,7 @@ handleMouseUp(e) {
 }
 ```
 
-你可能注意到在onMouseUp的最后，我们没有把计算得到的角度存到当前组件的state里，而是将数据传递给了父组件，改变父组件的state。那是因为，每当组件改变step/time/pointerRotate时，我们都应该重新计算渲染指针的角度，而`PickerDargHandler`组件内部存的state，只是用来在拖拽的过程中改变，以便渲染指针UI的旋转角度：
+你可能注意到只有在`onMouseUp`的最后，我们才把计算得到的角度回调到父组件里，，改变父组件的state。而在`handleMouseMove`方法里，我们只把角度存在当前state里。那是因为在每次移动过程中，都需要知道每次开始移动时的角度偏移量。这个数值我们是从父组件state里拿到的，因此只有在放手时才会更新它。而`PickerDargHandler`组件内部存的state，只是用来在拖拽的过程中改变，以便渲染指针UI的旋转角度：
 
 ```javascript
 componentDidUpdate(prevProps) {
@@ -583,11 +591,11 @@ render() {
   let {draging, height, top, pointerRotate} = this.state;
   let pickerPointerClass = draging ? "picker_pointer" : "picker_pointer animation";
 
-  // handleMouseDown事件绑定在了“pointer_drag”上，它位于指针最顶端的位置
+  // handleMouseDown事件绑定在了“.pointer_drag”上，它位于指针最顶端的位置
   return (
     <div className="picker_handler">
       <div
-        ref="dragPointer"
+        ref={(d) => this.dragPointer = d}
         className={pickerPointerClass}
         style={getInitialPointerStyle(height, top, pointerRotate)}>
         <div
@@ -597,13 +605,13 @@ render() {
       </div>
       <div
         className="picker_center"
-        ref="pickerCenter"></div>
+        ref={(p) => this.pickerCenter = p}></div>
     </div>
   )
 }
 ```
 
-> 至此，我们的工作就已经完成了（才没有）。但这其实离一个合格的NPM包还有一段距离。除了基本的代码编写，我们还需要有单元测试，需要对包进行编译和发布。
+> 至此，我们的工作就已经完成了（才没有）。其实除了控制旋转角度以外，还有指针的坐标、长度等需要进行计算和控制。但即便完成这些，离一个合格的NPM包还有一段距离。除了基本的代码编写，我们还需要有单元测试，需要对包进行编译和发布。
 
 ### 测试
 
@@ -718,4 +726,125 @@ describe('handle focus change func', () => {
 })
 ```
 
+### 编译
 
+如同上面所说，我最后选用的是当今最火的`webpack`同学来编译我们的代码。相信`React`加`ES6`的webpack编译配置大家已经配烦了，其基本的loader也就是`babel-loader`了：
+
+```javascript
+const webpack = require('webpack');
+
+// 通过node的方法遍历src文件夹，来组成所有的webpack entry
+const path = require('path');
+const fs = require('fs');
+const srcFolder = path.join(__dirname, 'src', 'components');
+// 读取./src/components/文件夹下的所有文件
+const components = fs.readdirSync(srcFolder);
+
+// 把文件存在entries中，作为webpack编译的入口
+const files = [];
+const entries = {};
+components.forEach(component => {
+  const name = component.split('.')[0];
+  if (name) {
+    const file = `./src/components/${name}`;
+    files.push(file);
+    entries[name] = file;
+  }
+});
+
+module.exports = {
+  entry: entries,
+  output: {
+    filename: '[name].js',
+    path: './lib/components/',
+    // 模块化风格为commonjs2
+    libraryTarget: 'commonjs2',
+  },
+  module: {
+    loaders: [
+      {
+        test: /\.jsx?$/,
+        exclude: /(node_modules)/,
+        include: path.join(__dirname, 'src'),
+        loader: ["babel-loader"],
+        query: {
+          presets: ["react", "es2015"]
+        }
+      }
+    ],
+  },
+  resolve: {
+    extensions: ['', '.js', '.jsx'],
+  },
+  plugins: [
+    new webpack.optimize.UglifyJsPlugin({
+      compress: {
+          warnings: false
+      }
+    }),
+    new webpack.optimize.OccurenceOrderPlugin(),
+    new webpack.DefinePlugin({
+      'process.env.NODE_ENV': '"production"'
+    }),
+    new webpack.NoErrorsPlugin()
+  ]
+};
+```
+
+但有一个很重要很重要的问题需要说明一下：
+
+编译过React组件的人都应该知道，React打包进代码里是比较大的（即便在Production+UglifyJsPlugin的情况下），更何况，我们这个组件作为独立的`node_module`包，不应该把React打包进去，因为：
+
+1. 打包React之后会让组件文件体积增大数倍
+2. 打包React之后，安装这个组件的用户会出现“重复安装React”的严重bug
+
+因此，我们在打包的时候应该将第三方依赖独立出去，这就需要配置`webpack`的`externals`：
+
+```javascript
+externals(context, request, callback) {
+  if (files.indexOf(request) > -1) {
+    return callback(null, false);
+  }
+  return callback(null, true);
+},
+```
+
+什么意思呢？你可以看[webpack externals官方文档](https://webpack.github.io/docs/configuration.html#externals)。鉴于`webpack`文档一般都很烂，我来大致解释一下：
+
+在配置`externals`的时候，可以把它作为一个要复写的function：
+
+> 官方栗子
+
+```javascript
+// request是webpack在打包过程中要处理了某一个依赖，无论是自己写的文件之间的相互引用，还是对第三方包的引用，都会将这次引用作为request参数，走这个方法
+// callback接收两个参数，error和result
+// 当result返回true或者一个String的时候，webpack就不会把这个request依赖编译到文件里去。而返回false则会正常编译
+// 因此，我们在每次依赖调用的时候，通过这个方法来判断，某些依赖是否应该编译进文件里
+function(context, request, callback) {
+  // Every module prefixed with "global-" becomes external
+  // "global-abc" -> abc
+  if(/^global-/.test(request))
+      return callback(null, "var " + request.substr(7));
+  callback();
+}
+```
+所以，我们可以在webpack配置中加上自己定义的`externals`：
+
+```javascript
+externals(context, request, callback) {
+  // 如果这个依赖存在于files中，也就是在./src/components/文件夹下，说明这是我们自己编译的文件，妥妥的要打包
+  if (files.indexOf(request) > -1) {
+    return callback(null, false);
+  }
+  // 否则他就是第三方依赖，独立出去不打包，而是期待使用了该组件的用户自己去打包React
+  return callback(null, true);
+},
+```
+
+至此，这个组件的编写可以告一段落了。之后要做的就是NPM包发布的事情。本来想一次性把这个也说了的，但是鉴于有更详细的文章在，大家可以参考[前端扫盲-之打造一个Node命令行工具](https://www.awesomes.cn/source/12)来学习Node包创建和发布的过程。
+
+> 本文的源码全部位于github项目仓库[`react-times`](https://github.com/ecmadao/react-times)，如果有差异请以github为准。最终线上DEMO可见[react-times github page](https://ecmadao.github.io/react-times/)
+> 
+> 转载请注明来源：
+> 
+> ecmadao，https://github.com/ecmadao/Coding-Guide/blob/master/Notes/React/ReactJS/%E4%B8%80%E8%A8%80%E4%B8%8D%E5%90%88%E9%80%A0%E8%BD%AE%E5%AD%90--%E6%92%B8%E4%B8%80%E4%B8%AAReactTimePicker.md
