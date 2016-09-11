@@ -3,6 +3,7 @@
     - [css-plugin](./Tools/Plugin/css-plugin.md)
     - [js-plugin](./Tools/Plugin/js-plugin.md)
     - [react-plugin](./Tools/Plugin/react-plugin.md)
+    - [python-plugin](./Tools/Plugin/python-plugin.md)
   - Framework
     - [css-ui-framework](./Tools/Framework/css-ui-framework.md)
     - [react-ui-framework](./Tools/Framework/react-ui-framework.md)

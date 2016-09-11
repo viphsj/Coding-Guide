@@ -3,10 +3,6 @@
 **Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
 - [CSS UI FRAMEWORK](#css-ui-framework)
-  - [Semantic UI](#semantic-ui)
-  - [MUI](#mui)
-  - [amaze UI](#amaze-ui)
-  - [polymer](#polymer)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -14,7 +10,7 @@
 
 > CSS UI框架记录
 
-### [Semantic UI](http://semantic-ui.com/)
+- [Semantic UI](http://semantic-ui.com/)
 
 ![Semantic UI](https://camo.githubusercontent.com/fd37a36efc5d224a678609ae94405139399e0fd3/687474703a2f2f7777772e73656d616e7469632d75692e636f6d2f696d616765732f6c6f676f2e706e67)
 
@@ -26,7 +22,7 @@
 > 
 > Develop your UI once, then deploy with the same code everywhere.
 
-### [MUI](https://www.muicss.com/)
+- [MUI](https://www.muicss.com/)
 
 ![MUI](https://camo.githubusercontent.com/4416fb15c39b3d51468fbadce39aa04fafb96032/68747470733a2f2f7777772e6d75696373732e636f6d2f7374617469632f66617669636f6e732f69636f6e2d313932783139322e706e67)
 
@@ -36,7 +32,7 @@
 > 
 > 同样支持 React
 
-### [amaze UI](http://amazeui.org/)
+- [amaze UI](http://amazeui.org/)
 
 ![amaze UI](https://raw.githubusercontent.com/allmobilize/amazeui/master/vendor/amazeui/amazeui-b.png)
 
@@ -44,10 +40,10 @@
 > 
 > 纯国产，中文支持很好，也有React支持
 
-### [polymer](https://elements.polymer-project.org/)
+- [polymer](https://elements.polymer-project.org/)
 
 > 一套仿 MaterialDesign 的前端UI框架
 
-### [Materialize](http://materializecss.com/)
+- [Materialize](http://materializecss.com/)
 
 > material design 风格CSS UI插件，感觉比polymer轻量

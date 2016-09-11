@@ -1,3 +1,26 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [一言不合造轮子--撸一个ReactTimePicker](#%E4%B8%80%E8%A8%80%E4%B8%8D%E5%90%88%E9%80%A0%E8%BD%AE%E5%AD%90--%E6%92%B8%E4%B8%80%E4%B8%AAreacttimepicker)
+  - [起因](#%E8%B5%B7%E5%9B%A0)
+  - [设计与架构](#%E8%AE%BE%E8%AE%A1%E4%B8%8E%E6%9E%B6%E6%9E%84)
+    - [UI设计](#ui%E8%AE%BE%E8%AE%A1)
+    - [需求整理](#%E9%9C%80%E6%B1%82%E6%95%B4%E7%90%86)
+    - [代码设计](#%E4%BB%A3%E7%A0%81%E8%AE%BE%E8%AE%A1)
+    - [文件结构](#%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84)
+  - [环境搭建](#%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA)
+  - [组件编写](#%E7%BB%84%E4%BB%B6%E7%BC%96%E5%86%99)
+    - [`TimePicker`](#timepicker)
+    - [`OutsideClickHandler`](#outsideclickhandler)
+    - [`TimePickerModal`](#timepickermodal)
+    - [`PickerPoint`](#pickerpoint)
+    - [`PickerDargHandler`](#pickerdarghandler)
+  - [测试](#%E6%B5%8B%E8%AF%95)
+  - [编译](#%E7%BC%96%E8%AF%91)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 ## 一言不合造轮子--撸一个ReactTimePicker
 
 > 本文的源码全部位于github项目仓库[`react-times`](https://github.com/ecmadao/react-times)，如果有差异请以github为准。最终线上DEMO可见[react-times github page](https://ecmadao.github.io/react-times/)
