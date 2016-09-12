@@ -14,6 +14,7 @@
     - [`TimePicker`](#timepicker)
     - [`OutsideClickHandler`](#outsideclickhandler)
     - [`TimePickerModal`](#timepickermodal)
+    - [`PickerPointGenerator`](#pickerpointgenerator)
     - [`PickerPoint`](#pickerpoint)
     - [`PickerDargHandler`](#pickerdarghandler)
   - [测试](#%E6%B5%8B%E8%AF%95)
@@ -126,25 +127,25 @@ UI方面没得说，我是妥妥的`Material Design`党。这次也是着急动�
 
 So, 目前这样的结构设计应该可以满足我们的简单的需求。接下来就开始卷起袖子撸代码喽。
 
-新建项目，文件结构如下：
+新建项目，基本的文件结构如下：
 
 ```bash
 # react-times
-- src
-    - components
-        - TimePicker.jsx
-        - OutsideClickHandler.jsx
-        - TimePickerModal.jsx
-        - PickerPoint.jsx
-        - PickerDargHandler.jsx
+- src/
+    - components/
+        TimePicker.jsx
+        OutsideClickHandler.jsx
+        TimePickerModal.jsx
+        PickerPoint.jsx
+        PickerDargHandler.jsx
     - utils.js
     - ConstValue.js
-- css
-- test
-- lib
-- index.js
-- package.json
-- webpack.config.js
++ css/
++ test/
++ lib/
+index.js
+package.json
+webpack.config.js
 ```
 
 其中，`src`文件夹下是我们的源码，而`lib`则是编译过后的代码。而`index.js`则是整个包最终的出口，我们在这里将做好的组件暴露出去：
@@ -159,7 +160,7 @@ module.exports = TimePicker;
 
 既然是写一个独立的React组件，那它的开发则和我们项目的开发相互独立。
 
-那么问题来了：该如何搭建开发和测试环境呢？这个组件我想使用`React`和`ES6`的语法，而单元测试则使用`mocha`+`chai`和Airbnb的`enzyme`（再次感谢业界良心）。那么在发布之前，应该使用构建工具将其初步打包，针对于这点我选用了`webpack。
+那么问题来了：该如何搭建开发和测试环境呢？这个组件我想使用`React`和`ES6`的语法，而单元测试则使用`mocha`+`chai`和Airbnb的`enzyme`（再次感谢业界良心）。那么在发布之前，应该使用构建工具将其初步打包，针对于这点我选用了`webpack`。
 
 而在开发过程中，需要能够启动一个server，以便能在网页上渲染出组件，进行调试。因此，可以使用[`react-storybook`](https://github.com/kadirahq/react-storybook)这个库，它允许我们启动一个server，把自己的组件渲染在页面上，并支持webpack进行编译。具体的使用大家可以去看[storybook文档](https://getstorybook.io/)，非常简单易懂，便于配置。
 
