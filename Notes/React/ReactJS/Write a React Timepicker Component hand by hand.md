@@ -976,4 +976,4 @@ externals(context, request, callback) {
 > 
 > 转载请注明来源：
 > 
-> ecmadao，https://github.com/ecmadao/Coding-Guide/tree/master/Notes/React/ReactJS
+> ecmadao，https://github.com/ecmadao/Coding-Guide/blob/master/Notes/React/ReactJS/Write%20a%20React%20Timepicker%20Component%20hand%20by%20hand.md
