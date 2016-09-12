@@ -31,6 +31,8 @@
 
 ![react-times.gif](../../../image/timepicker/react-times.gif)
 
+这里可以玩[线上demo](https://ecmadao.github.io/react-times/)
+
 ### 起因
 
 因为我司的业务需求，需要有一个日期和时间的选择器。最开始我们使用的是[`pickadate`](http://amsul.ca/pickadate.js/)，一个基于jQuery的比较老牌的时间日期选择器。在页面上大致长这样：
