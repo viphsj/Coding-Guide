@@ -393,6 +393,102 @@ class TimePickerModal extends React.Component {
 }
 ```
 
+上面这样，就基本完成了`TimePickerModal`组件的编写。但还不够好。为什么呢？
+
+按照我们的逻辑，这个时间选择器应该根据`step`来切换表盘上表示小时/分钟的数字。也就是说，第一步选择小时，第二部选择分钟 -- 它是一个24小时制的时间选择器。那么，如果是要变成12小时制呢？让小时和分钟在同一个表盘上渲染，而`step`只改变AM/PM呢？
+
+那么考虑12小时制的情况：
+
+- 一个表盘上要同时有小时和分钟两种数字
+- 一个表盘上要有小时和分钟的两个指针
+- 切换`step`改变的是AM/PM
+
+鉴于我们不应该在`TimePickerModal`中放入太多的逻辑判断，那么还是针对12小时制专门创建一个组件`TwelveHoursModal`比较好，但也会提取出`TimePickerModal`组件中可以独立的方法，作为专门渲染PickerPoint的中间层，`PickerPointGenerator.jsx`。
+
+#### `PickerPointGenerator`
+
+`PickerPointGenerator`其实算是一个中间层组件。在它内部会进行一些逻辑判断，最终渲染出我们想要的表盘数字。
+
+```javascript
+// src/components/PickerPointGenerator.jsx
+// ...
+import {
+  MINUTES,
+  HOURS,
+  TWELVE_HOURS
+} from '../ConstValue.js';
+import PickerPoint from './PickerPoint';
+
+const pickerPointGenerator = (type = 'hour', mode = 24) => {
+  return class PickerPointGenerator extends React.Component {
+    constructor(props) {
+      super(props);
+      this.handleTimePointerClick = props.handleTimePointerClick.bind(this);
+    }
+    // 返回PickerPoint
+    renderMinutePointes() {}
+    renderHourPointes() {}
+
+    render() {
+      return (
+        <div
+          ref={ref => this.pickerPointerContainer = ref}
+          id="picker_pointer_container">
+          {type === 'hour' ? this.renderHourPointes() : this.renderMinutePointes()}
+        </div>
+      )
+    }
+  }
+};
+
+export default pickerPointGenerator;
+```
+
+有了它之后，我们之前的`TimePickerModal`可以这么写：
+
+```javascript
+// src/components/TimePickerModal.jsx
+// ...
+class TimePickerModal extends React.Component {
+  render() {
+    const {step} = this.state;
+    const type = step === 0 ? 'hour' : 'minute';
+    const PickerPointGenerator = pickerPointGenerator(type);
+
+    return (
+      ...
+      <PickerPointGenerator
+        handleTimePointerClick={this.handleTimePointerClick}
+      />
+      ...
+    )
+  }
+}
+```
+
+而如果是12小时制呢：
+
+```javascript
+// src/components/TwelveHoursModal.jsx
+// ...
+class TwelveHoursModal extends React.Component {
+  render() {
+    const HourPickerPointGenerator = pickerPointGenerator('hour', 12);
+    const MinutePickerPointGenerator = pickerPointGenerator('minute', 12);
+    return (
+      ...
+      <HourPickerPointGenerator
+        handleTimePointerClick={this.handleHourPointerClick}
+      />
+      <MinutePickerPointGenerator
+        handleTimePointerClick={this.handleMinutePointerClick}
+      />
+      ...
+    )
+  }
+}
+```
+
 #### `PickerPoint`
 
 `PickerPoint`内的逻辑很简单，就是渲染数字，并处理点击事件：
