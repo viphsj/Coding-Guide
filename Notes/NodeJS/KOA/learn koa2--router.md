@@ -1,5 +1,7 @@
 ## learn koa2--router
 
+### 给Koa2增加路由功能
+
 鉴于Koa的轻量级设计，其自身并没有提供route的功能，而需要我们自己去安装[koa-router](https://github.com/alexmingoia/koa-router)组件：
 
 ```bash
@@ -112,3 +114,102 @@ fs
 
 export default router;
 ```
+
+### 扩展：`koa-router`的使用
+
+#### 基本使用
+
+```javascript
+// 基本使用
+import Koa from 'koa';
+import koaRouter from 'koa-router';
+
+const router = koaRouter();
+const app = new Koa();
+
+router.get('/', (ctx, next) => {
+  // ...
+});
+
+app
+  .use(router.routes())
+  .use(router.allowedMethods());
+```
+
+#### 路由的`get|put|post|patch|delete`方法
+
+```javascript
+// 直接通过router.xxx方法即可，可以线性链接各方法
+router
+  .get('/', (ctx, next) => {
+    ctx.body = 'Hello Koa';
+  })
+  .post('/users', (ctx, next) => {
+    // ...
+  })
+  .put('/users/:id', (ctx, next) => {
+    // ...
+  })
+  .del('/users/:id', (ctx, next) => {
+    // ...
+  });
+```
+
+#### 动态路由
+
+```javascript
+router.get('/:category/:title', (ctx, next) => {
+  console.log(ctx.params);
+});
+```
+
+```javascript
+// get: /programming/how-to-node
+// -->
+// log: { category: 'programming', title: 'how-to-node' }
+```
+
+#### 使用middleware
+
+```javascript
+router.get(
+  '/users/:id',
+  (ctx, next) => {
+    return User.findOne(ctx.params.id).then((user) => {
+      ctx.user = user;
+      return next();
+    });
+  },
+  (ctx) => {
+    console.log(ctx.user);
+    // => { id: 17, name: "Alex" }
+  }
+);
+```
+
+#### 路由嵌套
+
+```javascript
+const forums = new Router();
+const posts = new Router();
+
+posts.get('/', (ctx, next) => {...});
+posts.get('/:pid', (ctx, next) => {...});
+forums.use('/forums/:fid/posts', posts.routes(), posts.allowedMethods());
+
+// 相当于posts接收的`/`和`/:pid`都嵌套到forums内
+// 这样处理之后，app可以相应类似"/forums/123/posts"或者"/forums/123/posts/123"
+app.use(forums.routes());
+```
+
+#### 指定前缀
+
+```javascript
+var router = new Router({
+  prefix: '/users'
+});
+
+router.get('/', ...); // responds to "/users"
+router.get('/:id', ...); // responds to "/users/:id"
+```
+
