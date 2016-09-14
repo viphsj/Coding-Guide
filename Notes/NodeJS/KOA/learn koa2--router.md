@@ -56,7 +56,7 @@ const router = koaRouter({
 router.get('/', (ctx, next) => {
   ctx.body = 'home page';
 });
-router.get('/about', (ctx, next) => {
+router.get('about', (ctx, next) => {
   ctx.body = 'about page';
 });
 
@@ -89,6 +89,13 @@ router.get('/:id/info', (ctx, next) => {
 
 module.exports = router;
 ```
+
+上面文件里定义的路由有：
+
+- `/articles`
+- `/articles/`
+- `/articles/:id/author`
+- `/articles/:id/info`
 
 此时进入`localhost:7000/articles`页面，可以看见`articles page`，并且进入类似`localhost:7000/articles/1/author`这样的页面则也能获取到对应的`article author page`
 
