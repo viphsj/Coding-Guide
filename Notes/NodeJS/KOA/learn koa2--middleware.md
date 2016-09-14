@@ -1,4 +1,4 @@
-## learn koa2--1
+## learn koa2--middleware
 
 玩过express，但没接触过Koa1。虽然Koa2发布到现在，已有的文档资料相比于1而言还缺少许多，但鉴于Koa2对ES6的良好支持和新特性，还是直接干脆的上Koa2比较好吧？因此，下文全部都是基于Koa2学习整理而成的。
 

@@ -1,4 +1,4 @@
-## learn koa2--2
+## learn koa2--router
 
 鉴于Koa的轻量级设计，其自身并没有提供route的功能，而需要我们自己去安装[koa-router](https://github.com/alexmingoia/koa-router)组件：
 
