@@ -1,3 +1,16 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [Eslint 配置记录(with webpack)](#eslint-%E9%85%8D%E7%BD%AE%E8%AE%B0%E5%BD%95with-webpack)
+  - [安装](#%E5%AE%89%E8%A3%85)
+  - [基本配置](#%E5%9F%BA%E6%9C%AC%E9%85%8D%E7%BD%AE)
+    - [配置webpack](#%E9%85%8D%E7%BD%AEwebpack)
+  - [插件](#%E6%8F%92%E4%BB%B6)
+  - [资料](#%E8%B5%84%E6%96%99)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 ## Eslint 配置记录(with webpack)
 
 [ESLint](http://eslint.org/)，The pluggable linting utility for JavaScript and JSX
