@@ -18,7 +18,7 @@
 
 ### 命令行
 
-- ![tqdm](https://github.com/tqdm/tqdm)
+- [tqdm](https://github.com/tqdm/tqdm)
 
 > 一个在命令行里展现进度条的插件
 

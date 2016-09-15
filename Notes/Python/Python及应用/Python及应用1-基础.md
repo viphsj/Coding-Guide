@@ -64,6 +64,11 @@ isinstance(a, list) # True
 
 - 使用`*`进行复制
 
+```python
+a = '1' * 8
+# 11111111
+```
+
 - 字符串不可变
 
 ```python
