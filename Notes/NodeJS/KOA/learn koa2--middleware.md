@@ -91,7 +91,7 @@ $ npm start
 
 打开`localhost:7000`，就能看见Hello Koa喽
 
-### middleware
+### Middleware
 
 middleware（中间件）始终是Koa中的一个核心概念。在middleware中，中间件由外而内的相互嵌套，执行完毕之后再由内到外的依次执行回调。不得不盗张官方的图：
 
@@ -171,4 +171,51 @@ app 2 callback
 GET / - 3ms
 app 1 callback
 GET / - 7ms
+```
+
+### Middleware best practices
+
+- 对于一个公共的`middleware`，将它用方法包裹起来，并在方法中进行类型检查
+
+例如，一个打印log的`middleware`：
+
+```javascript
+const logger = (format) => {
+  format = format || ':method ":url"';
+
+  return async (ctx, next) => {
+    const str = format
+      .replace(':method', ctx.method)
+      .replace(':url', ctx.url);
+
+    console.log(str);
+
+    await next();
+  };
+};
+
+app.use(logger());
+app.use(logger(':method :url'));
+```
+
+- 命名一个`middleware`，有利于debug
+
+```javascript
+const logger = (format) => {
+  return async logger(ctx, next) => {
+    // print log
+  };
+};
+```
+
+- 将多个`m`通过[`koa-compose`](https://github.com/koajs/compose)组合在一起
+
+```bash
+$ npm install koa-compose --save
+```
+
+Usage:
+
+```javascript
+compose([a, b, c, ...]);
 ```
