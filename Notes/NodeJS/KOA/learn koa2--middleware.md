@@ -253,3 +253,22 @@ const all = compose([random, backwards, pi]);
 
 app.use(all);
 ```
+
+### Middleware in usage
+
+利用middleware，可以便捷的捕获到中间件在传递过程中，由下游回调至上游过程中的错误：
+
+```javascript
+app.use((ctx, next) => {
+  try {
+    next();
+  } catch (err) {
+    ctx.response.status = err.status || 500;
+    ctx.body = err.message;
+  }
+});
+
+app.use((ctx, next) => {
+  throw new Error('some error');
+});
+```
