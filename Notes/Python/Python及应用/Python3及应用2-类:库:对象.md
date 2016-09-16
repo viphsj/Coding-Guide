@@ -2,7 +2,7 @@
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 **Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
-- [Python及应用2-类/库/对象](#python%E5%8F%8A%E5%BA%94%E7%94%A82-%E7%B1%BB%E5%BA%93%E5%AF%B9%E8%B1%A1)
+- [Python3及应用2-类/库/对象](#python3%E5%8F%8A%E5%BA%94%E7%94%A82-%E7%B1%BB%E5%BA%93%E5%AF%B9%E8%B1%A1)
   - [Python标准库](#python%E6%A0%87%E5%87%86%E5%BA%93)
     - [`setdefault()`&`defaultdict()`](#setdefault&defaultdict)
     - [`Counter`](#counter)
@@ -21,7 +21,7 @@
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
-## Python及应用2-类/库/对象
+## Python3及应用2-类/库/对象
 
 ### Python标准库
 

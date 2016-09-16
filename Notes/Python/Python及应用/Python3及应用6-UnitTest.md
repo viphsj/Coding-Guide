@@ -2,7 +2,7 @@
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 **Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
-- [Python及应用6-UnitTest](#python%E5%8F%8A%E5%BA%94%E7%94%A86-unittest)
+- [Python3及应用6-UnitTest](#python3%E5%8F%8A%E5%BA%94%E7%94%A86-unittest)
   - [Intro](#intro)
   - [Pylint](#pylint)
   - [UnitTest](#unittest)
@@ -16,7 +16,7 @@
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
-## Python及应用6-UnitTest
+## Python3及应用6-UnitTest
 
 [如何测试Python应用](http://py.windrunner.info/great-code/testing.html)
 

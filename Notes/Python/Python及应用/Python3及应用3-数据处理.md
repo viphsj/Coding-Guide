@@ -2,7 +2,7 @@
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 **Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
-- [Python及应用3-数据处理](#python%E5%8F%8A%E5%BA%94%E7%94%A83-%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86)
+- [Python3及应用3-数据处理](#python3%E5%8F%8A%E5%BA%94%E7%94%A83-%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86)
   - [数据处理](#%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86)
     - [文本格式化](#%E6%96%87%E6%9C%AC%E6%A0%BC%E5%BC%8F%E5%8C%96)
     - [`input`](#input)
@@ -39,7 +39,7 @@
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
-## Python及应用3-数据处理
+## Python3及应用3-数据处理
 
 ### 数据处理
 

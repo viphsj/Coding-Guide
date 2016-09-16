@@ -2,7 +2,7 @@
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 **Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
-- [Python及应用1-基础](#python%E5%8F%8A%E5%BA%94%E7%94%A81-%E5%9F%BA%E7%A1%80)
+- [Python3及应用1-基础](#python3%E5%8F%8A%E5%BA%94%E7%94%A81-%E5%9F%BA%E7%A1%80)
   - [数字、字符串和变量](#%E6%95%B0%E5%AD%97%E3%80%81%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%92%8C%E5%8F%98%E9%87%8F)
   - [列表和元组](#%E5%88%97%E8%A1%A8%E5%92%8C%E5%85%83%E7%BB%84)
     - [ 列表](#%E5%88%97%E8%A1%A8)
@@ -39,7 +39,9 @@
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
-## Python及应用1-基础
+## Python3及应用1-基础
+
+
 
 ### 数字、字符串和变量
 
