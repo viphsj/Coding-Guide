@@ -1,3 +1,16 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [learn koa2--context](#learn-koa2--context)
+  - [handle error](#handle-error)
+  - [context.request](#contextrequest)
+  - [context.response](#contextresponse)
+  - [context.cookies](#contextcookies)
+  - [context.throw](#contextthrow)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 ## learn koa2--context
 
 > [Koa context](https://github.com/koajs/koa/blob/master/docs/api/context.md)

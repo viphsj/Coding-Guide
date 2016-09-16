@@ -1,3 +1,15 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [learn koa2--middleware](#learn-koa2--middleware)
+  - [Install & Basical](#install-&-basical)
+  - [Middleware](#middleware)
+  - [Middleware best practices](#middleware-best-practices)
+  - [Middleware in usage](#middleware-in-usage)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 ## learn koa2--middleware
 
 玩过express，但没接触过Koa1。虽然Koa2发布到现在，已有的文档资料相比于1而言还缺少许多，但鉴于Koa2对ES6的良好支持和新特性，还是直接干脆的上Koa2比较好吧？因此，下文全部都是基于Koa2学习整理而成的。

@@ -1,3 +1,14 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [learn koa2--tools](#learn-koa2--tools)
+  - [Tools](#tools)
+  - [Templates](#templates)
+  - [Move to Koa2.X](#move-to-koa2x)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 ## learn koa2--tools
 
 ### Tools
