@@ -64,39 +64,64 @@ console.log(intersectionList); // [2, 3, 4]
 
 ### 代码组合（compose）
 
-### `combineReducers`
+代码组合就像是数学中的结合律：
 
 ```javascript
-// combineReducers的使用格式
-const todos = (state = INIT.todos, action) {};
-const filterStatus = (state = INIT.filterStatus, action) {};
+const compose = (f, g) => {
+  return (x) => {
+    return f(g(x));
+  };
+};
+// 还可以再简洁点
+const compose = (f, g) => (x) => f(g(x));
+```
+
+通过这样函数之间的组合，可以大大增加可读性，效果远大于嵌套一大堆的函数调用，并且我们可以随意更改函数的调用顺序
+
+### Redux
+
+#### `combineReducers`
+
+```javascript
+// 回顾一下combineReducers的使用格式
+
+// 两个reducer
+const todos = (state = INIT.todos, action) {
+  // ....
+};
+const filterStatus = (state = INIT.filterStatus, action) {
+  // ...
+};
 
 const appReducer = combineReducers({
   todos,
   filterStatus
 });
 ```
+
+> 还记得`combineReducers`的黑魔法吗？即：传入的Object参数中，对象的`key`与`value`所代表的`reducer function`同名，且各个`reducer function`的名称和传入的`state`同名。
+
 源码标注解读（省略部分）：
 
 ```javascript
 export default function combineReducers(reducers) {
   // 第一次筛选，参数reducers为Object
-  var reducerKeys = Object.keys(reducers)
+  // 筛选掉reducers中不是function的键值对
+  var reducerKeys = Object.keys(reducers);
   var finalReducers = {}
   for (var i = 0; i < reducerKeys.length; i++) {
-    var key = reducerKeys[i]
-    // 剔除掉不是function的
+    var key = reducerKeys[i];
     if (typeof reducers[key] === 'function') {
       finalReducers[key] = reducers[key]
     }
   }
+
   // 二次筛选，判断reducer中传入的值是否合法（!== undefined）
   // 获取筛选完之后的所有key
   var finalReducerKeys = Object.keys(finalReducers)
-
   var sanityError
-  // assertReducerSanity函数用于遍历finalReducers中的reducer，检查传入reducer的state是否合法
   try {
+    // assertReducerSanity函数用于遍历finalReducers中的reducer，检查传入reducer的state是否合法
     assertReducerSanity(finalReducers)
   } catch (e) {
     sanityError = e
