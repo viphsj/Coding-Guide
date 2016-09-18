@@ -15,7 +15,54 @@
 
 ## Redux入坑笔记-源码解析
 
+> 本文不涉及redux的使用方法，因此可能更适合使用过redux的玩家翻阅😃
+
+### 预热
+
 > redux 函数内部包含了大量[柯里化函数](https://llh911001.gitbooks.io/mostly-adequate-guide-chinese/content/ch4.html)以及[代码组合](https://llh911001.gitbooks.io/mostly-adequate-guide-chinese/content/ch5.html)思想
+
+### 柯里化函数（curry）
+
+通俗的来讲，可以用一句话概括柯里化函数：返回函数的函数
+
+```javascript
+// example
+const funcA = (a) => {
+  return const funcB = (b) => {
+    return a + b
+  }
+};
+```
+
+上述的`funcA`函数接收一个参数，并返回同样接收一个参数的`funcB`函数。
+
+柯里化函数有什么好处呢？
+
+- 避免了给一个函数传入大量的参数--我们可以通过柯里化来构建类似上例的函数嵌套，将参数的代入分离开，更有利于调试
+- 降低耦合度和代码冗余，便于复用
+
+举个栗子：
+
+```javascript
+// 已知listA, listB两个Array，都由int组成，需要筛选出两个Array的交集
+const listA = [1, 2, 3, 4, 5];
+const listB = [2, 3, 4];
+
+const checkIfDataExist = (list) => {
+  return (target) => {
+    return list.some(value => value === target)
+  };
+};
+// 调用一次checkIfDataExist函数，并将listA作为参数传入，来构建一个新的函数。
+// 而新函数的作用则是：检查传入的参数是否存在于listA里
+const ifDataExist = checkIfDataExist(listA);
+
+// 使用新函数来对listB里的每一个元素进行筛选
+const intersectionList = listB.filter(value => ifDataExist(value));
+console.log(intersectionList); // [2, 3, 4]
+```
+
+### 代码组合（compose）
 
 ### `combineReducers`
 
