@@ -3,13 +3,17 @@
 **Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
 - [Redux入坑笔记-源码解析](#redux%E5%85%A5%E5%9D%91%E7%AC%94%E8%AE%B0-%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90)
-  - [`combineReducers`](#combinereducers)
-  - [`createStore`](#createstore)
-  - [redux-thunk](#redux-thunk)
-  - [`applyMiddleware`](#applymiddleware)
-  - [`bindActionCreator`](#bindactioncreator)
+  - [预热](#%E9%A2%84%E7%83%AD)
+  - [柯里化函数（curry）](#%E6%9F%AF%E9%87%8C%E5%8C%96%E5%87%BD%E6%95%B0%EF%BC%88curry%EF%BC%89)
+  - [代码组合（compose）](#%E4%BB%A3%E7%A0%81%E7%BB%84%E5%90%88%EF%BC%88compose%EF%BC%89)
+  - [Redux](#redux)
+    - [`combineReducers`](#combinereducers)
+    - [`createStore`](#createstore)
+    - [redux-thunk](#redux-thunk)
+    - [`applyMiddleware`](#applymiddleware)
+    - [`bindActionCreator`](#bindactioncreator)
     - [`bindActionCreator`源码解析](#bindactioncreator%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90)
-  - [react-redux](#react-redux)
+    - [react-redux](#react-redux)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -116,9 +120,10 @@ export default function combineReducers(reducers) {
     }
   }
 
+  var finalReducerKeys = Object.keys(finalReducers)
+
   // 二次筛选，判断reducer中传入的值是否合法（!== undefined）
   // 获取筛选完之后的所有key
-  var finalReducerKeys = Object.keys(finalReducers)
   var sanityError
   try {
     // assertReducerSanity函数用于遍历finalReducers中的reducer，检查传入reducer的state是否合法
@@ -127,9 +132,9 @@ export default function combineReducers(reducers) {
     sanityError = e
   }
   
-  // 返回一个总state，内部包含子reducer
+  // 返回一个function。该方法接收state和action作为参数
   return function combination(state = {}, action) {
-    // 如果之前的判断state有不法值，则抛出错误
+    // 如果之前的判断reducers中有不法值，则抛出错误
     if (sanityError) {
       throw sanityError
     }
@@ -143,10 +148,11 @@ export default function combineReducers(reducers) {
 
     var hasChanged = false
     var nextState = {}
-    // 遍历所有的key和reducer，分别将reducer对应的key所代表的state代入到reducer中进行函数调用
+    // 遍历所有的key和reducer，分别将reducer对应的key所代表的state，代入到reducer中进行函数调用
     for (var i = 0; i < finalReducerKeys.length; i++) {
       var key = finalReducerKeys[i]
       var reducer = finalReducers[key]
+      // 这也就是为什么说combineReducers黑魔法--要求传入的Object参数中，reducer function的名称和要和state同名的原因
       var previousStateForKey = state[key]
       var nextStateForKey = reducer(previousStateForKey, action)
       // 如果reducer返回undefined则抛出错误
@@ -167,8 +173,10 @@ export default function combineReducers(reducers) {
 function assertReducerSanity(reducers) {
   Object.keys(reducers).forEach(key => {
     var reducer = reducers[key]
-    // 遍历reducer，给它传入(undefined, action)。当第一个参数传入undefined时，则为reducer定义的默认参数
+    // 遍历全部reducer，并给它传入(undefined, action)
+    // 当第一个参数传入undefined时，则为各个reducer定义的默认参数
     var initialState = reducer(undefined, { type: ActionTypes.INIT })
+    
     // ActionTypes.INIT几乎不会被定义，所以会通过switch的default返回reducer的默认参数。如果没有指定默认参数，则返回undefined，抛出错误
     if (typeof initialState === 'undefined') {
       throw new Error(
@@ -194,12 +202,13 @@ function assertReducerSanity(reducers) {
 }
 ```
 
-### `createStore`
+#### `createStore`
 
 ```javascript
-// API
+// 回顾下使用方法
 const store = createStore(reducers, state, enhance);
 ```
+
 源码标注解读（省略部分）：
 
 ```javascript
@@ -319,7 +328,7 @@ export default function createStore(reducer, initialState, enhancer) {
 }
 ```
 
-### redux-thunk
+#### redux-thunk
 
 源码及其简单简直给跪...
 
@@ -336,7 +345,7 @@ export default function thunkMiddleware({ dispatch, getState }) {
 }
 ```
 
-### `applyMiddleware`
+#### `applyMiddleware`
 
 ```javascript
 // 传入一些function作为参数，返回其链式调用的形态。例如，
@@ -362,7 +371,7 @@ export default function applyMiddleware(...middlewares) {
       getState: store.getState,
       dispatch: (action) => dispatch(action)
     }
-    // 每个 middleware 都以 middlewareAPI 作为参数进行注入，返回一个新的链。此时的返回值相当于 thunkMiddleware 的回调函数 (next)=>(action)=>{} ，接收一个next作为其参数
+    // 每个 middleware 都以 middlewareAPI 作为参数进行注入，返回一个新的链。此时的返回值相当于 thunkMiddleware 的回调函数 (next) => (action) => {} ，接收一个next作为其参数
     chain = middlewares.map(middleware => middleware(middlewareAPI))
     // 并将链代入进 compose 组成一个函数的调用链
     // compose(...chain) 返回形如(...args) => f(g(h(...args)))，f/g/h都是chain中的函数对象。在目前只有 thunkMiddleware 作为middlewares参数的情况下，将返回 (next)=>(action)=>{}
@@ -406,15 +415,15 @@ if (typeof enhancer !== 'undefined') {
 applyMiddleware(thunkMiddleware)(createStore)(reducer, initialState)
 ```
 
-  - `applyMiddleware(thunkMiddleware)`
+- `applyMiddleware(thunkMiddleware)`
 
 `applyMiddleware`接收`thunkMiddleware`作为参数，返回形如`(createStore)=>(reducer, initialState, enhancer)=>{}`的函数。
 
-  - `applyMiddleware(thunkMiddleware)(createStore)`
+- `applyMiddleware(thunkMiddleware)(createStore)`
 
 以 createStore 作为参数，调用上一步返回的函数`(reducer, initialState, enhancer)=>{}`
 
-  - `applyMiddleware(thunkMiddleware)(createStore)(reducer, initialState)`
+- `applyMiddleware(thunkMiddleware)(createStore)(reducer, initialState)`
 
 以（reducer, initialState）为参数进行调用。
 在这个函数内部，`thunkMiddleware`被调用，其作用是监测 type 是function 的 action
@@ -429,7 +438,7 @@ applyMiddleware(thunkMiddleware)(createStore)(reducer, initialState)
 
 当 action 内部需要获取 state，或者需要进行异步操作，在操作完成之后进行事件调用分发的话，我们就可以让 action 返回一个以（dispatch, getState）为参数的 function 而不是通常的 Object，enhance就会对其进行检测以便正确的处理
 
-### `bindActionCreator`
+#### `bindActionCreator`
 
 在传统写法下，当我们要把 state 和 action 注入到子组件中时，一般会这么做：
 
@@ -475,7 +484,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import {addTodo, deleteTodo} as TodoActions from './action.js';
 
-class TodoComponect extends Component {
+class TodoComponect extends React.Component {
   
   // 在本组件内的应用
   addTodo(todo) {
@@ -543,9 +552,9 @@ export default function bindActionCreators(actionCreators, dispatch) {
 }
 ```
 
-### react-redux
+#### react-redux
 
-  - `Provider`
+- `Provider`
 
 ```javascript
 export default class Provider extends Component {
@@ -585,7 +594,7 @@ Provider.childContextTypes = {
 }
 ```
 
-  - `connect`
+- `connect`
 
 传入`mapStateToProps`,`mapDispatchToProps`,`mergeProps`,`options`。
 首先获取传入的参数，如果没有则以默认值代替
@@ -597,6 +606,7 @@ const { pure = true, withRef = false } = options
 ```
 
 之后，通过
+
 ```javascript
 const finalMergeProps = mergeProps || defaultMergeProps
 ```
@@ -614,7 +624,7 @@ const defaultMergeProps = (stateProps, dispatchProps, parentProps) => ({
 返回一个以 Component 作为参数的函数。在这个函数内部，生成了一个叫做`Connect`的 Component
 
 ```javascript
-...
+// ...
   return function wrapWithConnect(WrappedComponent) {
     const connectDisplayName = `Connect(${getDisplayName(WrappedComponent)})`
     // 检查参数合法性
@@ -691,7 +701,7 @@ const defaultMergeProps = (stateProps, dispatchProps, parentProps) => ({
     
     return hoistStatics(Connect, WrappedComponent)
   }
-...
+// ...
 ```
 
 我们看见，在connect的最后，返回了使用`hoistStatics`包装的`Connect`和`WrappedComponent`
