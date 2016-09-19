@@ -9,7 +9,7 @@
   - [Redux](#redux)
     - [`combineReducers`](#combinereducers)
     - [`createStore`](#createstore)
-    - [redux-thunk](#redux-thunk)
+    - [`thunkMiddleware`](#thunkmiddleware)
     - [`applyMiddleware`](#applymiddleware)
     - [`bindActionCreator`](#bindactioncreator)
     - [`bindActionCreator`源码解析](#bindactioncreator%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90)
@@ -90,10 +90,10 @@ const compose = (f, g) => (x) => f(g(x));
 // 回顾一下combineReducers的使用格式
 
 // 两个reducer
-const todos = (state = INIT.todos, action) {
+const todos = (state = INIT.todos, action) => {
   // ....
 };
-const filterStatus = (state = INIT.filterStatus, action) {
+const filterStatus = (state = INIT.filterStatus, action) => {
   // ...
 };
 
@@ -103,7 +103,11 @@ const appReducer = combineReducers({
 });
 ```
 
-> 还记得`combineReducers`的黑魔法吗？即：传入的Object参数中，对象的`key`与`value`所代表的`reducer function`同名，且各个`reducer function`的名称和传入的`state`同名。
+> 还记得`combineReducers`的黑魔法吗？即：
+> 
+> 1. 传入的Object参数中，对象的`key`与`value`所代表的`reducer function`同名
+> 
+> 2. 各个`reducer function`的名称和需要传入该reducer的`state`参数同名。
 
 源码标注解读（省略部分）：
 
@@ -218,7 +222,7 @@ export var ActionTypes = {
 }
 
 export default function createStore(reducer, initialState, enhancer) {
-  // 检查你的state和enhance有没有传反
+  // 检查你的state和enhance参数有没有传反
   if (typeof initialState === 'function' && typeof enhancer === 'undefined') {
     enhancer = initialState
     initialState = undefined
@@ -239,7 +243,7 @@ export default function createStore(reducer, initialState, enhancer) {
   var currentState = initialState
   var currentListeners = []
   var nextListeners = currentListeners
-  var isDispatching = false
+  var isDispatching = false // 是否正在分发事件
 
   function ensureCanMutateNextListeners() {
     if (nextListeners === currentListeners) {
@@ -247,9 +251,11 @@ export default function createStore(reducer, initialState, enhancer) {
     }
   }
 
+  // 我们在action middleware中经常使用的getState()方法，返回当前state
   function getState() {
     return currentState
   }
+
   // 注册listener，同时返回一个取消事件注册的方法。当调用store.dispatch的时候调用listener
   function subscribe(listener) {
     if (typeof listener !== 'function') {
@@ -267,13 +273,15 @@ export default function createStore(reducer, initialState, enhancer) {
       }
 
       isSubscribed = false
-
+      // 从nextListeners中去除掉当前listener
       ensureCanMutateNextListeners()
       var index = nextListeners.indexOf(listener)
       nextListeners.splice(index, 1)
     }
   }
 
+  // dispatch方法接收的action是个对象，而不是方法。
+  // 这个对象实际上就是我们自定义action的返回值，因为dispatch的时候，已经调用过我们的自定义action了，比如 dispatch(addTodo())
   function dispatch(action) {
     if (!isPlainObject(action)) {
       throw new Error(
@@ -328,7 +336,7 @@ export default function createStore(reducer, initialState, enhancer) {
 }
 ```
 
-#### redux-thunk
+#### `thunkMiddleware`
 
 源码及其简单简直给跪...
 
@@ -347,9 +355,28 @@ export default function thunkMiddleware({ dispatch, getState }) {
 
 #### `applyMiddleware`
 
+先复习下用法：
+
 ```javascript
+// usage
+import {createStore, applyMiddleware} from 'redux';
+import thunkMiddleware from 'redux-thunk';
+
+const store = createStore(
+      reducers,
+      state,
+      applyMiddleware(thunkMiddleware)
+);
+```
+
+`applyMiddleware`首先接收`thunkMiddleware`作为参数，两者组合成为一个新的函数（`enhance`），之后在`createStore`内部，因为`enhance`的存在，将会变成返回`enhancer(createStore)(reducer, initialState)`
+
+源码标注解读（省略部分）：
+
+```javascript
+// 定义一个代码组合的方法
 // 传入一些function作为参数，返回其链式调用的形态。例如，
-// compose(f, g, h) 相当于 (...args) => f(g(h(...args)))
+// compose(f, g, h) 最终返回 (...args) => f(g(h(...args)))
 export default function compose(...funcs) {
   if (funcs.length === 0) {
     return arg => arg
@@ -361,7 +388,8 @@ export default function compose(...funcs) {
 }
 
 export default function applyMiddleware(...middlewares) {
-  // 返回一个以createStore为参数的匿名函数，这个函数返回另一个以reducer, initialState, enhancer为参数的匿名函数
+  // 最终返回一个以createStore为参数的匿名函数
+  // 这个函数返回另一个以reducer, initialState, enhancer为参数的匿名函数
   return (createStore) => (reducer, initialState, enhancer) => {
     var store = createStore(reducer, initialState, enhancer)
     var dispatch
@@ -371,11 +399,12 @@ export default function applyMiddleware(...middlewares) {
       getState: store.getState,
       dispatch: (action) => dispatch(action)
     }
-    // 每个 middleware 都以 middlewareAPI 作为参数进行注入，返回一个新的链。此时的返回值相当于 thunkMiddleware 的回调函数 (next) => (action) => {} ，接收一个next作为其参数
+    // 每个 middleware 都以 middlewareAPI 作为参数进行注入，返回一个新的链。此时的返回值相当于调用 thunkMiddleware 返回的函数： (next) => (action) => {} ，接收一个next作为其参数
     chain = middlewares.map(middleware => middleware(middlewareAPI))
     // 并将链代入进 compose 组成一个函数的调用链
-    // compose(...chain) 返回形如(...args) => f(g(h(...args)))，f/g/h都是chain中的函数对象。在目前只有 thunkMiddleware 作为middlewares参数的情况下，将返回 (next)=>(action)=>{}
-    // 之后以 store.dispatch 作为参数进行注入，即 next = store.dispatch
+    // compose(...chain) 返回形如(...args) => f(g(h(...args)))，f/g/h都是chain中的函数对象。
+    // 在目前只有 thunkMiddleware 作为 middlewares 参数的情况下，将返回 (next) => (action) => {}
+    // 之后以 store.dispatch 作为参数进行注入
     dispatch = compose(...chain)(store.dispatch)
 
     return {
@@ -386,7 +415,9 @@ export default function applyMiddleware(...middlewares) {
 }
 ```
 
-当我们搭配 redux-thunk 这个库的时候，在redux配合components时，通常这么写
+一脸懵逼？没关系，来结合实际使用总结一下：
+
+当我们搭配`redux-thunk`这个库的时候，在`redux`配合`components`时，通常这么写
 
 ```javascript
 import thunkMiddleware from 'redux-thunk';
@@ -409,7 +440,7 @@ if (typeof enhancer !== 'undefined') {
 }
 ```
 
-也就会变成下面的情况
+也就是说，会变成下面的情况
 
 ```javascript
 applyMiddleware(thunkMiddleware)(createStore)(reducer, initialState)
@@ -417,28 +448,30 @@ applyMiddleware(thunkMiddleware)(createStore)(reducer, initialState)
 
 - `applyMiddleware(thunkMiddleware)`
 
-`applyMiddleware`接收`thunkMiddleware`作为参数，返回形如`(createStore)=>(reducer, initialState, enhancer)=>{}`的函数。
+`applyMiddleware`接收`thunkMiddleware`作为参数，返回形如`(createStore) => (reducer, initialState, enhancer) => {}`的函数。
 
 - `applyMiddleware(thunkMiddleware)(createStore)`
 
-以 createStore 作为参数，调用上一步返回的函数`(reducer, initialState, enhancer)=>{}`
+以 createStore 作为参数，调用上一步返回的函数`(reducer, initialState, enhancer) => {}`
 
 - `applyMiddleware(thunkMiddleware)(createStore)(reducer, initialState)`
 
 以（reducer, initialState）为参数进行调用。
-在这个函数内部，`thunkMiddleware`被调用，其作用是监测 type 是function 的 action
+在这个函数内部，`thunkMiddleware`被调用，其作用是监测`type`是`function`的`action`
 
-此时的 action 已经在 component 内部被代入参数的调用。因此，如果 此时的 action 返回为 function，则证明是中间件，将 (dispatch, getState) 作为参数代入其中，进行 action 内部下一步的操作。否则的话，认为只是一个普通的 action，将通过 next(也就是 dispatch)进行分发
+因此，如果`dispatch`的`action`返回的是一个`function`，则证明是中间件，则将`(dispatch, getState)`作为参数代入其中，进行`action` 内部下一步的操作。否则的话，认为只是一个普通的`action`，将通过`next`(也就是`dispatch`)进一步分发
 
 ---
 
 也就是说，`applyMiddleware(thunkMiddleware)`作为`enhance`，最终起了这样的作用：
 
-对 dispatch 调用的 action (例如，dispatch(addNewTodo(todo)))进行检查，如果 action 在第一次调用之后返回的是 function，则将（dispatch, getState）作为参数注入到 action返回的方法中，否则就正常对 action 进行分发，这样一来我们的中间件就完成喽~
+对`dispatch`调用的`action`(例如，`dispatch(addNewTodo(todo)))`进行检查，如果`action`在第一次调用之后返回的是`function`，则将`(dispatch, getState)`作为参数注入到`action`返回的方法中，否则就正常对`action`进行分发，这样一来我们的中间件就完成喽~
 
-当 action 内部需要获取 state，或者需要进行异步操作，在操作完成之后进行事件调用分发的话，我们就可以让 action 返回一个以（dispatch, getState）为参数的 function 而不是通常的 Object，enhance就会对其进行检测以便正确的处理
+因此，当`action`内部需要获取`state`，或者需要进行异步操作，在操作完成之后进行事件调用分发的话，我们就可以让`action` 返回一个以`(dispatch, getState)`为参数的`function`而不是通常的`Object`，`enhance`就会对其进行检测以便正确的处理
 
 #### `bindActionCreator`
+
+> 这个方法感觉比较少见，我个人也很少用到
 
 在传统写法下，当我们要把 state 和 action 注入到子组件中时，一般会这么做：
 
