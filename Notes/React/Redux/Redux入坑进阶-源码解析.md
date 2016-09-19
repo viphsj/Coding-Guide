@@ -13,7 +13,9 @@
     - [`applyMiddleware`](#applymiddleware)
     - [`bindActionCreator`](#bindactioncreator)
     - [`bindActionCreator`源码解析](#bindactioncreator%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90)
-    - [react-redux](#react-redux)
+  - [`react-redux`](#react-redux)
+    - [`Provider`](#provider)
+    - [`connect`](#connect)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -585,9 +587,9 @@ export default function bindActionCreators(actionCreators, dispatch) {
 }
 ```
 
-#### react-redux
+### `react-redux`
 
-- `Provider`
+#### `Provider`
 
 ```javascript
 export default class Provider extends Component {
@@ -627,7 +629,7 @@ Provider.childContextTypes = {
 }
 ```
 
-- `connect`
+#### `connect`
 
 传入`mapStateToProps`,`mapDispatchToProps`,`mergeProps`,`options`。
 首先获取传入的参数，如果没有则以默认值代替
