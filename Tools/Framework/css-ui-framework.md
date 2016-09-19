@@ -46,4 +46,4 @@
 
 - [Materialize](http://materializecss.com/)
 
-> material design 风格CSS UI插件，感觉比polymer轻量
+> material design 风格CSS UI插件，比polymer轻量

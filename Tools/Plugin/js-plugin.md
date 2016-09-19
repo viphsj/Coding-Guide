@@ -330,3 +330,7 @@ before.to(after); // in a day 相对时间多久之后
 - [hammerjs](http://hammerjs.github.io/)
 
 > 手势解析库
+
+- [push.js](https://github.com/Nickersoft/push.js/)
+
+> 浏览器通知插件

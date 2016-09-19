@@ -2,7 +2,7 @@
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 **Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
-- [Redux入坑笔记-源码解析](#redux%E5%85%A5%E5%9D%91%E7%AC%94%E8%AE%B0-%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90)
+- [Redux入坑进阶-源码解析](#redux%E5%85%A5%E5%9D%91%E8%BF%9B%E9%98%B6-%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90)
   - [预热](#%E9%A2%84%E7%83%AD)
   - [柯里化函数（curry）](#%E6%9F%AF%E9%87%8C%E5%8C%96%E5%87%BD%E6%95%B0%EF%BC%88curry%EF%BC%89)
   - [代码组合（compose）](#%E4%BB%A3%E7%A0%81%E7%BB%84%E5%90%88%EF%BC%88compose%EF%BC%89)
@@ -17,7 +17,7 @@
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
-## Redux入坑笔记-源码解析
+## Redux入坑进阶-源码解析
 
 > 本文不涉及redux的使用方法，因此可能更适合使用过redux的玩家翻阅😃
 
