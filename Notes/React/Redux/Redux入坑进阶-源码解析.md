@@ -4,9 +4,9 @@
 
 - [Redux入坑进阶-源码解析](#redux%E5%85%A5%E5%9D%91%E8%BF%9B%E9%98%B6-%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90)
   - [预热](#%E9%A2%84%E7%83%AD)
-  - [柯里化函数（curry）](#%E6%9F%AF%E9%87%8C%E5%8C%96%E5%87%BD%E6%95%B0%EF%BC%88curry%EF%BC%89)
-  - [代码组合（compose）](#%E4%BB%A3%E7%A0%81%E7%BB%84%E5%90%88%EF%BC%88compose%EF%BC%89)
-  - [Redux](#redux)
+    - [柯里化函数（`curry`）](#%E6%9F%AF%E9%87%8C%E5%8C%96%E5%87%BD%E6%95%B0%EF%BC%88curry%EF%BC%89)
+    - [代码组合（`compose`）](#%E4%BB%A3%E7%A0%81%E7%BB%84%E5%90%88%EF%BC%88compose%EF%BC%89)
+  - [`Redux`](#redux)
     - [`combineReducers`](#combinereducers)
     - [`createStore`](#createstore)
     - [`thunkMiddleware`](#thunkmiddleware)
@@ -27,7 +27,7 @@
 
 > redux 函数内部包含了大量[柯里化函数](https://llh911001.gitbooks.io/mostly-adequate-guide-chinese/content/ch4.html)以及[代码组合](https://llh911001.gitbooks.io/mostly-adequate-guide-chinese/content/ch5.html)思想
 
-### 柯里化函数（curry）
+#### 柯里化函数（`curry`）
 
 通俗的来讲，可以用一句话概括柯里化函数：返回函数的函数
 
@@ -68,7 +68,7 @@ const intersectionList = listB.filter(value => ifDataExist(value));
 console.log(intersectionList); // [2, 3, 4]
 ```
 
-### 代码组合（compose）
+#### 代码组合（`compose`）
 
 代码组合就像是数学中的结合律：
 
@@ -84,7 +84,7 @@ const compose = (f, g) => (x) => f(g(x));
 
 通过这样函数之间的组合，可以大大增加可读性，效果远大于嵌套一大堆的函数调用，并且我们可以随意更改函数的调用顺序
 
-### Redux
+### `Redux`
 
 #### `combineReducers`
 
