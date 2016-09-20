@@ -115,7 +115,7 @@ app.listen(7000);
 export default app;
 ```
 
-- [koa-onerror]()
+- [koa-onerror](https://github.com/koajs/onerror)
 
 > 更优化的错误消息提示
 
@@ -153,6 +153,21 @@ router.get('/', async (ctx, next) => {
 而使用了`koa-onerror`之后则：
 
 ![with koa-onerror](../../../image/koa/with-koa-onerror.png)
+
+- [koa-csrf](https://github.com/koajs/csrf)
+
+跨域请求的认证，基本必装
+
+```bash
+$ npm install --save koa-csrf@3.x
+```
+
+```javascript
+// app.js
+import csrf from 'koa-csrf';
+// ...
+app.use(convert(new csrf()));
+```
 
 ### Templates
 
