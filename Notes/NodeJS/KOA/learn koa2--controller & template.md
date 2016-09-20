@@ -52,10 +52,13 @@ That's All. Done.
 
 寻找了很多模板，最终决定使用`nunjucks`来做Koa2的模板：
 
-1. `mozilla`出品，品质和维护起步有保障
+1. `mozilla`出品，品质和维护起来有保障
 2. 语法和文档都挺清晰
 3. 类似于原生html，学习成本低
-4. 有对应的webpack loader
+
+为什么不用[`pug`](https://github.com/pugjs/pug)？
+
+- 从事前端工作的我表示不是很喜欢`pug`的语法
 
 ```bash
 $ npm install nunjucks --save
