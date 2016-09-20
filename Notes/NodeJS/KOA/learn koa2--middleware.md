@@ -235,7 +235,7 @@ compose([a, b, c, ...]);
 example:
 
 ```javascript
-const compose = require('koa-compose');
+import compose from 'koa-compose';
 
 async random = (ctx, next) => {
   if ('/random' == ctx.path) {
