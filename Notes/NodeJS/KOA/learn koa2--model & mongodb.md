@@ -14,4 +14,6 @@
 
 ### mongodb
 
+> 如果对mongodb不熟悉，我墙裂推荐看[MongoDB 极简实践入门](https://github.com/StevenSLXie/Tutorials-for-Web-Developers/blob/master/MongoDB%20%E6%9E%81%E7%AE%80%E5%AE%9E%E8%B7%B5%E5%85%A5%E9%97%A8.md)入门
+
 ### model
