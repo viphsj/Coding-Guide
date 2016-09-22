@@ -201,6 +201,7 @@ app.use(async (ctx, next) => {
     <br/>
     <a href="/user/logout">logout</a>
   {% else %}
+    <!-- 未登录时跳转到授权链接 -->
     <a href="https://github.com/login/oauth/authorize?scope=user:email&client_id=1b1d94a101d42c0f6dee">login with github</a>
   {% endif %}
 {% endblock %}
@@ -212,6 +213,8 @@ app.use(async (ctx, next) => {
 // app/routes/user.js
 import koaRouter from 'koa-router';
 import user from '../controllers/user';
+// checkIfLogin是一个辅助类中间件，通过session来检查用户是否已授权登录
+import {checkIfLogin} from '../middlewares/utils';
 
 const router = koaRouter({
   prefix: '/user'
@@ -238,20 +241,19 @@ const userIndex = async (ctx, next) => {
   });
 };
 
-// 处理 /user/login/github
+// 处理 /user/login/github callback
 const github = async (ctx, next) => {
   // 获取code，并由code获取token
   const code = ctx.request.query.code;
   const result = await getGithubToke(code);
   try {
     const token = result.match(/^access_token=(\w+)&/)[1];
-    ctx.session.token = token;
     // 并通过token获取用户信息
     // 最终user信息和token都存到了session里
     const userInfo = await getGithubUser(token);
     if (userInfo) {
+      ctx.session.token = token;
       ctx.session.user = JSON.parse(userInfo);
-      return ctx.redirect('/todo');
     }
     return ctx.redirect('/user');
   } catch (TypeError) {
@@ -273,9 +275,9 @@ export default {
 };
 ```
 
-在拿到`token`之后，获取用户信息并储存起来。
+可以看到，我们拿到用户授权的code之后，在服务端向github发出了两次请求，以获取用户`token`和个人信息，并储存起来。
 
-想服务端向github发出请求：（使用[`request`](https://github.com/request/request)）：
+在服务端向github发出请求：（使用[`request`](https://github.com/request/request)）：
 
 ```bash
 $ npm install --save request
@@ -286,6 +288,8 @@ $ npm install --save request
 import githubConfig from XXX
 import request from 'request';
 
+// 获取token
+// 返回值类似access_token=XXX&scope=user%3Aemail&token_type=bearer
 export const getGithubToke = (code) => {
   return new Promise((resolve, reject) => {
     request.post(`https://github.com/login/oauth/access_token?client_id=${githubConfig.clientId}&client_secret=${githubConfig.clientSecret}&code=${code}`, (err, httpResponse, body) => {
@@ -298,6 +302,8 @@ export const getGithubToke = (code) => {
   });
 };
 
+// 通过token获取用户的信息
+// 注意要设置User-Agent为你注册的应用名称
 export const getGithubUser = (token) => {
   return new Promise((resolve, reject) => {
     request.get(`https://api.github.com/user?access_token=${token}`, {
