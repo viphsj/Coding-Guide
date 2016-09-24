@@ -2,21 +2,19 @@
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 **Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
-- [PostCSS配置指北(with webpack)](#postcss%E9%85%8D%E7%BD%AE%E6%8C%87%E5%8C%97with-webpack)
+- [PostCSS配置指北](#postcss%E9%85%8D%E7%BD%AE%E6%8C%87%E5%8C%97)
   - [Use with webpack](#use-with-webpack)
     - [基本配置](#%E5%9F%BA%E6%9C%AC%E9%85%8D%E7%BD%AE)
     - [使用插件](#%E4%BD%BF%E7%94%A8%E6%8F%92%E4%BB%B6)
-  - [autoprefixer](#autoprefixer)
+  - [兼容性CSS的自动补全](#%E5%85%BC%E5%AE%B9%E6%80%A7css%E7%9A%84%E8%87%AA%E5%8A%A8%E8%A1%A5%E5%85%A8)
   - [Use stylelint](#use-stylelint)
-    - [单独使用stylelint](#%E5%8D%95%E7%8B%AC%E4%BD%BF%E7%94%A8stylelint)
-      - [1. use with webpack](#1-use-with-webpack)
-      - [2. add  configuration](#2-add--configuration)
+    - [在webpack内单独使用stylelint](#%E5%9C%A8webpack%E5%86%85%E5%8D%95%E7%8B%AC%E4%BD%BF%E7%94%A8stylelint)
     - [在PostCSS内使用(荐)](#%E5%9C%A8postcss%E5%86%85%E4%BD%BF%E7%94%A8%E8%8D%90)
-    - [1. use with postcss/webpack](#1-use-with-postcsswebpack)
+    - [1. 基础使用方式](#1-%E5%9F%BA%E7%A1%80%E4%BD%BF%E7%94%A8%E6%96%B9%E5%BC%8F)
     - [2. 增加配置文件](#2-%E5%A2%9E%E5%8A%A0%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6)
       - [`.stylelintignore`](#stylelintignore)
       - [`stylelint.config.js`](#stylelintconfigjs)
-    - [3. StyleLintPlugin config options](#3-stylelintplugin-config-options)
+    - [3. StyleLintPlugin的配置参数](#3-stylelintplugin%E7%9A%84%E9%85%8D%E7%BD%AE%E5%8F%82%E6%95%B0)
   - [资源](#%E8%B5%84%E6%BA%90)
     - [postcss & loader](#postcss-&-loader)
     - [autoprefixer & cssnext](#autoprefixer-&-cssnext)
@@ -26,13 +24,15 @@
 
 ## [PostCSS](https://github.com/postcss/postcss)配置指北
 
-![euil martians](../../image/euil_martians.svg)
+![postcss](../../image/postcss.png)
 
-一个类似于webpack的工具，组成CSS编译/lint/autoprefixer的生态环境。它的作者是[Euil Martians](https://evilmartians.com/)，一家致力于技术研究与网站外包开发的公司。其后端技术栈偏重于Ruby，而前端从React到Node都有涉猎。
+> `PostCSS`并不是一门语言，而是一个类似于`webpack`的工具，它支持很多插件，来达到便捷的编译效果，组成一个CSS编译/lint/autoprefixer的生态圈。它的作者是[Euil Martians](https://evilmartians.com/)，一家致力于技术研究与网站外包开发的公司。其后端技术栈偏重于Ruby，而前端从React到Node都有涉猎。
 
-PostCSS的一大特点是，具体的编译插件甚至是CSS书写风格，可以根据自己的需要进行安装，而不是像less或者scss一样的全家桶。
+`PostCSS`的一大特点是，具体的编译插件甚至是CSS书写风格，可以根据自己的需要进行安装，选择自己需要的特性：嵌套，函数，变量。自动补全，CSS新特性等等，而不是像`less`或者`scss`一样的大型全家桶。因此，不需要再专门去学习`less`或者`scss`的语法，只要选择自己喜欢的特性，可以只写CSS文件，但依旧可以写嵌套或者函数，然后选择合适的插件编译它就行了。
 
 ### Use with webpack
+
+鉴于现在`webpack`也越来越火，所以之后的配置主要是借助于`postcss-loader`，将`PostCSS`的生态圈依托在`webpack`之下。
 
 ```bash
 # 安装webpack postcss loader
@@ -48,9 +48,9 @@ module: {
   loaders: [
     {
       test: /\.css$/,
-      // if you use ExtractTextPlugin
+      // 如果使用了 ExtractTextPlugin
       loader: ExtractTextPlugin.extract('style', 'css!postcss')
-      // else
+      // 否则
       // loader: "style-loader!css-loader!postcss-loader"
     }
   ]
@@ -62,6 +62,8 @@ postcss: function () {
 ```
 
 #### 使用插件
+
+> 快速配置一览
 
 ```bash
 # cssnext可以让你写CSS4的语言，并能配合autoprefixer进行浏览器兼容的不全，而且还支持嵌套语法
@@ -84,19 +86,19 @@ const cssnext = require('postcss-cssnext');
 // ...
 postcss: function () {
 	return [
-		cssnext({autoprefixer: {browsers: "ie >= 10, ..."}}),
-		postcssImport({ addDependencyTo: webpack })
+    postcssImport({ addDependencyTo: webpack }),
+		cssnext({autoprefixer: {browsers: "ie >= 10, ..."}})
 	];
 }
 ```
 
-### [autoprefixer](https://github.com/postcss/autoprefixer)
+### [兼容性CSS的自动补全](https://github.com/postcss/autoprefixer)
 
 ```bash
 $ npm install autoprefixer --save-dev
 ```
 
-- autoprefixer可以单独配置使用
+- `autoprefixer`也可以单独配置使用
 
 ```javascript
 // webpack.config.js
@@ -113,27 +115,28 @@ postcss: function(){
 const cssnext = require('postcss-cssnext');
 
 postcss: function(){
+  // 通过配置browsers，可以指定将CSS语法兼容到什么程度
   return [cssnext({autoprefixer: {browsers: "ie >= 10, ..."}})]
 }
 ```
 
-[`autoprefixer`的配置](https://github.com/postcss/autoprefixer#options)
+- [`autoprefixer`的配置](https://github.com/postcss/autoprefixer#options)
 
 ### Use stylelint
 
 [Stylelint](https://github.com/stylelint/stylelint)插件可以让你在编译的时候就知道自己CSS文件里的错误
 
-#### 单独使用stylelint
+#### 在webpack内单独使用stylelint
 
 用到如下插件：
 
 - [stylelint-webpack-plugin](https://github.com/vieron/stylelint-webpack-plugin)
 - [stylelint-config-standard](https://github.com/stylelint/stylelint-config-standard)
 
-##### 1. [use with webpack](https://github.com/vieron/stylelint-webpack-plugin)
-
 ```bash
 $ npm install stylelint-webpack-plugin --save-dev
+# stylelint语法，使用标准语法
+$ npm install stylelint-config-standard --save-dev
 ```
 
 ```javascript
@@ -141,31 +144,15 @@ $ npm install stylelint-webpack-plugin --save-dev
 const StyleLintPlugin = require('stylelint-webpack-plugin');
 // ...
 plugins: [
-	new StyleLintPlugin(),
-],
-```
-
-##### 2. [add  configuration](https://github.com/stylelint/stylelint-config-standard)
-
-use standard styelint config as an example
-
-```bash
-$ npm install stylelint-config-standard --save-dev
-```
-
-```javascript
-// webpack.config.js
-// 接着上面的webpack配置继续
-plugins: [
 	new StyleLintPlugin({
       config: {
-      	// 你的lint扩展自刚刚安装的stylelint-config-standard
+        // 你的lint扩展自刚刚安装的stylelint-config-standard
         "extends": "stylelint-config-standard"
       },
       // 正则匹配想要lint监测的文件
       files: 'frontend/stylesheet/**/*.l?(e|c)ss'
-	}),
-]
+  }),
+],
 ```
 
 #### 在PostCSS内使用(荐)
@@ -176,10 +163,10 @@ plugins: [
 - [postcss-reporter](https://github.com/postcss/postcss-reporter)
 - [stylelint-config-standard](https://github.com/stylelint/stylelint-config-standard)
 
-#### 1. [use with postcss/webpack](https://github.com/stylelint/stylelint/blob/master/docs/user-guide/postcss-plugin.md)
+#### 1. [基础使用方式](https://github.com/stylelint/stylelint/blob/master/docs/user-guide/postcss-plugin.md)
 
 ```bash
-# 安装
+# 安装stylelint
 $ npm install stylelint --save-dev
 ```
 
@@ -194,10 +181,10 @@ module: {
 }
 postcss: function() {
   return [
+    postcssImport({ addDependencyTo: webpack }),
     stylelint({
       failOnError: true
-    }),
-    postcssImport({ addDependencyTo: webpack })
+    })
   ]
 }
 ```
@@ -233,7 +220,7 @@ $ npm install stylelint-config-standard --save-dev
 在配置文件中指明我们的检测语法扩展自该插件：
 
 - [User guide](https://github.com/stylelint/stylelint/blob/master/docs/user-guide.md)
-- [rules](https://github.com/stylelint/stylelint/blob/master/docs/user-guide/rules.md)
+- [配置规则](https://github.com/stylelint/stylelint/blob/master/docs/user-guide/rules.md)
 
 ```javascript
 // 常用配置
@@ -263,11 +250,11 @@ module.exports = {
 ```javascript
 postcss: function() {
   return [
+    postcssImport({ addDependencyTo: webpack }),
     stylelint({
         config: require('../../stylelint.config.js'),
         failOnError: true
-    }),
-    postcssImport({ addDependencyTo: webpack })
+    })
   ]
 }
 ```
@@ -290,11 +277,11 @@ webpack配置：
 ```javascript
 postcss: function() {
   return [
+    postcssImport({ addDependencyTo: webpack }),
     stylelint({
         config: require('../../stylelint.config.js'),
         failOnError: true
     }),
-    postcssImport({ addDependencyTo: webpack }),
     postcssReporter({ clearMessages: true })
   ]
 }
@@ -309,7 +296,7 @@ frontend/stylesheet/layout/test_post_css.css
 
 吊吊哒！
 
-#### 3. [StyleLintPlugin config options](https://github.com/vieron/stylelint-webpack-plugin#options)
+#### 3. [StyleLintPlugin的配置参数](https://github.com/vieron/stylelint-webpack-plugin#options)
 
 [stylelint options](http://stylelint.io/user-guide/node-api/#options)里面的配置也可以在plugin里使用。介绍几个常用的配置：
 
