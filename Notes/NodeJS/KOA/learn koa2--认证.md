@@ -46,7 +46,7 @@ const app = new Koa();
 app.keys = ['keys'];
 
 // session
-app.use(session(app));
+app.use(convert(session(app)));
 ```
 
 #### `generic-session`
