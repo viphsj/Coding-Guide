@@ -24,9 +24,9 @@
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
-## [PostCSS](https://github.com/postcss/postcss)配置指北(with webpack)
+## [PostCSS](https://github.com/postcss/postcss)配置指北
 
-![euil martians](../../image/euil martians.svg)
+![euil martians](../../image/euil_martians.svg)
 
 一个类似于webpack的工具，组成CSS编译/lint/autoprefixer的生态环境。它的作者是[Euil Martians](https://evilmartians.com/)，一家致力于技术研究与网站外包开发的公司。其后端技术栈偏重于Ruby，而前端从React到Node都有涉猎。
 
