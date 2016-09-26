@@ -9,6 +9,7 @@
     - [Koa2系列教程](#koa2%E7%B3%BB%E5%88%97%E6%95%99%E7%A8%8B)
     - [Python3系列教程](#python3%E7%B3%BB%E5%88%97%E6%95%99%E7%A8%8B)
     - [Ember文档翻译系列(V2.8.0)](#ember%E6%96%87%E6%A1%A3%E7%BF%BB%E8%AF%91%E7%B3%BB%E5%88%97v280)
+    - [好玩的](#%E5%A5%BD%E7%8E%A9%E7%9A%84)
   - [License](#license)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -55,7 +56,7 @@
 ### 前端工程
 
 - [Webpack配置从零到一](./Notes/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B/Webpack%E9%85%8D%E7%BD%AE%E4%BB%8E%E9%9B%B6%E5%88%B0%E4%B8%80.md)
-- [【译文】用Webpack武装自己]()
+- [【译文】用Webpack武装自己](./Notes/%E8%AF%91%E6%96%87/%E3%80%90%E8%AF%91%E6%96%87%E3%80%91%E7%94%A8Webpack%E6%AD%A6%E8%A3%85%E8%87%AA%E5%B7%B1.md)
 - [PostCSS配置指北](./Notes/CSS/PostCSS%E9%85%8D%E7%BD%AE%E6%8C%87%E5%8C%97.md)
 - [【译文】七条可应用于设计的心理学原则](./Notes/%E8%AF%91%E6%96%87/%E3%80%90%E8%AF%91%E6%96%87%E3%80%91%E4%B8%83%E6%9D%A1%E5%8F%AF%E5%BA%94%E7%94%A8%E4%BA%8E%E8%AE%BE%E8%AE%A1%E7%9A%84%E5%BF%83%E7%90%86%E5%AD%A6%E5%8E%9F%E5%88%99.md)
 - [【译文】网页设计中隐藏在色彩之后的情感和心理学](./Notes/%E8%AF%91%E6%96%87/%E3%80%90%E8%AF%91%E6%96%87%E3%80%91%E7%BD%91%E9%A1%B5%E8%AE%BE%E8%AE%A1%E4%B8%AD%E9%9A%90%E8%97%8F%E5%9C%A8%E8%89%B2%E5%BD%A9%E4%B9%8B%E5%90%8E%E7%9A%84%E6%83%85%E6%84%9F%E5%92%8C%E5%BF%83%E7%90%86%E5%AD%A6.md)
@@ -105,6 +106,24 @@
 - [Component](./Notes/ember/Ember%E5%88%9D%E6%AD%A5--Component.md)
 - [Controller](./Notes/ember/Ember%E5%88%9D%E6%AD%A5--Controller.md)
 - [Model](./Notes/ember/Ember%E5%88%9D%E6%AD%A5--Model.md)
+
+### 好玩的
+
+- [Electron](./Notes/Electron/Electron%E3%80%9001%E3%80%91--%E4%B8%BB%E8%BF%9B%E7%A8%8BVS%E6%B8%B2%E6%9F%93%E8%BF%9B%E7%A8%8B%26%E4%B8%8D%E5%90%8C%E9%A1%B5%E9%9D%A2%E9%97%B4%E5%85%B1%E4%BA%AB%E6%95%B0%E6%8D%AE.md)
+
+> 优点：web写法（其实就是前端），一次书写可编译成多平台应用
+> 
+> 缺点：打包后体积太大。经验不足的开发者容易把它做成和web没有太大差别，仅仅是外面套了个壳的应用。和原生应用相比，可获取的系统接口还是太少，一般情况下没有太大开发意义，产品易被网页版取代
+
+- [Elm](./master/Notes/Elm/Think%20in%20Elm.md)
+
+> 优点：Redux鼻祖。纯函数式编程，简洁，漂亮。
+> 
+> 缺点：学习和开发、维护成本偏高。很少运用于生产环境
+
+- [Don't Make Me Think](./master/Notes/Projects/Don-t-Make-Me-Think.md)
+
+> 产品/设计相关的经典之作，很多理念到现在还在延续并被扩展
 
 ## License
 
