@@ -125,6 +125,31 @@
 
 > 产品/设计相关的经典之作，很多理念到现在还在延续并被扩展
 
+- [React Native](https://github.com/ecmadao/F8App-Analysis)
+
+> 优点：没玩过weex，除此以外RN是我见过的性能最好对React栈前端尤其友好的跨平台框架。生产环境下编译后应用运行速度不会比原生差很大。
+> 
+> 缺点：交互弱。属于跨平台框架通病
+
+- [React Times](https://github.com/ecmadao/react-times)
+
+  - [源码](https://github.com/ecmadao/react-times)
+  - [教程](./Notes/React/ReactJS/Write%20a%20React%20Timepicker%20Component%20hand%20by%20hand.md)
+
+> 一个React小时选择组件，支持24小时/12小时制
+
+- [剁手党](https://github.com/ecmadao/Hands-Chopping)
+
+> 【Hands Chopping】【剁手党】Python3编写的爬取淘宝/京东命令行工具。使用BS + Selenium
+
+- [Alfred TodoList](https://github.com/ecmadao/Alfred-TodoList)
+
+> 基于Mac神器Alfred的一个Todo App，使用Python2编写
+> 
+> 优点：Alfred插件可以拿多种脚本语言编写，甚至可以和系统API联动
+> 
+> 缺点：可惜的是目前Alfred还不支持Python3，以及对于第三方库的支持也不太友好。
+
 ## License
 
 Apache License 2.0
