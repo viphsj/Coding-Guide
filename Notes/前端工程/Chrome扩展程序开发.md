@@ -1,3 +1,19 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [Chrome扩展程序开发](#chrome%E6%89%A9%E5%B1%95%E7%A8%8B%E5%BA%8F%E5%BC%80%E5%8F%91)
+  - [`manifest.json`](#manifestjson)
+    - [注](#%E6%B3%A8)
+  - [不同运行环境之间的交互](#%E4%B8%8D%E5%90%8C%E8%BF%90%E8%A1%8C%E7%8E%AF%E5%A2%83%E4%B9%8B%E9%97%B4%E7%9A%84%E4%BA%A4%E4%BA%92)
+  - [脚本的区别与生命周期](#%E8%84%9A%E6%9C%AC%E7%9A%84%E5%8C%BA%E5%88%AB%E4%B8%8E%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F)
+    - [`content_scripts`](#content_scripts)
+    - [background](#background)
+    - [runtime](#runtime)
+    - [storage](#storage)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 ## Chrome扩展程序开发
 
 ### `manifest.json`

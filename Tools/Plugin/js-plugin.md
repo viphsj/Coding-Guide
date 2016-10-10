@@ -10,6 +10,7 @@
 - [About Writer](#about-writer)
 - [markdown解析](#markdown%E8%A7%A3%E6%9E%90)
 - [Hotkeys](#hotkeys)
+- [时间日期选择](#%E6%97%B6%E9%97%B4%E6%97%A5%E6%9C%9F%E9%80%89%E6%8B%A9)
 - [Other tools](#other-tools)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -69,6 +70,10 @@
 > 处理页面滚动。
 >
 > 滚动，缩放，平移，无限滚动，视差滚动，旋转功能
+
+- [scrollreveal](https://github.com/jlmakes/scrollreveal)
+
+> 滚动如丝般顺滑
 
 - [glide](http://glide.jedrzejchalubek.com/)
 
@@ -216,6 +221,10 @@ before.to(after); // in a day 相对时间多久之后
 
 > 支持markdown的富文本编辑器
 
+- [marginotes](https://github.com/fdansv/marginotes)
+
+> jQuery插件，文章旁注的效果
+
 ### markdown解析
 
 - [marked](https://github.com/chjj/marked)
@@ -260,6 +269,23 @@ before.to(after); // in a day 相对时间多久之后
 
 > 平心而论github star数目还是挺多的，然而没用过
 
+### 时间日期选择
+
+- [pickadate.js](http://amsul.ca/pickadate.js/)
+
+> The mobile-friendly, responsive, and lightweight
+> jQuery date & time input picker.
+>
+> 基于jQuery的 datePicker & timePicker
+
+- [datedropper](https://github.com/felicegattuso/datedropper)
+
+> 针对移动端的日期选择
+
+- [react-times](https://github.com/ecmadao/react-times)
+
+> 基于React的时间选择组件，没有jQuery依赖
+
 ### Other tools
 
 - [UNDERSCORE.JS](http://underscorejs.org/)
@@ -273,13 +299,6 @@ before.to(after); // in a day 相对时间多久之后
 - [favico.js](http://lab.ejci.net/favico.js/)
 
 > 在你网站的favico上展现小徽标，逼死强迫症
-
-- [pickadate.js](http://amsul.ca/pickadate.js/)
-
-> The mobile-friendly, responsive, and lightweight
-> jQuery date & time input picker.
->
-> 基于jQuery的 datePicker & timePicker
 
 - [Messenger](http://www.bootcss.com/p/messenger/)
 
@@ -334,3 +353,11 @@ before.to(after); // in a day 相对时间多久之后
 - [push.js](https://github.com/Nickersoft/push.js/)
 
 > 浏览器通知插件
+
+- [Slidebars](https://github.com/adchsm/Slidebars)
+
+> jQuery插件，创建侧边栏
+
+- [doctoc](https://github.com/thlorenz/doctoc)
+
+> 一个Node组件，为你的Markdown文件自动化添加目录。你看见的本文的目录就是由doctoc添加的
