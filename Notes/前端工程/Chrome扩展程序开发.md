@@ -23,7 +23,7 @@
 
 在项目根目录下创建`manifest.json`文件，其中会涵盖扩展程序的基本信息，并指明需要的权限和资源文件
 
-```json
+```javascript
 {
   // 以下为必写
   "manifest_version": 2, // 必须为2，1号版本已弃用
@@ -107,7 +107,7 @@
 
 内容脚本，在每个标签页下运行。虽然它可以访问到页面DOM，但无法访问到这个里面里，其他JS文件创建的全局变量或者函数。也就是说，各个`content_scripts`(以及外部JS文件)之间是相互独立的，只有：
 
-```json
+```javascript
 "content_scripts": [
   {
     "js": []
@@ -188,7 +188,7 @@ chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {})
 
 要使用这个API则需要先在`manifest.json`中注册：
 
-```json
+```javascript
 "permissions": [
   "tabs",
   // ...
@@ -237,7 +237,7 @@ chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
 
 同样，使用这个API需要先在`manifest.json`中注册：
 
-```json
+```javascript
 "permissions": [
   "storage",
   // ...

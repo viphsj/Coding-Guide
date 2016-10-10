@@ -112,13 +112,13 @@
 - [Electron](./Notes/Electron/Electron%E3%80%9001%E3%80%91--%E4%B8%BB%E8%BF%9B%E7%A8%8BVS%E6%B8%B2%E6%9F%93%E8%BF%9B%E7%A8%8B%26%E4%B8%8D%E5%90%8C%E9%A1%B5%E9%9D%A2%E9%97%B4%E5%85%B1%E4%BA%AB%E6%95%B0%E6%8D%AE.md)
 
 > 优点：web写法（其实就是前端），一次书写可编译成多平台应用
-> 
+>
 > 缺点：打包后体积太大。经验不足的开发者容易把它做成和web没有太大差别，仅仅是外面套了个壳的应用。和原生应用相比，可获取的系统接口还是太少，一般情况下没有太大开发意义，产品易被网页版取代
 
 - [Elm](./master/Notes/Elm/Think%20in%20Elm.md)
 
 > 优点：Redux鼻祖。纯函数式编程，简洁，漂亮。
-> 
+>
 > 缺点：学习和开发、维护成本偏高。很少运用于生产环境
 
 - [Don't Make Me Think](./master/Notes/Projects/Don-t-Make-Me-Think.md)
@@ -128,7 +128,7 @@
 - [React Native](https://github.com/ecmadao/F8App-Analysis)
 
 > 优点：没玩过weex，除此以外RN是我见过的性能最好对React栈前端尤其友好的跨平台框架。生产环境下编译后应用运行速度不会比原生差很大。
-> 
+>
 > 缺点：交互弱。属于跨平台框架通病
 
 - [React Times](https://github.com/ecmadao/react-times)
@@ -145,9 +145,9 @@
 - [Alfred TodoList](https://github.com/ecmadao/Alfred-TodoList)
 
 > 基于Mac神器Alfred的一个Todo App，使用Python2编写
-> 
+>
 > 优点：Alfred插件可以拿多种脚本语言编写，甚至可以和系统API联动
-> 
+>
 > 缺点：可惜的是目前Alfred还不支持Python3，以及对于第三方库的支持也不太友好。
 
 - [Job Hunter](https://github.com/ecmadao/job-hunter)
@@ -156,6 +156,7 @@
 
 - [cliper-chrome](https://github.com/ecmadao/cliper-chrome)
 - [cliper-backend](https://github.com/ecmadao/cliper-backend)
+- [chrome扩展程序开发](https://github.com/ecmadao/Coding-Guide/blob/master/Notes/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B/Chrome扩展程序开发.md)
 
 > 一个Chrome扩展程序 + 对应的前后端（Koa2 + react），作用是快速保存页面或者页面上选择的文本，用于阅读文章时的摘记和整理。暂未部署上线
 
