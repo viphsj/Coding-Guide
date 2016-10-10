@@ -96,6 +96,14 @@ lock.release() # 释放线程锁
 lock.locked() # 获取当前锁的状态，若锁已经被某个线程获取,返回True, 否则为False
 ```
 
+> 除去`lock.acquire()`和`lock.release()`方法外，还有更加优雅的方式来加锁：
+
+```python
+# Lock 对象和 with 语句块一起使用可以保证互斥执行，就是每次只有一个线程可以执行 with 语句包含的代码块。with 语句会在这个代码块执行前自动获取锁，在执行结束后自动释放锁。
+with lock:
+	# do something
+```
+
 ### 使用实例
 
 ```python
