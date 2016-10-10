@@ -150,6 +150,15 @@
 > 
 > 缺点：可惜的是目前Alfred还不支持Python3，以及对于第三方库的支持也不太友好。
 
+- [Job Hunter](https://github.com/ecmadao/job-hunter)
+
+> 找工作的时候那么多数据看的很烦，于是建了这个项目，试图通过自动化的方式解放那些繁琐的流程。努力挖坑中
+
+- [cliper-chrome](https://github.com/ecmadao/cliper-chrome)
+- [cliper-backend](https://github.com/ecmadao/cliper-backend)
+
+> 一个Chrome扩展程序 + 对应的前后端（Koa2 + react），作用是快速保存页面或者页面上选择的文本，用于阅读文章时的摘记和整理。暂未部署上线
+
 ## License
 
 Apache License 2.0
