@@ -4,13 +4,14 @@
 
 - [Chrome扩展程序开发](#chrome%E6%89%A9%E5%B1%95%E7%A8%8B%E5%BA%8F%E5%BC%80%E5%8F%91)
   - [`manifest.json`](#manifestjson)
-    - [注](#%E6%B3%A8)
   - [不同运行环境JS的绳命周期](#%E4%B8%8D%E5%90%8C%E8%BF%90%E8%A1%8C%E7%8E%AF%E5%A2%83js%E7%9A%84%E7%BB%B3%E5%91%BD%E5%91%A8%E6%9C%9F)
     - [`content_scripts`](#content_scripts)
     - [`background`](#background)
     - [`browser_action`](#browser_action)
   - [不同运行环境JS之间的交互](#%E4%B8%8D%E5%90%8C%E8%BF%90%E8%A1%8C%E7%8E%AF%E5%A2%83js%E4%B9%8B%E9%97%B4%E7%9A%84%E4%BA%A4%E4%BA%92)
     - [chrome.runtime](#chromeruntime)
+      - [普通的消息传递](#%E6%99%AE%E9%80%9A%E7%9A%84%E6%B6%88%E6%81%AF%E4%BC%A0%E9%80%92)
+      - [长链接](#%E9%95%BF%E9%93%BE%E6%8E%A5)
     - [chrome.tabs](#chrometabs)
     - [chrome.storage](#chromestorage)
   - [学习资源](#%E5%AD%A6%E4%B9%A0%E8%B5%84%E6%BA%90)
@@ -19,7 +20,7 @@
 
 ## Chrome扩展程序开发
 
-### `manifest.json`
+### [`manifest.json`](https://crxdoc-zh.appspot.com/extensions/manifest)
 
 在项目根目录下创建`manifest.json`文件，其中会涵盖扩展程序的基本信息，并指明需要的权限和资源文件
 
@@ -92,7 +93,7 @@
 - `content_scripts`
     - 当前浏览的页面里运行的文件，可以操作DOM
 
-#### 注
+注：
 
 - `content_scripts`中如果没有`matches`，则扩展程序无法正常加载，也不能通过“加载未封装的扩展程序”来添加。如果你的`content_scripts`中有js可以针对所有页面运行，则填写`"matches" : ["http://*/*", "https://*/*"]`即可
 - 推荐将`background`中的`persistent`设置为`false`，根据事件来运行后台js
@@ -145,6 +146,10 @@
 
 #### [chrome.runtime](https://crxdoc-zh.appspot.com/extensions/runtime)
 
+- [消息传递](https://crxdoc-zh.appspot.com/apps/messaging)
+
+##### 普通的消息传递
+
 通过`runtime`的`onMessage`、`sendMessage`等方法，可以在各个JS之间传递并监听消息。举个栗子：
 
 在`popup.js`中，我们让它初始化之后发送一个消息：
@@ -175,14 +180,62 @@ chrome.runtime.getBackgroundPage(function (backgroundPage) {
   // backgroundPage 即 window 对象
 });
 // 发送消息
-chrome.runtime.sendMessage(message, function(response) {});
+chrome.runtime.sendMessage(message, function(response) {
+  // response 代表消息回复，可以接受到通过 sendResponse 方法发送的消息回复
+});
 // 监听消息
-chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {});
+chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
+  // message 就是你发送的 message
+  // sender 代表发送者，可以通过 sender.tab 判断消息是否是从内容脚本发出
+  // sendResponse 可以直接发送回复，如：
+  sendResponse({
+    method: 'response',
+    message: 'send a response'
+  });
+});
 ```
 
 需要注意的是，即便你在多个JS中注册了消息监听`onMessage.addListener`，也只有一个监听者能收到通过`runtime.sendMessage`发送出去的消息。
 
 如果需要不同的监听者分别监听消息，则需要使用`chrome.tab` API
+
+##### 长链接
+
+通过`chrome.runtime.connect`（或者`chrome.tabs.connect`）可以建立起不同类型JS之间的长链接。
+
+信息的发送者需要制定独特的信息类型，发送并监听信息：
+
+```javascript
+var port = chrome.runtime.connect({type: "connection"});
+port.postMessage({
+  method: "add",
+  datas: [1, 2, 3]
+});
+port.onMessage.addListener(function(msg) {
+  if (msg.method === "answer") {
+  	console.log(msg.data);
+  }
+});
+```
+
+而接受者则要注册监听，并判断消息的类型：
+
+```javascript
+chrome.runtime.onConnect.addListener(function(port) {
+  console.assert(port.type == "connection");
+  port.onMessage.addListener(function(msg) {
+    if (msg.method == "add") {
+      var result = msg.datas.reduce(function(previousValue, currentValue, index, array){
+      return previousValue + currentValue;
+  });
+      port.postMessage({
+        method: "answer",
+        data: result
+      });
+    }
+  });
+});
+```
 
 #### [chrome.tabs](https://crxdoc-zh.appspot.com/extensions/tabs)
 
@@ -219,6 +272,14 @@ chrome.tabs.getCurrent(function(tab) {
     message: 'get active tab'
   }, function(response) {});
 });
+// 或者
+chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+  chrome.tabs.sendMessage(tabs[0].id, {
+    method: 'tab',
+    message: 'get active tab'
+  }, function(response) {
+  });
+});
 ```
 
 然后在`content_scripts`中，进行消息监听：
@@ -248,6 +309,8 @@ chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
 
 `chrome.storage.local`是基于本地的储存，而`chrome.storage.sync`会先判断当前用户是否登录了google账户，如果登录，则会将储存的数据通过google服务自动同步，否则，会使用`chrome.storage.local`仅进行本地储存
 
+> 注：因为储存区没有加密，所以不应该储存用户的敏感信息
+
 API:
 
 ```javascript
@@ -265,6 +328,43 @@ StorageArea.clear(function callback)
 
 // 监听储存的变化
 chrome.storage.onChanged.addListener(function(changes, namespace) {});
+```
+
+举栗子：
+
+我们将部分用户信息储存在`storage`中，初始化时检查是否有储存，没有的话则需要用户登录，成功后再添加：
+
+```javascript
+chrome.storage.sync.get('user', function(result) {
+  // 通过 result.user 获取到储存的 user 对象
+  result && setPopDOM(result.user);
+});
+
+function setPopDOM(user) {
+  if (user && user.userId) {
+    // show user UI
+  } else {
+    // show login UI
+  }
+};
+
+document.getElementById('login').onclick = function() {
+  // login user..
+  // 通过 ajax 请求异步登录，获取到成功的回调后，将返回的 user 对象储存在 storage 中
+  chrome.storage.sync.set({user: user}, function(result) {});
+}
+```
+
+而在其他环境的JS里，我们可以监听`storage`的变化：
+
+```javascript
+chrome.storage.onChanged.addListener(function(changes, namespace) {
+  for (key in changes) {
+    if (key === 'user') {
+      console.log('user storage changed!');
+    }
+  }
+});
 ```
 
 ### 学习资源
