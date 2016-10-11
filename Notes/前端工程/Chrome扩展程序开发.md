@@ -20,6 +20,35 @@
 
 ## Chrome扩展程序开发
 
+> 十一在家无聊时开发了这个项目。其出发点是想通过chrome插件，来保存网页上选中的文本。后来就顺手把前后端都做了(Koa2 + React)：
+>
+> [chrome插件源码](https://github.com/ecmadao/cliper-chrome)
+>
+> [插件对应的前后端源码](https://github.com/ecmadao/cliper-backend)
+
+### 概述
+
+#### chrome扩展程序
+
+chrome扩展程序大家应该都很熟悉了，它可以通过脚本帮我们完成一些快速的操作。通过插件可以捕捉到网页内容、标签页、本地存储，或者用户的操作行为；它也可以在一定程度上改变浏览器的UI，例如页面上右键的菜单、浏览器右上角点击插件logo后的弹窗，或者浏览器新标签页
+
+#### 开发缘由
+
+按照惯例，开发前多问问自己 why? how?
+
+why：
+
+- 我在平常看博文时，对于一些段落想进行摘抄或者备注，又懒得复制粘贴
+
+how：
+
+- 一个chrome扩展程序，可以通过鼠标右键的菜单，或者键盘快捷键快速保存当前页面上选择的文本
+- 如果没有选择文本，则保存网页链接
+- 要有对应的后台服务，保存 user、cliper、page (后话，本文不涉及)
+- 还要有对应的前端，以便浏览我的保存记录 (后话，本文不涉及)
+
+> clip 有剪辑之意，因此项目命名为 cliper
+
 ### [`manifest.json`](https://crxdoc-zh.appspot.com/extensions/manifest)
 
 在项目根目录下创建`manifest.json`文件，其中会涵盖扩展程序的基本信息，并指明需要的权限和资源文件
@@ -28,13 +57,12 @@
 {
   // 以下为必写
   "manifest_version": 2, // 必须为2，1号版本已弃用
-  "name": "扩展程序名称",
+  "name": "cliper", // 扩展程序名称
   "version": "0.01", // 版本号
   
   // 以下为选填
   
   // 推荐
-  "default_locale": "cn",
   "description": "描述",
   "icons": {
     "16": "icons/icon_16.png",
@@ -88,10 +116,13 @@
 
 - `browser_action`
     - 控制logo点击后出现的弹窗，涵盖相关的html/js/css
+    - 在弹窗中，会进行登录/注册的操作，并将用户信息保存在本地储存中。已登录用户则展现基本信息
 - `background`
     - 在后台持续运行，或者被事件唤醒后运行
+    - 右键菜单的点击和异步保存事件将在这里触发
 - `content_scripts`
     - 当前浏览的页面里运行的文件，可以操作DOM
+    - 因此，我会在这个文件里监听用户的选择事件
 
 注：
 
@@ -111,7 +142,7 @@
 ```javascript
 "content_scripts": [
   {
-    "js": []
+    "js": [...]
   }
 ]
 ```
@@ -167,7 +198,7 @@ chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
   if (message.method === 'showAlert') {
     alert('showAlert');
   }
-})
+});
 ```
 
 以上代码，会在每次打开插件弹窗的时候弹出一个Alert。
@@ -195,9 +226,94 @@ chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
 });
 ```
 
-需要注意的是，即便你在多个JS中注册了消息监听`onMessage.addListener`，也只有一个监听者能收到通过`runtime.sendMessage`发送出去的消息。
+需要注意的是，即便你在多个JS中注册了消息监听`onMessage.addListener`，也只有一个监听者能收到通过`runtime.sendMessage`发送出去的消息。如果需要不同的监听者分别监听消息，则需要使用`chrome.tab` API来指定消息接收对象
 
-如果需要不同的监听者分别监听消息，则需要使用`chrome.tab` API
+举个栗子：
+
+上文说过，需要在`content_scripts`中监听选择事件，获取选择的文本，而对于右键菜单的点击则是在`background`中监听的。那么需要把选择的文本作为消息，发送给`background`，在`background`完成异步保存。
+
+```javascript
+// content_scripts 中获取选择，并发送消息
+// js/selection.js
+
+// 获取选择的文本
+function getSelectedText() {
+  if (window.getSelection) {
+    return window.getSelection().toString();
+  } else if (document.getSelection) {
+    return document.getSelection();
+  } else if (document.selection) {
+    return document.selection.createRange().text;
+  }
+}
+// 组建信息
+function getSelectionMessage() {
+  var text = getSelectedText();
+  var title = document.title;
+  var url = window.location.href;
+  var data = {
+    text: text,
+    title: title,
+    url: url
+  };
+  var message = {
+    method: 'get_selection',
+    data: data
+  }
+  return message;
+}
+// 发送消息
+function sendSelectionMessage(message) {
+  chrome.runtime.sendMessage(message, function(response) {});
+}
+// 监听鼠标松开的事件，只有在右键点击时，才会去获取文本
+window.onmouseup = function(e) {
+  if (!e.button === 2) {
+    return;
+  }
+  var message = getSelectionMessage();
+  sendSelectionMessage(message);
+};
+```
+
+```javascript
+// background 中接收消息，监听右键菜单的点击，并异步保存数据
+// js/background.js
+
+// 创建一个全局对象，来保存接收到的消息值
+var selectionObj = null;
+
+// 首先要创建菜单
+chrome.runtime.onInstalled.addListener(function() {
+  chrome.contextMenus.create({
+    type: 'normal',
+    title: 'save selection',
+    id: 'save_selection',
+    // 有选择才会出现
+    contexts: ['selection']
+  });
+});
+// 监听菜单的点击
+chrome.contextMenus.onClicked.addListener(function(menuItem) {
+  if (menuItem.menuItemId === "save_selection") {
+    addCliper();
+  }
+});
+
+// 消息监听，接收从 content_scripts 传递来的消息，并保存在一个全局对象中
+chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
+  if (message.method === 'get_selection') {
+    selectionObj = message.data;
+  }
+});
+
+// 异步保存
+function addCliper() {
+  $.ajax({
+    // ...
+  });
+}
+```
 
 ##### 长链接
 
@@ -332,9 +448,12 @@ chrome.storage.onChanged.addListener(function(changes, namespace) {});
 
 举栗子：
 
-我们将部分用户信息储存在`storage`中，初始化时检查是否有储存，没有的话则需要用户登录，成功后再添加：
+我们在`browser_action`完成了用户的登录/注册操作，将部分用户信息储存在`storage`中。每次初始化时，都会检查是否有储存，没有的话则需要用户登录，成功后再添加：
 
 ```javascript
+// browser_action
+// js.popup.js
+
 chrome.storage.sync.get('user', function(result) {
   // 通过 result.user 获取到储存的 user 对象
   result && setPopDOM(result.user);
@@ -358,10 +477,17 @@ document.getElementById('login').onclick = function() {
 而在其他环境的JS里，我们可以监听`storage`的变化：
 
 ```javascript
+// background
+// js/background.js
+
+// 一个全局的 user 对象，用来保存用户信息，以便在异步时发生 userId
+var user = null;
+
 chrome.storage.onChanged.addListener(function(changes, namespace) {
   for (key in changes) {
     if (key === 'user') {
       console.log('user storage changed!');
+      user = changes[key];
     }
   }
 });
