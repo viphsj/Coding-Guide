@@ -47,6 +47,14 @@ how：
 - 要有对应的后台服务，保存 user、cliper、page (后话，本文不涉及)
 - 还要有对应的前端，以便浏览我的保存记录 (后话，本文不涉及)
 
+先上个成果图：
+
+![chrome extension - login](../../image/cliper/login.png)
+
+![chrome extension - info](../../image/cliper/info.png)
+
+![chrome extension - frontend](../../image/cliper/frontend.png)
+
 > clip 有剪辑之意，因此项目命名为 cliper
 
 ### [`manifest.json`](https://crxdoc-zh.appspot.com/extensions/manifest)
@@ -177,7 +185,7 @@ how：
 
 #### [chrome.runtime](https://crxdoc-zh.appspot.com/extensions/runtime)
 
-- [消息传递](https://crxdoc-zh.appspot.com/apps/messaging)
+> [消息传递](https://crxdoc-zh.appspot.com/apps/messaging)
 
 ##### 普通的消息传递
 
@@ -493,9 +501,15 @@ chrome.storage.onChanged.addListener(function(changes, namespace) {
 });
 ```
 
+> 大体上，我们目前为止理清了三种环境下JS的不同，以及他们交流和储存的方式。除此以外，还有popup弹窗、右键菜单的创建和使用。其实使用这些知识就足够做出一个简单的chrome扩展了。
+>
+> 在这之后，如果需要将自己的扩展程序发布到chrome商店，则需要在开发者信息中心(https://chrome.google.com/webstore/developer/dashboard/)进行登记，并缴费5刀。此时可以参照[如何成为一名Chrome应用开发者](https://segmentfault.com/a/1190000006035525)一文来通过验证。
+
 ### 学习资源
 
 - [建立 Chrome 扩展程序](https://crxdoc-zh.appspot.com/extensions/getstarted)
 - [Chrome插件（Extensions）开发攻略](http://www.cnblogs.com/guogangj/p/3235703.html)
 - [如何成为一名Chrome应用开发者](https://segmentfault.com/a/1190000006035525)
 - [chrome扩展的开发](https://segmentfault.com/a/1190000005071240)
+
+注：本文源码位于[github仓库：cliper-chrome](https://github.com/ecmadao/cliper-chrome)
