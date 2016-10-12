@@ -12,6 +12,8 @@
 
 ## Python3及应用5-多线程
 
+> 多线程适合IO密集型任务，如网络资源下载或者读写文件；多进程适合CPU密集型任务，比如需要大量计算的任务
+
 [Python模块学习：threading 多线程控制和处理](http://python.jobbole.com/81546/)
 
 ### [`threading`模块](https://docs.python.org/3/library/threading.html)
