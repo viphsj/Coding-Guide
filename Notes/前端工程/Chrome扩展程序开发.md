@@ -506,7 +506,7 @@ chrome.storage.onChanged.addListener(function(changes, namespace) {
 
 > 大体上，我们目前为止理清了三种环境下JS的不同，以及他们交流和储存的方式。除此以外，还有popup弹窗、右键菜单的创建和使用。其实使用这些知识就足够做出一个简单的chrome扩展了。
 >
-> 在这之后，如果需要将自己的扩展程序发布到chrome商店，则需要在开发者信息中心(https://chrome.google.com/webstore/developer/dashboard/)进行登记，并缴费5刀。此时可以参照[如何成为一名Chrome应用开发者](https://segmentfault.com/a/1190000006035525)一文来通过验证。
+> 在这之后，如果需要将自己的扩展程序发布到chrome商店，则需要在[开发者信息中心](https://chrome.google.com/webstore/developer/dashboard/)进行登记，并缴费5刀。此时可以参照[如何成为一名Chrome应用开发者](https://segmentfault.com/a/1190000006035525)一文来通过验证。
 
 ### 学习资源
 
