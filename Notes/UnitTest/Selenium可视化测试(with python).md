@@ -16,6 +16,7 @@
     - [弹出对话框](#%E5%BC%B9%E5%87%BA%E5%AF%B9%E8%AF%9D%E6%A1%86)
     - [历史记录](#%E5%8E%86%E5%8F%B2%E8%AE%B0%E5%BD%95)
     - [Cookies](#cookies)
+  - [运行脚本](#%E8%BF%90%E8%A1%8C%E8%84%9A%E6%9C%AC)
   - [定位DOM元素](#%E5%AE%9A%E4%BD%8Ddom%E5%85%83%E7%B4%A0)
   - [Waits](#waits)
     - [明确的wait](#%E6%98%8E%E7%A1%AE%E7%9A%84wait)
@@ -252,6 +253,18 @@ driver.add_cookie(cookie)
 
 # And now output all the available cookies for the current URL
 driver.get_cookies()
+```
+
+### 运行脚本
+
+有时候，我们无法直接明确的通过操作DOM来达到目的，这时可能需要让`selenium`运行一段JS脚本。
+
+比如，一个通过异步加载载入数据的页面，只有在用户滚动到最底部时才会加载下一页。这时我们就需要让浏览器滚动到底部去：
+
+```python
+# ....
+js = "document.body.scrollTop=100000"
+driver.execute_script(js)
 ```
 
 ### 定位DOM元素

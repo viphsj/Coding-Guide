@@ -30,10 +30,10 @@
 
 ### 空格
 
-- `:`用在行尾时前后皆不加空格，如分枝、循环、函数和类定义语言；用在非行尾时两端加空格
+- `:`用在行尾时前后皆不加空格，如分枝、循环、函数和类定义语言
 
 ```python
-example = {'a' : 1, 'b' : 2} # 非行尾时两端加空格
+example = {'a': 1, 'b': 2}
 if isTrue: # 在行尾不加空格
 ```
 
@@ -41,6 +41,22 @@ if isTrue: # 在行尾不加空格
 
 ```python
 def example_method(a, b=1):
+```
+
+- 在使用不同优先级的运算符时，考虑在更低优先级的操作符两侧插入空格
+
+```python
+# good
+i = i + 1
+x = x*2 - 1
+hypot2 = x*x + y*y
+c = (a+b) * (a-b)
+
+# bad
+i=i+1
+x = x * 2 - 1
+hypot2 = x * x + y * y
+c = (a + b) * (a - b)
 ```
 
 ### 类和注释
@@ -58,6 +74,14 @@ class ExampleClass(object):
 	"""
 	def __init__(self, a, b):
 		........
+```
+
+- 对于单行的文档字符串，把结尾`"""`放在同一行
+
+```python
+def double(x):
+	"""get double"""
+	return x * x
 ```
 
 ### 字符串

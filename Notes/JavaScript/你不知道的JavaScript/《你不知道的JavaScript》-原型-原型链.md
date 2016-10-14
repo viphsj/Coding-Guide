@@ -2,23 +2,19 @@
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 **Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
-- [原型](#%E5%8E%9F%E5%9E%8B)
+- [JavaScript中的原型链](#javascript%E4%B8%AD%E7%9A%84%E5%8E%9F%E5%9E%8B%E9%93%BE)
   - [属性设置与屏蔽](#%E5%B1%9E%E6%80%A7%E8%AE%BE%E7%BD%AE%E4%B8%8E%E5%B1%8F%E8%94%BD)
   - [类与继承](#%E7%B1%BB%E4%B8%8E%E7%BB%A7%E6%89%BF)
     - [委托/继承](#%E5%A7%94%E6%89%98%E7%BB%A7%E6%89%BF)
+    - [构造函数](#%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0)
+    - [原型继承](#%E5%8E%9F%E5%9E%8B%E7%BB%A7%E6%89%BF)
     - [检查类关系](#%E6%A3%80%E6%9F%A5%E7%B1%BB%E5%85%B3%E7%B3%BB)
     - [原型的动态性](#%E5%8E%9F%E5%9E%8B%E7%9A%84%E5%8A%A8%E6%80%81%E6%80%A7)
     - [子类复写、添加方法](#%E5%AD%90%E7%B1%BB%E5%A4%8D%E5%86%99%E3%80%81%E6%B7%BB%E5%8A%A0%E6%96%B9%E6%B3%95)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
----
-title: 《你不知道的JavaScript》--原型/原型链
-date: 2016-03-04 12:25:22
-tags: JavaScript
----
-
-## 原型
+## JavaScript中的原型链
 
 我们创建的每个函数都有一个**原型属性(prototype)**，该属性是一个指针，指向一个对象。
 
@@ -81,12 +77,13 @@ var a = new Foo();
 Object.getPrototypeOf(a) === Foo.prototype; // true
 ```
 
-new Foo()会生成一个新对象(a)，这个新对象的内部链接[[Prototype]]关联的是`Foo.prototype`对象
+`new Foo()`会生成一个新对象(a)，这个新对象的内部链接`[[Prototype]]`关联的是`Foo.prototype`对象
 
 > 在JavaScript中，我们并不会将一个对象（“类”）复制到另一个对象（“实例”），只是将它们关联起来。（**原型继承**）
-> 
+>
 > 这样一个对象就可以通过**委托**访问另一个对象的属性和函数
-构造函数
+
+#### 构造函数
 
 ```js
 function Foo(){
@@ -101,15 +98,15 @@ a.constructor === Foo; // true
 
 `Foo.prototype`默认有一个公有且不可枚举的属性`.constructor`，这个属性引用的是对象关联的函数（本例中是Foo）。
 
-通过构造函数调用new Foo()创建的对象也有一个`.constructor`属性，指向“创造这个对象的函数”
+通过构造函数调用`new Foo()`创建的对象也有一个`.constructor`属性，指向“创造这个对象的函数”
 
 > 在JavaScript中对于“构造函数”最准确的解释是--所有带new的函数调用
-> 
+>
 > 函数不是构造函数，但是当且仅当使用new时，函数调用会变成“构造函数调用”
 
 但实际上，a并没有一个指向Foo的`.constructor`属性。`.constructor`引用同样被委托给了`Foo.prototype`，而`Foo.prototype.constructor`默认指向Foo
 
-**a.constructor只是通过默认的[[Prototype]]委托指向Foo**
+**`a.constructor`只是通过默认的`[[Prototype]]`委托指向Foo**
 
 ```js
 function Foo(){ /*...*/ }
@@ -123,12 +120,13 @@ a1.constructor === Foo; // false
 a1.constructor === Object; // true
 ```
 
-a1并没有`.constructor`属性，所以它会委托[[Prototype]]链上的`Foo.prototype`，但这个对象也没有`.constructor`属性（但默认的`Foo.prototype`对象有这个属性），所以它会继续委托，这次会委托给委托链顶端的`Object.prototype`，这个对象有`.constructor`属性，指向内置的`Object(..)`函数
+a1并没有`.constructor`属性，所以它会委托`[[Prototype]]`链上的`Foo.prototype`，但这个对象也没有`.constructor`属性（但默认的`Foo.prototype`对象有这个属性），所以它会继续委托，这次会委托给委托链顶端的`Object.prototype`，这个对象有`.constructor`属性，指向内置的`Object(..)`函数
 
 > constructor不代表被构造
-> 
+>
 > .constructor不可枚举，但它的值是可修改的
- 原型继承
+
+#### 原型继承
 
 ```js
 function Foo(name){
@@ -164,7 +162,7 @@ a.myLabel(); // obj a
 
 #### 检查类关系
 
-- instanceof
+- `instanceof`
 
 ```js
 function Foo(){
@@ -177,35 +175,36 @@ var a = new Foo();
 
 a instanceof Foo; //true
 
-//instanceof回答的问题是：在a的整条[[Prototype]]链中是否有指向Foo.prototype的对象？
+// instanceof回答的问题是：在a的整条 [[Prototype]] 链中是否有指向 Foo.prototype 的对象？
 
-//处理对象(a)和函数(带.prototype引用的Foo)之间的关系
+// 处理对象(a)和函数(带 .prototype 引用的Foo)之间的关系
 
-//如果想判断两个对象（比如a和b）之间是否通过[[Prototype]]链关联，instanceof无法实现
+// 如果想判断两个对象（比如a和b）之间是否通过 [[Prototype]] 链关联，instanceof 无法实现
 ```
 
-- isPrototypeOf(..)
+- `isPrototypeOf(..)`
 
 ```js
 Foo.prototype.isPrototypeOf(a); //true
 
-// isPrototypeOf回答的问题是：在a的整条[[Prototype]]链中是否出现过Foo.prototype
+// isPrototypeOf 回答的问题是：在a的整条 [[Prototype]] 链中是否出现过Foo.prototype
 ```
 
-- Object.getPrototypeOf(..)
+- `Object.getPrototypeOf(..)`
 
 ```js
 Object.getPrototypeOf(a) === Foo.prototype; //true
 
-//getPrototypeOf可直接获取一个对象的[[Prototype]]链
+// getPrototypeOf 可直接获取一个对象的 [[Prototype]] 链
 ```
 
 #### 原型的动态性
+
 原型链在更新时是不起作用的。当我们对某个对象做出改变时，不会触及该对象的原型。
 
 但我们对原型对象所做的任何修改都能立刻在实例上展现出来。如果我们添加/修改一个新的属性到原型中，该属性会立即对所有基于该原型创建的对象可见
 
-**子类得到的只是父类的一个副本。类的集成本质上是复制**
+**子类得到的只是父类的一个副本。类的继承本质上是复制**
 
 **即使是先创建了实例后再修改原型也是这样：**
 
@@ -216,6 +215,7 @@ Person.prototype.sayHi = function(){
 };
 friend.sayHi(); //hi
 ```
+
 但若是在实例化之后，重写整个原型对象，则再调用之前的旧实例时会报错。
 
 #### 子类复写、添加方法
