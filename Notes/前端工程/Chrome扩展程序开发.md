@@ -66,7 +66,7 @@ how：
 这两天终于安奈不住买了服务器，终于把网址部署了，也上线了chrome插件：
 
 - [cliper](http://cliper.com.cn)
-- [cliper extension](https://chrome.google.com/webstore/detail/biijehenaabpogldekblkfgooifmagbi/publish-accepted)
+- [cliper extension](https://chrome.google.com/webstore/detail/biijehenaabpogldekblkfgooifmagbi)
 
 ### [`manifest.json`](https://crxdoc-zh.appspot.com/extensions/manifest)
 
@@ -521,7 +521,7 @@ chrome.storage.onChanged.addListener(function(changes, namespace) {
 - 首先，你要在[开发者信息中心](https://chrome.google.com/webstore/developer/dashboard/)进行登记，缴费5刀。这一步可以参照[如何成为一名Chrome应用开发者](https://segmentfault.com/a/1190000006035525)一文来通过验证和支付。但需要注意的是，我在尝试时使用的账户为中国google账户，因此完全无法支付，直到重新注册了一个香港账户才搞定
 - 之后，要填写一系列的发布信息。google对icon和banner的尺寸要求的相当严格。。这一步可以参考[Google Chrome 应用商店上传扩展程序](http://www.cnblogs.com/xishuai/p/google-chrome-webstore-developer-upload-program.html)一文
 
-最后终于搞定，线上可见：[cliper extension](https://chrome.google.com/webstore/detail/biijehenaabpogldekblkfgooifmagbi/publish-accepted)
+最后终于搞定，线上可见：[cliper extension](https://chrome.google.com/webstore/detail/biijehenaabpogldekblkfgooifmagbi)
 
 ### 学习资源
 
@@ -530,11 +530,13 @@ chrome.storage.onChanged.addListener(function(changes, namespace) {
 - [如何成为一名Chrome应用开发者](https://segmentfault.com/a/1190000006035525)
 - [chrome扩展的开发](https://segmentfault.com/a/1190000005071240)
 
-注：本文源码位于[github仓库：cliper-chrome](https://github.com/ecmadao/cliper-chrome)，线上产品见：[cliper](http://cliper.com.cn) 和 [cliper extension](https://chrome.google.com/webstore/detail/biijehenaabpogldekblkfgooifmagbi/publish-accepted)
-
 ### 下一步？
 
 - 插件功能丰富化
 - 插件可在网页上高亮展示标记的文本
 - 用`es6` + `babel`重构
 - 需要使用框架吗？
+
+---
+
+注：本文源码位于[github仓库：cliper-chrome](https://github.com/ecmadao/cliper-chrome)，线上产品见：[cliper](http://cliper.com.cn) 和 [cliper extension](https://chrome.google.com/webstore/detail/biijehenaabpogldekblkfgooifmagbi)
