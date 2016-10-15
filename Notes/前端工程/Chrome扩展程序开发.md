@@ -18,6 +18,7 @@
     - [chrome.tabs](#chrometabs)
     - [chrome.storage](#chromestorage)
   - [学习资源](#%E5%AD%A6%E4%B9%A0%E8%B5%84%E6%BA%90)
+  - [下一步？](#%E4%B8%8B%E4%B8%80%E6%AD%A5%EF%BC%9F)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -58,7 +59,13 @@ how：
 
 ![chrome extension - frontend](../../image/cliper/frontend.png)
 
+
 > clip 有剪辑之意，因此项目命名为 cliper
+
+这两天终于安奈不住买了服务器，终于把网址部署了，也上线了chrome插件：
+
+- [cliper](http://cliper.com.cn)
+- [cliper extension](https://chrome.google.com/webstore/detail/biijehenaabpogldekblkfgooifmagbi/publish-accepted)
 
 ### [`manifest.json`](https://crxdoc-zh.appspot.com/extensions/manifest)
 
@@ -515,4 +522,10 @@ chrome.storage.onChanged.addListener(function(changes, namespace) {
 - [如何成为一名Chrome应用开发者](https://segmentfault.com/a/1190000006035525)
 - [chrome扩展的开发](https://segmentfault.com/a/1190000005071240)
 
-注：本文源码位于[github仓库：cliper-chrome](https://github.com/ecmadao/cliper-chrome)
+注：本文源码位于[github仓库：cliper-chrome](https://github.com/ecmadao/cliper-chrome)，线上产品见：[cliper](http://cliper.com.cn) 和 [cliper extension](https://chrome.google.com/webstore/detail/biijehenaabpogldekblkfgooifmagbi/publish-accepted)
+
+### 下一步？
+
+- 插件功能丰富化
+- 插件可在网页上高亮展示标记的文本
+- 用`es6` + `babel`重构

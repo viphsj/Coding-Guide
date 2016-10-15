@@ -87,7 +87,7 @@ reqHeaders = new Headers({
 
 - request
 
-```
+```text
 /** 注：
 * request = (url, options)
 * url 为请求的路径
@@ -107,18 +107,19 @@ reqHeaders = new Headers({
 
 response 的属性:
 
-```js
+```text
 status (number) - HTTP状态码，100~599之间
 statusText (String) - Status text as reported by the server, e.g. "Unauthorized"
 ok (boolean) - 如果返回的HTTP状态码为2XX则为true
 headers (Headers)
 url (String)
 ```
+
 response处理body的方法:
 
 **返回一个Promise对象**
 
-```js
+```text
 text() - 将 response text 转为 String
 json() - 输出 result of JSON.parse(responseText)
 blob() - yields a Blob
@@ -132,7 +133,7 @@ formData() - 处理成可以再次被request使用的formData对象
 
 #### 实例
 
-  - 通过fetch获取数据
+- 通过fetch获取数据
 
 ```javascript
 fetch(url).then((response) => response.json()) // 解析获取到的json
@@ -144,7 +145,7 @@ fetch(url).then((response) => response.json()) // 解析获取到的json
 });
 ```
 
-  - 通过fetch发送数据
+- 通过fetch发送数据
 
 ```javascript
 fetch(url, {

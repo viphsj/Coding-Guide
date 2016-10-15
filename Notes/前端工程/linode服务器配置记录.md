@@ -7,6 +7,7 @@
   - [安装node](#%E5%AE%89%E8%A3%85node)
   - [github](#github)
   - [production](#production)
+  - [nginx](#nginx)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -83,4 +84,18 @@ $ cat id_rsa.pub # 复制内容
 # http://www.cnblogs.com/no7dw/archive/2012/07/07/2580307.html
 # scp file ssh:/path
 $ scp /Users/ecmadao/production/config/production.json ecmadao@xxx.xxx:/home/ecmadao/production/config
+```
+
+### nginx
+
+```bash
+$ sudo apt-get update
+$ sudo apt-get install nginx
+
+$ cd /etc/nginx
+$ ls
+$ cd sites-enabled
+
+# 配置完成之后
+$ sudo service nginx restart
 ```
