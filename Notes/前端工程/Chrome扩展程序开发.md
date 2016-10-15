@@ -17,6 +17,7 @@
       - [长链接](#%E9%95%BF%E9%93%BE%E6%8E%A5)
     - [chrome.tabs](#chrometabs)
     - [chrome.storage](#chromestorage)
+  - [正式发布](#%E6%AD%A3%E5%BC%8F%E5%8F%91%E5%B8%83)
   - [学习资源](#%E5%AD%A6%E4%B9%A0%E8%B5%84%E6%BA%90)
   - [下一步？](#%E4%B8%8B%E4%B8%80%E6%AD%A5%EF%BC%9F)
 
@@ -512,8 +513,15 @@ chrome.storage.onChanged.addListener(function(changes, namespace) {
 ```
 
 > 大体上，我们目前为止理清了三种环境下JS的不同，以及他们交流和储存的方式。除此以外，还有popup弹窗、右键菜单的创建和使用。其实使用这些知识就足够做出一个简单的chrome扩展了。
->
-> 在这之后，如果需要将自己的扩展程序发布到chrome商店，则需要在[开发者信息中心](https://chrome.google.com/webstore/developer/dashboard/)进行登记，并缴费5刀。此时可以参照[如何成为一名Chrome应用开发者](https://segmentfault.com/a/1190000006035525)一文来通过验证。
+
+### 正式发布
+
+其实我觉得整个过程中最蛋疼的一步就是把插件正式发布到chrome商店了。
+
+- 首先，你要在[开发者信息中心](https://chrome.google.com/webstore/developer/dashboard/)进行登记，缴费5刀。这一步可以参照[如何成为一名Chrome应用开发者](https://segmentfault.com/a/1190000006035525)一文来通过验证和支付。但需要注意的是，我在尝试时使用的账户为中国google账户，因此完全无法支付，直到重新注册了一个香港账户才搞定
+- 之后，要填写一系列的发布信息。google对icon和banner的尺寸要求的相当严格。。这一步可以参考[Google Chrome 应用商店上传扩展程序](http://www.cnblogs.com/xishuai/p/google-chrome-webstore-developer-upload-program.html)一文
+
+最后终于搞定，线上可见：[cliper extension](https://chrome.google.com/webstore/detail/biijehenaabpogldekblkfgooifmagbi/publish-accepted)
 
 ### 学习资源
 
@@ -529,3 +537,4 @@ chrome.storage.onChanged.addListener(function(changes, namespace) {
 - 插件功能丰富化
 - 插件可在网页上高亮展示标记的文本
 - 用`es6` + `babel`重构
+- 需要使用框架吗？
