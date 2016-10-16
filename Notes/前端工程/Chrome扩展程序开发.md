@@ -20,6 +20,7 @@
   - [正式发布](#%E6%AD%A3%E5%BC%8F%E5%8F%91%E5%B8%83)
   - [学习资源](#%E5%AD%A6%E4%B9%A0%E8%B5%84%E6%BA%90)
   - [下一步？](#%E4%B8%8B%E4%B8%80%E6%AD%A5%EF%BC%9F)
+  - [Geek](#geek)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -167,6 +168,8 @@ how：
 ```
 
 `js`所定义的一个Array里的各个JS可以相互影响。
+
+除此以外，对于chrome提供的extension可使用的API，`content_scripts`只能调用[`extension`](https://crxdoc-zh.appspot.com/extensions/extension)，[`runtime`](https://crxdoc-zh.appspot.com/extensions/runtime)，[`storage`](https://crxdoc-zh.appspot.com/extensions/storage)这几个
 
 #### [`background`](https://crxdoc-zh.appspot.com/extensions/event_pages)
 
@@ -536,6 +539,18 @@ chrome.storage.onChanged.addListener(function(changes, namespace) {
 - 插件可在网页上高亮展示标记的文本
 - 用`es6` + `babel`重构
 - 需要使用框架吗？
+
+### Geek
+
+遇见心动的chrome插件，想要查看其源码来学习？
+
+对于Mac系统，
+
+```bash
+$ cd ~/Library/"Application Support"/Google/Chrome/Default/Extensions/
+```
+
+`Extensions`文件夹下的文件夹名称，即chrome插件的ID。进入指定ID的文件夹即可查看插件代码
 
 ---
 

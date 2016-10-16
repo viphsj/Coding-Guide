@@ -16,17 +16,15 @@
     - [创建一个含N个列表的列表](#%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AA%E5%90%ABn%E4%B8%AA%E5%88%97%E8%A1%A8%E7%9A%84%E5%88%97%E8%A1%A8)
     - [使用列表来创建字符串](#%E4%BD%BF%E7%94%A8%E5%88%97%E8%A1%A8%E6%9D%A5%E5%88%9B%E5%BB%BA%E5%AD%97%E7%AC%A6%E4%B8%B2)
     - [在集合体（collection）中查找一个项（而不是列表中）](#%E5%9C%A8%E9%9B%86%E5%90%88%E4%BD%93%EF%BC%88collection%EF%BC%89%E4%B8%AD%E6%9F%A5%E6%89%BE%E4%B8%80%E4%B8%AA%E9%A1%B9%EF%BC%88%E8%80%8C%E4%B8%8D%E6%98%AF%E5%88%97%E8%A1%A8%E4%B8%AD%EF%BC%89)
+    - [限制try里面有且仅有绝对必要的代码](#%E9%99%90%E5%88%B6try%E9%87%8C%E9%9D%A2%E6%9C%89%E4%B8%94%E4%BB%85%E6%9C%89%E7%BB%9D%E5%AF%B9%E5%BF%85%E8%A6%81%E7%9A%84%E4%BB%A3%E7%A0%81)
+    - [使用`''.startswith()`和`''.endswith()`替代切片](#%E4%BD%BF%E7%94%A8startswith%E5%92%8Cendswith%E6%9B%BF%E4%BB%A3%E5%88%87%E7%89%87)
+    - [不要用`==`比较`True`和`False`](#%E4%B8%8D%E8%A6%81%E7%94%A8%E6%AF%94%E8%BE%83true%E5%92%8Cfalse)
   - [代码美感](#%E4%BB%A3%E7%A0%81%E7%BE%8E%E6%84%9F)
+  - [推荐阅读](#%E6%8E%A8%E8%8D%90%E9%98%85%E8%AF%BB)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 ## Python Style Guide
-
-- [Google开源项目风格指南](http://zh-google-styleguide.readthedocs.io/en/latest/google-python-styleguide/)
-- [Python最佳实践指南](http://pythonguidecn.readthedocs.io/zh/latest/)
-- [PEP 8 - Python 编码风格指南](http://damnever.github.io/2015/04/24/PEP8-style-guide-for-python-code/)
-
-(仅仅选取了一些值得注意的地方)
 
 ### 空格
 
@@ -234,6 +232,53 @@ def lookup_list(l):
 # 在集合中查找比在列表中查找要快速的多。当在列表中查找时，Python对查看每一项的值直到找到匹配的项。而在集合中，哈希值将会告诉Python在集合的哪里去查找匹配的项
 ```
 
+#### 限制try里面有且仅有绝对必要的代码
+
+对于所有的`try/except`语句来说，限制try里面有且仅有绝对必要的代码。相对的，使用`try/except/else`，在`else`中处理`except`没有捕获的情况。
+
+```python
+# good
+try:
+    value = collection[key]
+except KeyError:
+    return key_not_found(key)
+else:
+    return handle_value(value)
+
+# bad
+try:
+    # Too broad!
+    return handle_value(collection[key])
+except KeyError:
+    # Will also catch KeyError raised by handle_value()
+    return key_not_found(key)
+```
+
+#### 使用`''.startswith()`和`''.endswith()`替代切片
+
+有时候，我们可能需要检查一段字符串的开头或者结尾。除了常见的切片方法以外，更推荐`startswith`和`endswith`方法。
+
+```python
+# good
+if foo.startswith('bar'):
+	print(foo)
+
+# just soo
+if foo[:3] == 'bar':
+	print(foo)
+```
+
+#### 不要用`==`比较`True`和`False`
+
+```python
+# good
+if greeting:
+# bad
+if greeting == True:
+# too bad
+if greeting is True:
+```
+
 ### 代码美感
 
 ```python
@@ -262,3 +307,9 @@ my_list = [
 多行文档实例
 """
 ```
+
+### 推荐阅读
+
+- [Google开源项目风格指南](http://zh-google-styleguide.readthedocs.io/en/latest/google-python-styleguide/)
+- [Python最佳实践指南](http://pythonguidecn.readthedocs.io/zh/latest/)
+- [PEP 8 - Python 编码风格指南](http://drafts.damnever.com/2015/EPE8-style-guide-for-python-code.html)
