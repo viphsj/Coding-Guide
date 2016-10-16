@@ -99,3 +99,11 @@ $ cd sites-enabled
 # 配置完成之后
 $ sudo service nginx restart
 ```
+
+- [chown所有者权限设置](http://yanwen.org/doc/chown.html)
+- [Install & Configure Node.JS & Nginx on Ubuntu](https://coderwall.com/p/hwkjba/install-configure-node-js-nginx-on-ubuntu)
+- [How To Set Up a Node.js Application for Production on Ubuntu 14.04](https://www.digitalocean.com/community/tutorials/how-to-set-up-a-node-js-application-for-production-on-ubuntu-14-04)
+- [ubuntu创建、删除文件及文件夹，强制清空回收站方法](http://www.cnblogs.com/lwm-1988/archive/2011/09/13/2174538.html)
+- [在Linode上搭建Ghost的过程](http://www.justzht.com/zai-linodeshang-da-jian-ghostde-guo-cheng/)
+- [Ubuntu:使用Fail2ban防止暴力破解SSH等服务](https://www.polarxiong.com/archives/ubuntu-fail2ban.html)
+- [Using Fail2ban to Secure Your Server](https://www.linode.com/docs/security/using-fail2ban-for-security)

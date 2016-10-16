@@ -2,19 +2,18 @@
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 **Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
-- [Coding-Guide](#coding-guide)
-  - [Menu](#menu)
-  - [专题](#%E4%B8%93%E9%A2%98)
-    - [前端工程](#%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B)
-    - [Koa2系列教程](#koa2%E7%B3%BB%E5%88%97%E6%95%99%E7%A8%8B)
-    - [Python3系列教程](#python3%E7%B3%BB%E5%88%97%E6%95%99%E7%A8%8B)
-    - [Ember文档翻译系列(V2.8.0)](#ember%E6%96%87%E6%A1%A3%E7%BF%BB%E8%AF%91%E7%B3%BB%E5%88%97v280)
-    - [好玩的](#%E5%A5%BD%E7%8E%A9%E7%9A%84)
-  - [License](#license)
+- [Menu](#menu)
+- [专题](#%E4%B8%93%E9%A2%98)
+  - [前端工程](#%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B)
+  - [Koa2系列教程](#koa2%E7%B3%BB%E5%88%97%E6%95%99%E7%A8%8B)
+  - [Python3系列教程](#python3%E7%B3%BB%E5%88%97%E6%95%99%E7%A8%8B)
+  - [Ember文档翻译系列(V2.8.0)](#ember%E6%96%87%E6%A1%A3%E7%BF%BB%E8%AF%91%E7%B3%BB%E5%88%97v280)
+  - [好玩的](#%E5%A5%BD%E7%8E%A9%E7%9A%84)
+- [License](#license)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
-# Coding-Guide
+![Coding-Guide](./image/Coding-Guide.png)
 
 > 个人学习笔记与博文
 
@@ -115,13 +114,13 @@
 >
 > 缺点：打包后体积太大。经验不足的开发者容易把它做成和web没有太大差别，仅仅是外面套了个壳的应用。和原生应用相比，可获取的系统接口还是太少，一般情况下没有太大开发意义，产品易被网页版取代
 
-- [Elm](./master/Notes/Elm/Think%20in%20Elm.md)
+- [Elm](./Notes/Elm/Think%20in%20Elm.md)
 
 > 优点：Redux鼻祖。纯函数式编程，简洁，漂亮。
 >
 > 缺点：学习和开发、维护成本偏高。很少运用于生产环境
 
-- [Don't Make Me Think](./master/Notes/Projects/Don-t-Make-Me-Think.md)
+- [Don't Make Me Think](./Notes/Projects/Don-t-Make-Me-Think.md)
 
 > 产品/设计相关的经典之作，很多理念到现在还在延续并被扩展
 
@@ -140,7 +139,7 @@
 
 - [剁手党](https://github.com/ecmadao/Hands-Chopping)
 
-> 【Hands Chopping】【剁手党】Python3编写的爬取淘宝/京东命令行工具。使用BS + Selenium
+> 【Hands Chopping】【剁手党】Python3编写的爬取淘宝/京东命令行工具。使用xpath + Selenium
 
 - [Alfred TodoList](https://github.com/ecmadao/Alfred-TodoList)
 
@@ -152,13 +151,15 @@
 
 - [Job Hunter](https://github.com/ecmadao/job-hunter)
 
-> 找工作的时候那么多数据看的很烦，于是建了这个项目，试图通过自动化的方式解放那些繁琐的流程。努力挖坑中
+> 找工作的时候那么多数据看的很烦，于是建了这个项目，试图通过自动化的方式解放那些繁琐的流程。目前只写了初步的爬虫，还在努力挖坑中
 
 - [cliper-chrome](https://github.com/ecmadao/cliper-chrome)
 - [cliper-backend](https://github.com/ecmadao/cliper-backend)
 - [chrome扩展程序开发](https://github.com/ecmadao/Coding-Guide/blob/master/Notes/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B/Chrome扩展程序开发.md)
 
-> 一个Chrome扩展程序 + 对应的前后端（Koa2 + react），作用是快速保存页面或者页面上选择的文本，用于阅读文章时的摘记和整理。暂未部署上线
+> 一个Chrome扩展程序 + 对应的前后端（Koa2 + react），作用是快速保存页面或者页面上选择的文本，用于阅读文章时的摘记和整理
+>
+> 初版已部署上线：[cliper](http://cliper.com.cn)、[cliper chrome extension](https://chrome.google.com/webstore/detail/cliper/biijehenaabpogldekblkfgooifmagbi)
 
 ## License
 
