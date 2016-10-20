@@ -161,6 +161,10 @@
 >
 > 初版已部署上线：[cliper](http://cliper.com.cn)、[cliper chrome extension](https://chrome.google.com/webstore/detail/cliper/biijehenaabpogldekblkfgooifmagbi)
 
+- [github chrome 插件](https://github.com/ecmadao/github-extension)
+
+> 提高 pull request 创建 / code review 体验，在仓库主页展示其大小和相关推荐的开源项目
+
 ## License
 
 Apache License 2.0
