@@ -8,6 +8,7 @@
   - [Koa2系列教程](#koa2%E7%B3%BB%E5%88%97%E6%95%99%E7%A8%8B)
   - [Python3系列教程](#python3%E7%B3%BB%E5%88%97%E6%95%99%E7%A8%8B)
   - [Ember文档翻译系列(V2.8.0)](#ember%E6%96%87%E6%A1%A3%E7%BF%BB%E8%AF%91%E7%B3%BB%E5%88%97v280)
+  - [关于项目](#%E5%85%B3%E4%BA%8E%E9%A1%B9%E7%9B%AE)
   - [好玩的](#%E5%A5%BD%E7%8E%A9%E7%9A%84)
 - [License](#license)
 
@@ -106,6 +107,12 @@
 - [Controller](./Notes/ember/Ember%E5%88%9D%E6%AD%A5--Controller.md)
 - [Model](./Notes/ember/Ember%E5%88%9D%E6%AD%A5--Model.md)
 
+### 关于项目
+
+- [极客与团队](./Notes/Projects/极客与团队.md)
+- [Don't Make Me Think](./Notes/Projects/Don-t-Make-Me-Think.md)
+- [The Pragmatic Programmer](./Notes/Projects/The Pragmatic Programmer.md)
+
 ### 好玩的
 
 - [Electron](./Notes/Electron/Electron%E3%80%9001%E3%80%91--%E4%B8%BB%E8%BF%9B%E7%A8%8BVS%E6%B8%B2%E6%9F%93%E8%BF%9B%E7%A8%8B%26%E4%B8%8D%E5%90%8C%E9%A1%B5%E9%9D%A2%E9%97%B4%E5%85%B1%E4%BA%AB%E6%95%B0%E6%8D%AE.md)
@@ -119,10 +126,6 @@
 > 优点：Redux鼻祖。纯函数式编程，简洁，漂亮。
 >
 > 缺点：学习和开发、维护成本偏高。很少运用于生产环境
-
-- [Don't Make Me Think](./Notes/Projects/Don-t-Make-Me-Think.md)
-
-> 产品/设计相关的经典之作，很多理念到现在还在延续并被扩展
 
 - [React Native](https://github.com/ecmadao/F8App-Analysis)
 
