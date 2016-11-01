@@ -10,6 +10,7 @@
   - [Ember文档翻译系列(V2.8.0)](#ember%E6%96%87%E6%A1%A3%E7%BF%BB%E8%AF%91%E7%B3%BB%E5%88%97v280)
   - [关于项目](#%E5%85%B3%E4%BA%8E%E9%A1%B9%E7%9B%AE)
   - [好玩的](#%E5%A5%BD%E7%8E%A9%E7%9A%84)
+  - [源码解读](#%E6%BA%90%E7%A0%81%E8%A7%A3%E8%AF%BB)
 - [License](#license)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -167,6 +168,36 @@
 - [github chrome 插件](https://github.com/ecmadao/github-extension)
 
 > 提高 pull request 创建 / code review 体验，在仓库主页展示其大小和相关推荐的开源项目
+>
+> [download in chrome extension store](https://chrome.google.com/webstore/detail/dimfhhiifdbdcjaoijgldompniobhcbd)
+
+### 源码解读
+
+> 大部分位于 github 仓库：[code-analysis](https://github.com/ecmadao/code-analysis)
+
+- [redux 源码解析](./Notes/React/Redux/Redux%E5%85%A5%E5%9D%91%E8%BF%9B%E9%98%B6-%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90.md)
+
+状态管理插件，本质上就是一个函数库
+
+- [blazy 源码解析](https://github.com/ecmadao/code-analysis/blob/master/analysis/blazy.js)
+
+基于jQuery的图片懒加载插件
+
+- [push.js 源码解析](https://github.com/ecmadao/code-analysis/blob/master/analysis/notification/push.js)
+
+一个兼容多平台多种类浏览器的 notification 插件
+
+- [jquery.hotkeys 源码解析](https://github.com/ecmadao/code-analysis/blob/master/analysis/hotkey/jquery.hotkeys.js)
+
+一个依赖于 jQuery 的插件，提供按键监听
+
+- [store.js 源码解析](https://github.com/ecmadao/code-analysis/blob/master/analysis/storage/store.js)
+
+通过封装localStorage API，提供了友好的操作，并兼容IE
+
+- [nprogress 源码解析](https://github.com/ecmadao/code-analysis/blob/master/analysis/nprogress.js)
+
+一个在页面（或特定容器）顶部创建进度条的插件
 
 ## License
 
