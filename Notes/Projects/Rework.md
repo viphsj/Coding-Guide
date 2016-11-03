@@ -1,3 +1,25 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [Rework](#rework)
+  - [卸负篇](#%E5%8D%B8%E8%B4%9F%E7%AF%87)
+    - [不要指望从错误中学习](#%E4%B8%8D%E8%A6%81%E6%8C%87%E6%9C%9B%E4%BB%8E%E9%94%99%E8%AF%AF%E4%B8%AD%E5%AD%A6%E4%B9%A0)
+    - [Fuck Plan](#fuck-plan)
+    - [何必壮大](#%E4%BD%95%E5%BF%85%E5%A3%AE%E5%A4%A7)
+    - [工作狂](#%E5%B7%A5%E4%BD%9C%E7%8B%82)
+  - [行动篇](#%E8%A1%8C%E5%8A%A8%E7%AF%87)
+    - [挠自己的痒处](#%E6%8C%A0%E8%87%AA%E5%B7%B1%E7%9A%84%E7%97%92%E5%A4%84)
+    - [明确立场](#%E6%98%8E%E7%A1%AE%E7%AB%8B%E5%9C%BA)
+    - [宗旨](#%E5%AE%97%E6%97%A8)
+    - [万不得已不融资](#%E4%B8%87%E4%B8%8D%E5%BE%97%E5%B7%B2%E4%B8%8D%E8%9E%8D%E8%B5%84)
+    - [你的需求没有想象的那么多](#%E4%BD%A0%E7%9A%84%E9%9C%80%E6%B1%82%E6%B2%A1%E6%9C%89%E6%83%B3%E8%B1%A1%E7%9A%84%E9%82%A3%E4%B9%88%E5%A4%9A)
+    - [要成就事业，不能只是创业](#%E8%A6%81%E6%88%90%E5%B0%B1%E4%BA%8B%E4%B8%9A%EF%BC%8C%E4%B8%8D%E8%83%BD%E5%8F%AA%E6%98%AF%E5%88%9B%E4%B8%9A)
+    - [破釜沉舟](#%E7%A0%B4%E9%87%9C%E6%B2%89%E8%88%9F)
+    - [轻装上阵](#%E8%BD%BB%E8%A3%85%E4%B8%8A%E9%98%B5)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 ## Rework
 
 ### 卸负篇

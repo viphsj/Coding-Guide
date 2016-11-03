@@ -11,6 +11,7 @@
   - [关于项目](#%E5%85%B3%E4%BA%8E%E9%A1%B9%E7%9B%AE)
   - [好玩的](#%E5%A5%BD%E7%8E%A9%E7%9A%84)
   - [源码解读](#%E6%BA%90%E7%A0%81%E8%A7%A3%E8%AF%BB)
+  - [js-bits](#js-bits)
 - [License](#license)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -198,6 +199,14 @@
 - [nprogress 源码解析](https://github.com/ecmadao/code-analysis/blob/master/analysis/nprogress.js)
 
 一个在页面（或特定容器）顶部创建进度条的插件
+
+- [object-assign 源码分析](https://github.com/ecmadao/code-analysis/blob/master/analysis/object-assign.js)
+
+`Object.assign`的`ponyfill`，兼容性很好
+
+### [js-bits](https://github.com/ecmadao/js-bits-cn)
+
+使用代码解释`JavaScript`的概念，翻译自[`vasanthk/js-bits`](https://github.com/vasanthk/js-bits)，已获得作者授权。
 
 ## License
 
