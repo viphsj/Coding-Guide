@@ -114,6 +114,7 @@
 - [极客与团队](./Notes/Projects/极客与团队.md)
 - [Don't Make Me Think](./Notes/Projects/Don-t-Make-Me-Think.md)
 - [The Pragmatic Programmer](./Notes/Projects/The Pragmatic Programmer.md)
+- [Rework](./Notes/Projects/Rework.md)
 
 ### 好玩的
 
@@ -153,10 +154,6 @@
 > 优点：Alfred插件可以拿多种脚本语言编写，甚至可以和系统API联动
 >
 > 缺点：可惜的是目前Alfred还不支持Python3，以及对于第三方库的支持也不太友好。
-
-- [Job Hunter](https://github.com/ecmadao/job-hunter)
-
-> 找工作的时候那么多数据看的很烦，于是建了这个项目，试图通过自动化的方式解放那些繁琐的流程。目前只写了初步的爬虫，还在努力挖坑中
 
 - [cliper-chrome](https://github.com/ecmadao/cliper-chrome)
 - [cliper-backend](https://github.com/ecmadao/cliper-backend)
