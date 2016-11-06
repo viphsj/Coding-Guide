@@ -94,10 +94,13 @@
 
 扩展：
 
-- [Magic Python](./Notes/Python/Magic%20Python.md)
-- [Effective Python](./Notes/Python/Effective Python.md)
-- [Python Style Guide](./Notes/Python/Python%20Style%20Guide.md)
 - [Gitbook](https://ecmadao.gitbooks.io/python3/content/)
+
+### Python进阶
+
+- [Magic Python](./Notes/Python/Python进阶/Magic%20Python.md)
+- [Effective Python](./Notes/Python/Python进阶/Effective Python.md)
+- [Python Style Guide](./Notes/Python/Python进阶/Python%20Style%20Guide.md)
 
 ### Ember文档翻译系列(V2.8.0)
 
