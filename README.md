@@ -95,6 +95,7 @@
 扩展：
 
 - [Magic Python](./Notes/Python/Magic%20Python.md)
+- [Effective Python](./Notes/Python/Effective Python.md)
 - [Python Style Guide](./Notes/Python/Python%20Style%20Guide.md)
 - [Gitbook](https://ecmadao.gitbooks.io/python3/content/)
 
