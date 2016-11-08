@@ -33,7 +33,7 @@
 d.setdefault(key, defaultvalue)
 # 如果键不存在字典中，则会被赋予默认值。否则不会改变原有的键值
 
-from collection import defaultdict
+from collections import defaultdict
 defaultdict(fun)
 # 以函数作为参数，它返回赋给缺失的键值
 # e.g.
@@ -86,12 +86,14 @@ Counter(example_list1) | Counter(example_list2)
 ```python
 from collections import OrderedDict
 example_dict = {
-  'a': 1,
-  'b': 2,
-  'c': 3
+	'a': 1,
+	'b': 2,
+	'c': 3
 }
 
-for key in OrderedDict(example_dict):
+orderedDict = OrderedDict(sorted(example_dict.items(), key=lambda t: t[0]))
+
+for key in orderedDict:
 	print(key)
 # a
 # b
@@ -138,12 +140,11 @@ print(d2) # deque([2, 3, 4, 0, 1]) 当参数的绝对值大于等于列表长度
 
 ```python
 d = deque(maxlen=30)
-
 ```
 
 #### `namedtuple`
 
-命名元组。通过命名元组创建的对象具有元祖的特性，而且可以通过位置索引&键值索引获取到元组内的数据。
+命名元组。通过命名元组创建的对象具有元组的特性，而且可以通过位置索引&键值索引获取到元组内的数据。
 
 ```python
 from collections import namedtuple

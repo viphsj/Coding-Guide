@@ -18,7 +18,7 @@
 
 ## Effective Python
 
-> 部分提炼自同名书籍：《Effective Python》，但也针对原文内容修改过案例，并加上了我自己的理解和运用中的最佳实践
+> 部分提炼自书籍：《Effective Python》&《Python3 Cookbook》，但也做出了部分修改，并加上了我自己的理解和运用中的最佳实践
 
 ### Pythonic
 

@@ -7,6 +7,7 @@
   - [前端工程](#%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B)
   - [Koa2系列教程](#koa2%E7%B3%BB%E5%88%97%E6%95%99%E7%A8%8B)
   - [Python3系列教程](#python3%E7%B3%BB%E5%88%97%E6%95%99%E7%A8%8B)
+  - [Python进阶](#python%E8%BF%9B%E9%98%B6)
   - [Ember文档翻译系列(V2.8.0)](#ember%E6%96%87%E6%A1%A3%E7%BF%BB%E8%AF%91%E7%B3%BB%E5%88%97v280)
   - [关于项目](#%E5%85%B3%E4%BA%8E%E9%A1%B9%E7%9B%AE)
   - [好玩的](#%E5%A5%BD%E7%8E%A9%E7%9A%84)
@@ -101,6 +102,7 @@
 - [Magic Python](./Notes/Python/Python进阶/Magic%20Python.md)
 - [Effective Python](./Notes/Python/Python进阶/Effective Python.md)
 - [Python Style Guide](./Notes/Python/Python进阶/Python%20Style%20Guide.md)
+- [Python 中的 Collections 库](./Notes/Python/Python进阶/Python 中的 Collections 库.md)
 
 ### Ember文档翻译系列(V2.8.0)
 
