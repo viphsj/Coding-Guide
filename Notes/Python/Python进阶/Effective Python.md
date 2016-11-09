@@ -13,6 +13,9 @@
     - [使用位置参数](#%E4%BD%BF%E7%94%A8%E4%BD%8D%E7%BD%AE%E5%8F%82%E6%95%B0)
     - [使用关键字参数](#%E4%BD%BF%E7%94%A8%E5%85%B3%E9%94%AE%E5%AD%97%E5%8F%82%E6%95%B0)
     - [关于参数的默认值](#%E5%85%B3%E4%BA%8E%E5%8F%82%E6%95%B0%E7%9A%84%E9%BB%98%E8%AE%A4%E5%80%BC)
+  - [类](#%E7%B1%BB)
+    - [`__call__`](#__call__)
+    - [`@classmethod` & `@staticmethod`](#classmethod-&-staticmethod)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -348,4 +351,126 @@ result2 = get_default()
 result2.append(2)
 print(result) # [1]
 print(result2) # [2]
+```
+
+### 类
+
+#### `__call__`
+
+通过定义类中的`__call__`方法，可以使该类的实例能够像普通函数一样调用。
+
+```python
+class AddNumber(object):
+	def __init__(self):
+		self.num = 0
+
+	def __call__(self, num=1):
+		self.num += num
+
+add_number = AddNumber()
+print(add_number.num) # 0
+add_number() # 像方法一样的调用
+print(add_number.num) # 1
+add_number(3)
+print(add_number.num) # 4
+```
+
+通过这种方式实现的好处是，可以通过类的属性来保存状态，而不必创建一个闭包或者全局变量。
+
+#### `@classmethod` & `@staticmethod`
+
+资料：
+
+- [Python @classmethod and @staticmethod for beginner](http://stackoverflow.com/questions/12179271/python-classmethod-and-staticmethod-for-beginner)
+- [Difference between staticmethod and classmethod in python](http://pythoncentral.io/difference-between-staticmethod-and-classmethod-in-python/)
+
+`@classmethod`和`@staticmethod`很像，但他们的使用场景并不一样。
+
+- 类内部普通的方法，都是以`self`作为第一个参数，代表着通过实例调用时，将实例的作用域传入方法内；
+- `@classmethod`以`cls`作为第一个参数，代表将类本身的作用域传入。无论通过类来调用，还是通过类的实例调用，默认传入的第一个参数都将是类本身
+- `@staticmethod`不需要传入默认参数，类似于一个普通的函数
+
+来通过实例了解它们的使用场景：
+
+假设我们需要创建一个名为`Date`的类，用于储存 年/月/日 三个数据
+
+```python
+class Date(object):
+	def __init__(self, year=0, month=0, day=0):
+		self.year = year
+		self.month = month
+		self.day = day
+	
+	@property
+	def time(self):
+		return "{year}-{month}-{day}".format(
+			year=self.year,
+			month=self.month,
+			day=self.day
+		)
+```
+
+上述代码创建了`Date`类，该类会在初始化时设置`day/month/year`属性，并且通过`property`设置了一个`getter`，可以在实例化之后，通过`time`获取存储的时间：
+
+```python
+date = Date('2016', '11', '09')
+date.time # 2016-11-09
+```
+
+但如果我们想改变属性传入的方式呢？毕竟，在初始化时就要传入年/月/日三个属性还是很烦人的。能否找到一个方法，在不改变现有接口和方法的情况下，可以通过传入`2016-11-09`这样的字符串来创建一个`Date`实例？
+
+你可能会想到这样的方法：
+
+```python
+date_string = '2016-11-09'
+year, month, day = map(str, date_string.split('-'))
+date = Date(year, month, day)
+```
+
+但不够好：
+
+- 在类外额外多写了一个方法，每次还得格式化以后获取参数
+- 这个方法也只跟`Date`类有关
+- 没有解决传入参数过多的问题
+
+此时就可以利用`@classmethod`，在类的内部新建一个格式化字符串，并返回类的实例的方法：
+
+```python
+# 在 Date 内新增一个 classmethod
+@classmethod
+def from_string(cls, string):
+	year, month, day = map(str, string.split('-'))
+	date = cls(year, month, day)
+	return date
+```
+
+这样，我们就可以通过`Date`类来调用`from_string`方法创建实例，并且不侵略、修改旧的实例化方式：
+
+```python
+date = Date.from_string('2016-11-09')
+# 旧的实例化方式仍可以使用
+date_old = Date('2016', '11', '09')
+```
+
+好处：
+
+- 在`@classmethod`内，可以通过`cls`参数，获取到跟外部调用类时一样的便利
+- 可以在其中进一步封装该方法，提高复用性
+- 更加符合面向对象的编程方式
+
+而`@staticmethod`，因为其本身类似于普通的函数，所以可以把和这个类相关的 helper 方法作为`@staticmethod`，放在类里，然后直接通过类来调用这个方法。
+
+```python
+# 在 Date 内新增一个 staticmethod
+@staticmethod
+def is_month_validate(month):
+	return int(month) <= 12 and int(month) >= 1
+```
+
+将与日期相关的辅助类函数作为`@staticmethod`方法放在`Date`类内后，可以通过类来调用这些方法：
+
+```python
+month = '08'
+if not Date.is_month_validate(month):
+	print('{} is a validate month number'.format(month))
 ```
