@@ -7,9 +7,11 @@
     - [列表切割](#%E5%88%97%E8%A1%A8%E5%88%87%E5%89%B2)
     - [列表推导式](#%E5%88%97%E8%A1%A8%E6%8E%A8%E5%AF%BC%E5%BC%8F)
     - [迭代](#%E8%BF%AD%E4%BB%A3)
+    - [反向迭代](#%E5%8F%8D%E5%90%91%E8%BF%AD%E4%BB%A3)
     - [`try/except/else/finally`](#tryexceptelsefinally)
   - [函数](#%E5%87%BD%E6%95%B0)
     - [使用生成器](#%E4%BD%BF%E7%94%A8%E7%94%9F%E6%88%90%E5%99%A8)
+    - [可迭代对象](#%E5%8F%AF%E8%BF%AD%E4%BB%A3%E5%AF%B9%E8%B1%A1)
     - [使用位置参数](#%E4%BD%BF%E7%94%A8%E4%BD%8D%E7%BD%AE%E5%8F%82%E6%95%B0)
     - [使用关键字参数](#%E4%BD%BF%E7%94%A8%E5%85%B3%E9%94%AE%E5%AD%97%E5%8F%82%E6%95%B0)
     - [关于参数的默认值](#%E5%85%B3%E4%BA%8E%E5%8F%82%E6%95%B0%E7%9A%84%E9%BB%98%E8%AE%A4%E5%80%BC)
@@ -121,6 +123,66 @@ else:
 # 0
 ```
 
+#### 反向迭代
+
+对于普通的序列（列表），我们可以通过内置的`reversed()`函数进行反向迭代：
+
+```python
+list_example = [i for i in range(5)]
+iter_example = (i for i in range(5)) # 迭代器
+set_example = {i for i in range(5)} # 集合
+
+# 普通的正向迭代
+# for i in list_example
+
+# 通过 reversed 进行反向迭代
+for i in reversed(list_example):
+	print(i)
+# 4
+# 3
+# 2
+# 1
+# 0
+
+# 但无法作用于 集合 和 迭代器
+reversed(iter_example) # TypeError: argument to reversed() must be a sequence
+```
+
+除此以外，还可以通过实现类里的`__reversed__`方法，将类进行反向迭代：
+
+```python
+class Countdown:
+    def __init__(self, start):
+        self.start = start
+
+    # 正向迭代
+    def __iter__(self):
+        n = self.start
+        while n > 0:
+            yield n
+            n -= 1
+
+    # 反向迭代
+    def __reversed__(self):
+        n = 1
+        while n <= self.start:
+            yield n
+            n += 1
+
+for i in reversed(Countdown(4)):
+    print(i)
+# 1
+# 2
+# 3
+# 4
+for i in Countdown(4):
+    print(i)
+# 4
+# 3
+# 2
+# 1
+```
+
 #### `try/except/else/finally`
 
 - 如果`try`内没有发生异常，则调用`else`内的代码
@@ -163,8 +225,20 @@ def get_a_indexs(string):
 ```python
 string = 'this is a test to find a\' index'
 indexs = get_a_indexs(string)
+
+# 可以这样遍历
 for i in indexs:
 	print(i)
+
+# 或者这样
+try:
+	while True:
+		print(next(indexs))
+except StopIteration:
+	print('finish!')
+
+# 生成器在获取完之后如果继续通过 next() 取值，则会触发 StopIteration 错误
+# 但通过 for 循环遍历时会自动捕获到这个错误
 ```
 
 如果你还是需要一个列表，那么可以将函数的调用结果作为参数，再调用`list`方法
@@ -174,7 +248,9 @@ results = get_a_indexs('this is a test to check a')
 results_list = list(results)
 ```
 
-但是需要注意的是，迭代器只能迭代一轮，一轮之后重复调用是无效的。解决这种问题的方法是，你可以定义一个可迭代的容器类：
+#### 可迭代对象
+
+需要注意的是，普通的迭代器只能迭代一轮，一轮之后重复调用是无效的。解决这种问题的方法是，你可以**定义一个可迭代的容器类**：
 
 ```python
 class LoopIter(object):
@@ -190,14 +266,34 @@ class LoopIter(object):
 这样的话，将类的实例迭代重复多少次都没问题：
 
 ```python
+string = 'this is a test to find a\' index'
 indexs = LoopIter(string)
+
 print('loop 1')
 for _ in indexs:
 	print(_)
+# loop 1
+# 8
+# 23
 
 print('loop 2')
 for _ in indexs:
 	print(_)
+# loop 2
+# 8
+# 23
+```
+
+但要注意的是，仅仅是实现`__iter__`方法的迭代器，只能通过`for`循环来迭代；想要通过`next`方法迭代的话则需要使用`iter`方法：
+
+```python
+string = 'this is a test to find a\' index'
+indexs = LoopIter(string)
+
+next(indexs) # TypeError: 'LoopIter' object is not an iterator
+
+iter_indexs = iter(indexs)
+next(iter_indexs) # 8
 ```
 
 #### 使用位置参数
@@ -440,6 +536,7 @@ date = Date(year, month, day)
 @classmethod
 def from_string(cls, string):
 	year, month, day = map(str, string.split('-'))
+	# 在 classmethod 内可以通过 cls 来调用到类的方法，甚至创建实例
 	date = cls(year, month, day)
 	return date
 ```
