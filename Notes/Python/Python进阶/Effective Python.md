@@ -20,6 +20,7 @@
     - [`__slots__`](#__slots__)
     - [`__call__`](#__call__)
     - [`@classmethod` & `@staticmethod`](#classmethod-&-staticmethod)
+    - [创建上下文管理器](#%E5%88%9B%E5%BB%BA%E4%B8%8A%E4%B8%8B%E6%96%87%E7%AE%A1%E7%90%86%E5%99%A8)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -742,3 +743,61 @@ if not Date.is_month_validate(month):
 	print('{} is a validate month number'.format(month))
 ```
 
+#### 创建上下文管理器
+
+上下文管理器，通俗的介绍就是：在代码块执行前，先进行准备工作；在代码块执行完成后，做收尾的处理工作。`with`语句常伴随上下文管理器一起出现，经典场景有：
+
+```python
+with open('test.txt', 'r') as file:
+	for line in file.readlines():
+		print(line)
+```
+
+通过`with`语句，代码完成了文件打开操作，并在调用结束，或者读取发生异常时自动关闭文件，即完成了文件读写之后的处理工作。如果不通过上下文管理器的话，则会是这样的代码：
+
+```python
+file = open('test.txt', 'r')
+try:
+	for line in file.readlines():
+		print(line)
+finally:
+    file.close()
+```
+
+比较繁琐吧？所以说使用上下文管理器的好处就是，通过调用我们预先设置好的回调，自动帮我们处理代码块开始执行和执行完毕时的工作。而通过自定义类的`__enter__`和`__exit__`方法，我们可以自定义一个上下文管理器。
+
+```python
+class ReadFile(object):
+	def __init__(self, filename):
+		self.file = open(filename, 'r')
+	
+	def __enter__(self):
+		return self.file
+	
+	def __exit__(self, type, value, traceback):
+		# type, value, traceback 分别代表错误的类型、值、追踪栈
+		self.file.close()
+		# 返回 True 代表不抛出错误
+		# 否则错误会被 with 语句抛出
+		return True
+```
+
+然后可以以这样的方式进行调用：
+
+```python
+with ReadFile('test.txt') as file_read:
+	for line in file_read.readlines():
+		print(line)
+```
+
+在调用的时候：
+
+1. `with`语句先暂存了`ReadFile`类的`__exit__`方法
+2. 然后调用`ReadFile`类的`__enter__`方法
+3. `__enter__`方法打开文件，并将结果返回给`with`语句
+4. 上一步的结果被传递给`file_read`参数
+5. 在`with`语句内对`file_read`参数进行操作，读取每一行
+6. 读取完成之后，`with`语句调用之前暂存的`__exit__`方法
+7. `__exit__`方法关闭了文件
+
+要注意的是，在`__exit__`方法内，我们关闭了文件，但最后返回`True`，所以错误不会被`with`语句抛出。否则`with`语句会抛出一个对应的错误。
