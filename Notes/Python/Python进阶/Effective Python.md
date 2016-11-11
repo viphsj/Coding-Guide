@@ -10,12 +10,14 @@
     - [反向迭代](#%E5%8F%8D%E5%90%91%E8%BF%AD%E4%BB%A3)
     - [`try/except/else/finally`](#tryexceptelsefinally)
   - [函数](#%E5%87%BD%E6%95%B0)
+    - [使用装饰器](#%E4%BD%BF%E7%94%A8%E8%A3%85%E9%A5%B0%E5%99%A8)
     - [使用生成器](#%E4%BD%BF%E7%94%A8%E7%94%9F%E6%88%90%E5%99%A8)
     - [可迭代对象](#%E5%8F%AF%E8%BF%AD%E4%BB%A3%E5%AF%B9%E8%B1%A1)
     - [使用位置参数](#%E4%BD%BF%E7%94%A8%E4%BD%8D%E7%BD%AE%E5%8F%82%E6%95%B0)
     - [使用关键字参数](#%E4%BD%BF%E7%94%A8%E5%85%B3%E9%94%AE%E5%AD%97%E5%8F%82%E6%95%B0)
     - [关于参数的默认值](#%E5%85%B3%E4%BA%8E%E5%8F%82%E6%95%B0%E7%9A%84%E9%BB%98%E8%AE%A4%E5%80%BC)
   - [类](#%E7%B1%BB)
+    - [`__slots__`](#__slots__)
     - [`__call__`](#__call__)
     - [`@classmethod` & `@staticmethod`](#classmethod-&-staticmethod)
 
@@ -87,6 +89,26 @@ list = (x ** 2 for x in range(0, 1000000000))
 #### 迭代
 
 - 需要获取 index 时使用`enumerate`
+- `enumerate`可以接受第二个参数，作为迭代时加在`index`上的数值
+
+```python
+list = ['a', 'b', 'c', 'd']
+
+for index, value in enumerate(list):
+	print(index)
+# 0
+# 1
+# 2
+# 3
+
+for index, value in enumerate(list, 2):
+	print(index)
+# 2
+# 3
+# 4
+# 5
+```
+
 - 用`zip`同时遍历两个迭代器
 
 ```python
@@ -98,6 +120,19 @@ for letter, number in zip(list_a, list_b):
 # a 1
 # b 2
 # c 3
+```
+
+- `zip`遍历时返回一个元组
+
+```python
+a = [1, 2, 3]
+b = ['w', 'x', 'y', 'z']
+for i in zip(a,b):
+	print(i)
+
+# (1, 'w')
+# (2, 'x')
+# (3, 'y')
 ```
 
 - 关于`for`和`while`循环后的`else`块
@@ -190,6 +225,116 @@ for i in Countdown(4):
 - 最终一定会执行`finally`，可以在其中进行清理工作
 
 ### 函数
+
+#### 使用装饰器
+
+装饰器用于在不改变原函数代码的情况下修改已存在的函数。常见场景是增加一句调试，或者为已有的函数增加`log`监控
+
+举个栗子：
+
+```python
+def decorator_fun(fun):
+	def new_fun(*args, **kwargs):
+		print('current fun:', fun.__name__)
+		print('position arguments:', args)
+		print('key arguments:', **kwargs)
+		result = fun(*args, **kwargs)
+		print(result)
+		return result
+	return new_fun
+	
+@decorator_fun
+def add(a, b):
+	return a + b
+
+add(3, 2)
+# current fun: add
+# position arguments: (3, 2)
+# key arguments: {}
+# 5
+```
+
+除此以外，还可以编写接收参数的装饰器，其实就是在原本的装饰器上的外层又嵌套了一个函数：
+
+```python
+def read_file(filename='results.txt'):
+	def decorator_fun(fun):
+		def new_fun(*args, **kwargs):
+			result = fun(*args, **kwargs)
+			with open(filename, 'a') as f:
+                f.write(result + '\n')
+			return result
+		return new_fun
+	return decorator_fun
+
+# 使用装饰器时代入参数
+@read_file(filename='log.txt')
+def add(a, b):
+	return a + b
+```
+
+但是像上面那样使用装饰器的话有一个问题：
+
+```python
+@decorator_fun
+def add(a, b):
+	return a + b
+
+print(add.__name__)
+# new_fun
+```
+
+也就是说原函数已经被装饰器里的`new_fun`函数替代掉了。调用经过装饰的函数，相当于调用一个新函数。查看原函数的参数、注释、甚至函数名的时候，只能看到装饰器的相关信息。为了解决这个问题，我们可以使用 Python 自带的`functools.wraps`方法。
+
+> [stackoverflow: What does functools.wraps do?](http://stackoverflow.com/questions/308999/what-does-functools-wraps-do)
+
+`functools.wraps`是个很 hack 的方法，它本事作为一个装饰器，做用在装饰器内部将要返回的函数上。也就是说，它是装饰器的装饰器，并且以原函数为参数，作用是保留原函数的各种信息，使得我们之后查看被装饰了的原函数的信息时，可以保持跟原函数一模一样。
+
+```python
+from functools import wraps
+
+def decorator_fun(fun):
+	@wraps(fun)
+	def new_fun(*args, **kwargs):
+		result = fun(*args, **kwargs)
+		print(result)
+		return result
+	return new_fun
+	
+@decorator_fun
+def add(a, b):
+	return a + b
+
+print(add.__name__)
+# add
+```
+
+此外，有时候我们的装饰器里可能会干不止一个事情，此时应该把事件作为额外的函数分离出去。但是又因为它可能仅仅和该装饰器有关，所以此时可以构造一个装饰器类。原理很简单，主要就是编写类里的`__call__`方法，使类能够像函数一样的调用。
+
+```python
+from functools import wraps
+
+class logResult(object):
+	def __init__(self, filename='results.txt'):
+		self.filename = filename
+	
+	def __call__(self, fun):
+		@wraps(fun)
+		def new_fun(*args, **kwargs):
+			result = fun(*args, **kwargs)
+			with open(filename, 'a') as f:
+                f.write(result + '\n')
+			return result
+		self.send_notification()
+		return new_fun
+	
+	def send_notification(self):
+		pass
+
+@logResult('log.txt')
+def add(a, b):
+	return a + b
+```
 
 #### 使用生成器
 
@@ -451,6 +596,31 @@ print(result2) # [2]
 
 ### 类
 
+#### `__slots__`
+
+默认情况下，Python 用一个字典来保存一个对象的实例属性。这使得我们可以在运行的时候动态的给类的实例添加新的属性：
+
+```python
+test = Test()
+test.new_key = 'new_value'
+```
+
+然而这个字典浪费了多余的空间 --- 很多时候我们不会创建那么多的属性。因此通过`__slots__`可以告诉 Python 不要使用字典而是固定集合来分配空间。
+
+```python
+class Test(object):
+	# 用列表罗列所有的属性
+	__slots__ = ['name', 'value']
+	def __init__(self, name='test', value='0'):
+		self.name = name
+		self.value = value
+
+test = Test()
+# 此时再增加新的属性则会报错
+test.new_key = 'new_value'
+# AttributeError: 'Test' object has no attribute 'new_key'
+```
+
 #### `__call__`
 
 通过定义类中的`__call__`方法，可以使该类的实例能够像普通函数一样调用。
@@ -571,3 +741,4 @@ month = '08'
 if not Date.is_month_validate(month):
 	print('{} is a validate month number'.format(month))
 ```
+

@@ -34,6 +34,10 @@
     - [匿名函数`lambda()`](#%E5%8C%BF%E5%90%8D%E5%87%BD%E6%95%B0lambda)
     - [装饰器](#%E8%A3%85%E9%A5%B0%E5%99%A8)
     - [命名空间和作用域](#%E5%91%BD%E5%90%8D%E7%A9%BA%E9%97%B4%E5%92%8C%E4%BD%9C%E7%94%A8%E5%9F%9F)
+  - [自省（`introspection`）](#%E8%87%AA%E7%9C%81%EF%BC%88introspection%EF%BC%89)
+    - [`dir`](#dir)
+    - [`type`](#type)
+    - [`id`](#id)
   - [generator](#generator)
   - [中文编码](#%E4%B8%AD%E6%96%87%E7%BC%96%E7%A0%81)
 
@@ -770,7 +774,7 @@ new_add(3, 2)
 # 5
 ```
 
-*相对于人工进行装饰器赋值传参的操作过程，可以直接在要装饰的函数前面添加装饰器名称@decorator_name:*
+*相对于人工进行装饰器赋值传参的操作过程，可以直接在要装饰的函数前面添加装饰器名称`@decorator_name`:*
 
 ```python
 def decorator_fun(fun):
@@ -830,6 +834,40 @@ fun() # 2
 print(const_value) 
 # const_value
 # 函数中使用的const_value为局部变量
+```
+
+### 自省（`introspection`）
+
+指在运行时来判断一个对象的类型的能力
+
+#### `dir`
+
+以某个对象作为参数，返回一个列表，列出了一个对象所拥有的属性和方法
+
+```python
+test = 'test'
+dir(test)
+# ['__add__', '__class__', '__contains__', '__delattr__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__getitem__', '__getnewargs__', '__gt__', '__hash__', '__init__', '__iter__', '__le__', '__len__', '__lt__', '__mod__', '__mul__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__rmod__', '__rmul__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', 'capitalize', 'casefold', 'center', 'count', 'encode', 'endswith', 'expandtabs', 'find', 'format', 'format_map', 'index', 'isalnum', 'isalpha', 'isdecimal', 'isdigit', 'isidentifier', 'islower', 'isnumeric', 'isprintable', 'isspace', 'istitle', 'isupper', 'join', 'ljust', 'lower', 'lstrip', 'maketrans', 'partition', 'replace', 'rfind', 'rindex', 'rjust', 'rpartition', 'rsplit', 'rstrip', 'split', 'splitlines', 'startswith', 'strip', 'swapcase', 'title', 'translate', 'upper', 'zfill']
+```
+
+#### `type`
+
+使用`type`函数获取对象的类型
+
+```python
+test = 'test'
+type(test) # <class 'str'>
+test_list = []
+type(test_list) # <class 'list'>
+```
+
+#### `id`
+
+返回对象的唯一`id`
+
+```python
+test = 'test'
+id(test) # 43134560 每次运行时 id 都不同
 ```
 
 ### generator
