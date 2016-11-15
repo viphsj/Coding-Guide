@@ -1,3 +1,17 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [探索 RxJS - Observable](#%E6%8E%A2%E7%B4%A2-rxjs---observable)
+  - [`Observable`是什么？](#observable%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F)
+  - [`Pull`&`Push`](#pull&push)
+  - [进一步理解`Observable`](#%E8%BF%9B%E4%B8%80%E6%AD%A5%E7%90%86%E8%A7%A3observable)
+  - [创建`Observable`](#%E5%88%9B%E5%BB%BAobservable)
+  - [监听`Observable`](#%E7%9B%91%E5%90%ACobservable)
+  - [流`Observable`的操作](#%E6%B5%81observable%E7%9A%84%E6%93%8D%E4%BD%9C)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 ## 探索 RxJS - Observable
 
 ### `Observable`是什么？
@@ -367,4 +381,14 @@ var subscription = source.subscribe(
 
 ### 监听`Observable`
 
-### 处理流中事件的执行
+要监听一个流，必须创建一个观察者，然后调用`subscribe`方法。在`subscribe`方法中，有下列三种回调：
+
+- `onNext` 当流中的某个事件被执行时所触发的回调，参数是事件触发之后的返回值
+- `onError` 事件执行报错时所触发的回调，参数是一个 Error
+- `onCompleted` 当一个 onNext 执行完毕且没有报错后的回调
+
+当一个流开始执行时，会触发`onNext`零次或多次，之后会调用`onError`或者`onCompleted`方法，但不会两个都调用。
+
+### 流`Observable`的操作
+
+详见：[Reactivex - operators](http://reactivex.io/documentation/operators.html)
