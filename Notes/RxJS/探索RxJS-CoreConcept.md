@@ -7,6 +7,7 @@
   - [Quick Intro](#quick-intro)
   - [运用场景](#%E8%BF%90%E7%94%A8%E5%9C%BA%E6%99%AF)
     - [含有异步请求和事件触发的混合流](#%E5%90%AB%E6%9C%89%E5%BC%82%E6%AD%A5%E8%AF%B7%E6%B1%82%E5%92%8C%E4%BA%8B%E4%BB%B6%E8%A7%A6%E5%8F%91%E7%9A%84%E6%B7%B7%E5%90%88%E6%B5%81)
+    - [处理一系列的异步请求队列](#%E5%A4%84%E7%90%86%E4%B8%80%E7%B3%BB%E5%88%97%E7%9A%84%E5%BC%82%E6%AD%A5%E8%AF%B7%E6%B1%82%E9%98%9F%E5%88%97)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -24,11 +25,11 @@ ReactiveX，又称 Reactive Extensions（响应式扩展），其中的 X 代表
 
 我的理解是，Rx 通过 “流” 的概念，将事件串联成一个个事件流，各个事件流之间还可进行 "并联" 的作用。当某个流上的事件被调用时，就可以触发我们设定好的监听回调。
 
-那么什么样的事件可以成为流呢？答案是任何事件。无论是异步非阻塞事件（setTimeOut、网络请求等），还是同步可阻塞事件（点击事件、对迭代器的遍历等），一切都是流。此时不得不盗一张图：
+那么什么样的事件可以成为流呢？答案是任何事件。无论是异步非阻塞事件（setTimeOut、网络请求等），还是同步可阻塞事件（点击事件、对迭代器的遍历等），一切都是流。此时不得不祭出一张神棍图：
 
 ![everything is a steam](../../image/RxJS/everything is a steam.jpg)
 
-事件的串联就是流。比方说，用户对一个按钮进行了猛烈的点击，所有的点击事件就是一个流；再或者，并发多个网络请求，它们也是一个流。而 Rx 的主要作用，就是为流的处理提供了一整套的解决方案：将不同的流进行组合，或者监听事件的触发及时给予响应等等。
+事件的串联是流。比方说，用户对一个按钮进行了猛烈的点击，所有的点击事件就是一个流；再或者，并发多个网络请求，它们也是一个流。而 Rx 的主要作用，就是为流的处理提供了一整套的解决方案：将不同的流进行组合，或者监听事件的触发及时给予响应等等。
 
 ### Quick Intro
 
@@ -83,7 +84,7 @@ var dictionarySuggest = Rx.Observable.fromEvent(input, 'keyup')
 
 我们创建了一个流来处理从用户`keyup`，到`searchWikipedia`，再到处理网络请求结果这一系列事件，并且在其中对事件进行了筛选判断：
 
-- `filter` 剔除掉不合法的值
+- [`filter`](http://reactivex.io/documentation/operators/filter.html) 剔除掉不合法的值
 - [`distinctUntilChanged`](https://github.com/Reactive-Extensions/RxJS/blob/master/doc/api/core/operators/distinctuntilchanged.md) 当用户按下例如 左、右 这种按钮时，不会改变 input 的值，但也会触发`keyup`事件。这种时候就完全没有必要重复发送异步请求了。`distinctUntilChanged`会剔除流中有着相同的值的元素
 - [`debounce`](https://github.com/Reactive-Extensions/RxJS/blob/master/doc/api/core/operators/debounce.md) 在过了一段指定的时间还没触发事件时才触发下一个事件。也就是说，在打字过程中，如果用户在指定事件间隔（250ms）内没有再打字，则触发下一个事件（searchWikipedia）；否则我们认为用户在连续打字，所以不会频繁的发送网络请求
 - [`flatMapLatest`](http://reactivex.io/documentation/operators/flatmap.html)
@@ -92,6 +93,52 @@ var dictionarySuggest = Rx.Observable.fromEvent(input, 'keyup')
 
 ![flatMapLatest](../../image/RxJS/flatMapLatest.png)
 
+- [`subscribe`](http://reactivex.io/documentation/operators/subscribe.html) 创建对流的监听，并提供了成功和失败的回调
+
 而在传统的编写方法里，我们可能会创建 input 的`keyup`监听事件，并缓存上一次的值；每次`keyup`时，要判断当前值是否合法，并且与上一次的值不一样。除此以外，还要创建一个定时器，每隔一段时间就用合法的值去请求`searchWikipedia`方法 --- 即便这样，也无法保证不在用户连续打字时发送请求。
 
 可以看到，在我们把事件串成流并进行处理之后，要比传统的编写方式方便很多。
+
+#### 处理一系列的异步请求队列
+
+假设我们要读取一个 4GB 的大文件，将其加密后写入到一个新文件里。直接将整个文件读到内存里再加密、写入肯定是不行的，反之，我们依赖 RxJS 的流，创建多个读取、加密、写入事件，形成三个流出来：
+
+- 文件读取流：每次调用方法时异步读取 64k 的文件
+- 加密流：对读取的文件进行加密
+- 写入流：将加密好的内容异步写入新文件
+- 最后对整个`observable`进行监听
+
+```javascript
+var fs = require('fs');
+var Rx = require('rx');
+
+// Read/write from stream implementation
+function readAsync(fd, chunkSize) { /* impl */ }
+function appendAsync(fd, buffer) { /* impl */ }
+function encrypt(buffer) { /* impl */}
+
+// 打开一个 4GB 的文件，每次只读取 64k
+var inFile = fs.openSync('4GBfile.txt', 'r+');
+var outFile = fs.openSync('Encrypted.txt', 'w+');
+
+readAsync(inFile, 2 << 15)
+  .map(encrypt)
+  .flatMap(function (data) {
+    return appendAsync(outFile, data);
+  })
+  .subscribe(
+    function () { },
+    function (err) {
+      console.log('An error occurred while encrypting the file: %s', err.message);
+      fs.closeSync(inFile);
+      fs.closeSync(outFile);
+    },
+    function () {
+      console.log('Successfully encrypted the file.');
+      fs.closeSync(inFile);
+      fs.closeSync(outFile);
+    }
+  );
+```
+
+> 因此可以看出，在应对较复杂的事件流或者处理多个异步事件的时候，使用 RxJS 会有一定优势；但如果复杂度没有这么高的时候则没有什么使用的必要。
