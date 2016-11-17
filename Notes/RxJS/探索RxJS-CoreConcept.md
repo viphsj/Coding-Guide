@@ -55,7 +55,7 @@ filter( (event) -> event.x < 250 )
 
 也就是说，我们可以像对待 JavaScript 中可遍历对象一样，对流上的各个事件进行遍历，选出符合条件的事件。这就是 Rx 的魅力所在。
 
-### 运用场景
+### 主要运用场景
 
 既然 Rx 是为了流而生的，那么最佳运用场景当然是面对一系列较复杂的事件流时了。
 
@@ -65,17 +65,22 @@ filter( (event) -> event.x < 250 )
 
 ```javascript
 var input = document.getElementById('input');
+// 通过 fromEvent 以及 input keyup 事件创建一个流
 var dictionarySuggest = Rx.Observable.fromEvent(input, 'keyup')
+  // 获取到每次 keyup 时的input value，并通过 filter 保证其合法性
   .map(function () { return input.value; })
   .filter(function (text) { return !!text; })
   .distinctUntilChanged()
   .debounce(250)
+  // searchWikipedia 为异步请求方法
   .flatMapLatest(searchWikipedia)
   .subscribe(
+  	// onNext
     function (results) {
       list = [];
       list.concat(results.map(createItem));
     },
+    // onError
     function (err) {
       logError(err);
     }
@@ -127,12 +132,15 @@ readAsync(inFile, 2 << 15)
     return appendAsync(outFile, data);
   })
   .subscribe(
+  	// onNext
     function () { },
+    // onError
     function (err) {
       console.log('An error occurred while encrypting the file: %s', err.message);
       fs.closeSync(inFile);
       fs.closeSync(outFile);
     },
+    // onCompleted
     function () {
       console.log('Successfully encrypted the file.');
       fs.closeSync(inFile);
@@ -141,4 +149,8 @@ readAsync(inFile, 2 << 15)
   );
 ```
 
-> 因此可以看出，在应对较复杂的事件流或者处理多个异步事件的时候，使用 RxJS 会有一定优势；但如果复杂度没有这么高的时候则没有太大的使用必要。
+---
+
+由此可以看出，在应对较复杂的事件流或者处理多个异步事件的时候，使用 RxJS 会有一定优势；但如果复杂度没有这么高的时候则没有太大的使用必要。
+
+目前为止，本文基本介绍了 RxJS 的核心概念 --- 针对事件流的管理与掌控。在下一篇文章里，将会着重介绍流（`Observable`）是什么、如何创建以及流拥有的方法和监听。
