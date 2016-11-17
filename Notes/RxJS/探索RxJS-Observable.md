@@ -8,6 +8,7 @@
   - [进一步理解`Observable`](#%E8%BF%9B%E4%B8%80%E6%AD%A5%E7%90%86%E8%A7%A3observable)
   - [创建`Observable`](#%E5%88%9B%E5%BB%BAobservable)
   - [监听`Observable`](#%E7%9B%91%E5%90%ACobservable)
+  - [取消监听](#%E5%8F%96%E6%B6%88%E7%9B%91%E5%90%AC)
   - [流`Observable`的操作](#%E6%B5%81observable%E7%9A%84%E6%93%8D%E4%BD%9C)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -387,7 +388,41 @@ var subscription = source.subscribe(
 - `onError` 事件执行报错时所触发的回调，参数是一个 Error
 - `onCompleted` 当一个 onNext 执行完毕且没有报错后的回调
 
-当一个流开始执行时，会触发`onNext`零次或多次，之后会调用`onError`或者`onCompleted`方法，但不会两个都调用。
+当一个流开始执行时，会触发`onNext`零次或多次，之后会调用`onError`或者`onCompleted`方法，**但不会两个都调用**。你可以在`onError`或者`onCompleted`进行清理工作。
+
+除了直接代入三个方法以外，还可以代入一个 Object：
+
+```javascript
+var observer = {
+  next: x => console.log('Observer got a next value: ' + x),
+  error: err => console.error('Observer got an error: ' + err),
+  complete: () => console.log('Observer got a complete notification'),
+};
+Observable.subscribe(observer);
+```
+
+`observer`内的`next`、`error`、`complete`分别对应着`onNext`、`onError`、`onCompleted`状态
+
+### 取消监听
+
+对流进行监听之后，返回一个`subscription`，通过调用其`dispose`方法可以取消监听，并且停止所有事件：
+
+```javascript
+console.clear();
+var array = ['1', '2', 'foo', '5', 'bar'];
+var source = Rx.Observable.interval(1000).take(9).map(i => array[i]);
+
+var result = source.map(x => parseInt(x)).filter(x => !isNaN(x));
+
+var subscription = result.subscribe(x => console.log(x), err => console.log(err), () => console.log('completed'));
+
+setTimeout(() => {
+  console.log('unsubscribe');
+  subscription.dispose();
+}, 1000);
+```
+
+当调用`dispose()`方法时，流上还没有触发的事件不会再触发，而已经在进行中的事件则不会被打断，而是继续进行直到完成或报错。但是，那些还在进行的方法即便完成了，也不会触发观察者的回调。
 
 ### 流`Observable`的操作
 
