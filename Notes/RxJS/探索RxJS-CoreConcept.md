@@ -5,7 +5,7 @@
 - [探索 RxJS - Core Concept](#%E6%8E%A2%E7%B4%A2-rxjs---core-concept)
   - [Steam in ReactiveX](#steam-in-reactivex)
   - [Quick Intro](#quick-intro)
-  - [运用场景](#%E8%BF%90%E7%94%A8%E5%9C%BA%E6%99%AF)
+  - [主要运用场景](#%E4%B8%BB%E8%A6%81%E8%BF%90%E7%94%A8%E5%9C%BA%E6%99%AF)
     - [含有异步请求和事件触发的混合流](#%E5%90%AB%E6%9C%89%E5%BC%82%E6%AD%A5%E8%AF%B7%E6%B1%82%E5%92%8C%E4%BA%8B%E4%BB%B6%E8%A7%A6%E5%8F%91%E7%9A%84%E6%B7%B7%E5%90%88%E6%B5%81)
     - [处理一系列的异步请求队列](#%E5%A4%84%E7%90%86%E4%B8%80%E7%B3%BB%E5%88%97%E7%9A%84%E5%BC%82%E6%AD%A5%E8%AF%B7%E6%B1%82%E9%98%9F%E5%88%97)
 

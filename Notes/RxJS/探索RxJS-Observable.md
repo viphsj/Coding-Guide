@@ -7,9 +7,9 @@
   - [`Pull`&`Push`](#pull&push)
   - [进一步理解`Observable`](#%E8%BF%9B%E4%B8%80%E6%AD%A5%E7%90%86%E8%A7%A3observable)
   - [创建`Observable`](#%E5%88%9B%E5%BB%BAobservable)
+  - [流`Observable`的操作](#%E6%B5%81observable%E7%9A%84%E6%93%8D%E4%BD%9C)
   - [监听`Observable`](#%E7%9B%91%E5%90%ACobservable)
   - [取消监听](#%E5%8F%96%E6%B6%88%E7%9B%91%E5%90%AC)
-  - [流`Observable`的操作](#%E6%B5%81observable%E7%9A%84%E6%93%8D%E4%BD%9C)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -141,7 +141,7 @@ result.subscribe(x => console.log(x));
 
 ### 创建`Observable`
 
-- [`just()`](http://reactivex.io/documentation/operators/just.html) 将一个或多个对象转为`Observable`
+- [`just(obj)`](http://reactivex.io/documentation/operators/just.html) 将一个或多个对象转为`Observable`
 
 ![just](../../image/RxJS/just.png)
 
@@ -156,7 +156,7 @@ var subscription = source.subscribe(
 // Completed
 ```
 
-- [`from()`](http://reactivex.io/documentation/operators/from.html) 将一个可迭代对象或者 Array 转为流
+- [`from(array/string/iter)`](http://reactivex.io/documentation/operators/from.html) 将一个可迭代对象或者 Array 转为流
 
 ![from](../../image/RxJS/from.png)
 
@@ -188,7 +188,7 @@ Rx.Observable.from("foo").subscribe(
 // Completed
 ```
 
-- [`fromCallback()`](http://reactivex.io/documentation/operators/from.html) 以一个函数作为参数，通过回调函数来创建流。创建好的流可接收函数所需的参数，并返回新的流
+- [`fromCallback(func)`](http://reactivex.io/documentation/operators/from.html) 以一个函数作为参数，通过回调函数来创建流。创建好的流可接收函数所需的参数，并返回新的流
 
 ![fromCallback](../../image/RxJS/fromCallback.png)
 
@@ -210,7 +210,7 @@ var subscription = source.subscribe(
 // Completed
 ```
 
-- [`fromEvent()`](http://reactivex.io/documentation/operators/from.html) 通过 DOM 事件来创建流
+- [`fromEvent(DOM, eventName)`](http://reactivex.io/documentation/operators/from.html) 通过 DOM 事件来创建流
 
 ![fromEvent](../../image/RxJS/fromEvent.png)
 
@@ -231,7 +231,7 @@ input.trigger('click');
 // Next: Clicked!
 ```
 
-- [`fromPromise()`](http://reactivex.io/documentation/operators/from.html) 通过 Promise 对象来创建流
+- [`fromPromise(promise)`](http://reactivex.io/documentation/operators/from.html) 通过 Promise 对象来创建流
 
 ```javascript
 var promise = new RSVP.Promise(function (resolve, reject) {
@@ -248,7 +248,7 @@ var subscription = source.subscribe(
 // Completed
 ```
 
-- [`of()`](http://reactivex.io/documentation/operators/from.html) 与`from`不同的是，`of`方法需要将参数一个一个的传入
+- [`of(a, b, c...)`](http://reactivex.io/documentation/operators/from.html) 与`from`不同的是，`of`方法需要将参数一个一个的传入
 
 ![of](../../image/RxJS/of.png)
 
@@ -265,7 +265,7 @@ var subscription = source.subscribe(
 // Completed
 ```
 
-- [`ofArrayChanges()`](http://reactivex.io/documentation/operators/from.html) 以一个 Array 作为参数，通过监听 Array 的变化来触发事件
+- [`ofArrayChanges(array)`](http://reactivex.io/documentation/operators/from.html) 以一个 Array 作为参数，通过监听 Array 的变化来触发事件
 
 ```javascript
 var arr = [1,2,3];
@@ -280,7 +280,7 @@ arr.push(4)
 // Next: {type: "splice", object: Array[4], index: 3, removed: Array[0], addedCount: 1}
 ```
 
-- [`ofObjectChanges()`](http://reactivex.io/documentation/operators/from.html) 以一个对象作为参数，通过监听对象的变化来触发事件
+- [`ofObjectChanges(obj)`](http://reactivex.io/documentation/operators/from.html) 以一个对象作为参数，通过监听对象的变化来触发事件
 
 ```javascript
 var obj = {x: 1};
@@ -295,7 +295,7 @@ obj.x = 42;
 // Next: {type: "update", object: Object, name: "x", oldValue: 1}
 ```
 
-- [`pairs()`](http://reactivex.io/documentation/operators/from.html) 以一个对象作为参数，创建一个可以遍历对象中键值对的流
+- [`pairs(obj)`](http://reactivex.io/documentation/operators/from.html) 以一个对象作为参数，创建一个可以遍历对象中键值对的流
 
 ```javascript
 var obj = {
@@ -316,7 +316,7 @@ var subscription = source.subscribe(
 // Completed
 ```
 
-- `defer()` 直到创建了监听，才创建一个`Observable`
+- [`defer(func)`](http://reactivex.io/documentation/operators/defer.html) 直到创建了监听，才创建一个`Observable`
 
 ![defer](../../image/RxJS/defer.png)
 
@@ -335,7 +335,7 @@ var subscription = source.subscribe(
 // Completed
 ```
 
-- `range()` 实质上相当于`from()`方法接收了一个由数组组成的 Array
+- `range(start, end)` 实质上相当于`from()`方法接收了一个由数组组成的 Array
 
 ![range](../../image/RxJS/range.png)
 
@@ -352,7 +352,7 @@ var subscription = source.subscribe(
 // Completed
 ```
 
-- `interval()` 指定每次执行事件时的时间间隔
+- [`interval(ms)`](http://reactivex.io/documentation/operators/interval.html) 创建 Observable 的时候指定每次执行事件时的时间间隔
 
 ![interval](../../image/RxJS/interval.png)
 
@@ -379,6 +379,113 @@ var subscription = source.subscribe(
 // Next: {value: 2, interval: 500}
 // Completed
 ```
+
+- [`repeat(value, num)`](http://reactivex.io/documentation/operators/repeat.html) 将指定 value 重复 num 次
+
+![repeat](../../image/RxJS/repeat.png)
+
+```javascript
+var source = Rx.Observable.repeat(42, 3);
+
+var subscription = source.subscribe(
+    function (x) { console.log('Next: ' + x); },
+    function (err) { console.log('Error: ' + err); },
+    function () { console.log('Completed'); });
+// Next: 42
+// Next: 42
+// Next: 42
+// Completed
+```
+
+- [`doWhile(func)`](http://reactivex.io/documentation/operators/repeat.html) 接收一个方法作为参数，并不断调用该方法。如果该方法返回`true`，则执行事件；否则不执行事件
+
+![doWhile](../../image/RxJS/doWhile.png)
+
+```javascript
+var i = 0;
+
+var source = Rx.Observable.return(42).doWhile(
+    function () { return ++i < 2; });
+
+var subscription = source.subscribe(
+    function (x) { console.log('Next: ' + x); },
+    function (err) { console.log('Error: ' + err); },
+    function () { console.log('Completed'); });
+// Next: 42
+// Next: 42
+// Completed
+```
+
+- [`while(func, Observable)`](http://reactivex.io/documentation/operators/repeat.html) 以一个函数和`Observable`作为参数，如果函数返回`true`，则调用`Observable`
+
+![while](../../image/RxJS/while.png)
+
+```javascript
+var i = 0;
+
+// Repeat until condition no longer holds
+var source = Rx.Observable.while(
+    function () { return i++ < 3 },
+    Rx.Observable.return(42)
+);
+
+var subscription = source.subscribe(
+    function (x) { console.log('Next: ' + x); },
+    function (err) { console.log('Error: ' + err); },
+    function () { console.log('Completed'); });
+// Next: 42
+// Next: 42
+// Next: 42
+// Completed
+```
+
+- [`start(func[, context])`](http://reactivex.io/documentation/operators/start.html) 以一个方法作为参数，流被监听时会调用该方法
+
+![start](../../image/RxJS/start.png)
+
+```javascript
+var source = Rx.Observable.start(
+    function () {
+        return '123';
+    }
+);
+
+var subscription = source.subscribe(
+    function (x) {
+        console.log('Next: ' + x);
+    }
+// Next: 123
+```
+
+- [`startAsync()`](http://reactivex.io/documentation/operators/start.html) 类似于`start()`，但是以一个异步方法作为参数
+
+- [`startWith(a, b, c...)`](https://github.com/Reactive-Extensions/RxJS/blob/master/doc/api/core/operators/startwith.md) 以一个或多个对象作为参数，流将会以它们作为开头
+
+```javascript
+var source = Rx.Observable.return(4)
+    .startWith(1, 2, 3)
+
+var subscription = source.subscribe(
+    function (x) {
+        console.log('Next: ' + x);
+    },
+    function (err) {
+        console.log('Error: ' + err);
+    },
+    function () {
+        console.log('Completed');
+    });
+
+// => Next: 1
+// => Next: 2
+// => Next: 3
+// => Next: 4
+// => Completed
+```
+
+### 流`Observable`的操作
+
+详见：[Reactivex - operators](http://reactivex.io/documentation/operators.html)
 
 ### 监听`Observable`
 
@@ -423,7 +530,3 @@ setTimeout(() => {
 ```
 
 当调用`dispose()`方法时，流上还没有触发的事件不会再触发，而已经在进行中的事件则不会被打断，而是继续进行直到完成或报错。但是，那些还在进行的方法即便完成了，也不会触发观察者的回调。
-
-### 流`Observable`的操作
-
-详见：[Reactivex - operators](http://reactivex.io/documentation/operators.html)
