@@ -10,6 +10,7 @@
   - [流`Observable`的操作](#%E6%B5%81observable%E7%9A%84%E6%93%8D%E4%BD%9C)
   - [监听`Observable`](#%E7%9B%91%E5%90%ACobservable)
   - [取消监听](#%E5%8F%96%E6%B6%88%E7%9B%91%E5%90%AC)
+  - [扩展阅读](#%E6%89%A9%E5%B1%95%E9%98%85%E8%AF%BB)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -380,6 +381,25 @@ var subscription = source.subscribe(
 // Completed
 ```
 
+- [`timer(firstValueDelay[, intervalBetweenValues])`](http://reactivex.io/documentation/operators/timer.html) 在指定时间（`firstValueDelay`）之后触发流。如果有第二个参数则每个事件之间间隔`intervalBetweenValues`毫秒
+
+![timer](../../image/RxJS/timer.png)
+
+```javascript
+const start = 5;
+Rx.Observable
+  .timer(100, 100) // 开始流之前延迟100ms，开始之后每个事件间隔100ms
+  .map(i => start - i)
+  .take(start + 1)
+  .subscribe(i => console.log(i));
+// 5
+// 4
+// 3
+// 2
+// 1
+// 0
+```
+
 - [`repeat(value, num)`](http://reactivex.io/documentation/operators/repeat.html) 将指定 value 重复 num 次
 
 ![repeat](../../image/RxJS/repeat.png)
@@ -530,3 +550,10 @@ setTimeout(() => {
 ```
 
 当调用`dispose()`方法时，流上还没有触发的事件不会再触发，而已经在进行中的事件则不会被打断，而是继续进行直到完成或报错。但是，那些还在进行的方法即便完成了，也不会触发观察者的回调。
+
+### 扩展阅读
+
+- [how to make countdown timer with rxjs observables](http://stackoverflow.com/questions/34921555/how-to-make-countdown-timer-with-rxjs-observables)
+- [ReactiveX/RxJava文档中文版](https://mcxiaoke.gitbooks.io/rxdocs/content/)
+- [The introduction of RxJS](http://xgrommx.github.io/rx-book/index.html)
+- [RxJS Manual](http://reactivex.io/rxjs/manual/index.html)
