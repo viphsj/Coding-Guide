@@ -517,7 +517,7 @@ var subscription = source.subscribe(
 
 当一个流开始执行时，会触发`onNext`零次或多次，之后会调用`onError`或者`onCompleted`方法，**但不会两个都调用**。你可以在`onError`或者`onCompleted`进行清理工作。
 
-除了直接代入三个方法以外，还可以代入一个 Object：
+除了直接代入三个方法以外，还可以代入一个 Object，但要注意的是，目前仅 RxJS 5 版本支持：
 
 ```javascript
 var observer = {
@@ -555,5 +555,5 @@ setTimeout(() => {
 
 - [how to make countdown timer with rxjs observables](http://stackoverflow.com/questions/34921555/how-to-make-countdown-timer-with-rxjs-observables)
 - [ReactiveX/RxJava文档中文版](https://mcxiaoke.gitbooks.io/rxdocs/content/)
-- [The introduction of RxJS](http://xgrommx.github.io/rx-book/index.html)
-- [RxJS Manual](http://reactivex.io/rxjs/manual/index.html)
+- [The introduction of RxJS - RxJS 4.0 版本](http://xgrommx.github.io/rx-book/index.html)
+- [RxJS Manual - RxJS 5 beta 版](http://reactivex.io/rxjs/manual/index.html)
