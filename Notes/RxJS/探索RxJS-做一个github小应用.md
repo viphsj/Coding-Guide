@@ -17,6 +17,8 @@
 
 本文是一篇 RxJS 实战教程，利用 RxJS 和 github API 来一步步做一个 github 小应用。因此，文章的重点是解释 RxJS 的使用，而涉及的 ES6语法、webpack 等知识点不予讲解。
 
+> 本例的所有代码在 github 仓库：[rxjs-example](https://github.com/ecmadao/rxjs-example)
+
 首先要注意的是，目前在 github 上有两个主流 RxJS，它们代表不同的版本：
 
 - [ReactiveX - rxjs](https://github.com/ReactiveX/rxjs) RxJS 5 beta 版
@@ -320,3 +322,4 @@ $(() => {
 - [What does RxJS observable debounce do](http://stackoverflow.com/questions/30840247/what-does-rxjs-observable-debounce-do)
 - [How do I work with jQuery and RxJS](https://github.com/Reactive-Extensions/RxJS/blob/master/doc/howdoi/jquery.md)
 - [Introduction of observable operators](http://reactivex.io/documentation/operators.html)
+- [文章源码 - rxjs-example](https://github.com/ecmadao/rxjs-example)

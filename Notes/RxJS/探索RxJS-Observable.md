@@ -8,6 +8,7 @@
   - [进一步理解`Observable`](#%E8%BF%9B%E4%B8%80%E6%AD%A5%E7%90%86%E8%A7%A3observable)
   - [创建`Observable`](#%E5%88%9B%E5%BB%BAobservable)
   - [流`Observable`的操作](#%E6%B5%81observable%E7%9A%84%E6%93%8D%E4%BD%9C)
+    - [利用`do`/`tap`来做一些无关事件流的处理](#%E5%88%A9%E7%94%A8dotap%E6%9D%A5%E5%81%9A%E4%B8%80%E4%BA%9B%E6%97%A0%E5%85%B3%E4%BA%8B%E4%BB%B6%E6%B5%81%E7%9A%84%E5%A4%84%E7%90%86)
   - [监听`Observable`](#%E7%9B%91%E5%90%ACobservable)
   - [取消监听](#%E5%8F%96%E6%B6%88%E7%9B%91%E5%90%AC)
   - [扩展阅读](#%E6%89%A9%E5%B1%95%E9%98%85%E8%AF%BB)
@@ -507,6 +508,21 @@ var subscription = source.subscribe(
 
 详见：[Reactivex - operators](http://reactivex.io/documentation/operators.html)
 
+汉化版可见：
+
+- [RxJS 序列](http://cw.hubwiz.com/card/c/569d92e3acf9a45a69b05154/1/3/1/)
+- [RxJS Observable 操作](https://mcxiaoke.gitbooks.io/rxdocs/content/Operators.html)
+
+#### 利用`do`/`tap`来做一些无关事件流的处理
+
+你可以在`do`或者`tab`方法里做一些无关事件流的事件，比如输出 log 或者操作 DOM：
+
+```javascript
+var result = xs
+  .filter(function (x) { return x.failed; })
+  .tap(function (x) { log(x); });
+```
+
 ### 监听`Observable`
 
 要监听一个流，必须创建一个观察者，然后调用`subscribe`方法。在`subscribe`方法中，有下列三种回调：
@@ -515,7 +531,7 @@ var subscription = source.subscribe(
 - `onError` 事件执行报错时所触发的回调，参数是一个 Error
 - `onCompleted` 当一个 onNext 执行完毕且没有报错后的回调
 
-当一个流开始执行时，会触发`onNext`零次或多次，之后会调用`onError`或者`onCompleted`方法，**但不会两个都调用**。你可以在`onError`或者`onCompleted`进行清理工作。
+当一个流开始执行时，会触发`onNext`零次或多次，之后会调用`onError`或者流结束时触发`onCompleted`方法，**但不会两个都调用**。你可以在`onError`或者`onCompleted`进行清理工作。
 
 除了直接代入三个方法以外，还可以代入一个 Object，但要注意的是，目前仅 RxJS 5 版本支持：
 
@@ -555,5 +571,6 @@ setTimeout(() => {
 
 - [how to make countdown timer with rxjs observables](http://stackoverflow.com/questions/34921555/how-to-make-countdown-timer-with-rxjs-observables)
 - [ReactiveX/RxJava文档中文版](https://mcxiaoke.gitbooks.io/rxdocs/content/)
-- [The introduction of RxJS - RxJS 4.0 版本](http://xgrommx.github.io/rx-book/index.html)
+- [The introduction of RxJS - RxJS 4.x 版本](http://xgrommx.github.io/rx-book/index.html)
 - [RxJS Manual - RxJS 5 beta 版](http://reactivex.io/rxjs/manual/index.html)
+
