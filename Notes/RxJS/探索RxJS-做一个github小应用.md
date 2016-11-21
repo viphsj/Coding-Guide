@@ -78,7 +78,7 @@ Observable.subscribe(x => console.log(x), (err) => console.log(err), () => conso
 
 ### 初始化 DOM 事件流
 
-在`index.html`中编写一个`input`，我们将在`index.js`中，通过 RxJS 的 Observable 监听`input`的`keyup`事件：
+在`index.html`中编写一个`input`，我们将在`index.js`中，通过 RxJS 的 Observable 监听`input`的`keyup`事件。可以使用[`fromEvent`](http://reactivex.io/documentation/operators/from.html)来创建一个基于 DOM 事件的流，并通过[`map`](http://reactivex.io/documentation/operators/map.html)和[`filter`](http://reactivex.io/documentation/operators/filter.html)进一步处理。
 
 ```html
 <!-- index.html -->
@@ -172,7 +172,7 @@ const observable = Rx.Observable.fromEvent($input, 'keyup')
 
 ---
 
-- 不断打字时会连续不断触发异步请求，占用资源影响体验
+> 不断打字时会连续不断触发异步请求，占用资源影响体验
 
 也就是说，当用户在连续打字时，我们不应该继续进行之后的事件处理，而如果打字中断，或者说两次`keyup`事件的时间间隔足够长时，才应该发送异步请求。针对这点，可以使用 RxJS 的[`debounce`](http://reactivex.io/documentation/operators/debounce.html)方法：
 
@@ -195,7 +195,7 @@ const observable = Rx.Observable.fromEvent($input, 'keyup')
 
 ---
 
-- 如果相邻的`keyup`事件触发时 input 的值一样，也就是说按下了不改变 value 的按键（比如方向键），会重复触发一样的异步事件
+> 如果相邻的`keyup`事件触发时 input 的值一样，也就是说按下了不改变 value 的按键（比如方向键），会重复触发一样的异步事件
 
 也就是说，对于任意相邻的事件，如果它们的返回值一样，则只要取一个（重复事件中的第一个）就好了。可以利用[`distinctUntilChanged`](http://reactivex.io/documentation/operators/distinct.html)方法：
 
@@ -217,7 +217,7 @@ const observable = Rx.Observable.fromEvent($input, 'keyup')
 
 ---
 
-- 发出多个异步事件之后，每个事件所耗费的时间不一定相同。如果前一个异步所用时间较后一个长，那么当它最终返回结果时，有可能把后面的异步率先返回的结果覆盖
+> 发出多个异步事件之后，每个事件所耗费的时间不一定相同。如果前一个异步所用时间较后一个长，那么当它最终返回结果时，有可能把后面的异步率先返回的结果覆盖
 
 这个蛋疼的问题我相信大家很可能遇见过。在发送多个异步请求时，因为所用时长不一定，无法保障异步返回的先后顺序，所以，有时候可能**早请求的异步的结果会覆盖后来请求的异步结果**。
 
@@ -268,7 +268,7 @@ observable.subscribe((data) => {
 
 ---
 
-这样，一个通过 RxJS 监听事件的流已经完全建立完毕了。多一句嘴，如果我们不使用 RxJS，而用传统方式监听 input 的话：
+这样，一个通过 RxJS 监听事件的流已经完全建立完毕了。而如果我们不使用 RxJS，用传统方式监听 input 的话：
 
 ```javascript
 // src/js/index.js
