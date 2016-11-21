@@ -8,6 +8,8 @@
   - [实时进行异步获取](#%E5%AE%9E%E6%97%B6%E8%BF%9B%E8%A1%8C%E5%BC%82%E6%AD%A5%E8%8E%B7%E5%8F%96)
   - [优化事件流](#%E4%BC%98%E5%8C%96%E4%BA%8B%E4%BB%B6%E6%B5%81)
   - [流的监听](#%E6%B5%81%E7%9A%84%E7%9B%91%E5%90%AC)
+  - [更加优雅的 Rx 风格](#%E6%9B%B4%E5%8A%A0%E4%BC%98%E9%9B%85%E7%9A%84-rx-%E9%A3%8E%E6%A0%BC)
+  - [创建基于`hover`的事件流](#%E5%88%9B%E5%BB%BA%E5%9F%BA%E4%BA%8Ehover%E7%9A%84%E4%BA%8B%E4%BB%B6%E6%B5%81)
 - [APIS](#apis)
 - [扩展阅读](#%E6%89%A9%E5%B1%95%E9%98%85%E8%AF%BB)
 
@@ -274,6 +276,15 @@ observable.subscribe((data) => {
 }, () => {
   console.log('completed');
 });
+
+// 异步返回的结果是个 Array，代表搜索到的各个仓库 item
+// 遍历所有 item，转化为 jQuery 对象，最后插入到 content_container 中
+const showNewResults = (items) => {
+  const repos = items.map((item, i) => {
+    return reposTemplate(item);
+  }).join('');
+  $('.content_container').html(repos);
+};
 ```
 
 ---
@@ -320,16 +331,173 @@ $(() => {
 
 挺复杂了吧？而且即便如此，这样的处理还是不够到位。上面仅仅是通过`fetching`变量来判断是否正在异步，如果正在异步，则不进行新的异步；而我们更希望的是能够取消旧的异步，只处理新的异步请求。
 
+### 更加优雅的 Rx 风格
+
+按照上面的教程，我们在 Observable 中获取到了数据、发送异步请求并拿到了最新一次的返回值。之后，再通过`subscribe`，在监听的回调中将返回值拼接成 HTML 并插入 DOM。
+
+但是有一个问题：小应用的另一个功能是，当鼠标`hover`到头像上时，异步获取并展现用户的信息。可是用户头像是在`subscribe`回调中动态插入的，又该如何创建事件流呢？当然了，可以在每次插入 DOM 之后在利用`fromEvent`创建一个基于`hover`的事件流，但那样总是不太好的，写出来的代码也不够 Rx。或许我们就不应该在`.flatMapLatest(getRepos)`之后中断流的传递？但那样的话，又该如何把异步的返回值插入 DOM 呢？
+
+针对这种情况，我们可以使用 RxJS 的[`do`](http://reactivex.io/documentation/operators/do.html)方法：
+
+![do](../../image/RxJS/do.png)
+
+你想在`do`的回调内做什么都可以，它不会影响到流内的事件；除此以外，还可以拿到流中各个事件的返回值：
+
+```javascript
+var observable = Rx.Observable.from([0, 1, 2])
+    .do((x) => console.log(x))
+    .map((x) => x + 1);
+observable.subscribe((x) => {
+  console.log(x);
+});
+```
+
+所以，我们可以利用`do`来完成 DOM 的渲染：
+
+```javascript
+// src/js/index.js
+// ...
+// $conatiner 是装载搜索结果的容器 div
+const $conatiner = $('.content_container');
+
+const observable = Rx.Observable.fromEvent($input, 'keyup')
+	.debounce(400)
+  	.map(() => $input.val())
+    .filter((text) => !!text)
+    .distinctUntilChanged()
+    .do((value) => console.log(value))
+    .flatMapLatest(getRepos)
+    // 首先把之前的搜索结果清空
+    .do((results) => $conatiner.html(''))
+    // 利用 Rx.Observable.from 将异步的结果转化为 Observable，并通过 flatMap 合并到原有的流中。此时流中的每个元素是 results 中的每个 item
+    .flatMap((results) => Rx.Observable.from(results))
+    // 将各 item 转化为 jQuery 对象
+    .map((repos) => $(reposTemplate(repos)))
+    // 最后把每个 jQuery 对象依次加到容器里
+    .do(($repos) => {
+      $conatiner.append($repos);
+    });
+
+// 在 subscribe 中实际上什么都不用做，就能达到之前的效果
+observable.subscribe(() => {
+  console.log('success');
+}, (err) => {
+  console.log(err);
+}, () => {
+  console.log('completed');
+});
+```
+
+简直完美！现在我们这个`observable`在最后通过`map`，依次返回了一个 jQuery 对象。那么之后如果要对头像添加`hover`的监听，则可以在这个流的基础上继续进行。
+
+### 创建基于`hover`的事件流
+
+我们接下来针对用户头像的`hover`事件创建一个流。用户的详细资料是异步加载的，而`hover`到头像上时弹出 modal。如果是第一个`hover`，则 modal 里只有一个 loading 的图标，并且异步获取数据，之后将返回的数据插入到 modal 里；而如果已经拿到并插入好了数据，则不再有异步请求，直接展示：
+
+> 没有数据时展示 loading，同时异步获取数据
+
+![userinfo-loading](../../image/RxJS/userinfo-loading.png)
+
+> 异步返回后插入数据。且如果已经有了数据则直接展示
+
+![userinfo-info](../../image/RxJS/userinfo-info.png)
+
+先不管上一个流，我们先创建一个新的事件流：
+
+```javascript
+// src/js/index.js
+// ...
+const initialUserInfoSteam = () => {
+  const $avator = $('.user_header');
+  // 通过头像 $avator 的 hover 事件来创建流
+  const avatorMouseover = Rx.Observable.fromEvent($avator, 'mouseover')
+    // 500ms 内重复触发事件则会被忽略
+    .debounce(500)
+    // 只有当满足了下列条件的流才会继续执行，否则将中断
+    .takeWhile((e) => {
+      // 异步获取的用户信息被新建到 DOM 里，该 DOM 最外层是 infos_container
+      // 因此，如果已经有了 infos_container，则可以认为我们已经异步获取过数据了，此时 takeWhile 将返回 false，流将会中断
+      const $infosWrapper = $(e.target).parent().find('.user_infos_wrapper');
+      return $infosWrapper.find('.infos_container').length === 0;
+    })
+    .map((e) => {
+      const $infosWrapper = $(e.target).parent().find('.user_infos_wrapper');
+      return {
+        conatiner: $infosWrapper,
+        url: $(e.target).attr('data-api')
+      }
+    })
+    .filter((data) => !!data.url)
+    // getUser 来异步获取用户信息
+    .flatMapLatest(getUser);
+
+  avatorMouseover.subscribe((result) => {
+  	// 将用户信息组建成为 DOM 元素，并插入到页面中。在这之后，该用户对应的 DOM 里就会拥有 infos_container 这个 div，所以 takeWhile 会返回 false。也就是说，之后再 hover 上去，流也不会被触发了
+    const {data, conatiner} = result;
+    showUserInfo(conatiner, data);
+  }, (err) => {
+    console.log(err);
+  }, () => {
+    console.log('completed');
+  });
+};
+```
+
+上面的代码中有一个 API 需要讲解：[`takeWhile`](http://reactivex.io/documentation/operators/takewhile.html)
+
+![takeWhile](../../image/RxJS/takeWhile.png)
+
+由图可知，当`takeWhile`中的回调返回`true`时，流可以正常进行；而一旦返回`false`，则之后的事件不会再发生，流将直接终止：
+
+```javascript
+var source = Rx.Observable.range(1, 5)
+    .takeWhile(function (x) { return x < 3; });
+
+var subscription = source.subscribe(
+    function (x) { console.log('Next: ' + x); },
+    function (err) { console.log('Error: ' + err); },
+    function () { console.log('Completed'); });
+// Next: 0
+// Next: 1
+// Next: 2
+// Completed
+```
+
+---
+
+创建好针对`hover`的事件流，我们可以把它和上一个事件流结合起来：
+
+```javascript
+// src/js/index.js
+// ...
+const initialUserInfoSteam = (repos) => {
+  const $avator = repos.find('.user_header');
+  // ...
+}
+
+const observable = Rx.Observable.fromEvent($input, 'keyup')
+	// ...
+	.do(($repos) => {
+      $conatiner.append($repos);
+      initialUserInfoSteam($repos);
+    });
+// ...
+```
+
 ## APIS
 
 栗子中使用到的 RxJS API：
 
-- [fromEvent](http://reactivex.io/documentation/operators/from.html) 通过 DOM 事件来创建流
-- [debounce](http://reactivex.io/documentation/operators/debounce.html) 如果在一定时间内流中的某个事件不断被触发，则不会进行之后的事件操作
-- [map](http://reactivex.io/documentation/operators/map.html) 遍历流中所有事件，返回新的流
-- [filter](http://reactivex.io/documentation/operators/filter.html) 筛选流中所有事件，返回新的流
-- [flatMapLatest](http://reactivex.io/documentation/operators/flatmap.html) 对各个事件返回的值进行处理并返回 Observable，然后将所有的 Observable 扁平化，成为一个新的 Observable
-- [distinctUntilChanged](http://reactivex.io/documentation/operators/distinct.html) 流中如果相邻事件的结果一样，则仅筛选出一个（剔除重复值）
+- [`from`](http://reactivex.io/documentation/operators/from.html) 通过一个可迭代对象来创建流
+- [`fromEvent`](http://reactivex.io/documentation/operators/from.html) 通过 DOM 事件来创建流
+- [`debounce`](http://reactivex.io/documentation/operators/debounce.html) 如果在一定时间内流中的某个事件不断被触发，则不会进行之后的事件操作
+- [`map`](http://reactivex.io/documentation/operators/map.html) 遍历流中所有事件，返回新的流
+- [`filter`](http://reactivex.io/documentation/operators/filter.html) 筛选流中所有事件，返回新的流
+- [`flatMap`](http://reactivex.io/documentation/operators/flatmap.html) 对各个事件返回的值进行处理并返回 Observable，然后将所有的 Observable 扁平化，成为一个新的 Observable
+- [`flatMapLatest`](http://reactivex.io/documentation/operators/flatmap.html) 对各个事件返回的值进行处理并返回 Observable，然后将所有的 Observable 扁平化，成为一个新的 Observable。但只会获取最后一次返回的 Observable，其他的返回结果不予处理
+- [`distinctUntilChanged`](http://reactivex.io/documentation/operators/distinct.html) 流中如果相邻事件的结果一样，则仅筛选出一个（剔除重复值）
+- [`do`](http://reactivex.io/documentation/operators/do.html) 可以依次拿到流上每个事件的返回值，利用其做一些无关流传递的事情
+- [`takeWhile`](http://reactivex.io/documentation/operators/takewhile.html) 给予流一个判断，只有当`takeWhile`中的回调返回`true`时，流才会继续执行；否则将中断之后的事件
 
 ## 扩展阅读
 
