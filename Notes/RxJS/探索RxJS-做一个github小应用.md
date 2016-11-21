@@ -231,7 +231,7 @@ const observable = Rx.Observable.fromEvent($input, 'keyup')
 
 这个蛋疼的问题我相信大家很可能遇见过。在发送多个异步请求时，因为所用时长不一定，无法保障异步返回的先后顺序，所以，有时候可能**早请求的异步的结果会覆盖后来请求的异步结果**。
 
-而这种情况的处理方式就是，在连续发出多个异步的时候，既然我们期待的是最后一个异步返回的结果，那么就可以把之前的异步取消掉，不 care 其返回了什么。因此，我们可以使用[`flatMapLatest`](http://reactivex.io/documentation/operators/flatmap.html) API（类似于 RxJava 中的`switchMap` API）
+而这种情况的处理方式就是，在连续发出多个异步的时候，既然我们期待的是最后一个异步返回的结果，那么就可以把之前的异步取消掉，不 care 其返回了什么。因此，我们可以使用[`flatMapLatest`](http://reactivex.io/documentation/operators/flatmap.html) API（类似于 RxJava 中的`switchMap` API，同时在 RxJS 5.0 中也已经改名为`switchMap`）
 
 通过`flatMapLatest`，当 Observable 触发某个事件，返回新的 Observable 时，将取消之前触发的事件，并且不再关心返回结果的处理，只监视当前这一个。也就是说，发送多个请求时，不关心之前请求的处理，只处理最后一次的请求：
 
@@ -328,7 +328,7 @@ $(() => {
 - [debounce](http://reactivex.io/documentation/operators/debounce.html) 如果在一定时间内流中的某个事件不断被触发，则不会进行之后的事件操作
 - [map](http://reactivex.io/documentation/operators/map.html) 遍历流中所有事件，返回新的流
 - [filter](http://reactivex.io/documentation/operators/filter.html) 筛选流中所有事件，返回新的流
-- [flatMapLatest](http://reactivex.io/documentation/operators/flatmap.html)
+- [flatMapLatest](http://reactivex.io/documentation/operators/flatmap.html) 对各个事件返回的值进行处理并返回 Observable，然后将所有的 Observable 扁平化，成为一个新的 Observable
 - [distinctUntilChanged](http://reactivex.io/documentation/operators/distinct.html) 流中如果相邻事件的结果一样，则仅筛选出一个（剔除重复值）
 
 ## 扩展阅读
