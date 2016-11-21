@@ -63,7 +63,17 @@ Observable.subscribe(x => console.log(x), (err) => console.log(err), () => conso
 
 ## Let's start
 
-如上所说，我们要利用 RxJS 和 github API 来一步步做一个 github 小应用。安装 webpack 配置编译环境，并使用 ES6 语法。安装如下依赖，并配置好 webpack：
+如上所说，我们要利用 RxJS 和 github API 来一步步做一个 github 小应用。首先完成其基本功能，即通过一个 input 输入文字，并实时根据 input 内值的变化去发送异步请求，调用 github API 进行搜索。如图所示（[线上 Demo](https://ecmadao.github.io/rxjs-example)）：
+
+> 通过`RxJS`，在输入过程中实时进行异步搜索：
+
+![search_repos](../../image/RxJS/search_repos.png)
+
+> `hover`到 avator 上之后异步获取用户信息
+
+![fetch_info.png](../../image/RxJS/fetch_info.png)
+
+安装 webpack 配置编译环境，并使用 ES6 语法。安装如下依赖，并配置好 webpack：
 
 - webpack
 - webpack-dev-server
