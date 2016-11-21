@@ -94,7 +94,7 @@ $(() => {
   // 通过 input 的 keyup 事件来创建流
   const observable = Rx.Observable.fromEvent($input, 'keyup')
   	// 并获取每次 keyup 时搜索框的值，筛选出合法值
-  	.map(() => $input.val())
+  	.map(() => $input.val().trim())
     .filter((text) => !!text)
     // 利用 do 可以做一些不影响流的事件，比如这里打印出 input 的值
     .do((value) => console.log(value));
@@ -268,7 +268,11 @@ observable.subscribe((data) => {
 
 ---
 
-这样，一个通过 RxJS 监听事件的流已经完全建立完毕了。而如果我们不使用 RxJS，用传统方式监听 input 的话：
+这样，一个通过 RxJS 监听事件的流已经完全建立完毕了。整个过程使用图像来表示则如下：
+
+![rxjs-example](../../image/RxJS/rxjs-example.png)
+
+而如果我们不使用 RxJS，用传统方式监听 input 的话：
 
 ```javascript
 // src/js/index.js
