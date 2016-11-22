@@ -429,12 +429,15 @@ const initialUserInfoSteam = () => {
     })
     .filter((data) => !!data.url)
     // getUser 来异步获取用户信息
-    .flatMapLatest(getUser);
+    .flatMapLatest(getUser)
+    .do((result) => {
+      // 将用户信息组建成为 DOM 元素，并插入到页面中。在这之后，该用户对应的 DOM 里就会拥有 infos_container 这个 div，所以 takeWhile 会返回 false。也就是说，之后再 hover 上去，流也不会被触发了
+      const {data, conatiner} = result;
+      showUserInfo(conatiner, data);
+    });
 
   avatorMouseover.subscribe((result) => {
-  	// 将用户信息组建成为 DOM 元素，并插入到页面中。在这之后，该用户对应的 DOM 里就会拥有 infos_container 这个 div，所以 takeWhile 会返回 false。也就是说，之后再 hover 上去，流也不会被触发了
-    const {data, conatiner} = result;
-    showUserInfo(conatiner, data);
+  	console.log('fetch user info succeed');
   }, (err) => {
     console.log(err);
   }, () => {
@@ -470,8 +473,8 @@ var subscription = source.subscribe(
 ```javascript
 // src/js/index.js
 // ...
-const initialUserInfoSteam = (repos) => {
-  const $avator = repos.find('.user_header');
+const initialUserInfoSteam = ($repos) => {
+  const $avator = $repos.find('.user_header');
   // ...
 }
 
@@ -483,6 +486,35 @@ const observable = Rx.Observable.fromEvent($input, 'keyup')
     });
 // ...
 ```
+
+现在这样就已经可以使用了，但依旧不够好。目前总共有两个流：监听 input `keyup`的流和监听`mouseover`的流。但是，因为用户头像是动态插入的 ，所以我们必须在`$conatiner.append($repos);`之后才能创建并监听`mouseover`。不过鉴于我们已经在最后的`do`方法里插入了获取的数据，所以可以试着把两个流合并到一起：
+
+```javascript
+// src/js/index.js
+// ...
+const initialUserInfoSteam = ($repos) => {
+  const $avator = $repos.find('.user_header');
+  const avatorMouseover = Rx.Observable.fromEvent($avator, 'mouseover')
+  // ... 流的处理跟之前的一样
+  // 但我们不再需要 subscribe 它，而是返回这个 Observable
+  return avatorMouseover;
+};
+
+const observable = Rx.Observable.fromEvent($input, 'keyup')
+	// ...
+	.do(($repos) => {
+      $conatiner.append($repos);
+      // 不再在 do 里面创建新的流并监听
+      // initialUserInfoSteam($repos);
+    })
+    // 相反，我们继续这个流的传递，只是通过 flatMap 将原来的流变成了监听 mouseover 的流
+    .flatMap(($repos) => {
+      return initialUserInfoSteam($repos);
+    });
+// ...
+```
+
+DONE ！
 
 ## APIS
 
