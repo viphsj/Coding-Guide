@@ -139,6 +139,8 @@ export default class Portal extends React.Component {
 
     let children = props.children;
     // https://gist.github.com/jimfb/d99e0678e9da715ccf6454961ef04d1b
+    // children 的类型既可以是 React.element，也可以是是一个方法，比如
+    // children={() => this.refs.xxxx}，需要返回 ref
     if (typeof props.children.type === 'function') {
       // React.cloneElement API，将根据参数拷贝出一个新的 React 元素，之前元素的 props 会被浅拷贝进去
       // React.cloneElement(
@@ -223,3 +225,184 @@ handleOutsideMouseClick(e) {
 ```
 
 ### [`react-overlays`](https://github.com/react-bootstrap/react-overlays)
+
+`react-overlays`分离自[`react-bootstrap`](https://github.com/react-bootstrap/react-bootstrap)项目，本身是一个 React 工具集，内部也提供了诸如[`Portal`](https://github.com/react-bootstrap/react-overlays/blob/master/src/Portal.js)或者[`Overlay`](https://github.com/react-bootstrap/react-overlays/blob/master/src/Overlay.js)这样的工具
+
+在`react-overlays`中，`Portal`干的事情更少更纯粹，其作用就是在指定 DOM（或者`body`）中创建一个 DOM，并将`children`渲染进去。
+
+看个栗子：
+
+```javascript
+import React from 'react';
+import Button from 'react-bootstrap/lib/Button';
+import Portal from 'react-overlays/Portal';
+
+class PortalExample extends React.Component {
+  constructor(...args){
+    super(...args);
+    this.state = { show: false };
+    this.show = () => this.setState({ show: true });
+  }
+
+  render() {
+    let child = (
+      <span>But I actually render here!</span>
+    );
+    return (
+      <div className='portal-example'>
+        <Button bsStyle='primary' onClick={this.show}>
+          Render Child
+        </Button>
+        <div className='panel panel-default'>
+          <div className='panel-body'>
+            <span>It looks like I will render here.</span>
+			// container 是目标节点，Portal 中的 children 将会渲染到里面
+            <Portal container={()=> this.refs.container}>
+              { this.state.show && child }
+            </Portal>
+          </div>
+        </div>
+
+        <div className='panel panel-default'>
+          <div ref='container' className='panel-body'/>
+        </div>
+      </div>
+    );
+  }
+}
+
+export default PortalExample;
+```
+
+其结果是点击 button 之后，改变`show` state，因而将显示/去除`container`中加载的 Portal
+
+Portal 的 container 属性既可以是`React.element`，也可以是一个方法，但方法要返回一个`ref`
+
+再来看下其源码：
+
+```javascript
+// 使用 ES5 的方式
+let Portal = React.createClass({
+  displayName: 'Portal',
+  propTypes: {
+    /**
+     * container 可以是一个 Node 节点或者 Component，也可以是一二个返回节点的方法。
+     * 它将作为最终包裹 Portal children 的元素
+     */
+    container: React.PropTypes.oneOfType([
+      componentOrElement,
+      React.PropTypes.func
+    ])
+  },
+  // 渲染
+  componentDidMount() {
+    this._renderOverlay();
+  },
+  componentDidUpdate() {
+    this._renderOverlay();
+  },
+  // 处理改变了 container 时的情况
+  componentWillReceiveProps(nextProps) {
+    if (this._overlayTarget && nextProps.container !== this.props.container) {
+      this._portalContainerNode.removeChild(this._overlayTarget);
+      this._portalContainerNode = getContainer(nextProps.container, ownerDocument(this).body);
+      this._portalContainerNode.appendChild(this._overlayTarget);
+    }
+  },
+  // 卸载
+  componentWillUnmount() {
+    this._unrenderOverlay();
+    this._unmountOverlayTarget();
+  },
+  // 创建一个包裹 children 的 DOM
+  _mountOverlayTarget() {
+    if (!this._overlayTarget) {
+      this._overlayTarget = document.createElement('div');
+      this._portalContainerNode = getContainer(this.props.container, ownerDocument(this).body);
+      this._portalContainerNode.appendChild(this._overlayTarget);
+    }
+  },
+  // 卸载 overlayTarget
+  _unmountOverlayTarget() {
+    if (this._overlayTarget) {
+      this._portalContainerNode.removeChild(this._overlayTarget);
+      this._overlayTarget = null;
+    }
+    this._portalContainerNode = null;
+  },
+  // 渲染 overlay
+  _renderOverlay() {
+  	// React.Children.only 方法返回 children 中的单个元素，如果有多个 children 作为 Portal 的子元素则该方法会报错，因此确保了 Portal 中一只包含一个直接子元素
+    let overlay = !this.props.children
+      ? null
+      : React.Children.only(this.props.children);
+
+    // 将 overlay 渲染到 this._overlayTarget 中
+    if (overlay !== null) {
+      this._mountOverlayTarget();
+      this._overlayInstance = ReactDOM.unstable_renderSubtreeIntoContainer(
+        this, overlay, this._overlayTarget
+      );
+    } else {
+      // Unrender if the component is null for transitions to null
+      this._unrenderOverlay();
+      this._unmountOverlayTarget();
+    }
+  },
+  // 卸载 overlay
+  _unrenderOverlay() {
+    if (this._overlayTarget) {
+      ReactDOM.unmountComponentAtNode(this._overlayTarget);
+      this._overlayInstance = null;
+    }
+  },
+
+  render() {
+    return null;
+  },
+
+  getMountNode(){
+    return this._overlayTarget;
+  },
+
+  getOverlayDOMNode() {
+    if (!this.isMounted()) {
+      throw new Error('getOverlayDOMNode(): A component must be mounted to have a DOM node.');
+    }
+    if (this._overlayInstance) {
+      return ReactDOM.findDOMNode(this._overlayInstance);
+    }
+    return null;
+  }
+});
+
+export default Portal;
+```
+
+可以看到，`bootstrap`的`Portal`仅仅只是单纯的把`children`渲染到外层或者指定节点，而不会处理开启/关闭事件
+
+### 总结
+
+可以看到，`Portal`的核心模式如下：
+
+- 通过如下方式使用
+
+```javascript
+<Portal>
+	<div> Child component </div>
+</Portal>
+// 或者
+<Portal children={() => this.refs.childComponent}>
+</Portal>
+```
+
+- 将`children`渲染到`body`或者指定 DOM 中
+
+- 在`render`方法里返回`null`，至少不返回要渲染的`children`
+
+- 要在 class 内创建一个包裹 children 的 DOM
+
+- 在渲染的时候，通过`ReactDOM.unstable_renderSubtreeIntoContainer`将`children`渲染到某个 DOM 里
+
+- 在卸载的时候，通过`ReactDOM.unmountComponentAtNode`将`children`及其父元素去除
+
