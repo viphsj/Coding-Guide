@@ -537,3 +537,4 @@ DONE ！
 - [How do I work with jQuery and RxJS](https://github.com/Reactive-Extensions/RxJS/blob/master/doc/howdoi/jquery.md)
 - [Introduction of observable operators](http://reactivex.io/documentation/operators.html)
 - [文章源码 - rxjs-example](https://github.com/ecmadao/rxjs-example)
+- [函数式反应型编程(FRP) —— 实时互动应用开发的新思路](http://www.infoq.com/cn/articles/functional-reactive-programming)
