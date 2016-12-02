@@ -1,3 +1,14 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [React 模态框进阶](#react-%E6%A8%A1%E6%80%81%E6%A1%86%E8%BF%9B%E9%98%B6)
+  - [`react-portal`](#react-portal)
+  - [`react-overlays`](#react-overlays)
+  - [总结](#%E6%80%BB%E7%BB%93)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 ## React 模态框进阶
 
 以前在写 React 的模态框时，通常会遇见几个问题：
@@ -22,10 +33,15 @@ import Portal from 'react-portal';
 
 export default class App extends React.Component {
   render() {
+    const {isOpened, closePortal} = this.props;
     const button1 = <button>Open portal with pseudo modal</button>;
     return (
-      <Portal closeOnEsc closeOnOutsideClick openByClickOn={button1}>
-        <PseudoModal>
+      <Portal
+      	closeOnEsc
+      	closeOnOutsideClick
+      	openByClickOn={button1}
+      	isOpened={isOpened}>
+        <PseudoModal closePortal={closePortal}>
           <h2>Pseudo Modal</h2>
           <p>This react component is appended to the document body.</p>
         </PseudoModal>

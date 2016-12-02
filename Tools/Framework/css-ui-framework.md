@@ -46,6 +46,8 @@
 
 - [Materialize](http://materializecss.com/)
 
+![Materialize](https://camo.githubusercontent.com/4649c8978620e21388d1170b30a9f355d80ae713/68747470733a2f2f7261772e6769746875622e636f6d2f646f6766616c6f2f6d6174657269616c697a652f6d61737465722f696d616765732f6d6174657269616c697a652e676966)
+
 > material design 风格CSS UI插件，比polymer轻量
 
 - [milligram](https://github.com/milligram/milligram)
