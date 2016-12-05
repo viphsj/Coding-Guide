@@ -12,6 +12,7 @@
 - [Hotkeys](#hotkeys)
 - [时间日期选择](#%E6%97%B6%E9%97%B4%E6%97%A5%E6%9C%9F%E9%80%89%E6%8B%A9)
 - [Other tools](#other-tools)
+- [函数库](#%E5%87%BD%E6%95%B0%E5%BA%93)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -122,6 +123,10 @@
 - [Filterizr](http://yiotis.net/filterizr/)
 
 > Filterizr is a jQuery plugin that searches, sorts, shuffles and applies stunning filters over responsive galleries using CSS3 transitions.
+
+- [granim.js](https://github.com/sarcadass/granim.js)
+
+> 渐变效果
 
 ### About Data
 
@@ -361,3 +366,26 @@ before.to(after); // in a day 相对时间多久之后
 - [doctoc](https://github.com/thlorenz/doctoc)
 
 > 一个Node组件，为你的Markdown文件自动化添加目录。你看见的本文的目录就是由doctoc添加的
+
+- [Leaflet](https://github.com/Leaflet/Leaflet)
+
+> 开源地图组件
+
+### 函数库
+
+- [bacon.js](https://github.com/baconjs/bacon.js)
+
+> 基于流的函数库（FRP (functional reactive programming) library for Javascript）
+
+- [mobx](https://github.com/mobxjs/mobx)
+
+> 类似于 Redux 的状态管理器
+
+- [cerebraljs](https://github.com/cerebral/cerebral)
+
+> 状态管理器（A state controller with its own debugger）
+
+- [Rxjs - 5.0](https://github.com/ReactiveX/rxjs)
+- [RxJS - 4.x](https://github.com/Reactive-Extensions/RxJS)
+
+> Everything is steam !

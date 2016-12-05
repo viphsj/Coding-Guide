@@ -4,7 +4,9 @@
 
 - [REACT PLUGIN](#react-plugin)
   - [图表相关](#%E5%9B%BE%E8%A1%A8%E7%9B%B8%E5%85%B3)
+  - [布局 & UI](#%E5%B8%83%E5%B1%80-&-ui)
   - [其他](#%E5%85%B6%E4%BB%96)
+  - [函数库](#%E5%87%BD%E6%95%B0%E5%BA%93)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -46,16 +48,36 @@
 
 > 开源编辑器 [medium-editor](https://github.com/daviferreira/medium-editor) 的 React 版本
 
+### 布局 & UI
+
+- [reflexbox](https://github.com/jxnblk/reflexbox)
+
+> React flexbox
+
+- [react-toolbox](https://github.com/react-toolbox/react-toolbox)
+
+> 封装了一堆 React 组件
+
+- [react-overlays](https://github.com/react-bootstrap/react-overlays)
+
+> 从`react-bootstrap`中分离出的一些辅助类组件
+
+- [react-portal](https://github.com/tajo/react-portal)
+
+> React Modal 的辅助神器
+
 ### 其他
 
 - [react-lite](https://github.com/Lucifier129/react-lite)
 
 > 更加轻量压缩版本的 React
 
+### 函数库
+
 - [redux-persist](https://github.com/rt2zz/redux-persist)
 
 > 针对 redux 的数据持久化插件，保存你的 store
 
-- [react-toolbox](https://github.com/react-toolbox/react-toolbox)
+- [redux-observable](https://github.com/redux-observable/redux-observable)
 
-> 封装了一堆 React 组件
+> Use RxJS in Redux & React，需要依赖于 Rxjs

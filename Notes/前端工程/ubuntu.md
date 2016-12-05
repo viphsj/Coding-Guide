@@ -1,3 +1,16 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [Ubuntu](#ubuntu)
+  - [新用户](#%E6%96%B0%E7%94%A8%E6%88%B7)
+  - [node](#node)
+  - [端口](#%E7%AB%AF%E5%8F%A3)
+  - [sh](#sh)
+  - [forever](#forever)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 ## Ubuntu
 
 ### 新用户
@@ -64,4 +77,11 @@ $ kill pid
 $ cd /home/ecmadao/test.sh
 $ chmod +x test.sh
 $ ./test.sh
+```
+
+### forever 
+
+```bash
+# 查看 log
+$ tail -f /home/ecmadao/.forever/79UJ.log
 ```
