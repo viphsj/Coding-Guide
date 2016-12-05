@@ -7,6 +7,7 @@
   - [About color](#about-color)
   - [About page-switch](#about-page-switch)
   - [Icons & Web-Font](#icons-&-web-font)
+  - [Style](#style)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -25,7 +26,7 @@
 - [CONNOR ATHERTON](https://connoratherton.com/)
 
 > 各种各样的CSS动画效果
-> 
+>
 > 最初接触是因为它的[CSS Loading动画库](https://connoratherton.com/loaders)（论@keyframes如何才能玩的花）
 
 - [SpinKit](http://tobiasahlin.com/spinkit/)
@@ -41,8 +42,12 @@
 - [Colofilter.css](http://lukyvj.github.io/colofilter.css/)
 
 > 很方便的为图片添加滤镜效果
-> 
+>
 > 然而并不支持 IE&Edge浏览器，Opera Mini，以及Safari(desktop&IOS) ==
+
+- [open-color](https://github.com/yeun/open-color)
+
+> 为 css 提供颜色颜色变量，支持 css/sass/less/stylus
 
 ### About page-switch
 
@@ -71,15 +76,15 @@
 - [CIKONSS](http://www.bootcss.com/p/cikonss/)
 
 > 纯CSS实现的响应式Icon
-> 
+>
 > 兼容IE8+
-> 
+>
 > 然而不是很好看。。。。
 
 - [Transformicons](http://www.transformicons.com/)
 
 > 带有动效的小图标库
-> 
+>
 > 然而也不是很好看。。。。。。。。。。。。
 
 - [twig](https://wiredcraft.com/twig/)
@@ -91,3 +96,13 @@
 - [Tasty CSS-animated hamburgers](https://jonsuh.com/hamburgers/)
 
 > 基于CSS的带有动效的汉堡菜单icon
+
+- [Ionicons](http://ionicons.com/)
+
+> The premium icon font for Ionic
+
+### Style
+
+- [wysiwyg.css](http://jgthms.com/wysiwyg.css/)
+
+> 提供 markdown 渲染样式

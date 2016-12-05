@@ -42,6 +42,15 @@
 
 > 一个做视差滚动的js库
 
+- [PROGRESS BAR.JS](https://kimmobrunfeldt.github.io/progressbar.js/)
+- [SpinThatShit](https://github.com/MatejKustec/SpinThatShit)
+
+> 各种样式的 loading
+
+- [choreographer-js](https://github.com/christinecha/choreographer-js)
+
+> A simple library to take care of complex CSS animations.
+
 ### About page-switch
 
 - [reveal.js](http://lab.hakim.se/reveal-js/#/)
@@ -370,6 +379,10 @@ before.to(after); // in a day 相对时间多久之后
 - [Leaflet](https://github.com/Leaflet/Leaflet)
 
 > 开源地图组件
+
+- [fusejs](http://fusejs.io/)
+
+> 无依赖JavaScript库，提供模糊搜索（近似字符串匹配）
 
 ### 函数库
 
