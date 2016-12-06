@@ -41,6 +41,7 @@
 
 - [cleave.js](https://github.com/nosir/cleave.js)
 - [text-mask](https://github.com/text-mask/text-mask)
+- [Inputmask](https://github.com/RobinHerbots/Inputmask)
 
 > 格式化 input 的输入
 

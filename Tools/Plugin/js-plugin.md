@@ -239,6 +239,11 @@ before.to(after); // in a day 相对时间多久之后
 
 > jQuery插件，文章旁注的效果
 
+- [cleave.js](https://github.com/nosir/cleave.js)
+- [text-mask](https://github.com/text-mask/text-mask)
+
+> 格式化 input 的输入
+
 ### markdown解析
 
 - [marked](https://github.com/chjj/marked)
