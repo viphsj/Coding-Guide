@@ -16,6 +16,20 @@
 
 ### 图表相关
 
+- [react-vis](https://github.com/uber-common/react-vis)
+
+> Uber做的一款基于React.js的图表插件
+
+- [recharts](https://github.com/recharts/recharts)
+
+> 混合 React 和 D3 的图表
+
+- [react-chartjs](https://github.com/reactjs/react-chartjs)
+
+> 混合 React 和 chart.js 的图表
+
+### 输入
+
 - [Draft.js](https://facebook.github.io/draft-js/)
 
 > 一个React 文本编辑器
@@ -27,17 +41,13 @@
 
 > 基于 React 的下拉列表插件
 
-- [react-vis](https://github.com/uber-common/react-vis)
+- [react-times](https://github.com/ecmadao/react-times)
 
-> Uber做的一款基于React.js的图表插件
+> 一款时间选择插件，可以选择24或12小时制，以及黑白主题
 
 - [react-dates](https://github.com/airbnb/react-dates)
 
 > Airbnb开源的一款日期选择器
-
-- [react-times](https://github.com/ecmadao/react-times)
-
-> 一款时间选择插件，可以选择24或12小时制，以及黑白主题
 
 - [cleave.js](https://github.com/nosir/cleave.js)
 - [text-mask](https://github.com/text-mask/text-mask)
