@@ -5,11 +5,12 @@
 - [Menu](#menu)
 - [专题](#%E4%B8%93%E9%A2%98)
   - [前端工程](#%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B)
+  - [关于项目](#%E5%85%B3%E4%BA%8E%E9%A1%B9%E7%9B%AE)
+  - [关于产品](#%E5%85%B3%E4%BA%8E%E4%BA%A7%E5%93%81)
   - [Koa2系列教程](#koa2%E7%B3%BB%E5%88%97%E6%95%99%E7%A8%8B)
   - [Python3系列教程](#python3%E7%B3%BB%E5%88%97%E6%95%99%E7%A8%8B)
   - [Python进阶](#python%E8%BF%9B%E9%98%B6)
   - [Ember文档翻译系列(V2.8.0)](#ember%E6%96%87%E6%A1%A3%E7%BF%BB%E8%AF%91%E7%B3%BB%E5%88%97v280)
-  - [关于项目](#%E5%85%B3%E4%BA%8E%E9%A1%B9%E7%9B%AE)
   - [好玩的](#%E5%A5%BD%E7%8E%A9%E7%9A%84)
   - [源码解读](#%E6%BA%90%E7%A0%81%E8%A7%A3%E8%AF%BB)
   - [js-bits](#js-bits)
@@ -71,6 +72,19 @@
   - [探索RxJS - 做一个 github 小应用](./Notes/RxJS/探索RxJS-做一个github小应用.md)
   - [探索 RxJS - Observable](./Notes/RxJS/探索RxJS-Observable.md)
 
+### 关于项目
+
+- [极客与团队](./Notes/Projects/极客与团队.md)
+- [The Pragmatic Programmer](./Notes/Projects/The Pragmatic Programmer.md)
+- [Rework](./Notes/Projects/Rework.md)
+
+### 关于产品
+
+- [Don't Make Me Think](./Notes/Projects/Don-t-Make-Me-Think.md)
+- [【译文】七条可应用于设计的心理学原则](./Notes/%E8%AF%91%E6%96%87/%E3%80%90%E8%AF%91%E6%96%87%E3%80%91%E4%B8%83%E6%9D%A1%E5%8F%AF%E5%BA%94%E7%94%A8%E4%BA%8E%E8%AE%BE%E8%AE%A1%E7%9A%84%E5%BF%83%E7%90%86%E5%AD%A6%E5%8E%9F%E5%88%99.md)
+- [【译文】网页设计中隐藏在色彩之后的情感和心理学](./Notes/%E8%AF%91%E6%96%87/%E3%80%90%E8%AF%91%E6%96%87%E3%80%91%E7%BD%91%E9%A1%B5%E8%AE%BE%E8%AE%A1%E4%B8%AD%E9%9A%90%E8%97%8F%E5%9C%A8%E8%89%B2%E5%BD%A9%E4%B9%8B%E5%90%8E%E7%9A%84%E6%83%85%E6%84%9F%E5%92%8C%E5%BF%83%E7%90%86%E5%AD%A6.md)
+- [【译文】构建积极友好的 UI](./Notes/译文/【译文】构建积极友好的 UI.md)
+
 ### Koa2系列教程
 
 - [middleware](./Notes/NodeJS/KOA/learn%20koa2--middleware.md)
@@ -118,13 +132,6 @@
 - [Component](./Notes/ember/Ember%E5%88%9D%E6%AD%A5--Component.md)
 - [Controller](./Notes/ember/Ember%E5%88%9D%E6%AD%A5--Controller.md)
 - [Model](./Notes/ember/Ember%E5%88%9D%E6%AD%A5--Model.md)
-
-### 关于项目
-
-- [极客与团队](./Notes/Projects/极客与团队.md)
-- [Don't Make Me Think](./Notes/Projects/Don-t-Make-Me-Think.md)
-- [The Pragmatic Programmer](./Notes/Projects/The Pragmatic Programmer.md)
-- [Rework](./Notes/Projects/Rework.md)
 
 ### 好玩的
 

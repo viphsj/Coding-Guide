@@ -1,3 +1,17 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [【译文】构建积极友好的 UI](#%E3%80%90%E8%AF%91%E6%96%87%E3%80%91%E6%9E%84%E5%BB%BA%E7%A7%AF%E6%9E%81%E5%8F%8B%E5%A5%BD%E7%9A%84-ui)
+  - [积极？](#%E7%A7%AF%E6%9E%81%EF%BC%9F)
+  - [看起来太 Magic 了，为什么要这么做？](#%E7%9C%8B%E8%B5%B7%E6%9D%A5%E5%A4%AA-magic-%E4%BA%86%EF%BC%8C%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E8%BF%99%E4%B9%88%E5%81%9A%EF%BC%9F)
+  - [真实案例](#%E7%9C%9F%E5%AE%9E%E6%A1%88%E4%BE%8B)
+  - [进度展示](#%E8%BF%9B%E5%BA%A6%E5%B1%95%E7%A4%BA)
+  - [处理错误](#%E5%A4%84%E7%90%86%E9%94%99%E8%AF%AF)
+  - [结论](#%E7%BB%93%E8%AE%BA)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 ## 【译文】构建积极友好的 UI
 
 > 原文链接：[Optimistic UIs in under 1000 words](https://uxplanet.org/optimistic-1000-34d9eefe4c05#.wj1y3e4nd)
