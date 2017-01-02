@@ -3,20 +3,20 @@
 **Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
 - [JS PLUGIN](#js-plugin)
-- [About animation](#about-animation)
-- [About page-switch](#about-page-switch)
-- [About media](#about-media)
-- [About Data](#about-data)
-- [About Writer](#about-writer)
-- [markdown解析](#markdown%E8%A7%A3%E6%9E%90)
-- [Hotkeys](#hotkeys)
-- [时间日期选择](#%E6%97%B6%E9%97%B4%E6%97%A5%E6%9C%9F%E9%80%89%E6%8B%A9)
-- [Other tools](#other-tools)
-- [函数库](#%E5%87%BD%E6%95%B0%E5%BA%93)
+  - [About animation](#about-animation)
+  - [About page-switch](#about-page-switch)
+  - [About media](#about-media)
+  - [About Data](#about-data)
+  - [About Writer](#about-writer)
+  - [markdown解析](#markdown%E8%A7%A3%E6%9E%90)
+  - [Hotkeys](#hotkeys)
+  - [时间日期选择](#%E6%97%B6%E9%97%B4%E6%97%A5%E6%9C%9F%E9%80%89%E6%8B%A9)
+  - [Other tools](#other-tools)
+  - [函数库](#%E5%87%BD%E6%95%B0%E5%BA%93)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
-### JS PLUGIN
+## JS PLUGIN
 
 ### About animation
 
@@ -376,10 +376,6 @@ before.to(after); // in a day 相对时间多久之后
 - [Slidebars](https://github.com/adchsm/Slidebars)
 
 > jQuery插件，创建侧边栏
-
-- [doctoc](https://github.com/thlorenz/doctoc)
-
-> 一个Node组件，为你的Markdown文件自动化添加目录。你看见的本文的目录就是由doctoc添加的
 
 - [Leaflet](https://github.com/Leaflet/Leaflet)
 
