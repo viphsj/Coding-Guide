@@ -54,6 +54,9 @@
 
 > 一个Node组件，为你的Markdown文件自动化添加目录。你看见的本文的目录就是由doctoc添加的
 
+- [progress](https://github.com/visionmedia/node-progress)
+
+- [yargs](https://github.com/yargs/yargs)
 
 ### Callback
 
