@@ -8,6 +8,8 @@
   - [github](#github)
   - [production](#production)
   - [nginx](#nginx)
+  - [redis](#redis)
+  - [make](#make)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -107,3 +109,19 @@ $ sudo service nginx restart
 - [在Linode上搭建Ghost的过程](http://www.justzht.com/zai-linodeshang-da-jian-ghostde-guo-cheng/)
 - [Ubuntu:使用Fail2ban防止暴力破解SSH等服务](https://www.polarxiong.com/archives/ubuntu-fail2ban.html)
 - [Using Fail2ban to Secure Your Server](https://www.linode.com/docs/security/using-fail2ban-for-security)
+
+### redis
+
+```bash
+$ sudo apt-get install redis-server
+```
+
+### make
+
+```bash
+$ sudo apt-get remove make
+$ sudo apt-get install make
+# or
+$ sudo apt-get install --reinstall make
+```
+
