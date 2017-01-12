@@ -14,6 +14,11 @@
     - [重定向标准输出和错误到同一个文件](#%E9%87%8D%E5%AE%9A%E5%90%91%E6%A0%87%E5%87%86%E8%BE%93%E5%87%BA%E5%92%8C%E9%94%99%E8%AF%AF%E5%88%B0%E5%90%8C%E4%B8%80%E4%B8%AA%E6%96%87%E4%BB%B6)
   - [目录](#%E7%9B%AE%E5%BD%95)
   - [系统](#%E7%B3%BB%E7%BB%9F)
+  - [Shell](#shell)
+    - [echo](#echo)
+    - [转义符](#%E8%BD%AC%E4%B9%89%E7%AC%A6)
+    - [通配符](#%E9%80%9A%E9%85%8D%E7%AC%A6)
+    - [`{}`展开](#%E5%B1%95%E5%BC%80)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -165,7 +170,9 @@ $ cp -i file1 file2 # 若重名则需用户确认
 
 $ cp file1 file2 dir1 # 复制文件 file1 和文件 file2 到目录 dir1。目录 dir1 必须存在
 $ cp dir1/* dir2 # 目录 dir1 中的所有文件都被复制到目录 dir2 中。 dir2 必须已经存在
+$ cp -u dir1/* dir2 # 当把文件从一个目录复制到另一个目录时，仅复制 目标目录中不存在的文件，或者是文件内容新于目标目录中已经存在的文件
 
+# 复制目录(-r会递归的复制文件)
 $ cp -r dir1 dir2 # 复制目录 dir1 中的内容到目录 dir2。如果目录 dir2 不存在， 创建目录 dir2
 ```
 
@@ -193,4 +200,78 @@ $ df -hl # 查看磁盘剩余空间
 
 $ type command-name # 解释一个命令名
 $ man command-name # 显示命令手册页
+```
+
+### Shell
+
+#### echo
+
+```bash
+$ echo xxx # 将 echo 之后的命令执行结果输出
+
+$ echo * # 输出当前目录下的文件名
+
+# *** 路径名展开 ***
+$ echo D* # 输出当前目录下以 D 开头的文件名
+$ echo [[:upper:]]* # 输出目录下的大写文件的文件名
+$ echo ~ # 展开成当前用户的家目录：/homt/root
+$ echo ~ecmadao # 展开成指定用户的家目录名: /home/ecmadao
+```
+
+```bash
+$ echo -n xxx # 命令输出结果最后不换行
+$ echo -e xxx # 对转义符进行转义
+```
+
+#### 转义符
+
+- `\a` # 响铃
+- `\b` # 退格
+- `\n` # 换行
+- `\r` # 回车
+- `\t` # 制表
+
+#### 通配符
+
+- `*` # 匹配任意多个字符（包括零个或一个）
+- `?` # 匹配任意一个字符（不包括零个）
+- `[characters]` # 匹配任意一个属于字符集中的字符
+- `[!characters]` # 匹配任意一个不是字符集中的字符
+- `[[:class:]]` # 匹配任意一个属于指定字符类中的字符，`[:class:]`代表字符类
+
+常用字符类：
+
+- `[:alnum:]` # 匹配任意一个字母或数字
+- `[:alpha:]` # 匹配任意一个字母
+- `[:digit:]` # 匹配任意一个数字
+- `[:lower:]` # 匹配任意一个小写字母
+- `[:upper:]` # 匹配任意一个大写字母
+
+举例：
+
+```bash
+$ echo * # 输出当前目录下所有文件名
+# test README.md node_modules .gitignore index.js
+
+$ echo [[:upper:]]* # 输出以大写开头的文件
+# README.md
+
+$ echo [![:upper:]]* # 输出不以大写开头的文件
+$ echo [tn]* # 输出以 t 或 n 开头的文件
+$ echo .[!.]?* #输出以 . 开头，且第二个字符不是 . ，并且之后紧跟着任意多个字符的文件名
+```
+
+#### `{}`展开
+
+```bash
+$ echo {1..5} # 1 2 3 4 5
+$ echo {Z..A} # Z Y X W V U T S R Q P O N M L K J I H G F E D C B A
+
+# 可以嵌套
+$ echo a{A{1..3},B{4..6}}b
+# aA1b aA2b aA3b aB4b aB5b aB6b
+
+# 可以串联
+$ echo {a..c}-{1..3}
+# a-1 a-2 a-3 b-1 b-2 b-3 c-1 c-2 c-3
 ```
