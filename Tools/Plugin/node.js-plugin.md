@@ -61,3 +61,9 @@
 ### Callback
 
 - [bluebird](https://github.com/petkaantonov/bluebird)
+
+### System
+
+- [node-fs-extra](https://github.com/jprichardson/node-fs-extra)
+
+- [string.js](https://github.com/jprichardson/string.js)
