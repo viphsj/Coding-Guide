@@ -46,27 +46,6 @@ $ exit
 $ ssh xxx@xxxx.xxx.xxx # 使用新用户登录
 ```
 
-### node
-
-```bash
-# 安装 nvm
-$ curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.32.1/install.sh | bash
-
-# 配置
-$ vim ~/.bashrc
-# 增加如下内容
-export NVM_DIR="/home/ecmadao/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
-# 重启配置
-$ source ~/.bashrc
-
-# 安装 node
-$ nvm ls-remote # 查看远程可安装的node版本
-$ nvm install v5.11.1 # 安装指定版本
-$ nvm ls # 查看本地所有版本
-$ nvm alias default v5.11.1 # 将 v5.11.1 作为默认版本
-```
-
 ### 端口
 
 - 查看端口
@@ -108,6 +87,8 @@ $ less filename # 浏览文件内容
 
 ```bash
 $ cat file1 file2... # 读取一个或多个文件，然后复制它们到标准输出
+$ tac file1 file2... # 类似于 cat，但从最后一行开始输出，反向打印
+$ stat file # 显示文件详细属性信息
 
 $ tail -n x filename # 输出文件的倒数x行内容，不带参数则默认10行
 $ tail -f # 随着文件内容的增加而输出，默认输出间隔为1s。可以用于查看实时log
@@ -118,6 +99,41 @@ $ head -n x filename # 打印文件前x行内容，默认十行
 ```bash
 $ touch filename # 创建文件
 ```
+
+### 链接
+
+```bash
+# 创建硬链接
+$ ln file1 file2 # 给 file1 创建一个链接，指到 file2
+
+# 创建符号链接（软链接）
+$ ln -s file1 file2
+```
+
+不管是硬链接还是软连接，修改任意任意一个文件，会使链接的文件（或主文件）也被修改
+
+#### 硬链接
+
+- 硬链接不能关联它所在文件系统之外的文件
+- 硬链接不能关联目录
+
+```bash
+$ ln file1 file2
+# 输出两个文件的 inode 号，会发现它们是一样的
+$ ls -i file1
+$ ls -i file2
+```
+
+对系统而言，通过硬链接创建的文件实际上是同一个文件。删除两个文件的任意一个，都不会造成文件的删除。只有文件的硬链接数为0时，这个文件才会被删除。
+
+#### 软链接
+
+```bash
+$ ln -s file1 file2
+#  输出两个文件的 inode 号，会发现它们是不一样的
+```
+
+删除原文件后，软链接的文件不能再被打开。
 
 ### 重定向输出
 
