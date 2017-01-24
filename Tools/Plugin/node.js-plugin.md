@@ -65,6 +65,8 @@
 
 - [node-fs-extra](https://github.com/jprichardson/node-fs-extra)
 
+- [node-klaw](https://github.com/jprichardson/node-klaw)
+
 - [string.js](https://github.com/jprichardson/string.js)
 
 - [mkdirp](https://github.com/substack/node-mkdirp)
