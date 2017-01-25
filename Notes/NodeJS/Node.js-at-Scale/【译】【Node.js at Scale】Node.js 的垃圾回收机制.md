@@ -1,3 +1,25 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [【译】【Node.js at Scale】Node.js 的垃圾回收机制](#%E3%80%90%E8%AF%91%E3%80%91%E3%80%90nodejs-at-scale%E3%80%91nodejs-%E7%9A%84%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E6%9C%BA%E5%88%B6)
+  - [Node.js 应用中的内存管理](#nodejs-%E5%BA%94%E7%94%A8%E4%B8%AD%E7%9A%84%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86)
+  - [垃圾回收的概念](#%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E7%9A%84%E6%A6%82%E5%BF%B5)
+    - [被垃圾回收之前的内存](#%E8%A2%AB%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E4%B9%8B%E5%89%8D%E7%9A%84%E5%86%85%E5%AD%98)
+    - [垃圾回收之后的内存](#%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E4%B9%8B%E5%90%8E%E7%9A%84%E5%86%85%E5%AD%98)
+  - [使用垃圾回收的优势](#%E4%BD%BF%E7%94%A8%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E7%9A%84%E4%BC%98%E5%8A%BF)
+    - [使用垃圾回收时需要牢记的](#%E4%BD%BF%E7%94%A8%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E6%97%B6%E9%9C%80%E8%A6%81%E7%89%A2%E8%AE%B0%E7%9A%84)
+  - [Node.js 垃圾回收&内存管理实践](#nodejs-%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6&%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86%E5%AE%9E%E8%B7%B5)
+    - [栈](#%E6%A0%88)
+    - [堆](#%E5%A0%86)
+    - [垃圾回收方法](#%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E6%96%B9%E6%B3%95)
+      - [新空间与旧空间](#%E6%96%B0%E7%A9%BA%E9%97%B4%E4%B8%8E%E6%97%A7%E7%A9%BA%E9%97%B4)
+      - [新生代](#%E6%96%B0%E7%94%9F%E4%BB%A3)
+      - [Scavenge 和 Mark-Sweep 回收](#scavenge-%E5%92%8C-mark-sweep-%E5%9B%9E%E6%94%B6)
+  - [真实案例](#%E7%9C%9F%E5%AE%9E%E6%A1%88%E4%BE%8B)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 ## 【译】【Node.js at Scale】Node.js 的垃圾回收机制
 
 > 原文链接：[Node.js Garbage Collection Explained - Node.js at Scale](https://blog.risingstack.com/node-js-at-scale-node-js-garbage-collection/)
@@ -103,3 +125,94 @@ function Car (opts) {
 
 const LightningMcQueen = new Car({name: 'Lightning McQueen'});
 ```
+
+在这之后，内存的占用会变成：
+
+![node-js-garbage-collection-first-step-object-placed-in-memory-heap](https://blog-assets.risingstack.com/2016/11/node-js-garbage-collection-first-step-object-placed-in-memory-heap.png)
+
+再让我们实例化一些车，看看内存会变成什么样：
+
+```javascript
+function Car (opts) {  
+  this.name = opts.name
+}
+
+const LightningMcQueen = new Car({name: 'Lightning McQueen'})  
+const SallyCarrera = new Car({name: 'Sally Carrera'})  
+const Mater = new Car({name: 'Mater'})
+```
+
+![node-js-garbage-collection-second-step-more-elements-added-to-the-heap](https://blog-assets.risingstack.com/2016/11/node-js-garbage-collection-second-step-more-elements-added-to-the-heap.png)
+
+如果这会儿运行 GC ，鉴于 root 引用了所有的对象，什么东西都不会被释放。
+
+我们再给车增加些部件：
+
+```javascript
+function Engine (power) {  
+  this.power = power
+}
+
+function Car (opts) {  
+  this.name = opts.name
+  this.engine = new Engine(opts.power)
+}
+
+let LightningMcQueen = new Car({name: 'Lightning McQueen', power: 900})  
+let SallyCarrera = new Car({name: 'Sally Carrera', power: 500})  
+let Mater = new Car({name: 'Mater', power: 100})
+```
+
+![node-js-garbage-collection-assigning-values-to-the-objects-in-heap](https://blog-assets.risingstack.com/2016/11/node-js-garbage-collection-assigning-values-to-the-objects-in-heap.png)
+
+此时，如果我们不再使用 `Mater` 对象，但把它赋予其他值，比如 `Mater = undefined` 的话，会发生什么？
+
+![node-js-garbage-collection-redefining-values](https://blog-assets.risingstack.com/2016/11/node-js-garbage-collection-redefining-values.png)
+
+`Mater` 对象不再被引用，垃圾回收也可以释放它：
+
+![node-js-garbage-collection-freeing-up-unreachable-object](https://blog-assets.risingstack.com/2016/11/node-js-garbage-collection-freeing-up-unreachable-object.png)
+
+在我们理解了垃圾回收机制的行为之后，再来看看它在 V8 中是怎么实施的。
+
+#### 垃圾回收方法
+
+在上一篇文章里，我们提及了 [Node.js 中垃圾回收的工作方式](https://blog.risingstack.com/finding-a-memory-leak-in-node-js/)，我墙裂推荐你去看看。
+
+##### 新空间与旧空间
+
+堆具有两个主要区域，新空间（New Space）和旧空间（Old Space）。新空间是发生内存分配的地方，在这里垃圾回收进行的速度很快，可以达到 1~8 MB/s。新空间中的对象被叫做 新生代（Young Generation）。
+
+旧空间的对象则是从新空间里存留下来的幸存者，被叫做 老生代（Old Generation）。旧空间里的内存分配速度很快，但回收成本比较高，因此也很少发生。
+
+##### 新生代
+
+通常，只有不到 20% 的新生代可以成为老生代，而jiu'kong'jian旧空间只有在几乎耗尽时才会触发回收机制。V8 引擎采用了两种回收算法来实现：Scavenge 和 Mark-Sweep 。
+
+##### Scavenge 和 Mark-Sweep 回收
+
+Scavenge 回收算法速度很快，运行在新空间，而 Mark-Sweep 相对较慢，运行在旧空间。
+
+### 真实案例
+
+2013 年，Meteor 框架的作者们发布了他们遇见了一个内存泄露的例子：
+
+```javascript
+var theThing = null  
+var replaceThing = function () {  
+  var originalThing = theThing
+  var unused = function () {
+    if (originalThing)
+      console.log("hi")
+  }
+  theThing = {
+    longStr: new Array(1000000).join('*'),
+    someMethod: function () {
+      console.log(someMessage)
+    }
+  };
+};
+setInterval(replaceThing, 1000)
+```
+
+> Well, the typical way that closures are implemented is that every function object has a link to a dictionary-style object representing its lexical scope. If both functions defined inside replaceThing actually used originalThing, it would be important that they both get the same object, even if originalThing gets assigned to over and over, so both functions share the same lexical environment. Now, Chrome's V8 JavaScript engine is apparently smart enough to keep variables out of the lexical environment if they aren't used by any closures - from the [Meteor blog](http://info.meteor.com/blog/an-interesting-kind-of-javascript-memory-leak).
