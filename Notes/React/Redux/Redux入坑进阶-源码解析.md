@@ -21,7 +21,7 @@
 
 ## Redux入坑进阶-源码解析
 
-> 本文不涉及redux的使用方法，因此可能更适合使用过redux的玩家翻阅😃
+> 本文不涉及redux的使用方法，因此可能更适合使用过 redux 的玩家翻阅😃
 
 ### 预热
 
@@ -106,9 +106,9 @@ const appReducer = combineReducers({
 ```
 
 > 还记得`combineReducers`的黑魔法吗？即：
-> 
+>
 > 1. 传入的Object参数中，对象的`key`与`value`所代表的`reducer function`同名
-> 
+>
 > 2. 各个`reducer function`的名称和需要传入该reducer的`state`参数同名。
 
 源码标注解读（省略部分）：
