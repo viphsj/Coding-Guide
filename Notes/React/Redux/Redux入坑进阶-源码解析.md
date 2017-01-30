@@ -361,7 +361,7 @@ export default function thunkMiddleware({ dispatch, getState }) {
 
 ```javascript
 // usage
-import {createStore, applyMiddleware} from 'redux';
+import { createStore, applyMiddleware } from 'redux';
 import thunkMiddleware from 'redux-thunk';
 
 const store = createStore(
