@@ -1,3 +1,15 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [使用 Redux 打造你的应用 —— middleware](#%E4%BD%BF%E7%94%A8-redux-%E6%89%93%E9%80%A0%E4%BD%A0%E7%9A%84%E5%BA%94%E7%94%A8-%E2%80%94%E2%80%94-middleware)
+  - [`applyMiddleware`](#applymiddleware)
+  - [middleware](#middleware)
+  - [redux-promise](#redux-promise)
+  - [redux-thunk](#redux-thunk)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 ## 使用 Redux 打造你的应用 —— middleware
 
 ### `applyMiddleware`
@@ -107,9 +119,9 @@ const AppStore = createStore(appReducer, initialState, applyMiddleware(logger));
 - [A Beginner's Guide to Redux Middleware](https://www.codementor.io/vkarpov/beginner-s-guide-to-redux-middleware-du107uyud)
 - [Middleware -- redux doc](http://redux.js.org/docs/advanced/Middleware.html)
 
-### redux-promise
+### [redux-promise](https://github.com/acdlite/redux-promise)
 
-[redux-promise](https://github.com/acdlite/redux-promise) 是一个相当简洁的小库，它帮助你完成异步请求以后自动分发到 reducer，并且在失败（reject）的时候停止继续分发。
+redux-promise 是一个相当简洁的小库，它帮助你完成异步请求以后自动分发到 reducer，并且在失败（reject）的时候停止继续分发。
 
 ```javascript
 // 注入 middleware
@@ -201,5 +213,64 @@ function isValidKey(key) {
     'meta',
   ].indexOf(key) > -1;
 }
+```
+
+### [redux-thunk](https://github.com/gaearon/redux-thunk)
+
+在没有 redux-thunk 的情况下，我们写的 action 必须是同步的，且最后必须返回一个类似
+
+```javascript
+function increment(value) {
+  return {
+    type: INCREMENT_COUNTER,
+    payload: value
+  };
+}
+```
+
+的对象，以便分发给 reducer。
+
+而借助于 redux-thunk ，我们可以把 action 写成 middleware 的形式，在其中进行异步，或者分发其他的 action：
+
+```javascript
+import thunk from 'redux-thunk';
+const AppStore = createStore(appReducer, initialState, applyMiddleware(thunk));
+
+// actions.js
+function incrementIfOdd() {
+  return (dispatch, getState) => {
+    const { counter } = getState();
+
+    if (counter % 2 === 0) {
+      return;
+    }
+
+    dispatch(increment());
+  };
+}
+```
+
+更多参考：
+
+- [In-depth introduction to thunks in Redux](http://stackoverflow.com/questions/35411423/how-to-dispatch-a-redux-action-with-a-timeout/35415559#35415559)
+
+redux-thunk 源码：
+
+```javascript
+// 相当简单。检测每个 action 的类型，如果是对象，则分发给 reducer，否则以 dispatch, getState 为参数进行调用
+function createThunkMiddleware(extraArgument) {
+  return ({ dispatch, getState }) => next => action => {
+    if (typeof action === 'function') {
+      return action(dispatch, getState, extraArgument);
+    }
+
+    return next(action);
+  };
+}
+
+const thunk = createThunkMiddleware();
+thunk.withExtraArgument = createThunkMiddleware;
+
+export default thunk;
 ```
 
