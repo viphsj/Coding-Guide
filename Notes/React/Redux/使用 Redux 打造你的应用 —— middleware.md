@@ -6,6 +6,7 @@
   - [`applyMiddleware`](#applymiddleware)
   - [middleware](#middleware)
   - [redux-promise](#redux-promise)
+  - [redux-promise-middleware](#redux-promise-middleware)
   - [redux-thunk](#redux-thunk)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -214,6 +215,10 @@ function isValidKey(key) {
   ].indexOf(key) > -1;
 }
 ```
+
+### [redux-promise-middleware](https://github.com/pburtchaell/redux-promise-middleware)
+
+与 redux-promise 类似的一个库，其内部对 action 的判断更加仔细，但原理和 redux-promise 一样，不再赘述。
 
 ### [redux-thunk](https://github.com/gaearon/redux-thunk)
 
