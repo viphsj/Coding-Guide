@@ -233,7 +233,7 @@ before.to(after); // in a day 相对时间多久之后
 
 > 感觉挺新颖的，可以研究下
 
-- [SimpleMDE](https://simplemde.com/)
+- **[SimpleMDE](https://simplemde.com/)**
 
 > 支持markdown的富文本编辑器
 

@@ -34,7 +34,7 @@ $ npm install eslint-loader --save-dev
 
 ### 基本配置
 
-#### 配置webpack
+#### 配置 webpack
 
 ```javascript
 module: {
@@ -96,15 +96,15 @@ module: {
 }
 ```
 
-Eslint的规则配置具体可戳[这里](http://eslint.org/docs/rules/)
+Eslint 的规则配置具体可戳[这里](http://eslint.org/docs/rules/)
 
-通常，0代表不使用这个规则，1代表`warnning`的程度，2代表`error`的程度。
+通常，0 代表不使用这个规则，1 代表`warnning`的程度，2 代表`error`的程度。
 
 有一篇博客写的挺细的：[详解 ESLint 规则，规范你的代码](http://guowenfh.github.io/2016/08/07/ESLint-Rules/)
 
 ### 插件
 
-如果我们使用ES6/ES7或者JSX的语法，并用babel进行解析的话，可以安装[babel-eslint](https://github.com/babel/babel-eslint)
+如果我们使用 ES6/ES7 或者 JSX 的语法，并用 babel 进行解析的话，可以安装 [babel-eslint](https://github.com/babel/babel-eslint)
 
 ```bash
 $ npm install babel-eslint --save-dev
@@ -121,14 +121,14 @@ $ npm install babel-eslint --save-dev
 }
 ```
 
-在使用React的时候，如果Eslint里配置了`no-unused-vars`的规则，那么在检查代码的时候会报错，提示import的组件没有被调用(实际上使用了)：
+在使用 React 的时候，如果 Eslint 里配置了`no-unused-vars`的规则，那么在检查代码的时候会报错，提示 import 的组件没有被调用(实际上使用了)：
 
 ```bash
 React is defined but never used no-ununsed-vars
 Component is defined but never used
 ```
 
-查到Github上有人提出[issue](https://github.com/eslint/eslint/issues/4821)，解决方案是使用`eslint-plugin-react`，因此来安装配置`eslint-plugin`：
+查到 GitHub 上有人提出 [issue](https://github.com/eslint/eslint/issues/4821)，解决方案是使用`eslint-plugin-react`，因此来安装配置`eslint-plugin`：
 
 - [eslint-plugin-react](https://github.com/yannickcr/eslint-plugin-react)
 
@@ -160,7 +160,7 @@ $ npm install eslint-plugin-react --save-dev
 
 - [eslint-plugin-import](https://github.com/benmosher/eslint-plugin-import)
 
-> 检查import是否合法的插件
+> 检查 import 是否合法的插件
 
 ```bash
 $ npm install eslint-plugin-import --save-dev
@@ -175,8 +175,8 @@ $ npm install eslint-plugin-import --save-dev
   ],
   "rules": {
   	// 检查引用的路径是否有误
-  	// 通过{"commonjs": true, "amd": true}来支持commonjs和amd方式的require
-  	"import/no-unresolved": [2, {"commonjs": true, "amd": true}]
+  	// 通过 {"commonjs": true, "amd": true} 来支持 commonjs 和 amd 方式的 require
+  	"import/no-unresolved": [2, {"commonjs": true, "amd": true}],
     "import/namespace": 2,
   	"import/default": 2,
   	"import/export": 2
