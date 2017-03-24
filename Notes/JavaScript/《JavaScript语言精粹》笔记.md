@@ -3,8 +3,8 @@
 **Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
 - [第三章-对象](#%E7%AC%AC%E4%B8%89%E7%AB%A0-%E5%AF%B9%E8%B1%A1)
-  - [原型：](#%E5%8E%9F%E5%9E%8B%EF%BC%9A)
-  - [委托：](#%E5%A7%94%E6%89%98%EF%BC%9A)
+  - [原型：](#%E5%8E%9F%E5%9E%8B)
+  - [委托：](#%E5%A7%94%E6%89%98)
 - [第四章-函数](#%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%87%BD%E6%95%B0)
     - [方法/函数调用模式](#%E6%96%B9%E6%B3%95%E5%87%BD%E6%95%B0%E8%B0%83%E7%94%A8%E6%A8%A1%E5%BC%8F)
     - [构造器调用模式](#%E6%9E%84%E9%80%A0%E5%99%A8%E8%B0%83%E7%94%A8%E6%A8%A1%E5%BC%8F)

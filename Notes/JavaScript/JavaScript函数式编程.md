@@ -3,8 +3,8 @@
 **Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
 - [JavaScript-函数式编程](#javascript-%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B)
-  - [函数与其他数据类型一样，处于平等地位](#%E5%87%BD%E6%95%B0%E4%B8%8E%E5%85%B6%E4%BB%96%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E4%B8%80%E6%A0%B7%EF%BC%8C%E5%A4%84%E4%BA%8E%E5%B9%B3%E7%AD%89%E5%9C%B0%E4%BD%8D)
-  - [函数应该纯天然，无副作用](#%E5%87%BD%E6%95%B0%E5%BA%94%E8%AF%A5%E7%BA%AF%E5%A4%A9%E7%84%B6%EF%BC%8C%E6%97%A0%E5%89%AF%E4%BD%9C%E7%94%A8)
+  - [函数与其他数据类型一样，处于平等地位](#%E5%87%BD%E6%95%B0%E4%B8%8E%E5%85%B6%E4%BB%96%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E4%B8%80%E6%A0%B7%E5%A4%84%E4%BA%8E%E5%B9%B3%E7%AD%89%E5%9C%B0%E4%BD%8D)
+  - [函数应该纯天然，无副作用](#%E5%87%BD%E6%95%B0%E5%BA%94%E8%AF%A5%E7%BA%AF%E5%A4%A9%E7%84%B6%E6%97%A0%E5%89%AF%E4%BD%9C%E7%94%A8)
   - [引用透明](#%E5%BC%95%E7%94%A8%E9%80%8F%E6%98%8E)
   - [immutable](#immutable)
   - [柯里化](#%E6%9F%AF%E9%87%8C%E5%8C%96)

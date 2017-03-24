@@ -2,9 +2,9 @@
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 **Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
-- [【译文】为何柯里化（curry）如此给力](#%E3%80%90%E8%AF%91%E6%96%87%E3%80%91%E4%B8%BA%E4%BD%95%E6%9F%AF%E9%87%8C%E5%8C%96%EF%BC%88curry%EF%BC%89%E5%A6%82%E6%AD%A4%E7%BB%99%E5%8A%9B)
-  - [柯里化是啥，为什么这么迷人？](#%E6%9F%AF%E9%87%8C%E5%8C%96%E6%98%AF%E5%95%A5%EF%BC%8C%E4%B8%BA%E4%BB%80%E4%B9%88%E8%BF%99%E4%B9%88%E8%BF%B7%E4%BA%BA%EF%BC%9F)
-  - [但那又有什么卵用？](#%E4%BD%86%E9%82%A3%E5%8F%88%E6%9C%89%E4%BB%80%E4%B9%88%E5%8D%B5%E7%94%A8%EF%BC%9F)
+- [【译文】为何柯里化（curry）如此给力](#%E8%AF%91%E6%96%87%E4%B8%BA%E4%BD%95%E6%9F%AF%E9%87%8C%E5%8C%96curry%E5%A6%82%E6%AD%A4%E7%BB%99%E5%8A%9B)
+  - [柯里化是啥，为什么这么迷人？](#%E6%9F%AF%E9%87%8C%E5%8C%96%E6%98%AF%E5%95%A5%E4%B8%BA%E4%BB%80%E4%B9%88%E8%BF%99%E4%B9%88%E8%BF%B7%E4%BA%BA)
+  - [但那又有什么卵用？](#%E4%BD%86%E9%82%A3%E5%8F%88%E6%9C%89%E4%BB%80%E4%B9%88%E5%8D%B5%E7%94%A8)
     - [碎片](#%E7%A2%8E%E7%89%87)
     - [遍地都是函数](#%E9%81%8D%E5%9C%B0%E9%83%BD%E6%98%AF%E5%87%BD%E6%95%B0)
 

@@ -7,6 +7,7 @@
   - [About page-switch](#about-page-switch)
   - [About media](#about-media)
   - [About Data](#about-data)
+  - [HTML to..](#html-to)
   - [About Writer](#about-writer)
   - [markdown解析](#markdown%E8%A7%A3%E6%9E%90)
   - [Hotkeys](#hotkeys)
@@ -205,6 +206,20 @@ before.to(after); // in a day 相对时间多久之后
 
 - [js-cookie](https://github.com/js-cookie/js-cookie)
 
+### HTML to..
+
+- [jsPDF](https://github.com/MrRio/jsPDF)
+
+> Render HTML to PDF，但是只有当 HTML 结构与 CSS 样式比较简单时体验较好，适用用把 markdown 类的文章转换为 PDF
+
+- [dom-to-image](https://github.com/tsayen/dom-to-image)
+
+> 把 DOM 转换为图片。同样的，当 DOM 数量多或复杂的时候体验不好（渲染速度慢）
+
+- [to-markdown](https://github.com/domchristie/to-markdown)
+
+> html转markdown
+
 ### About Writer
 
 - [tinymce](https://www.tinymce.com/)
@@ -267,10 +282,6 @@ before.to(after); // in a day 相对时间多久之后
 - [markdown-it](https://github.com/markdown-it/markdown-it)
 
 > Markdown parser done right. Fast and easy to extend.
-
-- [to-markdown](https://github.com/domchristie/to-markdown)
-
-> html转markdown
 
 - [embed.js](https://github.com/ritz078/embed.js)
 
@@ -405,3 +416,4 @@ before.to(after); // in a day 相对时间多久之后
 - [RxJS - 4.x](https://github.com/Reactive-Extensions/RxJS)
 
 > Everything is steam !
+

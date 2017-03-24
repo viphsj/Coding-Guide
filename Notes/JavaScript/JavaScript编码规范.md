@@ -10,7 +10,7 @@
   - [属性与变量](#%E5%B1%9E%E6%80%A7%E4%B8%8E%E5%8F%98%E9%87%8F)
   - [比较运算符](#%E6%AF%94%E8%BE%83%E8%BF%90%E7%AE%97%E7%AC%A6)
   - [代码美观](#%E4%BB%A3%E7%A0%81%E7%BE%8E%E8%A7%82)
-  - [null & undefined](#null-&-undefined)
+  - [null & undefined](#null--undefined)
   - [命名规则](#%E5%91%BD%E5%90%8D%E8%A7%84%E5%88%99)
   - [jQuery相关](#jquery%E7%9B%B8%E5%85%B3)
 

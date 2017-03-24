@@ -2,7 +2,7 @@
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 **Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
-- [【译文】Javascript函数式编程【3】](#%E3%80%90%E8%AF%91%E6%96%87%E3%80%91javascript%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B%E3%80%903%E3%80%91)
+- [【译文】Javascript函数式编程【3】](#%E8%AF%91%E6%96%87javascript%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B3)
   - [使用函数创造函数](#%E4%BD%BF%E7%94%A8%E5%87%BD%E6%95%B0%E5%88%9B%E9%80%A0%E5%87%BD%E6%95%B0)
   - [更多的函数块](#%E6%9B%B4%E5%A4%9A%E7%9A%84%E5%87%BD%E6%95%B0%E5%9D%97)
     - [作用域](#%E4%BD%9C%E7%94%A8%E5%9F%9F)
@@ -10,7 +10,7 @@
     - [`call`和`apply`](#call%E5%92%8Capply)
     - [匿名函数](#%E5%8C%BF%E5%90%8D%E5%87%BD%E6%95%B0)
     - [预留参数](#%E9%A2%84%E7%95%99%E5%8F%82%E6%95%B0)
-    - [构造（`Compose`）](#%E6%9E%84%E9%80%A0%EF%BC%88compose%EF%BC%89)
+    - [构造（`Compose`）](#%E6%9E%84%E9%80%A0compose)
     - [柯里化](#%E6%9F%AF%E9%87%8C%E5%8C%96)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->

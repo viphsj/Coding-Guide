@@ -2,7 +2,7 @@
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 **Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
-- [Electron【01】--主进程VS渲染进程&不同页面间共享数据](#electron%E3%80%9001%E3%80%91--%E4%B8%BB%E8%BF%9B%E7%A8%8Bvs%E6%B8%B2%E6%9F%93%E8%BF%9B%E7%A8%8B&%E4%B8%8D%E5%90%8C%E9%A1%B5%E9%9D%A2%E9%97%B4%E5%85%B1%E4%BA%AB%E6%95%B0%E6%8D%AE)
+- [Electron【01】--主进程VS渲染进程&不同页面间共享数据](#electron01--%E4%B8%BB%E8%BF%9B%E7%A8%8Bvs%E6%B8%B2%E6%9F%93%E8%BF%9B%E7%A8%8B%E4%B8%8D%E5%90%8C%E9%A1%B5%E9%9D%A2%E9%97%B4%E5%85%B1%E4%BA%AB%E6%95%B0%E6%8D%AE)
   - [主进程VS渲染进程](#%E4%B8%BB%E8%BF%9B%E7%A8%8Bvs%E6%B8%B2%E6%9F%93%E8%BF%9B%E7%A8%8B)
     - [主进程](#%E4%B8%BB%E8%BF%9B%E7%A8%8B)
     - [渲染进程](#%E6%B8%B2%E6%9F%93%E8%BF%9B%E7%A8%8B)

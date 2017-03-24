@@ -8,7 +8,7 @@
     - [隐式绑定](#%E9%9A%90%E5%BC%8F%E7%BB%91%E5%AE%9A)
     - [显式绑定](#%E6%98%BE%E5%BC%8F%E7%BB%91%E5%AE%9A)
     - [new绑定](#new%E7%BB%91%E5%AE%9A)
-  - [判断this（绑定优先级）](#%E5%88%A4%E6%96%ADthis%EF%BC%88%E7%BB%91%E5%AE%9A%E4%BC%98%E5%85%88%E7%BA%A7%EF%BC%89)
+  - [判断this（绑定优先级）](#%E5%88%A4%E6%96%ADthis%E7%BB%91%E5%AE%9A%E4%BC%98%E5%85%88%E7%BA%A7)
   - [空绑定](#%E7%A9%BA%E7%BB%91%E5%AE%9A)
   - [箭头函数](#%E7%AE%AD%E5%A4%B4%E5%87%BD%E6%95%B0)
 

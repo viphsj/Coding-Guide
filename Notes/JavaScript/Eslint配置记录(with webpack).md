@@ -5,7 +5,7 @@
 - [Eslint 配置记录(with webpack)](#eslint-%E9%85%8D%E7%BD%AE%E8%AE%B0%E5%BD%95with-webpack)
   - [安装](#%E5%AE%89%E8%A3%85)
   - [基本配置](#%E5%9F%BA%E6%9C%AC%E9%85%8D%E7%BD%AE)
-    - [配置webpack](#%E9%85%8D%E7%BD%AEwebpack)
+    - [配置 webpack](#%E9%85%8D%E7%BD%AE-webpack)
   - [插件](#%E6%8F%92%E4%BB%B6)
   - [资料](#%E8%B5%84%E6%96%99)
 

@@ -2,7 +2,7 @@
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 **Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
-- [使用 Redux 打造你的应用 —— middleware](#%E4%BD%BF%E7%94%A8-redux-%E6%89%93%E9%80%A0%E4%BD%A0%E7%9A%84%E5%BA%94%E7%94%A8-%E2%80%94%E2%80%94-middleware)
+- [使用 Redux 打造你的应用 —— middleware](#%E4%BD%BF%E7%94%A8-redux-%E6%89%93%E9%80%A0%E4%BD%A0%E7%9A%84%E5%BA%94%E7%94%A8--middleware)
   - [`applyMiddleware`](#applymiddleware)
   - [middleware](#middleware)
   - [redux-promise](#redux-promise)

@@ -2,15 +2,15 @@
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 **Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
-- [使用 Redux 打造你的应用 —— redux-actions](#%E4%BD%BF%E7%94%A8-redux-%E6%89%93%E9%80%A0%E4%BD%A0%E7%9A%84%E5%BA%94%E7%94%A8-%E2%80%94%E2%80%94-redux-actions)
+- [使用 Redux 打造你的应用 —— redux-actions](#%E4%BD%BF%E7%94%A8-redux-%E6%89%93%E9%80%A0%E4%BD%A0%E7%9A%84%E5%BA%94%E7%94%A8--redux-actions)
   - [Actions](#actions)
     - [创建 action](#%E5%88%9B%E5%BB%BA-action)
-    - [`createAction` & `createActions`](#createaction-&-createactions)
+    - [`createAction` & `createActions`](#createaction--createactions)
       - [`createAction`](#createaction)
       - [`createActions`](#createactions)
   - [Reducers](#reducers)
     - [创建 reducers](#%E5%88%9B%E5%BB%BA-reducers)
-    - [`handleAction` & `handleActions`](#handleaction-&-handleactions)
+    - [`handleAction` & `handleActions`](#handleaction--handleactions)
       - [`handleActions`](#handleactions)
       - [`handleAction`](#handleaction)
 

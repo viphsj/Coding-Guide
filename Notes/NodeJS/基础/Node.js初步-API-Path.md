@@ -5,12 +5,12 @@
 - [Node.js初步 - API - Path](#nodejs%E5%88%9D%E6%AD%A5---api---path)
   - [Path API](#path-api)
     - [path.normalize](#pathnormalize)
-    - [path.parse & path.format](#pathparse-&-pathformat)
-    - [path.relative & path.resolve](#pathrelative-&-pathresolve)
+    - [path.parse & path.format](#pathparse--pathformat)
+    - [path.relative & path.resolve](#pathrelative--pathresolve)
     - [path.sep](#pathsep)
     - [path.join](#pathjoin)
     - [path.isAbsolute](#pathisabsolute)
-    - [path.dirname & path.extname](#pathdirname-&-pathextname)
+    - [path.dirname & path.extname](#pathdirname--pathextname)
     - [path.basename](#pathbasename)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->

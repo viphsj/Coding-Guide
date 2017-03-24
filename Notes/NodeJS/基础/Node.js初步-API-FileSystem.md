@@ -20,7 +20,7 @@
     - [readFile](#readfile)
     - [writeFile](#writefile)
     - [rename](#rename-1)
-    - [rmdir & mkdir](#rmdir-&-mkdir)
+    - [rmdir & mkdir](#rmdir--mkdir)
     - [unlink](#unlink)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->

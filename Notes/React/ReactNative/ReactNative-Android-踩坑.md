@@ -3,7 +3,7 @@
 **Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
 - [组件化](#%E7%BB%84%E4%BB%B6%E5%8C%96)
-- [又一个大坑：](#%E5%8F%88%E4%B8%80%E4%B8%AA%E5%A4%A7%E5%9D%91%EF%BC%9A)
+- [又一个大坑：](#%E5%8F%88%E4%B8%80%E4%B8%AA%E5%A4%A7%E5%9D%91)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 

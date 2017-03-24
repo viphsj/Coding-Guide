@@ -2,20 +2,20 @@
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 **Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
-- [【译文】Material Design 新手？来瞅瞅你需要知道的12条原则](#%E3%80%90%E8%AF%91%E6%96%87%E3%80%91material-design-%E6%96%B0%E6%89%8B%EF%BC%9F%E6%9D%A5%E7%9E%85%E7%9E%85%E4%BD%A0%E9%9C%80%E8%A6%81%E7%9F%A5%E9%81%93%E7%9A%8412%E6%9D%A1%E5%8E%9F%E5%88%99)
-  - [Material Design适合你吗？](#material-design%E9%80%82%E5%90%88%E4%BD%A0%E5%90%97%EF%BC%9F)
+- [【译文】Material Design 新手？来瞅瞅你需要知道的12条原则](#%E8%AF%91%E6%96%87material-design-%E6%96%B0%E6%89%8B%E6%9D%A5%E7%9E%85%E7%9E%85%E4%BD%A0%E9%9C%80%E8%A6%81%E7%9F%A5%E9%81%93%E7%9A%8412%E6%9D%A1%E5%8E%9F%E5%88%99)
+  - [Material Design适合你吗？](#material-design%E9%80%82%E5%90%88%E4%BD%A0%E5%90%97)
   - [1.熟悉其核心思想](#1%E7%86%9F%E6%82%89%E5%85%B6%E6%A0%B8%E5%BF%83%E6%80%9D%E6%83%B3)
-  - [2.理解Material Design中的“material”](#2%E7%90%86%E8%A7%A3material-design%E4%B8%AD%E7%9A%84%E2%80%9Cmaterial%E2%80%9D)
+  - [2.理解Material Design中的“material”](#2%E7%90%86%E8%A7%A3material-design%E4%B8%AD%E7%9A%84material)
   - [3.通过阴影传达层级关系](#3%E9%80%9A%E8%BF%87%E9%98%B4%E5%BD%B1%E4%BC%A0%E8%BE%BE%E5%B1%82%E7%BA%A7%E5%85%B3%E7%B3%BB)
   - [4.醒目的配色](#4%E9%86%92%E7%9B%AE%E7%9A%84%E9%85%8D%E8%89%B2)
   - [5.使用主色调和重点色](#5%E4%BD%BF%E7%94%A8%E4%B8%BB%E8%89%B2%E8%B0%83%E5%92%8C%E9%87%8D%E7%82%B9%E8%89%B2)
   - [6.利用留白](#6%E5%88%A9%E7%94%A8%E7%95%99%E7%99%BD)
-  - [7.使用无边框（edge-to-edge）的图片](#7%E4%BD%BF%E7%94%A8%E6%97%A0%E8%BE%B9%E6%A1%86%EF%BC%88edge-to-edge%EF%BC%89%E7%9A%84%E5%9B%BE%E7%89%87)
-  - [8.对于依赖于图片的设计，要从图片中选出色彩](#8%E5%AF%B9%E4%BA%8E%E4%BE%9D%E8%B5%96%E4%BA%8E%E5%9B%BE%E7%89%87%E7%9A%84%E8%AE%BE%E8%AE%A1%EF%BC%8C%E8%A6%81%E4%BB%8E%E5%9B%BE%E7%89%87%E4%B8%AD%E9%80%89%E5%87%BA%E8%89%B2%E5%BD%A9)
-  - [9.动起来！](#9%E5%8A%A8%E8%B5%B7%E6%9D%A5%EF%BC%81)
+  - [7.使用无边框（edge-to-edge）的图片](#7%E4%BD%BF%E7%94%A8%E6%97%A0%E8%BE%B9%E6%A1%86edge-to-edge%E7%9A%84%E5%9B%BE%E7%89%87)
+  - [8.对于依赖于图片的设计，要从图片中选出色彩](#8%E5%AF%B9%E4%BA%8E%E4%BE%9D%E8%B5%96%E4%BA%8E%E5%9B%BE%E7%89%87%E7%9A%84%E8%AE%BE%E8%AE%A1%E8%A6%81%E4%BB%8E%E5%9B%BE%E7%89%87%E4%B8%AD%E9%80%89%E5%87%BA%E8%89%B2%E5%BD%A9)
+  - [9.动起来！](#9%E5%8A%A8%E8%B5%B7%E6%9D%A5)
   - [10.让运动更逼真](#10%E8%AE%A9%E8%BF%90%E5%8A%A8%E6%9B%B4%E9%80%BC%E7%9C%9F)
-  - [11.让所有元素都可适应（不同设备）](#11%E8%AE%A9%E6%89%80%E6%9C%89%E5%85%83%E7%B4%A0%E9%83%BD%E5%8F%AF%E9%80%82%E5%BA%94%EF%BC%88%E4%B8%8D%E5%90%8C%E8%AE%BE%E5%A4%87%EF%BC%89)
-  - [12.请铭记：成败在于细节](#12%E8%AF%B7%E9%93%AD%E8%AE%B0%EF%BC%9A%E6%88%90%E8%B4%A5%E5%9C%A8%E4%BA%8E%E7%BB%86%E8%8A%82)
+  - [11.让所有元素都可适应（不同设备）](#11%E8%AE%A9%E6%89%80%E6%9C%89%E5%85%83%E7%B4%A0%E9%83%BD%E5%8F%AF%E9%80%82%E5%BA%94%E4%B8%8D%E5%90%8C%E8%AE%BE%E5%A4%87)
+  - [12.请铭记：成败在于细节](#12%E8%AF%B7%E9%93%AD%E8%AE%B0%E6%88%90%E8%B4%A5%E5%9C%A8%E4%BA%8E%E7%BB%86%E8%8A%82)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 

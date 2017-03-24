@@ -19,7 +19,7 @@
     - [chrome.storage](#chromestorage)
   - [正式发布](#%E6%AD%A3%E5%BC%8F%E5%8F%91%E5%B8%83)
   - [学习资源](#%E5%AD%A6%E4%B9%A0%E8%B5%84%E6%BA%90)
-  - [下一步？](#%E4%B8%8B%E4%B8%80%E6%AD%A5%EF%BC%9F)
+  - [下一步？](#%E4%B8%8B%E4%B8%80%E6%AD%A5)
   - [Geek](#geek)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->

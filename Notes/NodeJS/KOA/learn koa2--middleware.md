@@ -3,7 +3,7 @@
 **Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
 - [learn koa2--middleware](#learn-koa2--middleware)
-  - [Install & Basical](#install-&-basical)
+  - [Install & Basical](#install--basical)
   - [Middleware](#middleware)
   - [Middleware best practices](#middleware-best-practices)
   - [Middleware in usage](#middleware-in-usage)

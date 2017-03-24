@@ -2,8 +2,8 @@
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 **Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
-- [【译文】JavaScript函数式编程【1】](#%E3%80%90%E8%AF%91%E6%96%87%E3%80%91javascript%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B%E3%80%901%E3%80%91)
-  - [函数是什么？](#%E5%87%BD%E6%95%B0%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F)
+- [【译文】JavaScript函数式编程【1】](#%E8%AF%91%E6%96%87javascript%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B1)
+  - [函数是什么？](#%E5%87%BD%E6%95%B0%E6%98%AF%E4%BB%80%E4%B9%88)
   - [创造代码块](#%E5%88%9B%E9%80%A0%E4%BB%A3%E7%A0%81%E5%9D%97)
   - [别重复自己](#%E5%88%AB%E9%87%8D%E5%A4%8D%E8%87%AA%E5%B7%B1)
 

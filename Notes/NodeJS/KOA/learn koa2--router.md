@@ -4,7 +4,7 @@
 
 - [learn koa2--router](#learn-koa2--router)
   - [给Koa2增加路由功能](#%E7%BB%99koa2%E5%A2%9E%E5%8A%A0%E8%B7%AF%E7%94%B1%E5%8A%9F%E8%83%BD)
-  - [扩展：`koa-router`的使用](#%E6%89%A9%E5%B1%95%EF%BC%9Akoa-router%E7%9A%84%E4%BD%BF%E7%94%A8)
+  - [扩展：`koa-router`的使用](#%E6%89%A9%E5%B1%95koa-router%E7%9A%84%E4%BD%BF%E7%94%A8)
     - [基本使用](#%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8)
     - [路由的`get|put|post|patch|delete`方法](#%E8%B7%AF%E7%94%B1%E7%9A%84getputpostpatchdelete%E6%96%B9%E6%B3%95)
     - [动态路由](#%E5%8A%A8%E6%80%81%E8%B7%AF%E7%94%B1)

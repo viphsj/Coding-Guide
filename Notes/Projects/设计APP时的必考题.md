@@ -3,9 +3,9 @@
 **Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
 - [设计APP时的必考题](#%E8%AE%BE%E8%AE%A1app%E6%97%B6%E7%9A%84%E5%BF%85%E8%80%83%E9%A2%98)
-  - [使用之前：](#%E4%BD%BF%E7%94%A8%E4%B9%8B%E5%89%8D%EF%BC%9A)
-  - [开始使用：](#%E5%BC%80%E5%A7%8B%E4%BD%BF%E7%94%A8%EF%BC%9A)
-  - [再次使用：](#%E5%86%8D%E6%AC%A1%E4%BD%BF%E7%94%A8%EF%BC%9A)
+  - [使用之前：](#%E4%BD%BF%E7%94%A8%E4%B9%8B%E5%89%8D)
+  - [开始使用：](#%E5%BC%80%E5%A7%8B%E4%BD%BF%E7%94%A8)
+  - [再次使用：](#%E5%86%8D%E6%AC%A1%E4%BD%BF%E7%94%A8)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 

@@ -2,7 +2,7 @@
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 **Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
-- [Django-01-setup&unittest](#django-01-setup&unittest)
+- [Django-01-setup&unittest](#django-01-setupunittest)
   - [setup](#setup)
   - [unittest](#unittest)
     - [功能测试](#%E5%8A%9F%E8%83%BD%E6%B5%8B%E8%AF%95)

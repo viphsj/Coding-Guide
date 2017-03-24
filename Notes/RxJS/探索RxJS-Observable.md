@@ -3,8 +3,8 @@
 **Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
 - [探索 RxJS - Observable](#%E6%8E%A2%E7%B4%A2-rxjs---observable)
-  - [`Observable`是什么？](#observable%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F)
-  - [`Pull`&`Push`](#pull&push)
+  - [`Observable`是什么？](#observable%E6%98%AF%E4%BB%80%E4%B9%88)
+  - [`Pull`&`Push`](#pullpush)
   - [进一步理解`Observable`](#%E8%BF%9B%E4%B8%80%E6%AD%A5%E7%90%86%E8%A7%A3observable)
   - [创建`Observable`](#%E5%88%9B%E5%BB%BAobservable)
   - [流`Observable`的操作](#%E6%B5%81observable%E7%9A%84%E6%93%8D%E4%BD%9C)

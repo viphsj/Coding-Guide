@@ -6,7 +6,7 @@
   - [About animation](#about-animation)
   - [About color](#about-color)
   - [About page-switch](#about-page-switch)
-  - [Icons & Web-Font](#icons-&-web-font)
+  - [Icons & Web-Font](#icons--web-font)
   - [Style](#style)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->

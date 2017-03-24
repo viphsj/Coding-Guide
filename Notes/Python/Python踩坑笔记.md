@@ -20,7 +20,7 @@
   - [利用webbrowser控制浏览器](#%E5%88%A9%E7%94%A8webbrowser%E6%8E%A7%E5%88%B6%E6%B5%8F%E8%A7%88%E5%99%A8)
   - [特殊命名](#%E7%89%B9%E6%AE%8A%E5%91%BD%E5%90%8D)
   - [杂记](#%E6%9D%82%E8%AE%B0)
-    - [Do not use & when you use multiply int](#do-not-use-&-when-you-use-multiply-int)
+    - [Do not use & when you use multiply int](#do-not-use--when-you-use-multiply-int)
     - [Python2中的编码错误](#python2%E4%B8%AD%E7%9A%84%E7%BC%96%E7%A0%81%E9%94%99%E8%AF%AF)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->

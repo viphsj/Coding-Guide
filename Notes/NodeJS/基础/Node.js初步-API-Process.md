@@ -6,7 +6,7 @@
   - [Process API](#process-api)
     - [cwd](#cwd)
     - [chdir](#chdir)
-    - [stdout & stderr & stdin](#stdout-&-stderr-&-stdin)
+    - [stdout & stderr & stdin](#stdout--stderr--stdin)
     - [exit](#exit)
     - [memoryUsage](#memoryusage)
     - [nextTick](#nexttick)

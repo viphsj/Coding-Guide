@@ -15,7 +15,7 @@
     - [创建一个含N个对象的列表](#%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AA%E5%90%ABn%E4%B8%AA%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%88%97%E8%A1%A8)
     - [创建一个含N个列表的列表](#%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AA%E5%90%ABn%E4%B8%AA%E5%88%97%E8%A1%A8%E7%9A%84%E5%88%97%E8%A1%A8)
     - [使用列表来创建字符串](#%E4%BD%BF%E7%94%A8%E5%88%97%E8%A1%A8%E6%9D%A5%E5%88%9B%E5%BB%BA%E5%AD%97%E7%AC%A6%E4%B8%B2)
-    - [在集合体（collection）中查找一个项（而不是列表中）](#%E5%9C%A8%E9%9B%86%E5%90%88%E4%BD%93%EF%BC%88collection%EF%BC%89%E4%B8%AD%E6%9F%A5%E6%89%BE%E4%B8%80%E4%B8%AA%E9%A1%B9%EF%BC%88%E8%80%8C%E4%B8%8D%E6%98%AF%E5%88%97%E8%A1%A8%E4%B8%AD%EF%BC%89)
+    - [在集合体（collection）中查找一个项（而不是列表中）](#%E5%9C%A8%E9%9B%86%E5%90%88%E4%BD%93collection%E4%B8%AD%E6%9F%A5%E6%89%BE%E4%B8%80%E4%B8%AA%E9%A1%B9%E8%80%8C%E4%B8%8D%E6%98%AF%E5%88%97%E8%A1%A8%E4%B8%AD)
     - [限制try里面有且仅有绝对必要的代码](#%E9%99%90%E5%88%B6try%E9%87%8C%E9%9D%A2%E6%9C%89%E4%B8%94%E4%BB%85%E6%9C%89%E7%BB%9D%E5%AF%B9%E5%BF%85%E8%A6%81%E7%9A%84%E4%BB%A3%E7%A0%81)
     - [使用`''.startswith()`和`''.endswith()`替代切片](#%E4%BD%BF%E7%94%A8startswith%E5%92%8Cendswith%E6%9B%BF%E4%BB%A3%E5%88%87%E7%89%87)
     - [不要用`==`比较`True`和`False`](#%E4%B8%8D%E8%A6%81%E7%94%A8%E6%AF%94%E8%BE%83true%E5%92%8Cfalse)

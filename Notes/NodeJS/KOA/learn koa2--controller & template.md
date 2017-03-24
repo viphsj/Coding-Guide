@@ -2,7 +2,7 @@
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 **Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
-- [learn koa2--controller & template](#learn-koa2--controller-&-template)
+- [learn koa2--controller & template](#learn-koa2--controller--template)
   - [controller](#controller)
   - [template](#template)
 

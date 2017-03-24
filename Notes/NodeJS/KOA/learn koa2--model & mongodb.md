@@ -2,7 +2,7 @@
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 **Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
-- [learn koa2--model & mongodb](#learn-koa2--model-&-mongodb)
+- [learn koa2--model & mongodb](#learn-koa2--model--mongodb)
   - [model](#model)
   - [services](#services)
 

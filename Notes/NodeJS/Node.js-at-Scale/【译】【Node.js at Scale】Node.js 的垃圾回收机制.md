@@ -2,14 +2,14 @@
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 **Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
-- [【译】【Node.js at Scale】Node.js 的垃圾回收机制](#%E3%80%90%E8%AF%91%E3%80%91%E3%80%90nodejs-at-scale%E3%80%91nodejs-%E7%9A%84%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E6%9C%BA%E5%88%B6)
+- [【译】【Node.js at Scale】Node.js 的垃圾回收机制](#%E8%AF%91nodejs-at-scalenodejs-%E7%9A%84%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E6%9C%BA%E5%88%B6)
   - [Node.js 应用中的内存管理](#nodejs-%E5%BA%94%E7%94%A8%E4%B8%AD%E7%9A%84%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86)
   - [垃圾回收的概念](#%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E7%9A%84%E6%A6%82%E5%BF%B5)
     - [被垃圾回收之前的内存](#%E8%A2%AB%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E4%B9%8B%E5%89%8D%E7%9A%84%E5%86%85%E5%AD%98)
     - [垃圾回收之后的内存](#%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E4%B9%8B%E5%90%8E%E7%9A%84%E5%86%85%E5%AD%98)
   - [使用垃圾回收的优势](#%E4%BD%BF%E7%94%A8%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E7%9A%84%E4%BC%98%E5%8A%BF)
     - [使用垃圾回收时需要牢记的](#%E4%BD%BF%E7%94%A8%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E6%97%B6%E9%9C%80%E8%A6%81%E7%89%A2%E8%AE%B0%E7%9A%84)
-  - [Node.js 垃圾回收&内存管理实践](#nodejs-%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6&%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86%E5%AE%9E%E8%B7%B5)
+  - [Node.js 垃圾回收&内存管理实践](#nodejs-%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86%E5%AE%9E%E8%B7%B5)
     - [栈](#%E6%A0%88)
     - [堆](#%E5%A0%86)
     - [垃圾回收方法](#%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E6%96%B9%E6%B3%95)

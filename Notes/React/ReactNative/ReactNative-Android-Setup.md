@@ -5,7 +5,7 @@
 - [Android Setup](#android-setup)
 - [Clone Source](#clone-source)
 - [Generating Signed APK](#generating-signed-apk)
-- [Rock & Roll](#rock-&-roll)
+- [Rock & Roll](#rock--roll)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 

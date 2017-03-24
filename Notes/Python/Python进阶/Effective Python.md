@@ -19,7 +19,7 @@
   - [类](#%E7%B1%BB)
     - [`__slots__`](#__slots__)
     - [`__call__`](#__call__)
-    - [`@classmethod` & `@staticmethod`](#classmethod-&-staticmethod)
+    - [`@classmethod` & `@staticmethod`](#classmethod--staticmethod)
     - [创建上下文管理器](#%E5%88%9B%E5%BB%BA%E4%B8%8A%E4%B8%8B%E6%96%87%E7%AE%A1%E7%90%86%E5%99%A8)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->

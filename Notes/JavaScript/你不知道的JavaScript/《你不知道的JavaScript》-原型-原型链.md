@@ -10,7 +10,7 @@
     - [原型继承](#%E5%8E%9F%E5%9E%8B%E7%BB%A7%E6%89%BF)
     - [检查类关系](#%E6%A3%80%E6%9F%A5%E7%B1%BB%E5%85%B3%E7%B3%BB)
     - [原型的动态性](#%E5%8E%9F%E5%9E%8B%E7%9A%84%E5%8A%A8%E6%80%81%E6%80%A7)
-    - [子类复写、添加方法](#%E5%AD%90%E7%B1%BB%E5%A4%8D%E5%86%99%E3%80%81%E6%B7%BB%E5%8A%A0%E6%96%B9%E6%B3%95)
+    - [子类复写、添加方法](#%E5%AD%90%E7%B1%BB%E5%A4%8D%E5%86%99%E6%B7%BB%E5%8A%A0%E6%96%B9%E6%B3%95)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 

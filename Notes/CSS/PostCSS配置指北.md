@@ -16,8 +16,8 @@
       - [`stylelint.config.js`](#stylelintconfigjs)
     - [3. StyleLintPlugin的配置参数](#3-stylelintplugin%E7%9A%84%E9%85%8D%E7%BD%AE%E5%8F%82%E6%95%B0)
   - [资源](#%E8%B5%84%E6%BA%90)
-    - [postcss & loader](#postcss-&-loader)
-    - [autoprefixer & cssnext](#autoprefixer-&-cssnext)
+    - [postcss & loader](#postcss--loader)
+    - [autoprefixer & cssnext](#autoprefixer--cssnext)
     - [stylelint](#stylelint)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->

@@ -18,7 +18,7 @@
   - [监测浏览器窗口的大小改变](#%E7%9B%91%E6%B5%8B%E6%B5%8F%E8%A7%88%E5%99%A8%E7%AA%97%E5%8F%A3%E7%9A%84%E5%A4%A7%E5%B0%8F%E6%94%B9%E5%8F%98)
   - [监测按键](#%E7%9B%91%E6%B5%8B%E6%8C%89%E9%94%AE)
   - [在head区域替换整张样式表](#%E5%9C%A8head%E5%8C%BA%E5%9F%9F%E6%9B%BF%E6%8D%A2%E6%95%B4%E5%BC%A0%E6%A0%B7%E5%BC%8F%E8%A1%A8)
-  - [`null` & `undefined `](#null-&-undefined-)
+  - [`null` & `undefined `](#null--undefined-)
   - [`typeof`检测原始类型](#typeof%E6%A3%80%E6%B5%8B%E5%8E%9F%E5%A7%8B%E7%B1%BB%E5%9E%8B)
   - [`instanceof`检测引用类型](#instanceof%E6%A3%80%E6%B5%8B%E5%BC%95%E7%94%A8%E7%B1%BB%E5%9E%8B)
   - [`for..in`循环](#forin%E5%BE%AA%E7%8E%AF)

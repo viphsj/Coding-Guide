@@ -3,7 +3,7 @@
 **Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
 - [为jQuery写插件](#%E4%B8%BAjquery%E5%86%99%E6%8F%92%E4%BB%B6)
-- [理解jquery的`$.extend()`、`$.fn`和`$.fn.extend()`](#%E7%90%86%E8%A7%A3jquery%E7%9A%84extend%E3%80%81fn%E5%92%8Cfnextend)
+- [理解jquery的`$.extend()`、`$.fn`和`$.fn.extend()`](#%E7%90%86%E8%A7%A3jquery%E7%9A%84extendfn%E5%92%8Cfnextend)
   - [`jQuery.fn`](#jqueryfn)
   - [`jQuery.extend(object)`](#jqueryextendobject)
   - [`jQuery.extend( target, object1, [objectN])`](#jqueryextend-target-object1-objectn)

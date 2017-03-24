@@ -7,7 +7,7 @@
 - [`box-sizing`](#box-sizing)
 - [`X:nth-child(n)`](#xnth-childn)
 - [让元素不捕获事件](#%E8%AE%A9%E5%85%83%E7%B4%A0%E4%B8%8D%E6%8D%95%E8%8E%B7%E4%BA%8B%E4%BB%B6)
-- [通过3在元素内部（内部的前面或者后面）动态添加元素](#%E9%80%9A%E8%BF%873%E5%9C%A8%E5%85%83%E7%B4%A0%E5%86%85%E9%83%A8%EF%BC%88%E5%86%85%E9%83%A8%E7%9A%84%E5%89%8D%E9%9D%A2%E6%88%96%E8%80%85%E5%90%8E%E9%9D%A2%EF%BC%89%E5%8A%A8%E6%80%81%E6%B7%BB%E5%8A%A0%E5%85%83%E7%B4%A0)
+- [通过3在元素内部（内部的前面或者后面）动态添加元素](#%E9%80%9A%E8%BF%873%E5%9C%A8%E5%85%83%E7%B4%A0%E5%86%85%E9%83%A8%E5%86%85%E9%83%A8%E7%9A%84%E5%89%8D%E9%9D%A2%E6%88%96%E8%80%85%E5%90%8E%E9%9D%A2%E5%8A%A8%E6%80%81%E6%B7%BB%E5%8A%A0%E5%85%83%E7%B4%A0)
 - [使用负的`nth-child`选取元素](#%E4%BD%BF%E7%94%A8%E8%B4%9F%E7%9A%84nth-child%E9%80%89%E5%8F%96%E5%85%83%E7%B4%A0)
 - [currentColor是color属性的值](#currentcolor%E6%98%AFcolor%E5%B1%9E%E6%80%A7%E7%9A%84%E5%80%BC)
 - [`user-select`禁止选择文本](#user-select%E7%A6%81%E6%AD%A2%E9%80%89%E6%8B%A9%E6%96%87%E6%9C%AC)

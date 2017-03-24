@@ -4,7 +4,7 @@
 
 - [Python3及应用2-类/库/对象](#python3%E5%8F%8A%E5%BA%94%E7%94%A82-%E7%B1%BB%E5%BA%93%E5%AF%B9%E8%B1%A1)
   - [Python标准库](#python%E6%A0%87%E5%87%86%E5%BA%93)
-    - [`setdefault()`&`defaultdict()`](#setdefault&defaultdict)
+    - [`setdefault()`&`defaultdict()`](#setdefaultdefaultdict)
     - [`Counter`](#counter)
     - [`OrderedDict()`](#ordereddict)
     - [`deque`双端队列](#deque%E5%8F%8C%E7%AB%AF%E9%98%9F%E5%88%97)

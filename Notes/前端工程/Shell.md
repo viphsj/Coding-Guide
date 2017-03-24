@@ -1,3 +1,22 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [Shell](#shell)
+  - [变量](#%E5%8F%98%E9%87%8F)
+  - [操作](#%E6%93%8D%E4%BD%9C)
+    - [操作符](#%E6%93%8D%E4%BD%9C%E7%AC%A6)
+    - [字符串](#%E5%AD%97%E7%AC%A6%E4%B8%B2)
+    - [循环/遍历](#%E5%BE%AA%E7%8E%AF%E9%81%8D%E5%8E%86)
+    - [test](#test)
+  - [运算](#%E8%BF%90%E7%AE%97)
+  - [数组](#%E6%95%B0%E7%BB%84)
+    - [定义](#%E5%AE%9A%E4%B9%89)
+    - [赋/取值](#%E8%B5%8B%E5%8F%96%E5%80%BC)
+  - [函数](#%E5%87%BD%E6%95%B0)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 ## Shell
 
 ### 变量

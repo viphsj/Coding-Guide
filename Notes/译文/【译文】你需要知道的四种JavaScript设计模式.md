@@ -2,7 +2,7 @@
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 **Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
-- [【译文】你需要知道的四种JavaScript设计模式](#%E3%80%90%E8%AF%91%E6%96%87%E3%80%91%E4%BD%A0%E9%9C%80%E8%A6%81%E7%9F%A5%E9%81%93%E7%9A%84%E5%9B%9B%E7%A7%8Djavascript%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F)
+- [【译文】你需要知道的四种JavaScript设计模式](#%E8%AF%91%E6%96%87%E4%BD%A0%E9%9C%80%E8%A6%81%E7%9F%A5%E9%81%93%E7%9A%84%E5%9B%9B%E7%A7%8Djavascript%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F)
   - [模型](#%E6%A8%A1%E5%9E%8B)
     - [暴露模型模式](#%E6%9A%B4%E9%9C%B2%E6%A8%A1%E5%9E%8B%E6%A8%A1%E5%BC%8F)
   - [原型模式](#%E5%8E%9F%E5%9E%8B%E6%A8%A1%E5%BC%8F)

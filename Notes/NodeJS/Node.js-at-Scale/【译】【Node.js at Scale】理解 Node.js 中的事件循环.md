@@ -2,13 +2,13 @@
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 **Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
-- [【译】【Node.js at Scale】理解 Node.js 中的事件循环](#%E3%80%90%E8%AF%91%E3%80%91%E3%80%90nodejs-at-scale%E3%80%91%E7%90%86%E8%A7%A3-nodejs-%E4%B8%AD%E7%9A%84%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%8E%AF)
+- [【译】【Node.js at Scale】理解 Node.js 中的事件循环](#%E8%AF%91nodejs-at-scale%E7%90%86%E8%A7%A3-nodejs-%E4%B8%AD%E7%9A%84%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%8E%AF)
   - [问题起源](#%E9%97%AE%E9%A2%98%E8%B5%B7%E6%BA%90)
   - [解决方案](#%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88)
   - [堆栈](#%E5%A0%86%E6%A0%88)
   - [Node.js 的事件循环](#nodejs-%E7%9A%84%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%8E%AF)
     - [任务队列](#%E4%BB%BB%E5%8A%A1%E9%98%9F%E5%88%97)
-    - [微任务（Microtasks） 和宏任务（Macrotasks）](#%E5%BE%AE%E4%BB%BB%E5%8A%A1%EF%BC%88microtasks%EF%BC%89-%E5%92%8C%E5%AE%8F%E4%BB%BB%E5%8A%A1%EF%BC%88macrotasks%EF%BC%89)
+    - [微任务（Microtasks） 和宏任务（Macrotasks）](#%E5%BE%AE%E4%BB%BB%E5%8A%A1microtasks-%E5%92%8C%E5%AE%8F%E4%BB%BB%E5%8A%A1macrotasks)
   - [驯服异步怪兽](#%E9%A9%AF%E6%9C%8D%E5%BC%82%E6%AD%A5%E6%80%AA%E5%85%BD)
     - [最后一点建议](#%E6%9C%80%E5%90%8E%E4%B8%80%E7%82%B9%E5%BB%BA%E8%AE%AE)
 

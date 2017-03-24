@@ -4,7 +4,7 @@
 
 - [Think in Elm](#think-in-elm)
   - [基础组成](#%E5%9F%BA%E7%A1%80%E7%BB%84%E6%88%90)
-    - [Counter Example：](#counter-example%EF%BC%9A)
+    - [Counter Example：](#counter-example)
     - [Input Example](#input-example)
     - [Update](#update)
   - [混合实例](#%E6%B7%B7%E5%90%88%E5%AE%9E%E4%BE%8B)
@@ -15,7 +15,7 @@
     - [Commands](#commands)
       - [example--生成随机数](#example--%E7%94%9F%E6%88%90%E9%9A%8F%E6%9C%BA%E6%95%B0)
     - [Tasks](#tasks)
-    - [import & module](#import-&-module)
+    - [import & module](#import--module)
   - [生成HTML](#%E7%94%9F%E6%88%90html)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->

@@ -3,7 +3,7 @@
 **Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
 - [Go语言初步](#go%E8%AF%AD%E8%A8%80%E5%88%9D%E6%AD%A5)
-  - [Go用来做什么？](#go%E7%94%A8%E6%9D%A5%E5%81%9A%E4%BB%80%E4%B9%88%EF%BC%9F)
+  - [Go用来做什么？](#go%E7%94%A8%E6%9D%A5%E5%81%9A%E4%BB%80%E4%B9%88)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
