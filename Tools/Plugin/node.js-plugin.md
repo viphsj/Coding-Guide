@@ -11,6 +11,7 @@
   - [Tool](#tool)
   - [Server](#server)
   - [Progress](#progress)
+  - [Others](#others)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -101,3 +102,12 @@
 - [pm2](https://github.com/Unitech/pm2)
 
 - [forever](https://github.com/foreverjs/forever)
+
+### Others
+
+- [phantomjs-node](https://github.com/amir20/phantomjs-node)
+
+ - [How to evaluate a page using awaitFor to load dynamic contents](https://github.com/amir20/phantomjs-node/issues/431)
+
+如果有类似 `waitFor` 的需求，即保持阻塞直到触发某种条件，一般是用来通过检查某个 DOM 是否存在，来判断页面是否加载完成，以便进行下一步的操作（比如截图）。可以通过上面的 issue 来实现这样的需求。
+
