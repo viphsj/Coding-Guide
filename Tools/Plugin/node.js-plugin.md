@@ -85,7 +85,7 @@
 
 - [doctoc](https://github.com/thlorenz/doctoc)
 
-> 一个Node组件，为你的Markdown文件自动化添加目录。你看见的本文的目录就是由doctoc添加的
+> 一个 Node.js 组件，为你的Markdown文件自动化添加目录。你看见的本文的目录就是由doctoc添加的
 
 - [bcrypt](https://github.com/kelektiv/node.bcrypt.js)
 
@@ -100,8 +100,8 @@
 ### Progress
 
 - [pm2](https://github.com/Unitech/pm2)
-
 - [forever](https://github.com/foreverjs/forever)
+- [node-schedule](https://github.com/node-schedule/node-schedule) Node.js 定时任务
 
 ### Others
 
@@ -111,3 +111,14 @@
 
 如果有类似 `waitFor` 的需求，即保持阻塞直到触发某种条件，一般是用来通过检查某个 DOM 是否存在，来判断页面是否加载完成，以便进行下一步的操作（比如截图）。可以通过上面的 issue 来实现这样的需求。
 
+- [jsinspect](https://github.com/danielstjules/jsinspect)
+
+检查代码中的重复代码，虽然不是非常精准，但对优化代码也有一定帮助。
+
+- [**cheerio**](https://github.com/cheeriojs/cheerio)
+
+Node.js 爬虫工具，可以在服务端像使用 jQuery 一样解析获取的 HTML
+
+- [nodemailer](https://github.com/nodemailer/nodemailer)
+
+Node.js 发送邮件

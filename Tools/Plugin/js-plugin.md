@@ -222,6 +222,10 @@ before.to(after); // in a day 相对时间多久之后
 
 ### About Writer
 
+- [snarkdown](https://github.com/developit/snarkdown)
+
+>  轻量级的 Markdown -> HTML 解析
+
 - [tinymce](https://www.tinymce.com/)
 
 > 文本编辑器插件
