@@ -71,12 +71,12 @@
   - [探索 RxJS - Core Concept](./Notes/RxJS/探索RxJS-CoreConcept.md)
   - [探索RxJS - 做一个 github 小应用](./Notes/RxJS/探索RxJS-做一个github小应用.md)
   - [探索 RxJS - Observable](./Notes/RxJS/探索RxJS-Observable.md)
-- [JavaScript 中的数据结构](./Notes/JavaScript/JavaScript 数据结构.md)
+- [JavaScript 中的数据结构](https://github.com/ecmadao/Coding-Guide/blob/master/Notes/JavaScript/JavaScript%20%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84.md)
 
 ### 关于项目
 
 - [极客与团队](./Notes/Projects/极客与团队.md)
-- [The Pragmatic Programmer](./Notes/Projects/The Pragmatic Programmer.md)
+- [The Pragmatic Programmer](https://github.com/ecmadao/Coding-Guide/blob/master/Notes/Projects/The%20Pragmatic%20Programmer.md)
 - [Rework](./Notes/Projects/Rework.md)
 
 ### 关于产品
@@ -84,7 +84,7 @@
 - [Don't Make Me Think](./Notes/Projects/Don-t-Make-Me-Think.md)
 - [【译文】七条可应用于设计的心理学原则](./Notes/%E8%AF%91%E6%96%87/%E3%80%90%E8%AF%91%E6%96%87%E3%80%91%E4%B8%83%E6%9D%A1%E5%8F%AF%E5%BA%94%E7%94%A8%E4%BA%8E%E8%AE%BE%E8%AE%A1%E7%9A%84%E5%BF%83%E7%90%86%E5%AD%A6%E5%8E%9F%E5%88%99.md)
 - [【译文】网页设计中隐藏在色彩之后的情感和心理学](./Notes/%E8%AF%91%E6%96%87/%E3%80%90%E8%AF%91%E6%96%87%E3%80%91%E7%BD%91%E9%A1%B5%E8%AE%BE%E8%AE%A1%E4%B8%AD%E9%9A%90%E8%97%8F%E5%9C%A8%E8%89%B2%E5%BD%A9%E4%B9%8B%E5%90%8E%E7%9A%84%E6%83%85%E6%84%9F%E5%92%8C%E5%BF%83%E7%90%86%E5%AD%A6.md)
-- [【译文】构建积极友好的 UI](./Notes/译文/【译文】构建积极友好的 UI.md)
+- [【译文】构建积极友好的 UI](https://github.com/ecmadao/Coding-Guide/blob/master/Notes/%E8%AF%91%E6%96%87/%E3%80%90%E8%AF%91%E6%96%87%E3%80%91%E6%9E%84%E5%BB%BA%E7%A7%AF%E6%9E%81%E5%8F%8B%E5%A5%BD%E7%9A%84%20UI.md)
 
 ### Koa2系列教程
 
@@ -119,9 +119,9 @@
 ### Python进阶
 
 - [Magic Python](./Notes/Python/Python进阶/Magic%20Python.md)
-- [Effective Python](./Notes/Python/Python进阶/Effective Python.md)
+- [Effective Python](https://github.com/ecmadao/Coding-Guide/blob/master/Notes/Python/Python%E8%BF%9B%E9%98%B6/Effective%20Python.md)
 - [Python Style Guide](./Notes/Python/Python进阶/Python%20Style%20Guide.md)
-- [Python 中的 Collections 库](./Notes/Python/Python进阶/Python 中的 Collections 库.md)
+- [Python 中的 Collections 库](https://github.com/ecmadao/Coding-Guide/blob/master/Notes/Python/Python%E8%BF%9B%E9%98%B6/Python%20%E4%B8%AD%E7%9A%84%20Collections%20%E5%BA%93.md)
 
 ### Ember文档翻译系列(V2.8.0)
 
