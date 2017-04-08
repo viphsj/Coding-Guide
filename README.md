@@ -4,7 +4,7 @@
 
 - [Menu](#menu)
 - [专题](#%E4%B8%93%E9%A2%98)
-  - [前端工程](#%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B)
+  - [JavaScript](#javascript)
   - [关于项目](#%E5%85%B3%E4%BA%8E%E9%A1%B9%E7%9B%AE)
   - [关于产品](#%E5%85%B3%E4%BA%8E%E4%BA%A7%E5%93%81)
   - [Koa2系列教程](#koa2%E7%B3%BB%E5%88%97%E6%95%99%E7%A8%8B)
@@ -57,7 +57,7 @@
 
 ## 专题
 
-### 前端工程
+### JavaScript
 
 - [Webpack配置从零到一](./Notes/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B/Webpack%E9%85%8D%E7%BD%AE%E4%BB%8E%E9%9B%B6%E5%88%B0%E4%B8%80.md)
 - [【译文】用Webpack武装自己](./Notes/%E8%AF%91%E6%96%87/%E3%80%90%E8%AF%91%E6%96%87%E3%80%91%E7%94%A8Webpack%E6%AD%A6%E8%A3%85%E8%87%AA%E5%B7%B1.md)
@@ -71,6 +71,7 @@
   - [探索 RxJS - Core Concept](./Notes/RxJS/探索RxJS-CoreConcept.md)
   - [探索RxJS - 做一个 github 小应用](./Notes/RxJS/探索RxJS-做一个github小应用.md)
   - [探索 RxJS - Observable](./Notes/RxJS/探索RxJS-Observable.md)
+- [JavaScript 中的数据结构](./Notes/JavaScript/JavaScript 数据结构.md)
 
 ### 关于项目
 
