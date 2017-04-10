@@ -231,3 +231,9 @@ const flatArray = (arg) => {
 很傻的函数吧？反正只是为了学习。在这个函数里，我们有两层嵌套循环，因此，算法的时间复杂度为 O(n^2)。
 
 同理，当函数有三层嵌套循环时，我们可以认为其时间复杂度为 O(n^3)，以此类推。
+
+附一些可以参考的资料：
+
+- [What is a plain English explanation of “Big O” notation?](http://stackoverflow.com/questions/487258/what-is-a-plain-english-explanation-of-big-o-notation)
+- [算法复杂度分析](http://www.cnblogs.com/gaochundong/p/complexity_of_algorithms.html)
+- [算法时间复杂度的表示法O(n²)、O(n)、O(1)、O(nlogn)等是什么意思？](https://www.zhihu.com/question/21387264)
