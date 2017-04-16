@@ -52,6 +52,10 @@
 
 > A simple library to take care of complex CSS animations.
 
+- [typed.js](https://github.com/mattboldt/typed.js/)
+
+> 模拟打字效果
+
 ### About page-switch
 
 - [reveal.js](http://lab.hakim.se/reveal-js/#/)
@@ -85,6 +89,10 @@
 - [scrollreveal](https://github.com/jlmakes/scrollreveal)
 
 > 滚动如丝般顺滑
+
+- [waypoints](http://imakewebthings.com/waypoints/)
+
+> Waypoints is the easiest way to trigger a function when you scroll to an element.
 
 - [glide](http://glide.jedrzejchalubek.com/)
 
