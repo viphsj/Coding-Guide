@@ -32,16 +32,12 @@
 ### Http
 
 - [superagent](https://github.com/visionmedia/superagent)
-
 - [request](https://github.com/request/request)
-
 - [request-promise](https://github.com/request/request-promise)
-
 - [request-promise-native](https://github.com/request/request-promise-native)
-
 - [urllib](https://github.com/node-modules/urllib)
-
 - [isomorphic-fetch](https://github.com/matthew-andrews/isomorphic-fetch)
+- [strong-soap](https://github.com/strongloop/strong-soap)
 
 ### 命令行
 
@@ -66,13 +62,10 @@
 ### System
 
 - [node-fs-extra](https://github.com/jprichardson/node-fs-extra)
-
+- [ncp](https://github.com/AvianFlu/ncp)
 - [node-klaw](https://github.com/jprichardson/node-klaw)
-
 - [string.js](https://github.com/jprichardson/string.js)
-
 - [mkdirp](https://github.com/substack/node-mkdirp)
-
 - [rimraf](https://github.com/isaacs/rimraf)
 
 ### Tool
@@ -94,20 +87,27 @@
 ### Server
 
 - [nodemon](https://github.com/remy/nodemon)
-
 - [http-server](https://github.com/indexzero/http-server)
 
 ### Progress
 
 - [pm2](https://github.com/Unitech/pm2)
+
 - [forever](https://github.com/foreverjs/forever)
-- [node-schedule](https://github.com/node-schedule/node-schedule) Node.js 定时任务
+
+- [node-schedule](https://github.com/node-schedule/node-schedule) 
+
+Node.js 定时任务
+
+- [cron-parser](https://github.com/harrisiirak/cron-parser)
+
+时间设定工具，辅助定时任务
 
 ### Others
 
 - [phantomjs-node](https://github.com/amir20/phantomjs-node)
 
- - [How to evaluate a page using awaitFor to load dynamic contents](https://github.com/amir20/phantomjs-node/issues/431)
+- [How to evaluate a page using awaitFor to load dynamic contents](https://github.com/amir20/phantomjs-node/issues/431)
 
 如果有类似 `waitFor` 的需求，即保持阻塞直到触发某种条件，一般是用来通过检查某个 DOM 是否存在，来判断页面是否加载完成，以便进行下一步的操作（比如截图）。可以通过上面的 issue 来实现这样的需求。
 
@@ -122,3 +122,11 @@ Node.js 爬虫工具，可以在服务端像使用 jQuery 一样解析获取的 
 - [nodemailer](https://github.com/nodemailer/nodemailer)
 
 Node.js 发送邮件
+
+- [node-hat](https://github.com/substack/node-hat)
+
+Generate random IDs and avoid collisions.
+
+- [debug](https://github.com/visionmedia/debug)
+
+tiny node.js & browser debugging utility for your libraries and applications

@@ -135,19 +135,19 @@ how：
 综上，我们一共有三种资源文件，针对着三个运行环境：
 
 - `browser_action`
-    - 控制logo点击后出现的弹窗，涵盖相关的html/js/css
+    - 控制 logo 点击后出现的弹窗，涵盖相关的 html/js/css
     - 在弹窗中，会进行登录/注册的操作，并将用户信息保存在本地储存中。已登录用户则展现基本信息
 - `background`
     - 在后台持续运行，或者被事件唤醒后运行
     - 右键菜单的点击和异步保存事件将在这里触发
 - `content_scripts`
-    - 当前浏览的页面里运行的文件，可以操作DOM
+    - 当前浏览的页面里运行的文件，可以操作 DOM
     - 因此，我会在这个文件里监听用户的选择事件
 
 注：
 
-- `content_scripts`中如果没有`matches`，则扩展程序无法正常加载，也不能通过“加载未封装的扩展程序”来添加。如果你的`content_scripts`中有js可以针对所有页面运行，则填写`"matches" : ["http://*/*", "https://*/*"]`即可
-- 推荐将`background`中的`persistent`设置为`false`，根据事件来运行后台js
+- `content_scripts` 中如果没有 `matches`，则扩展程序无法正常加载，也不能通过“加载未封装的扩展程序”来添加。如果你的 `content_scripts` 中有js可以针对所有页面运行，则填写 `"matches" : ["http://*/*", "https://*/*"]` 即可
+- 推荐将 `background` 中的 `persistent` 设置为 `false`，根据事件来运行后台js
 
 ### 不同运行环境JS的绳命周期
 
@@ -167,15 +167,15 @@ how：
 ]
 ```
 
-`js`所定义的一个Array里的各个JS可以相互影响。
+`js` 所定义的一个Array里的各个JS可以相互影响。
 
-除此以外，对于chrome提供的extension可使用的API，`content_scripts`只能调用[`extension`](https://crxdoc-zh.appspot.com/extensions/extension)，[`runtime`](https://crxdoc-zh.appspot.com/extensions/runtime)，[`storage`](https://crxdoc-zh.appspot.com/extensions/storage)这几个
+除此以外，对于chrome提供的extension可使用的API，`content_scripts` 只能调用[`extension`](https://crxdoc-zh.appspot.com/extensions/extension)，[`runtime`](https://crxdoc-zh.appspot.com/extensions/runtime)，[`storage`](https://crxdoc-zh.appspot.com/extensions/storage)这几个
 
 #### [`background`](https://crxdoc-zh.appspot.com/extensions/event_pages)
 
 > 官方建议将后台js配置为`"persistent": false`，以便在需要时加载，再次进入空闲状态后卸载
 
-什么时候会让`background`的资源文件加载呢？
+什么时候会让 `background` 的资源文件加载呢？
 
 - 应用程序第一次安装或者更新
 - 监听某个事件触发(例如`chrome.runtime.onInstalled.addListener`)
@@ -248,11 +248,11 @@ chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
 });
 ```
 
-需要注意的是，即便你在多个JS中注册了消息监听`onMessage.addListener`，也只有一个监听者能收到通过`runtime.sendMessage`发送出去的消息。如果需要不同的监听者分别监听消息，则需要使用`chrome.tab` API来指定消息接收对象
+需要注意的是，即便你在多个JS中注册了消息监听 `onMessage.addListener`，也只有一个监听者能收到通过 `runtime.sendMessage` 发送出去的消息。如果需要不同的监听者分别监听消息，则需要使用 `chrome.tab` API来指定消息接收对象
 
 举个栗子：
 
-上文说过，需要在`content_scripts`中监听选择事件，获取选择的文本，而对于右键菜单的点击则是在`background`中监听的。那么需要把选择的文本作为消息，发送给`background`，在`background`完成异步保存。
+上文说过，需要在 `content_scripts` 中监听选择事件，获取选择的文本，而对于右键菜单的点击则是在 `background` 中监听的。那么需要把选择的文本作为消息，发送给 `background` ，在 `background` 完成异步保存。
 
 ```javascript
 // content_scripts 中获取选择，并发送消息

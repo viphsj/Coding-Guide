@@ -19,6 +19,8 @@
 
 ## JS PLUGIN
 
+> mark 一个 [issue](https://github.com/jawil/blog/issues/10) 地址
+
 ### About animation
 
 - [mo.js](http://mojs.io/)
@@ -146,7 +148,7 @@
 
 > 渐变效果
 
-### About Data
+### About Data Visualization
 
 - [Sortable](http://rubaxa.github.io/Sortable/)
 
@@ -199,6 +201,8 @@ let after = moment('2016-3-31');
 before.from(after); // a day ago 相对时间多久之前
 before.to(after); // in a day 相对时间多久之后
 ```
+
+### About Data Storage
 
 - [Basil.js](http://wisembly.github.io/basil.js/)
 
