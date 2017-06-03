@@ -46,6 +46,7 @@ $ vim authorized_keys # 添加并保存 pub ssh
 
 $ exit
 $ ssh xxx@xxxx.xxx.xxx # 使用新用户登录
+$ ssh xxx@xxx.xxx.xxx -v # ssh 输出 log
 ```
 
 ### 端口

@@ -92,8 +92,9 @@
 ### Progress
 
 - [pm2](https://github.com/Unitech/pm2)
-
 - [forever](https://github.com/foreverjs/forever)
+
+### 定时任务
 
 - [node-schedule](https://github.com/node-schedule/node-schedule) 
 
@@ -102,6 +103,23 @@ Node.js 定时任务
 - [cron-parser](https://github.com/harrisiirak/cron-parser)
 
 时间设定工具，辅助定时任务
+
+- [cron](https://github.com/kelektiv/node-cron)
+- [node-cron](https://github.com/merencia/node-cron)
+- [later](https://github.com/bunkat/later)
+
+### 消息队列
+
+- [coffee-resque](https://github.com/technoweenie/coffee-resque)
+- [super-queue](https://github.com/SuperID/super-queue)
+- [disque](https://github.com/antirez/disque)
+- [disqueue-node](https://github.com/gideonairex/disqueue-node)
+- [disq](https://github.com/djanowski/disq)
+
+文章
+
+- [node消息队列](https://mp.weixin.qq.com/s?__biz=MzAxMTU0NTc4Nw==&mid=222389072&idx=1&sn=c0baf99bda2c74aa8b4fd0e2a2b14096#rd)
+- [从Redis谈起（三）—— Redis和消息中间件](https://mp.weixin.qq.com/s?__biz=MzAxMjgyMTY1NA==&mid=401601934&idx=1&sn=f87768708cdfe54fb6c302f203f3af44#rd)
 
 ### Others
 
@@ -130,3 +148,24 @@ Generate random IDs and avoid collisions.
 - [debug](https://github.com/visionmedia/debug)
 
 tiny node.js & browser debugging utility for your libraries and applications
+
+### Machine Learning
+
+- [machine_learning](https://github.com/junku901/machine_learning) 【据说 API 很友好】
+- [brain.js](https://github.com/harthur-org/brain.js/) 【创建神经网络的库，通过输入/输出数据进行训练】
+- [neurojs](https://github.com/janhuenermann/neurojs) 【没有适当的文档】
+- [ml](https://github.com/mljs/ml)
+- [convnetjs](https://github.com/karpathy/convnetjs) 【不再积极维护，适合于对神经网络有较多经验的人使用】
+- [mind](https://github.com/stevenmiller888/mind)
+- [synaptic](https://github.com/cazala/synaptic) 【维护活跃】
+- [thing-translator](https://github.com/dmotz/thing-translator) 【图像识别】
+- [playground](https://github.com/tensorflow/playground) 【可用于学习，[tensorflow](https://github.com/tensorflow) 出品】
+- [FlappyLearning](https://github.com/xviniette/FlappyLearning) 【可用于学习，源码少，值得看】
+
+其他资源
+
+- [awesome-machine-learning](https://github.com/josephmisiti/awesome-machine-learning)
+- [awesome-machine-learning-cn](https://github.com/jobbole/awesome-machine-learning-cn)
+- [机器学习该怎么入门？](https://www.zhihu.com/question/20691338)
+- [机器学习入门资源不完全汇总](http://ml.memect.com/article/machine-learning-guide.html#%E5%85%A5%E9%97%A8%E6%94%BB%E7%95%A5)
+

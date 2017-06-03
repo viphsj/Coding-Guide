@@ -14,6 +14,15 @@
 
 大众的框架例如 React、Anjular、Ember 之类的无须再说，这里就罗列一些有意思的小框架
 
+### 类 React 框架
+
+- [riotjs](http://riotjs.com)
+- [infernojs](https://infernojs.org/)
+
+### 开箱即用
+
+- [NodeBB](https://github.com/NodeBB/NodeBB)
+
 ### 在线展示
 
 - [reveal.js](https://github.com/hakimel/reveal.js)

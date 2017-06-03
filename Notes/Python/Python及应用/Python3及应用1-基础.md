@@ -212,7 +212,7 @@ print(b) # [1, 2, 3]
 
 - `()` 创建空元组
 - `a, b = ('example', 'example2')` 解构元组
-- `tuple(list)` 将list转换为元组
+- `tuple(list)` 将 list 转换为元组
 
 创建包含一个或多个元素的元组时，每一个元素后面都需要跟着一个逗号。如果多于一个元素，则最后的那个逗号可以省略。
 
@@ -306,7 +306,7 @@ dict(examples)
 获取字典中的元素
 
 - `d.[key]` 
-- `d.get(key, defaultValue)` 获取指定key的value，并指定了默认值
+- `d.get(key, defaultValue)` 获取指定 key 的 value，并指定了默认值
 - `d.keys()` 获取所有键组成的list
 - `d.values()` 获取所有值组成的list
 - `d.items()` 获取所有键值对，返回一个list，里面的元素是(键，值)组成的元组
@@ -532,7 +532,7 @@ print(result2)
 
 `[expression for item in iterable if condition]`
 
-expression为符合condition条件的列表生成值。e.g.
+expression 为符合 condition 条件的列表生成值。e.g.
 
 ```python
 # example_1

@@ -56,7 +56,11 @@
 
 - [typed.js](https://github.com/mattboldt/typed.js/)
 
-> 模拟打字效果
+> 模拟打字效果，需要 jQuery 依赖
+
+- [ityped](https://ityped.surge.sh/)
+
+> 同样是模拟打字效果， 不需要 jQuery 依赖
 
 ### About page-switch
 
@@ -326,7 +330,7 @@ before.to(after); // in a day 相对时间多久之后
 >
 > 基于jQuery的 datePicker & timePicker
 
-- [datedropper](https://github.com/felicegattuso/datedropper)
+- **[datedropper](https://github.com/felicegattuso/datedropper)**
 
 > 针对移动端的日期选择
 

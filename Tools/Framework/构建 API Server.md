@@ -8,8 +8,10 @@
 
 ## 工具
 
-- [ratelimit](https://github.com/koajs/ratelimit)
-- [jwt](https://github.com/koajs/jwt)
+- [ratelimit](https://github.com/koajs/ratelimit)【Api Usage Limit】
+- [jwt](https://github.com/koajs/jwt)【Api Verification】
+- HMAC【Api Verification】
+- [joi](https://github.com/hapijs/joi)【Object Schema】
 
 ## 文档
 
