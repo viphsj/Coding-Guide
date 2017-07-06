@@ -23,6 +23,30 @@ $ sudo service redis-server start
 $ redis-cli shutdown
 ```
 
+- 配置
+
+```bash
+# redis 安全性配置
+# 配置文件默认位于 /etc/redis/redis.conf
+
+bind 127.0.0.1 # 仅绑定本机 IP，全部注释则默认任意 IP 均可访问本机的 redis
+port 6379 # 使用 6379 端口
+logfile /var/log/redis/redis-server.log # 日志文件
+requirepass your_passport_here # 设置密码
+
+# 修改完成后，通过
+$ redis-cli shutdown
+$ sudo service redis-server start /etc/redis/redis.conf # 重启并应用新的配置文件
+
+# 之后如果通过命令行连接 redis，则需
+$ redis-cli -p new_port -a passport
+# 例如，
+# redis-cli -p 6380 -a 12345678 配置了 6380 端口，且密码为 12345678
+
+# 如果允许外网 IP 访问，则在外部访问该服务器的 redis 时
+$ redis-cli -h ip -p new_port -a passport
+```
+
 ### redis-cli
 
 ```bash

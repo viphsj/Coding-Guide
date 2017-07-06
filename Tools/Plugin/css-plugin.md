@@ -87,7 +87,7 @@
 >
 > 然而也不是很好看。。。。。。。。。。。。
 
-- [twig](https://wiredcraft.com/twig/)
+- [twig](https://github.com/Wiredcraft/twig)
 
 > 简约线条式的图标库
 >
@@ -100,6 +100,11 @@
 - [Ionicons](http://ionicons.com/)
 
 > The premium icon font for Ionic
+
+- [feathericons](https://feathericons.com/)
+- [fontello](http://fontello.com/)
+
+> 在线生成并下载 Webfont Icon
 
 ### Style
 
