@@ -281,6 +281,10 @@ before.to(after); // in a day 相对时间多久之后
 
 > 格式化 input 的输入
 
+- [pell](https://github.com/jaredreich/pell)
+
+> **with no dependencies**
+
 ### markdown解析
 
 - [marked](https://github.com/chjj/marked)

@@ -81,13 +81,20 @@
 > 一个 Node.js 组件，为你的Markdown文件自动化添加目录。你看见的本文的目录就是由doctoc添加的
 
 - [bcrypt](https://github.com/kelektiv/node.bcrypt.js)
-
 - [xss](https://github.com/leizongmin/js-xss)
+- [node-bunyan](https://github.com/trentm/node-bunyan)
+- [casual](https://github.com/boo1ean/casual) Mock 工具
 
 ### Server
 
 - [nodemon](https://github.com/remy/nodemon)
 - [http-server](https://github.com/indexzero/http-server)
+
+### GraphQL
+
+- [graphql.js](https://github.com/graphql/graphql-js/)
+- [graphql-tools](https://github.com/apollographql/graphql-tools)
+- [apollo-server](https://github.com/apollographql/apollo-server)
 
 ### Progress
 

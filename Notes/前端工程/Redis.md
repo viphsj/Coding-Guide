@@ -111,3 +111,6 @@ $ redis-cli
 
 
 
+- http://www.awaimai.com/761.html
+- https://ruby-china.org/topics/28094
+- http://yijiebuyi.com/blog/bc2b3d3e010bf87ba55267f95ab3aa71.html

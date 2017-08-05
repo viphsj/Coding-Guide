@@ -93,3 +93,7 @@
 - [redux-observable](https://github.com/redux-observable/redux-observable)
 
 > Use RxJS in Redux & React，需要依赖于 Rxjs
+
+- [redux-pack](https://github.com/lelandrichardson/redux-pack)
+
+> 针对 Redux 中间件返回 Promise 进行处理
