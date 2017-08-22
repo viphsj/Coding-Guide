@@ -24,20 +24,25 @@ grad = zeros(size(theta));
 
 % h¦È(x) = 1 / (1 +e ^ (?¦Èx))
 
-[column, row] = size(X);
+% [column, row] = size(X);
+% 
+% theta = theta'
+% thetaX = sum(theta .* X, 2);
+% hx = sigmoid(thetaX);
+% cost = -y .* log(hx) .- (1 .- y ) .* log(1 .- hx);
+% 
+% J = sum(cost) / column;
+% 
+% grad1 = sum((hx .- y) .* X(:, 1)) / column;
+% grad2 = sum((hx .- y) .* X(:, 2)) / column;
+% grad3 = sum((hx .- y) .* X(:, 3)) / column;
+% 
+% grad = [grad1; grad2; grad3];
 
-theta = theta'
-thetaX = sum(theta .* X, 2);
-hx = sigmoid(thetaX);
-cost = -y .* log(hx) .- (1 .- y ) .* log(1 .- hx);
+sigmo = sigmoid(X * theta);
 
-J = sum(cost) / column;
-
-grad1 = sum((hx .- y) .* X(:, 1)) / column;
-grad2 = sum((hx .- y) .* X(:, 2)) / column;
-grad3 = sum((hx .- y) .* X(:, 3)) / column;
-
-grad = [grad1; grad2; grad3];
+J = 1 / m * (-y' * log(sigmo) - (1 - y') * log(1 - sigmo));
+grad = 1 / m * ((sigmo - y)' * X)';
 
 % =============================================================
 

@@ -128,6 +128,10 @@ Node.js 定时任务
 - [node消息队列](https://mp.weixin.qq.com/s?__biz=MzAxMTU0NTc4Nw==&mid=222389072&idx=1&sn=c0baf99bda2c74aa8b4fd0e2a2b14096#rd)
 - [从Redis谈起（三）—— Redis和消息中间件](https://mp.weixin.qq.com/s?__biz=MzAxMjgyMTY1NA==&mid=401601934&idx=1&sn=f87768708cdfe54fb6c302f203f3af44#rd)
 
+### 爬虫
+
+- [x-ray](https://github.com/matthewmueller/x-ray)
+
 ### Others
 
 - [phantomjs-node](https://github.com/amir20/phantomjs-node)

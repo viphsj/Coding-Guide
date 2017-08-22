@@ -441,3 +441,12 @@ before.to(after); // in a day 相对时间多久之后
 
 > Everything is steam !
 
+### 文件
+
+- [Dropzone](https://gitlab.com/meno/dropzone)
+
+> 拖拽上传文件
+
+- [PapaParse](https://github.com/mholt/PapaParse)
+
+> 在浏览器端解析 CSV 文件
