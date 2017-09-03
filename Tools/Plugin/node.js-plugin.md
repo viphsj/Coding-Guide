@@ -70,8 +70,6 @@
 
 ### Tool
 
-- [node-uuid](https://github.com/kelektiv/node-uuid)
-
 - [cross-env](https://github.com/kentcdodds/cross-env)
 
 - [cpx](https://github.com/mysticatea/cpx)
@@ -84,6 +82,14 @@
 - [xss](https://github.com/leizongmin/js-xss)
 - [node-bunyan](https://github.com/trentm/node-bunyan)
 - [casual](https://github.com/boo1ean/casual) Mock 工具
+
+#### 生成随机 ID
+
+- [node-uuid](https://github.com/kelektiv/node-uuid)
+- [js-shortid](https://github.com/zzzhan/js-shortid)
+- [guid](https://github.com/dandean/guid)
+- [node-hat](https://github.com/substack/node-hat)
+- [shortid](https://github.com/dylang/shortid)
 
 ### Server
 
@@ -151,10 +157,6 @@ Node.js 爬虫工具，可以在服务端像使用 jQuery 一样解析获取的 
 - [nodemailer](https://github.com/nodemailer/nodemailer)
 
 Node.js 发送邮件
-
-- [node-hat](https://github.com/substack/node-hat)
-
-Generate random IDs and avoid collisions.
 
 - [debug](https://github.com/visionmedia/debug)
 
