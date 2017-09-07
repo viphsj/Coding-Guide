@@ -47,7 +47,8 @@
     - [ReactJS](./Notes/React/ReactJS)
     - [React Native](./Notes/React/ReactNative)
   - Lua
-  - [算法](./Notes/算法)
+  - [算法](https://github.com/ecmadao/algorithms)
+  - [机器学习](https://github.com/ecmadao/ml-in-action)
   - [Projects](./Notes/Projects)
   - [译文](./Notes/译文)
   - [Electron](./Notes/Electron)
@@ -133,6 +134,11 @@
 - [Component](./Notes/ember/Ember%E5%88%9D%E6%AD%A5--Component.md)
 - [Controller](./Notes/ember/Ember%E5%88%9D%E6%AD%A5--Controller.md)
 - [Model](./Notes/ember/Ember%E5%88%9D%E6%AD%A5--Model.md)
+
+### 算法 & ML
+
+- [算法](https://github.com/ecmadao/algorithms)
+- [机器学习 - 用 JS 实现](https://github.com/ecmadao/ml-in-action)
 
 ### 好玩的
 
