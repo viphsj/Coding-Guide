@@ -109,7 +109,7 @@
 
 ### 定时任务
 
-- [node-schedule](https://github.com/node-schedule/node-schedule) 
+- [node-schedule](https://github.com/node-schedule/node-schedule)
 
 Node.js 定时任务
 
@@ -138,6 +138,10 @@ Node.js 定时任务
 
 - [x-ray](https://github.com/matthewmueller/x-ray)
 
+- [**cheerio**](https://github.com/cheeriojs/cheerio)
+
+Node.js 爬虫工具，可以在服务端像使用 jQuery 一样解析获取的 HTML
+
 ### Others
 
 - [phantomjs-node](https://github.com/amir20/phantomjs-node)
@@ -149,10 +153,6 @@ Node.js 定时任务
 - [jsinspect](https://github.com/danielstjules/jsinspect)
 
 检查代码中的重复代码，虽然不是非常精准，但对优化代码也有一定帮助。
-
-- [**cheerio**](https://github.com/cheeriojs/cheerio)
-
-Node.js 爬虫工具，可以在服务端像使用 jQuery 一样解析获取的 HTML
 
 - [nodemailer](https://github.com/nodemailer/nodemailer)
 
