@@ -139,3 +139,60 @@ $ chmod 750 test.md
 # c: 增加该属性后，表示自动压缩该文件，读取时会自动解压
 # i: 增加该属性后，表示文件不能被删除、重命名、设定链接、写入、新增数据
 ```
+
+- `find [path] [option]`
+
+```bash
+# -atime +n/-n: 表示访问或执行时间大于或小于 n 天的文件。atime -> access time, 在读取文件或执行文件时被修改
+# -ctime +n/-n: 表示写入、更改 inode 属性（如更改所有者、权限或者链接）时间大于或小于 n 天的文件。ctime -> create time, 在写入文件、更改所有者、权限或链接设置时随 inode 内容的更改而更改的
+# -mtime +n/-n: 表示写入时间大于或小于 n 天的文件。mtime -> modified time, 在写入文件时随文件内容的更改而更改
+$ find /tmp/ -mtime -1 # 查找 tmp 文件夹内修改时间小于 1 天的文件
+
+# -name filename: 直接根据文件名搜索
+$ find /tmp/ -name test.md
+
+# -type filetype: 根据文件类型搜索，可使用的类型包括 f, b, c, d, l, s 等
+$ find /tmp/ -type d # 搜索 tmp 文件夹下的搜索文件夹
+```
+
+### 用户和用户组
+
+#### 组
+
+- `groupadd [-g GID] groupname`
+
+```bash
+# 新增用户组
+# 如果不加 -g 选项，则按照系统默认的 gid 创建组
+$ groupadd groupTest1
+$ groupadd -g 511 groupTest2
+```
+
+- `groupdel`
+
+```bash
+# 删除组，当组内有用户时无法删除
+$ groupdel groupTest1
+```
+
+#### 用户
+
+- `useradd [-u UID] [-g GID] [-d HOME] [-M] [-s] username`
+
+```bash
+# -u 自定义 UID
+# -g 表示令用户属于某个已存在的组，-g 后可使用 GID 或组名
+# -d 自定义用户的家目录
+# -M 表示不建立家目录
+# -s 表示自定义 shell
+$ useradd -g 0 ecmadao # 添加 ecmadao 用户，并放到 root 组内
+# 如果 -g 后使用了不存在的 gid 则会报错
+```
+
+- `userdel [-r] username`
+
+```bash
+# -r: 删除用户时同时删除该用户的家目录
+$ userdel ecmadao
+$ userdel -r ecmadao
+```
