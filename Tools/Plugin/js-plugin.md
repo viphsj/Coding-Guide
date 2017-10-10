@@ -6,7 +6,8 @@
   - [About animation](#about-animation)
   - [About page-switch](#about-page-switch)
   - [About media](#about-media)
-  - [About Data](#about-data)
+  - [About Data Visualization](#about-data-visualization)
+  - [About Data Storage](#about-data-storage)
   - [HTML to..](#html-to)
   - [About Writer](#about-writer)
   - [markdown解析](#markdown%E8%A7%A3%E6%9E%90)
@@ -14,6 +15,7 @@
   - [时间日期选择](#%E6%97%B6%E9%97%B4%E6%97%A5%E6%9C%9F%E9%80%89%E6%8B%A9)
   - [Other tools](#other-tools)
   - [函数库](#%E5%87%BD%E6%95%B0%E5%BA%93)
+  - [文件](#%E6%96%87%E4%BB%B6)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 

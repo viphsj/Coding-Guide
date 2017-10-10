@@ -1,3 +1,22 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [TypeScript 备忘笔记](#typescript-%E5%A4%87%E5%BF%98%E7%AC%94%E8%AE%B0)
+  - [定义类型](#%E5%AE%9A%E4%B9%89%E7%B1%BB%E5%9E%8B)
+    - [通过接口定义](#%E9%80%9A%E8%BF%87%E6%8E%A5%E5%8F%A3%E5%AE%9A%E4%B9%89)
+      - [类与接口](#%E7%B1%BB%E4%B8%8E%E6%8E%A5%E5%8F%A3)
+      - [接口继承](#%E6%8E%A5%E5%8F%A3%E7%BB%A7%E6%89%BF)
+    - [通过 `type` 定义](#%E9%80%9A%E8%BF%87-type-%E5%AE%9A%E4%B9%89)
+  - [函数](#%E5%87%BD%E6%95%B0)
+  - [泛型](#%E6%B3%9B%E5%9E%8B)
+    - [泛型函数](#%E6%B3%9B%E5%9E%8B%E5%87%BD%E6%95%B0)
+    - [泛型接口](#%E6%B3%9B%E5%9E%8B%E6%8E%A5%E5%8F%A3)
+    - [泛型类](#%E6%B3%9B%E5%9E%8B%E7%B1%BB)
+  - [迭代](#%E8%BF%AD%E4%BB%A3)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 ## TypeScript 备忘笔记
 
 ### 定义类型

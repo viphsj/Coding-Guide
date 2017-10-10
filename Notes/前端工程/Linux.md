@@ -1,3 +1,25 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [Linux](#linux)
+  - [文件和目录管理](#%E6%96%87%E4%BB%B6%E5%92%8C%E7%9B%AE%E5%BD%95%E7%AE%A1%E7%90%86)
+    - [文件与目录](#%E6%96%87%E4%BB%B6%E4%B8%8E%E7%9B%AE%E5%BD%95)
+    - [文档](#%E6%96%87%E6%A1%A3)
+    - [属性和权限](#%E5%B1%9E%E6%80%A7%E5%92%8C%E6%9D%83%E9%99%90)
+  - [用户和用户组](#%E7%94%A8%E6%88%B7%E5%92%8C%E7%94%A8%E6%88%B7%E7%BB%84)
+    - [组](#%E7%BB%84)
+    - [用户](#%E7%94%A8%E6%88%B7)
+  - [磁盘管理](#%E7%A3%81%E7%9B%98%E7%AE%A1%E7%90%86)
+  - [VIM](#vim)
+  - [压缩](#%E5%8E%8B%E7%BC%A9)
+    - [常见压缩文件后缀名](#%E5%B8%B8%E8%A7%81%E5%8E%8B%E7%BC%A9%E6%96%87%E4%BB%B6%E5%90%8E%E7%BC%80%E5%90%8D)
+    - [压缩/打包命令](#%E5%8E%8B%E7%BC%A9%E6%89%93%E5%8C%85%E5%91%BD%E4%BB%A4)
+  - [shell 基础](#shell-%E5%9F%BA%E7%A1%80)
+  - [正则表达式](#%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 ## Linux
 
 ### 文件和目录管理

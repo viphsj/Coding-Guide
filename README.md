@@ -11,6 +11,7 @@
   - [Python3系列教程](#python3%E7%B3%BB%E5%88%97%E6%95%99%E7%A8%8B)
   - [Python进阶](#python%E8%BF%9B%E9%98%B6)
   - [Ember文档翻译系列(V2.8.0)](#ember%E6%96%87%E6%A1%A3%E7%BF%BB%E8%AF%91%E7%B3%BB%E5%88%97v280)
+  - [算法 & ML](#%E7%AE%97%E6%B3%95--ml)
   - [好玩的](#%E5%A5%BD%E7%8E%A9%E7%9A%84)
   - [源码解读](#%E6%BA%90%E7%A0%81%E8%A7%A3%E8%AF%BB)
   - [js-bits](#js-bits)

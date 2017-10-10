@@ -3,7 +3,7 @@
 **Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
 - [JavaScript编码规范](#javascript%E7%BC%96%E7%A0%81%E8%A7%84%E8%8C%83)
-  - [使用ES6中的规范](#%E4%BD%BF%E7%94%A8es6%E4%B8%AD%E7%9A%84%E8%A7%84%E8%8C%83)
+  - [使用 ES6 中的规范](#%E4%BD%BF%E7%94%A8-es6-%E4%B8%AD%E7%9A%84%E8%A7%84%E8%8C%83)
   - [文件与编码](#%E6%96%87%E4%BB%B6%E4%B8%8E%E7%BC%96%E7%A0%81)
   - [解构](#%E8%A7%A3%E6%9E%84)
   - [函数](#%E5%87%BD%E6%95%B0)
@@ -18,7 +18,7 @@
 
 ## JavaScript编码规范
 
-### 使用ES6中的规范
+### 使用 ES6 中的规范
 
 - 使用对象方法的简写
 
@@ -49,7 +49,7 @@ const lukeSkywalker = 'Luke Skywalker';
 
 // bad
 const obj = {
-	lukeSkywalker: lukeSkywalker,
+  lukeSkywalker: lukeSkywalker,
 };
 
 // good
@@ -68,20 +68,20 @@ const count = 100;
 
 // bad
 const obj = {
-	number: 1,
-	id: 2,
-	count,
-	three: 3,
-	example
+  number: 1,
+  id: 2,
+  count,
+  three: 3,
+  example
 };
 
 // good
 const obj = {
-	example,
-	count,
-	number: 1,
-	id: 2,
-	three: 3
+  example,
+  count,
+  number: 1,
+  id: 2,
+  three: 3
 };
 ```
 
@@ -116,8 +116,8 @@ export var AMOUNT = 10;
 // in index.js
 
 import {
-	CONST_VALUE,
-	AMOUNT
+  CONST_VALUE,
+  AMOUNT
 } from './ConstValue.js';
 ```
 
@@ -139,23 +139,23 @@ const name = 'Capt. Janeway';
 
 ```javascript
 // bad
-  function getFullName(user) {
-    const firstName = user.firstName;
-    const lastName = user.lastName;
+function getFullName(user) {
+  const firstName = user.firstName;
+  const lastName = user.lastName;
 
-    return `${firstName} ${lastName}`;
-  }
+  return `${firstName} ${lastName}`;
+}
 
-  // good
-  function getFullName(obj) {
-    const { firstName, lastName } = obj;
-    return `${firstName} ${lastName}`;
-  }
+// good
+function getFullName(obj) {
+  const { firstName, lastName } = obj;
+  return `${firstName} ${lastName}`;
+}
 
-  // best
-  function getFullName({ firstName, lastName }) {
-    return `${firstName} ${lastName}`;
-  }
+// best
+function getFullName({ firstName, lastName }) {
+  return `${firstName} ${lastName}`;
+}
 ```
 
 - 对数组使用解构赋值
@@ -176,23 +176,23 @@ const [first, second] = arr;
 > 增加属性或者改变排序不会改变调用时的位置
 
 ```javascript
- // bad
-  function processInput(input) {
-    // then a miracle occurs
-    return [left, right, top, bottom];
-  }
+// bad
+function processInput(input) {
+  // then a miracle occurs
+  return [left, right, top, bottom];
+}
 
-  // 调用时需要考虑回调数据的顺序。
-  const [left, __, top] = processInput(input);
+// 调用时需要考虑回调数据的顺序。
+const [left, _, top] = processInput(input);
 
-  // good
-  function processInput(input) {
-    // then a miracle occurs
-    return { left, right, top, bottom };
-  }
+// good
+function processInput(input) {
+  // then a miracle occurs
+  return { left, right, top, bottom };
+}
 
-  // 调用时只选择需要的数据
-  const { left, right } = processInput(input);
+// 调用时只选择需要的数据
+const { left, right } = processInput(input);
 ```
 
 ### 函数
@@ -254,13 +254,11 @@ function handleThings(opts = {}) {
 ```javascript
 // bad
 [1, 2, 3].map(function (x) {
-	return x * x;
+  return x * x;
 });
 
 // good
-[1, 2, 3].map((x) => {
-	return x * x;
-});
+[1, 2, 3].map(x => x * x);
 ```
 
 ### 属性与变量
@@ -295,25 +293,25 @@ const myName = person.name;
 ```javascript
 let name = '';
 if(!name) {
-	console.log('don\'t have name yet');
+  console.log('don\'t have name yet');
 }
 if(list.length) {
-	// do something...
+  // do something...
 }
 ```
 
 ### 代码美观
 
-- 使用 // 作为单行注释。在评论对象上面另起一行使用单行注释。在注释前插入空行
+- 使用 `//` 作为单行注释。在评论对象上面另起一行使用单行注释。在注释前插入空行
 
 ```javascript
 function example(){
-	const name = 'ecmadao';
+  const name = 'ecmadao';
 
-	// this is an example
-	function sayName() {
-		console.log(name);
-	}
+  // this is an example
+  function sayName() {
+    console.log(name);
+  }
 }
 ```
 
@@ -343,18 +341,18 @@ $('#items').find('.selected').highlight().end().find('.open').updateCount();
 // bad
 $('#items').
   find('.selected').
-    highlight().
-    end().
+  highlight().
+  end().
   find('.open').
-    updateCount();
+  updateCount();
 
 // good
 $('#items')
   .find('.selected')
-    .highlight()
-    .end()
+  .highlight()
+  .end()
   .find('.open')
-    .updateCount();
+  .updateCount();
 
 // bad
 const leds = stage.selectAll('.led').data(data).enter().append('svg:svg').class('led', true)
@@ -364,21 +362,21 @@ const leds = stage.selectAll('.led').data(data).enter().append('svg:svg').class(
 
 // good
 const leds = stage.selectAll('.led')
-    .data(data)
+  .data(data)
   .enter().append('svg:svg')
-    .classed('led', true)
-    .attr('width', (radius + margin) * 2)
+  .classed('led', true)
+  .attr('width', (radius + margin) * 2)
   .append('svg:g')
-    .attr('transform', 'translate(' + (radius + margin) + ',' + (radius + margin) + ')')
-    .call(tron.led);
+  .attr('transform', 'translate(' + (radius + margin) + ',' + (radius + margin) + ')')
+  .call(tron.led);
 ```
 
 ### null & undefined
 
-- 不要用null来检测是否传入了某个参数
-- 不要用null来检测一个未初始化的变量
-- 把null当做占位符，初始化变量的时候赋值
-- 如果所期望的值真的会是null，则可以直接和null比较
+- 不要用 null 来检测是否传入了某个参数
+- 不要用 null 来检测一个未初始化的变量
+- 把 null 当做占位符，初始化变量的时候赋值
+- 如果所期望的值真的会是 null，则可以直接和 null 比较
 
 ```javascript
 let person = null;

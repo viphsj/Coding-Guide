@@ -9,9 +9,15 @@
   - [Callback](#callback)
   - [System](#system)
   - [Tool](#tool)
+    - [生成随机 ID](#%E7%94%9F%E6%88%90%E9%9A%8F%E6%9C%BA-id)
   - [Server](#server)
+  - [GraphQL](#graphql)
   - [Progress](#progress)
+  - [定时任务](#%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1)
+  - [消息队列](#%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97)
+  - [爬虫](#%E7%88%AC%E8%99%AB)
   - [Others](#others)
+  - [Machine Learning](#machine-learning)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
