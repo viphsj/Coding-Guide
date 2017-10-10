@@ -26,7 +26,7 @@
 - 安装 Node
 - 全局安装Express
 
-```js
+```javascript
 // install node
 
 // install express
@@ -46,13 +46,13 @@ $ npm start
 
 创造一个Express模块对象：
 
-```js
+```javascript
 var express = require('express');
 var app = new express();
 ```
 application对象的方法：
 
-```js
+```javascript
 app.set(name, value) // 设置一个app属性 
 app.get(name) // 提取由app.set()设置的值 
 app.enable(name) // 开启一个设置 
@@ -76,7 +76,7 @@ app.listen() // 绑定并监听所有连接
 当一个客户端对Express app发起一个请求时，HTTP request对象被创建。
 它包含许多与当前请求相关的方法和属性：
 
-```js
+```javascript
 req.params // 包含请求路径中的变量 
 req.params(name) // 从GET变量或者POST变量中返回一个特定变量 
 req.query // 包含GET中的值 
@@ -111,7 +111,7 @@ response对象和request对象一起被创建
 
 每个中间件在把控制传递给下一个中间件之前都需要包含一个res对象和一个req对象
 
-```js
+```javascript
 res.status(code) // 设置HTTP恢复状态码 
 res.set(field, [value]) // 设置回复HTTP头文件 
 res.get(header) // 获取回复HTTP头文件 
@@ -148,7 +148,7 @@ res.render(view, [locals], callback) // 渲染一个视图
 
 #### 定义路由
 
-```js
+```javascript
 ./routes/index.js
 
 var express = require('express');
@@ -167,7 +167,7 @@ module.exports = router;
 ```
 其底层都是通过如下方法实现:
 
-```js
+```javascript
 // GET method route
 app.get('/', function (req, res) {
   res.send('GET request to the homepage');
@@ -184,7 +184,7 @@ app.post('/', function (req, res) {
 
 多个回调函数可以处理一个路由（确保您指定 next 对象）:
 
-```js
+```javascript
 app.get('/example/b', function (req, res, next) {
   console.log('the response will be sent by the next function ...');
   next();
@@ -195,7 +195,7 @@ app.get('/example/b', function (req, res, next) {
 
 一组回调函数可以处理一个路由。例如：
 
-```js
+```javascript
 var cb0 = function (req, res, next) {
   console.log('CB0');
   next();
@@ -216,7 +216,7 @@ app.get('/example/c', [cb0, cb1, cb2]);
 
 #### 分发路由,加载中间件
 
-```js
+```javascript
 ./app.js
 
 var express = require('express');
@@ -261,7 +261,7 @@ module.exports = app;
 ```
 在根路由 (/) 上（应用程序的主页）对 POST 请求进行响应:
 
-```js
+```javascript
 app.post('/', function (req, res) {
   res.send('Got a POST request');
 });
@@ -269,7 +269,7 @@ app.post('/', function (req, res) {
 
 对 /user 路由的 PUT 请求进行响应:
 
-```js
+```javascript
 app.put('/user', function (req, res) {
   res.send('Got a PUT request at /user');
 });
@@ -277,7 +277,7 @@ app.put('/user', function (req, res) {
 
 对 /user 路由的 DELETE 请求进行响应:
 
-```js
+```javascript
 app.delete('/user', function (req, res) {
   res.send('Got a DELETE request at /user');
 });
@@ -299,7 +299,7 @@ html
 
 #### 资源文件
 
-```js
+```javascript
 ./app.js
 
 // 配置路径
@@ -311,14 +311,14 @@ http://localhost:3000/css/style.css
 
 要使用多个静态资产目录，请多次调用 express.static 中间件函数:
 
-```js
+```javascript
 app.use(express.static('public'));
 app.use(express.static('files'));
 ```
 
 要为 express.static 函数提供的文件创建虚拟路径前缀（路径并不实际存在于文件系统中），请为静态目录指定安装路径，如下所示:
 
-```js
+```javascript
 app.use('/static', express.static('public'));
 // 推荐使用绝对路径
 app.use('/static', express.static(__dirname + '/public'));
@@ -331,7 +331,7 @@ http://localhost:3000/static/css/style.css
 
 设置404
 
-```js
+```javascript
 app.use(function(req, res, next) {
   res.status(404).send('Sorry cant find that!');
 });
@@ -339,7 +339,7 @@ app.use(function(req, res, next) {
 
 设置500
 
-```js
+```javascript
 app.use(function(err, req, res, next) {
   console.error(err.stack);
   res.status(500).send('Something broke!');

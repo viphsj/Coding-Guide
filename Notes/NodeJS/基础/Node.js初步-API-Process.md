@@ -23,24 +23,24 @@
 
 #### cwd
 
-```js
+```javascript
 process.cwd();
 ```
 > 查看应用程序当前目录
 
-```js
+```javascript
 console.log(`Current directory: ${process.cwd()}`);
 ```
 
 #### chdir
 
-```js
+```javascript
 process.chdir(directory);
 ```
 
 > 改变应用的当前目录，失败时报错，通过try/catch捕获
 
-```js
+```javascript
 console.log(`Starting directory: ${process.cwd()}`);
 try {
   process.chdir('/tmp');
@@ -62,7 +62,7 @@ catch (err) {
 > 
 > 可以通过stdout注册事件监听
 
-```js
+```javascript
 // 设置流编码
 process.stdout.setEncoding('utf8');
 
@@ -71,7 +71,7 @@ console.log = function(d){
 }
 ```
 
-```js
+```javascript
 // 注册监听事件
 process.stdout.on('data',function(data){
    console.log(data);
@@ -82,7 +82,7 @@ process.stdout.on('data',function(data){
 > 
 > 标准错误流，捕获错误信息
 
-```js
+```javascript
 // 设置流编码
 process.stderr.setEncoding('utf8');
 ```
@@ -91,7 +91,7 @@ process.stderr.setEncoding('utf8');
 > 
 > 可以通过注册事件的方式来获取输入的内容
 
-```js
+```javascript
 // 设置流编码
 process.stdin.setEncoding('utf8');
 
@@ -110,7 +110,7 @@ process.stdin.on('end', () => {
 
 #### exit
 
-```js
+```javascript
 process.exit([code])
 ```
 
@@ -120,7 +120,7 @@ process.exit([code])
 
 #### memoryUsage
 
-```js
+```javascript
 process.memoryUsage()
 ```
 
@@ -128,7 +128,7 @@ process.memoryUsage()
 > 
 > 单位是bytes
 
-```js
+```javascript
 console.log(util.inspect(process.memoryUsage())); 
 
 // 输出
@@ -141,7 +141,7 @@ console.log(util.inspect(process.memoryUsage()));
 
 #### nextTick
 
-```js
+```javascript
 process.nextTick(callback[, arg][, ...]);
 ```
 > 在事件循环的下一次循环中调用 callback 回调函数
@@ -150,7 +150,7 @@ process.nextTick(callback[, arg][, ...]);
 > 
 > 比 `setTimeout(fn, 0)` 更高效
 
-```js
+```javascript
 console.log('start');
 process.nextTick(() => {
   console.log('nextTick callback');
@@ -163,7 +163,7 @@ console.log('scheduled');
 ```
 > 这个函数对于想要在*对象创建*后而*I/O操作*发生之前，执行某些操作来说非常重要
 
-```js
+```javascript
 function MyThing(options) {
   this.setupOptions(options);
 
@@ -179,7 +179,7 @@ thing.getReadyForStuff();
 ```
 > 必须保证函数一定是同步执行或者一定是异步执行
 
-```js
+```javascript
 // WARNING!  DO NOT USE!  BAD UNSAFE HAZARD!
 function maybeSync(arg, cb) {
   if (arg) {
@@ -192,7 +192,7 @@ function maybeSync(arg, cb) {
 ```
 这样做很危险，因为当你这样做的时候：
 
-```js
+```javascript
 maybeSync(true, () => {
   foo();
 });
@@ -200,7 +200,7 @@ bar();
 ```
 并不知道`foo()`还是`bar()`哪个先被调用。如果能够确定是否100%异步或同步的话就没问题：
 
-```js
+```javascript
 function definitelyAsync(arg, cb) {
   if (arg) {
     process.nextTick(cb);

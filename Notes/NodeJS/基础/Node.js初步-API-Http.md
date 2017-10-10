@@ -13,7 +13,7 @@
 
 ### Http 初步
 
-```js
+```javascript
 var http = require('http')
 ```
 
@@ -21,7 +21,7 @@ var http = require('http')
 > 
 > http 头部信息通畅是如下所示的对象。Key全部小写，值是不能修改的
 
-```js
+```javascript
 { 
   'content-length': '123',
   'content-type': 'text/plain',
@@ -41,7 +41,7 @@ var http = require('http')
 > 
 > 接收到的原始头信息以数组形式 [key, value, key2, value2, ...] 保存在 rawHeaders 属性中. 例如, 前面提到的消息对象会有 rawHeaders 列表如下
 
-```js
+```javascript
 [ 'ConTent-Length', '123456',
   'content-LENGTH', '123',
   'content-type', 'text/plain',
@@ -60,7 +60,7 @@ var http = require('http')
 > 
 > Sockets are removed from the agent's pool when the socket emits either a 'close' event or a special 'agentRemove' event. This means that if you intend to keep one HTTP request open for a long time and don't want it to stay in the pool you can do something along the lines of:
 
-```js
+```javascript
 http.get(options, (res) => {
   // Do stuff
 }).on('socket', (socket) => {
@@ -69,7 +69,7 @@ http.get(options, (res) => {
 ```
 > Alternatively, you could just opt out of pooling entirely using `agent:false` :
 
-```js
+```javascript
 http.get({
   hostname: 'localhost',
   port: 80,
@@ -89,7 +89,7 @@ new Agent([options]):
 
 To configure any of them, you must create your own http.Agent object.
 
-```js
+```javascript
 const http = require('http');
 var keepAliveAgent = new http.Agent({ keepAlive: true });
 options.agent = keepAliveAgent;

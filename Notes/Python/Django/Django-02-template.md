@@ -181,7 +181,7 @@ articles.tags.all() # 第二次取出时仍会对数据库进行查询
 
 #### ajax
 
-```js
+```javascript
 $.ajax({
 	url: `/articles/${articleId}/comment_new/`,
 	method: 'POST',

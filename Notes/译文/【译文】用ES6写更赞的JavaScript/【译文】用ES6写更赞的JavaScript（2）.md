@@ -64,7 +64,7 @@ JavaScript没有这样的拷贝方法。在JavaScript中，实例化一个类也
 
 使用`class`和代码块创建类，称之为“类的声明”。在声明基类时不需要使用`extends`关键字：
 
-```js
+```javascript
 "use strict";
 
 // Food is a base class
@@ -103,7 +103,7 @@ console.log(chicken_breast.protein); // 26 (LINE A)
 
 你不必总是自己写`constructor`方法，当你不写的时候引擎会自动帮你添加一个新的`constructor`方法。
 
-```js
+```javascript
 "use strict";
 
 class NoConstructor { 
@@ -117,7 +117,7 @@ const nemo = new NoConstructor(); // Works, but pretty boring
 
 将类赋值给变量叫作类表达式：
 
-```js
+```javascript
 "use strict";
 
 // 创建匿名class，无法在class内部使用它的名字
@@ -151,7 +151,7 @@ try {
 
 使用`extends`建立的类被称为子类。它的使用很简单。来瞅瞅例子：
 
-```js
+```javascript
 "use strict";
 
 // FatFreeFood is a derived class
@@ -201,7 +201,7 @@ fat_free_yogurt.print(); // 'Greek Yogurt | 26g P :: 16g C :: 0g F  /  Would you
 
 构造函数并不是什么新东西。通过`new`关键字调用的方法都会返回一个对象--这种方法叫做构造方法。对应的函数叫做构造函数：
 
-```js
+```javascript
 "use strict";
 
 function Food (name, protein, carbs, fat) {
@@ -230,7 +230,7 @@ console.log(fish); // 'undefined'
 
 知道了这些之后，我们可以重写`Food`方法，并使其实例化时不必使用`new`关键字：
 
-```js
+```javascript
 "use strict";
 
 // Eliminating the need for 'new' -- just for demonstration
@@ -263,7 +263,7 @@ console.log(fish.protein); // 26
 
 这个过程--向其他对象查找不存在的属性--叫作**委托**
 
-```js
+```javascript
 "use strict";
 
 // joe 并没有toString方法
@@ -319,7 +319,7 @@ sara.toString(); // '[object Object]', 而不是 ReferenceError!
 
 这个函数（Object）跟其他的方法不同。它是一个构造函数--调用它则会返回一个新的对象：
 
-```js
+```javascript
 "use strict";
 
 typeof new Object(); // "object"
@@ -339,7 +339,7 @@ typeof Object(); // Object function 的一个奇特之处是它不需要通过 n
   
 反之，那个对象--`meFunction.prototype`--拥有一个名为`.constructor`的属性，返回`someFunction`方法。
 
-```js
+```javascript
 "use strict";
 
 function foo () {  console.log('Foo!');  }
@@ -366,7 +366,7 @@ foo.prototype.constructor(); // Prints 'Foo!' -- just proving that 'foo.prototyp
 
 看下这段代码：
 
-```js
+```javascript
 "use strict";
 const foo = { status : 'foobar' };
 ```
@@ -375,7 +375,7 @@ const foo = { status : 'foobar' };
 
 但是在这背后，JavaScript做了一些额外的工作。当我们直接创建一盒对象时，JavaScript会把对象的原型设置成`Object.prototype`，并把这个对象的`constructor`设置为`Object`：
 
-```js
+```javascript
 "use strict";
 const foo = { status : 'foobar' };
 Object.getPrototypeOf(foo) === Object.prototype; // true
@@ -386,7 +386,7 @@ foo.constructor === Object; // true
 
 再来看看`Food`这个例子
 
-```js
+```javascript
 "use strict";
 
 function Food (name, protein, carbs, fat) {
@@ -404,14 +404,14 @@ function Food (name, protein, carbs, fat) {
   1. 将`prototype`属性加到通过`new`声明的函数上。
   2. 将`constructor`属性加到`new`声明的函数上。
 
-```js
+```javascript
 const tootsie_roll = new Food('Tootsie Roll', 0, 26, 0);
 
 Object.getPrototypeOf(tootsie_roll) === Food.prototype; // true
 tootsie_roll.constructor === Food; // true
 ```
 
-```js
+```javascript
 "use strict";
 Food.prototype.cook = function cook () {
     console.log(`${this.name} is cooking!`);
@@ -425,7 +425,7 @@ dinner.cook(); // 'Lamb Chops are cooking!'
 
 我们可以通过`Object.create`手动设置原型。
 
-```js
+```javascript
 "use strict";
 const foo = {
     speak () {
@@ -450,7 +450,7 @@ Object.getPrototypeOf(bar) === foo; // true
 
 直接使用原型来模拟面向对象的行为需要很多技巧。
 
-```js
+```javascript
 "use strict";
 function Food (name, protein, carbs, fat) {
     this.name = name;
@@ -506,7 +506,7 @@ Object.defineProperty(FatFreeFood.constructor, "constructor", {
 
 第三点很有意思。在JavaScript中，类仅仅是个方法--它相当于类中的`constructor`方法
 
-```js
+```javascript
 "use strict";
 class Food {
     // Class definition is the same as before . . . 
@@ -516,7 +516,7 @@ typeof Food; // 'function'
 
 与普通方法不同的是，你只能通过`new`关键字来调用构造方法：
 
-```js
+```javascript
 const burrito = Food('Heaven', 100, 100, 25); // TypeError
 ```
 
@@ -524,7 +524,7 @@ const burrito = Food('Heaven', 100, 100, 25); // TypeError
 
 简单的答案：就像其他没有明确返回值的函数一样，它返回了`undefined`。因此你必须相信开发者会通过构造函数来调用函数。这也就是为什么js委员会建议使用首字母大写的方式来命名：提醒你使用`new`关键字。
 
-```js
+```javascript
 "use strict";
 
 function Food (name, protein, carbs, fat) {
@@ -542,7 +542,7 @@ ES2015提供了一个方法：[`new.target`](https://developer.mozilla.org/en-US
 
 `new.target`是通过`new`关键字调用的函数所拥有的一个属性。当你通过`new`调用一个方法的时候，方法内的`new.target`将指向该函数自身。而如果没有通过`new`调用，则这个属性的值是`undefined`。
 
-```js
+```javascript
 "use strict";
 
 // Enforcing constructor call
@@ -562,7 +562,7 @@ fish; // 'Food {name: "Halibut", protein: 20, carbs: 5, fat: 0}'
 
 在ES5中则不能更糟了：
 
-```js
+```javascript
 "use strict";
 function Food (name, protein, carbs, fat) {
     if (!(this instanceof Food))
@@ -580,7 +580,7 @@ function Food (name, protein, carbs, fat) {
 
 静态方法是构造函数上的方法，它对于实例化的类而言不可用。你可以通过`static`关键字定义它。
 
-```js
+```javascript
 "use strict";
 
 class Food {
@@ -594,7 +594,7 @@ Food.describe(); // '"Food" is a data type for storing macronutrient information
 
 静态方法与直接将属性加在函数身上有所类似：
 
-```js
+```javascript
 "use strict";
 function Food (name, protein, carbs, fat) {
     Food.count += 1;
@@ -617,7 +617,7 @@ Food.describe(); // "You've created 1 food."
 
 不是构造方法或者静态方法的方法都叫做属性方法。它的名字来源自我们将方法当做属性一样的附加在函数的原型身上：
 
-```js
+```javascript
 "use strict";
 
 // Using ES6:
@@ -658,7 +658,7 @@ Food.prototype.print = function print () {
 
 为了更加简洁，我们可以在方法里添加生成器：
 
-```js
+```javascript
 "use strict";
 class Range {
   constructor(from, to) {
@@ -698,7 +698,7 @@ for (let val of range.generate()) {
 
 新建一个symbol会返还给你一个绝对独特的值，它对于创建对象属性的名称而言非常有用：不会有偶然的命名重复。拿symbol做key也使得它不可数，因此对外部而言不可见（[并不是完全不可见](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Reflect/ownKeys)）
 
-```js
+```javascript
 "use strict";
 
 const secureObject = {
@@ -714,7 +714,7 @@ console.log( Reflect.ownKeys(secureObject) ); // [Symbol("name")] -- . . . 但�
 
 当你在自定义对象中使用内置构造方法的时候，JavaScript引擎会调用这个特殊Symbol方法。这个特性在JavaScript中充满诱惑。我们来看个例子：
 
-```js
+```javascript
 "use strict";
 // 通过扩展Array使得可以使用length属性，同时也使我们可以使用Array的内置方法，比如map, filter, reduce, push, pop等
 class FoodSet extends Array {

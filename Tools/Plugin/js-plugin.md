@@ -194,7 +194,7 @@
 >
 > 可以通过 moment 的方法快速的实现社交媒体上常见的“消息XX秒之前”以及日历上常见的“XX分钟之后”、“下周日”这样的效果
 
-```js
+```javascript
 moment(dateString).fromNow(); // 已现在为基准的之前
 
 moment(dateString).toNow(); // 已现在为基准的之后

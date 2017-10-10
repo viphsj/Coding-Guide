@@ -38,7 +38,7 @@ $ phantomjs <js file name>
 
 ### 编写测试脚本
 
-```js
+```javascript
 /*
 * 重要API-webpage
 * webpage用来打开网页，并返回status。若成功打开则为success
@@ -93,7 +93,7 @@ webpage.setting.userAgent = 'new agent'
 
 #### 获取页面上下文
 
-```js
+```javascript
 /*
 * 使用webpage的evaluate()函数
 * 可以在回调中获取到页面的上下文环境
@@ -118,7 +118,7 @@ webpage.open('https://google.com', function(status) {
 - `evalute()`方法可以返回一个对象，然而**返回值仅限于对象，不能包含函数（或闭包）**
 - 任何来自于网页并且包括来自`evaluate()`内部代码的控制台信息，默认不会显示。解决方案如下：
 
-```js
+```javascript
 // 重写webpage的onConsoleMessage方法，使输出统一调用console.log
 var webpage = require('webpage').create();
 webpage.onConsoleMessage = function((msg) {
@@ -134,7 +134,7 @@ webpage.onConsoleMessage = function((msg) {
 - `viewportSize` # 相当于浏览器窗口的大小，默认为手机端大小的窗口
 - `clipRect` # 截图剪裁的图像大小
 
-```js
+```javascript
 var webpage = require('webpage').create();
 webpage.viewportSize = {
   width: 1024,
@@ -157,7 +157,7 @@ webpage.open('https://www.google.com', function(status) {
 - `onResourceRequested` 记录request
 - `onResourceReceived` 记录response
 
-```js
+```javascript
 var url = 'https://www.google.com';
 var webpage = require('webpage').create();
 webpage.onResourceRequested = function(request) {
@@ -175,7 +175,7 @@ webpage.open(url, function(status) {
 
 在evaluate内获取DOM元素太慢太痛苦？我们可以引入jQuery等第三方库来便捷操作
 
-```js
+```javascript
 var webpage = require('webpage').create();
 page.open('https://www.google.com', function() {
 

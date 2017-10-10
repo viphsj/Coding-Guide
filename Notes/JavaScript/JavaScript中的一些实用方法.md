@@ -19,7 +19,7 @@
 
 ### [Object.assign()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/assign)
 
-```js
+```javascript
 Object.assign(target, ...sources);
 ```
 
@@ -30,7 +30,7 @@ Object.assign(target, ...sources);
 
 - 克隆对象
 
-```js
+```javascript
 let obj = {
 	a: 1,
 	b: 2
@@ -42,7 +42,7 @@ console.log(copyObj);
 
 - 合并对象
 
-```js
+```javascript
 let 
 obj1 = {a: 1},
 obj2 = {b: 2},
@@ -56,7 +56,7 @@ console.log(obj1); // {a:1, b:2, c:3}
 
 - 修改对象（不改变原有对象，返回新对象）
 
-```js
+```javascript
 let obj1 = {
 	name: 'ecmadao',
 	age: 24
@@ -71,7 +71,7 @@ console.log(obj2); // {name" 'edward', age: 24}
 当需要改变的目标对象属性嵌套层级很深时....
 
 
-```js
+```javascript
 let obj1 = {
 	profile: {
 		name: 'ecmadao',
@@ -102,7 +102,7 @@ console.log(obj2);
 
 - 作为参数调用
 
-```js
+```javascript
 console.log(...[1, 2, 3]); // 1 2 3
 
 let list = [1];
@@ -110,7 +110,7 @@ list.push(...[2, 3, 4]);
 console.log(list); // [1, 2, 3, 4]
 ```
 
-```js
+```javascript
 function test(a, b, c) {
 	// do something..
 }
@@ -121,7 +121,7 @@ test(...arguments);
 
 - 数组合并
 
-```js
+```javascript
 let list = [1, 2, 3];
 
 [a, b, ...list]; // [a, b, 1, 2, 3]
@@ -131,7 +131,7 @@ let list = [1, 2, 3];
 
 - 将字符串转换为数组
 
-```js
+```javascript
 let a = 'ecmadao';
 
 [...a]; // ['e', 'c', 'm', 'a', 'd', 'a', 'o'];
@@ -141,7 +141,7 @@ let a = 'ecmadao';
 
 - 构建 form
 
-```js
+```javascript
 // 手动构建一个form
 let form = new FormData();
 form.append(key, value);
@@ -154,7 +154,7 @@ let form = new FormData(formObj);
 
 - 发送数据
 
-```js
+```javascript
 formData.append(key, value); // 增加数据
 
 // 若通过 dom 构建 form 并传输文件，则需要在 <form> 中加入:
@@ -164,7 +164,7 @@ formData.append(key, value); // 增加数据
 
 - 通过 jQuery 发送 FormData 时，
 
-```js
+```javascript
 $.ajax({
 	url: url,
 	type: 'post',

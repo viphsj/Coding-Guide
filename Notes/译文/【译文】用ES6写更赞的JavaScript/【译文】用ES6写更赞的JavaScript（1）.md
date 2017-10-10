@@ -48,7 +48,7 @@ Let's get to it.
 
 来看看这个代码段：
 
-```js
+```javascript
 // 在 Node 中要使用严格模式
 "use strict";
 
@@ -108,7 +108,7 @@ let invisible = "You can't see me, yet"; // let 声明的变量没有变量提�
 
 `let`在循环体也非常有用：
 
-```js
+```javascript
 "use strict";
 
 var languages = ['Danish', 'Norwegian', 'Swedish'];
@@ -135,7 +135,7 @@ try {
 
 `let`对于每次循环的过程中重复绑定循环变量后很大优势。每个循环都有自己特有的拷贝，而不是共享一个全局变量。
 
-```js
+```javascript
 "use strict";
 
 // 简单又干净
@@ -161,7 +161,7 @@ for (var j = 0; j < 6; j += 1) {
 
 事实上，[规则很简单](https://github.com/getify/You-Dont-Know-JS/tree/master/this%20%26%20object%20prototypes)。不管怎样，在一些情景`this`会变得很笨拙：
 
-```js
+```javascript
 "use strict";
 
 const polyglot = {
@@ -199,7 +199,7 @@ polyglot.introduce();
 
 在ES2015中，我们做到了这点。箭头函数没有绑定`this`变量，使得我们可以更好的利用`this`。我们可以这样重构上面的代码：
 
-```js
+```javascript
 "use strict";
 
 let polyglot = {
@@ -217,7 +217,7 @@ let polyglot = {
 
 箭头函数有几种语法类型：
 
-```js
+```javascript
 "use strict";
 
 let languages = ["Spanish", "French", "Italian", "German", "Polish"];
@@ -254,7 +254,7 @@ ES2015提供了一些定义属性和方法的途径。
 
 在JavaScript中，方法是Object的一个参数，只不过以一个函数作为它的值：
 
-```js
+```javascript
 "use strict";
 
 const myObject = {
@@ -266,7 +266,7 @@ const myObject = {
 
 在ES2015中，我们可以简写成这样：
 
-```js
+```javascript
 "use strict";
 
 const myObject = {
@@ -299,7 +299,7 @@ ES6里同样引入了简写属性和计算属性。
 
 如果一个Object中的key的值和变量名称一样，那么就可以通过只写这个名称来达到跟`key: value`一样的效果。
 
-```js
+```javascript
 "use strict";
 
 const foo = 'foo';
@@ -319,7 +319,7 @@ const myObject = { foo, bar }
 
 当我使用[revealing module pattern](https://addyosmani.com/resources/essentialjsdesignpatterns/book/#revealingmodulepatternjavascript)写公共API的时候，就经常使用简写属性。
 
-```js
+```javascript
 "use strict";
 
 function Module () {
@@ -350,7 +350,7 @@ function Module () {
 
 ES6允许你用表达式当做变量名
 
-```js
+```javascript
 "use strict";
 
 const myObj = {
@@ -373,7 +373,7 @@ console.log(myObj.foo() ); // 'foo'
 
 最后，我想提及下`get`和`set`方法，虽说它们在ES5里就出现了。
 
-```js
+```javascript
 "use strict";
 
 // 从 MDN上拿的 getter例子
@@ -412,7 +412,7 @@ console.log(speakingObj.called); // 'blargh'
 
 举个栗子说明最后一点：
 
-```js
+```javascript
 "use strict";
 
 const speakingObj = {
@@ -439,7 +439,7 @@ Object.defineProperty(speakingObj, "called", get : getCalled )
 
 有了getter，就要增加setter。显而易见，setter使用自定义的方法改变Object上的属性值。
 
-```js
+```javascript
 "use strict";
 
 // 创建一个全局的globetrotter!

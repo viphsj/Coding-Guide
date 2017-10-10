@@ -38,7 +38,7 @@
 
 首先要理解的是JavaScript中的作用域。在JavaScript中，如果你在函数内部定义了一个变量，那么它就不能被外面的函数所引用。例如：
 
-```js
+```javascript
 var thing = 'bat';
     
 var sing = function() {
@@ -57,7 +57,7 @@ log(line);
 
 但是如果我们在函数内部定义了变量，函数内部的其他内部函数则可以使用这个外部的变量：
 
-```js
+```javascript
 var outer = function() {
     var outerVar = 'Hatter';
     var inner = function() {
@@ -79,7 +79,7 @@ var outer = function() {
 
 当你创建一个函数的时候，它会创建一个特殊的参数变量叫作`arguments`，是一个类似数组的玩意，里面包含了所有传给这个函数的参数。例如：
 
-```js
+```javascript
 var showArgs = function(a, b) {
     console.log(arguments);
 }
@@ -91,14 +91,14 @@ showArgs('Tweedledee', 'Tweedledum');
 
 真正有趣的是不管定义了多少参数，`arguments`能够获取所有传入方法的参数。因此，如果你给函数传递了额外的参数，它还是会被`arguments`收录。
 
-```js
+```javascript
 showArgs('a', 'l', 'i', 'c', 'e');
 //=> { '0': 'a', '1': 'l', '2': 'i', '3': 'c', '4': 'e' }
 ```
 
 `arguments`像Array一样，拥有`length`属性。
 
-```js
+```javascript
 var argsLen = function() {
     console.log(arguments.length);
 }
@@ -108,7 +108,7 @@ argsLen('a', 'l', 'i', 'c', 'e');
 
 将`arguments`当做真正的Array会非常有用。我们可以利用`slice`方法把`arguments`转成真正的Array：
 
-```js
+```javascript
 var showArgsAsArray = function() {
     var args = Array.prototype.slice.call(arguments, 0);
     console.log(args);
@@ -125,7 +125,7 @@ showArgsAsArray('Tweedledee', 'Tweedledum');
 
 最普遍的调用函数的方法是在函数名后面使用圆括号。例如：
 
-```js
+```javascript
 function twinkleTwinkle(thing) {
     console.log('Twinkle, twinkle, little ' + thing);
 }
@@ -135,7 +135,7 @@ twinkleTwinkle('bat');
 
 函数自己的一个内置方法叫作`call`，它可以让你使用其他方式调用函数：
 
-```js
+```javascript
 twinkleTwinkle.call(null, 'star');
 //=> Twinkle, twinkle, little star
 ```
@@ -144,7 +144,7 @@ twinkleTwinkle.call(null, 'star');
 
 除此之外还有个类似的`.apply`方法。与一个个传入参数所不同的是，`apply`允许你把参数作为一个Array传入，例如：
 
-```js
+```javascript
 twinkleTwinkle.apply(null, ['bat']);
 //=> Twinkle, twinkle, little bat
 ```
@@ -155,7 +155,7 @@ twinkleTwinkle.apply(null, ['bat']);
 
 JavaScript允许我们直接书写函数而不用先定义。这经常用在`map`和`reduce`里。例如：
 
-```js
+```javascript
 var numbers = [1, 2, 3];
 var doubledArray = map(function(x) { return x * 2}, numbers);
 console.log(doubledArray);
@@ -168,7 +168,7 @@ console.log(doubledArray);
 
 有时候不一定能给函数传满参数。例如，我们创建一个`addClass()`函数，接收`class`和DOM元素作为参数：
 
-```js
+```javascript
 var addClass = function(className, element) {
     element.className += ' ' + className;
     return element;
@@ -179,7 +179,7 @@ var addClass = function(className, element) {
 
 解决方案是创建一个新函数，通过它来告诉`addClass`我们想添加的class：
 
-```js
+```javascript
 var addTweedleClass = function(el) {
     return addClass('tweedle', el);
 }
@@ -187,7 +187,7 @@ var addTweedleClass = function(el) {
 
 现在我们就得到了只需要一个参数的函数：
 
-```js
+```javascript
 var ids = ['DEE', 'DUM'];
 var elements = map(document.getElementById, ids);
 elements = map(addTweedleClass, elements);
@@ -195,7 +195,7 @@ elements = map(addTweedleClass, elements);
 
 可是如果我们要加入其它class，则需要创建新的函数：
 
-```js
+```javascript
 var addBoyClass = function(el) {
     return addClass('boy', el);
 }
@@ -203,7 +203,7 @@ var addBoyClass = function(el) {
 
 我们开始重复代码了。。所以我们看看能不能找到它们相同的模式。如果我们再创建个函数来生成上面的函数呢？
 
-```js
+```javascript
 var partialFirstOfTwo = function(fn, param1) {
     return function(param2) {
         return fn(param1, param2);
@@ -213,7 +213,7 @@ var partialFirstOfTwo = function(fn, param1) {
 
 由此创建了一个返回匿名函数的函数。匿名函数需要接受一个参数，然后再返回一个函数。
 
-```js
+```javascript
 var addTweedleClass = partialFirstOfTwo(addClass, 'tweedle');
 var addBoyClass = partialFirstOfTwo(addClass, 'boy');
 
@@ -225,7 +225,7 @@ elements = map(addBoyClass, elements);
 
 当这个方法只需要传入两个参数的时候一切正常。但如果要传入三个参数呢？或者四个？针对这种情况，我们需要创建更通用的函数：
 
-```js
+```javascript
 var argsToArray(args) {
     return Array.prototype.slice.call(args, 0);
 }
@@ -247,7 +247,7 @@ var partial = function() {
 
 这个函数允许我们传入任意多的参数，最终将参数传给目标函数。
 
-```js
+```javascript
 var twinkle = function(noun, wonderAbout) {
     return 'Twinkle, twinkle, little ' +
         noun + '\nHow I wonder where you ' +
@@ -260,14 +260,14 @@ var twinkleStar = partial(twinkle, 'star', 'are');
 
 JavaScript有个叫`bind`的内置方法，它对所有方法都有效。它的第一个参数是你想要把`this`绑定到的Object，使得`this`所在的作用域传入到函数内部。这意味着，如果你想要把一些东西部分的`apply`到`document.getElementById`上，你需要把`document`作为参数传给`bind`
 
-```js
+```javascript
 var getWhiteRabbit = document.getElementById.bind(document, 'white-rabbit');
 var rabbit = getWhiteRabbit();
 ```
 
 然而我们并不需要`this`这个特殊的变量（尤其是我们使用了函数式编程），因此我们以`null`作为第一个参数传入。例如：
 
-```js
+```javascript
 var twinkleBat = twinkle.bind(null, 'bat', 'are at');
 var twinkleStar = twinkle.bind(null, 'star', 'are');
 ```
@@ -280,7 +280,7 @@ var twinkleStar = twinkle.bind(null, 'star', 'are');
 
 最简单的例子由两个函数组成，a和b，它们两个都接受一个参数。`Compose`创建出第三个函数c。以x作为参数调用c，返回a的被调用函数，其中，以b的被调用结果（以x为参数）作为参数（译者注：我已晕。。这种东西直接上例子多清晰。）。这特么什么鬼（译者注：我表示赞同）。还是举个例子吧：
 
-```js
+```javascript
 var composeTwo = function(funcA, funcB) {
     return function(x) {
         return funcA(funcB(x));
@@ -302,7 +302,7 @@ console.log(nohowContrariwise(statement));
 
 看着真棒。使用`composeTwo`可以让我们爽很长一段时间了。可是，如果你开始使用“纯函数”（我们迟点讲它）的话，你就会发现要把不只两个函数组合到一起。为此我们需要一个适应面更广的`compose`函数：
 
-```js
+```javascript
 var compose = function() {
     var args = arguments;
     var start = args.length - 1;
@@ -321,13 +321,13 @@ var compose = function() {
 
 第一眼看上去，`compose`好像没那么神奇。我们可以这样用`compose`函数：
 
-```js
+```javascript
 var nohowContrariwise = compose(contrariwise, nohow);
 ```
 
 可是这样看起来并不比下面的写法简洁：
 
-```js
+```javascript
 var nohowContrariwise = function(x) {
     return nohow(contrariwise(x));
 }
@@ -335,7 +335,7 @@ var nohowContrariwise = function(x) {
 
 `compose`的真正威力在于将它和柯里化函数组合的时候可以非常简洁。就算不是柯里化函数，与其他函数进行组合也可以让代码变的简洁。例如，想象一下有下面这首诗：
 
-```js
+```javascript
 var poem = 'Twas brillig, and the slithy toves\n' + 
     'Did gyre and gimble in the wabe;\n' +
     'All mimsy were the borogoves,\n' +
@@ -344,7 +344,7 @@ var poem = 'Twas brillig, and the slithy toves\n' +
 
 它在浏览器中的表现可不怎么样，因此我们需要给他加一些分段，顺便把难懂的"brillig"换成其他单词。我们要把整首诗放进`<p></p>`标签里并作为引语。先从两个简单的函数开始：
 
-```js
+```javascript
 var replace = function(find, replacement, str) {
     return str.replace(find, replacement);
 }
@@ -369,7 +369,7 @@ console.log(modifyPoem(poem));
 
 值得一提的是，当你把参数从左到右的传给`compose`函数，他们将会按照反转的顺序进行调用。一些人会对此感到困惑。因此还有一种从左到右正常调用的方法叫`pipe`或`flow`:
 
-```js
+```javascript
 var modifyPoem = pipe(replaceBrillig, addBreaks, wrapP, wrapBlockquote);
 ```
 
@@ -377,7 +377,7 @@ var modifyPoem = pipe(replaceBrillig, addBreaks, wrapP, wrapBlockquote);
 
 关于柯里化的细节稍微有点复杂，因此，先让我们看个例子。现在有一个叫作`formatName`的函数，用来把人的绰号放进引言里。这个函数接受三个参数。当我们以柯里化的形式调用这个函数，并传入的参数少于三个时，它会返回一个新的函数，并以传入的参数作为新函数的参数来调用它：
 
-```js
+```javascript
 var formatName = function(first, surname, nickname) {
     return first + ' “' + nickname + '” ' + surname;
 }
@@ -399,7 +399,7 @@ console.log(jamesS('Bandersnatch'));
 
 这里有些助你理解柯里化的函数：
 
-```js
+```javascript
 formatNameCurried('a')('b')('c') === formatNameCurried('a', 'b', 'c'); // true
 formatNameCurried('a', 'b')('c') === formatNameCurried('a')('b', 'c'); // true
 ```

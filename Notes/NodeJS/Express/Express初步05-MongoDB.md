@@ -27,7 +27,7 @@
 $ mkdir /Users/ecmadao/MongoDB/TodoApp
 ```
 
-```js
+```javascript
 $ cd /Users/ecmadao/MongoDB/MongoDB/bin[mongodb 的 bin 目录]
 
 // 将TodoApp文件夹作为工程的储存目录并启动数据库
@@ -36,7 +36,7 @@ $ ./mongod --dbpath /Users/ecmadao/MongoDB/TodoApp
 
 #### 对 Express 项目安装 MongoDB 与其他依赖
 
-```js
+```javascript
 $ cd [项目文件夹]
 
 // 安装MongoDB
@@ -53,7 +53,7 @@ $sudo npm install connect-flash
 
 - 在项目根目录下新建 setting.js
 
-```js
+```javascript
 module.exports = { 
   cookieSecret: 'todoApp',  // cookie加密
   db: 'TodoApp',  // 数据库名称（）
@@ -64,7 +64,7 @@ module.exports = {
 
 - 建立 models
 
-```js
+```javascript
 // 在项目根目录下新加 models文件夹
 $ mkdir models
 
@@ -83,7 +83,7 @@ module.exports = new Db(settings.db, new Server(settings.host, settings.port), {
 
 - 配置 app.js
 
-```js
+```javascript
 // 在app.js中
 
 var setting = require('./setting');

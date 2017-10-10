@@ -42,7 +42,7 @@ JavaScript的模型是为了保障一段代码和其他的组件独立，它是j
 
 为了建立各个私有作用域，模型应该是“立即自调用”（IIFE）的--一个保护自身变量和方法的闭包（它返回一个对象而不是方法）。它看起来像下面这样：
 
-```js
+```javascript
 (function() {
     // declare private variables and/or functions
     return {
@@ -53,7 +53,7 @@ JavaScript的模型是为了保障一段代码和其他的组件独立，它是j
 
 在这段代码里，在我们返回目标对象之前，首先实例化了私有属性和方法。闭包的外面和它不属于同一个作用域，因此无法直接调用那些私有变量。来看看更多例子：
 
-```js
+```javascript
 var HTMLChanger = (function() {
   var contents = 'contents'
   var changeHTML = function() {
@@ -78,7 +78,7 @@ console.log(HTMLChanger.contents);  // undefined
 
 模型模式的一个变种叫作暴露模型模式。它的目的是保持代码封装，同时通过返回的对象，暴露出去特定的变量和方法。看个直白的例子：
 
-```js
+```javascript
 var Exposer = (function() {
   var privateVariable = 10;
 
@@ -116,7 +116,7 @@ Exposer.methodToExpose; // undefined
 
 为了clone一个对象，必须存在一个可以用来实例化的构造函数。之后，通过关键字`prototype`变量和对象构造方法中的属性进行构造。来看个基础例子：
 
-```js
+```javascript
 var TeslaModelS = function() {
   this.numWheels    = 4;
   this.manufacturer = 'Tesla';
@@ -134,7 +134,7 @@ TeslaModelS.prototype.stop = function() {
 
 构造函数运行创建一个TeslaModelS对象。当创建一个新的TeslaModelS对象时，它会保留在构造函数中的状态之中。同时，你可以很方便的维护`go`和`stop`方法因为他们都在`prototype`里。还有一种同样意义的写法：
 
-```js
+```javascript
 var TeslaModelS = function() {
   this.numWheels    = 4;
   this.manufacturer = 'Tesla';

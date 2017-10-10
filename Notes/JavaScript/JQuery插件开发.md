@@ -39,7 +39,7 @@ tags: JavaScript
 
 写一个名为test的插件函数，完成插件的功能。这里可以直接使用this，表示选择器选择的那个元素封装对象。
 
-```js
+```javascript
 function test(){
 	this.css('background-color','red');
 	this.css('width', '200');
@@ -48,7 +48,7 @@ function test(){
 ```
 完成一个自执行函数，将jQuery传进去，关键就是把插件函数挂到jQuery.fn中去。
 
-```js
+```javascript
 (function(jquery){
 	jquery.fn.test = test;
 })(jQuery);
@@ -56,7 +56,7 @@ function test(){
 
 调用的时候，就用jQuery选择器选择test div后直接链式调用test插件函数即可。
 
-```js
+```javascript
 $('#test').test();
 ```
 
@@ -104,7 +104,7 @@ jQuery为开发插件提拱了两个方法，分别是：
 
 #### `jQuery.fn`
 
-```js
+```javascript
 jQuery.fn = jQuery.prototype = {
 　　　init: function( selector, context ) {
 　　　//….
@@ -121,7 +121,7 @@ jQuery便是一个封装得非常好的类，比如我们用语句`$("#btn1")`�
 
 为jQuery类添加类方法，可以理解为添加静态方法。如：
 
-```js
+```javascript
 jQuery.extend({
 	min: function(a, b) { return a < b ? a : b; },
 	max: function(a, b) { return a > b ? a : b; }
@@ -134,7 +134,7 @@ jQuery.max(4,5); //  5
 
 用一个或多个其他对象来扩展一个对象，返回被扩展的对象
 
-```js
+```javascript
 var settings = { validate: false, limit: 5, name: "foo" }; 
 var options = { validate: true, name: "bar" }; 
 jQuery.extend(settings, options); 
@@ -142,7 +142,7 @@ jQuery.extend(settings, options);
 
 结果：
 
-```js
+```javascript
 settings == { validate: true, limit: 5, name: "bar" }
 ```
 
@@ -152,7 +152,7 @@ settings == { validate: true, limit: 5, name: "bar" }
 
 比如我们要开发一个插件，做一个特殊的编辑框，当它被点击时，便alert 当前编辑框里的内容。可以这么做：
 
-```js
+```javascript
 $.fn.extend({          
 	alertWhileClick:function() {            
    		$(this).click(function(){                 
@@ -173,7 +173,7 @@ $("#input1").alertWhileClick();
 
 你可以拓展一个对象到jQuery的 prototype里去，这样的话就是插件机制了。
 
-```js
+```javascript
 (function( $ ){
 	$.fn.tooltip = function( options ) {
 		//do something

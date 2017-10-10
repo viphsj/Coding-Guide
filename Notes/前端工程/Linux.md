@@ -417,6 +417,21 @@ $ wc test.md # 输出 行数 词数 字符数
 $ echo '1' | tee test.md # 利用 echo 输出 1，然后使用 tee 写入到 test.md 中
 ```
 
+- `xargs cmd`
+- `xargs -n1 -I[variable] cmd [variable]`
+
+
+```bash
+# 把前面命令的输出作为 xargs 后面命令的输入
+$ ls README.md | xargs cat
+# ls README.md 输出 README.md，作为参数传递给 cat
+
+# 如果输出为多个值时，可以使用 xargs 的循环命令
+# -n1 表示对前面输出的各个值分别进行处理，类似循环
+# -Ivariable 表示每次循环使用的变量为 variable，该变量作为后面命令的输入
+$ ls folder/ | xargs -n1 -Iv mv v tmp_v
+```
+
 - `$`
 - `;`
 - `&`
@@ -433,4 +448,76 @@ $ mkdir test; echo '123'
 
 # && 前一个执行成功才会执行后一个，类似于 且 操作符
 # || 前一个执行失败才会执行后一个，类似于 或 操作符
+```
+
+### 正则表达式
+
+- `grep [-cinvABC] 'word' filename`
+
+```bash
+# -c: 打印符合要求的行数
+# -i: 忽略大小写
+# -n: 输出符合要求的行和行号
+# -v: 打印不符合要求的行
+# -A: 后 ＋数字，例如 -A2，表示打印符合要求的行和后面两行
+# -B: 后 ＋数字，例如 -B2，表示打印符合要求的行和上面两行
+# -C: 后 ＋数字，例如 -C2，表示打印符合要求的行和上下各两行
+
+$ grep -n '[0-9]' filename # 附带行号的输出带有数字的行
+$ grep -nv '[0-9]' filename # 附带行号的输出不带数字的行
+$ grep -n '^$' filename # 输出所有空行
+$ grep -n 'l\{2\}' README.md # 输出 l 连续出现两次的行
+```
+
+- `egrep`
+
+```bash
+# egrep 和 grep 不同的是，它能够使用扩展表达式
+# 如
+# + 匹配一个或者多个先前的字符, 至少一个先前字符.
+# ? 匹配 0 个或者多个先前字符.
+# a|b|c 匹配 a 或 b 或 c
+
+$ egrep 'a?' filename
+```
+
+- `sed -n 'n'p filename`
+
+```bash
+# sed 可以同时实现搜索和编辑的功能
+
+# n 为数字，表示第几行
+$ sed -n '2'p filename # 打印第二行
+$ sed -n '1,$'p filename # 打印所有行
+$ sed -n '1,3'p filename # 打印 1~3 行
+
+# n 为表达式，表示符合要求的行
+$ sed -n '/al/'p README.md
+# 要注意的是，它无法使用 egrep 支持的扩展表达式，即例如 sed -n 'a+'p README.md 这样会报错
+```
+
+- `sed 'n'd filename`
+
+```bash
+# 删除某行或符合条件的行
+$ sed '1'd filename # 删除第一行
+$ sed '1,3'd filename # 删除 1~3 行
+$ sed '/al/'d filename # 删除有 al 的行
+```
+
+- `sed [-i] 'ns/target/replace/[g]' filename`
+
+```bash
+# 替换字符或字符串之后输出
+# -i: 直接修改原文件，不加则不会修改，值在输出内容中进行替换
+
+# n: 代表某行或行的范围，不加则代表全部行
+# s: 替换的标识符
+# /: 操作分隔符，也可以使用 @ 或者 #
+# target 被替换对象
+# replace 替换对象
+# g: 是否全部替换匹配的对象。如果不加，则只替换每行的第一个匹配
+
+$ sed 's@a@bbbbbbbbbbbbbbbbbbbbbbbbbb@' README.md # 把每行第一个匹配的 a 替换为 bbbbbbbbbbbbbbbbbbbbbbbbbb
+$ sed '1,3s@about@abort@g' README.md # 把 1~3 行全部匹配的 about 替换为 abort
 ```

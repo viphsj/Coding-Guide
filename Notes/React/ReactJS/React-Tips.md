@@ -19,7 +19,7 @@
 
 在没有`classnames`的时候，我们如果要通过`state`或者`props`操作className，通常可能会这样：
 
-```js
+```javascript
 // inside some `<Message />` React component
 render: function() {
   var classString = 'message';
@@ -38,13 +38,13 @@ render: function() {
 
 需要先通过npm安装依赖：
 
-```js
+```javascript
 npm install classnames --save
 ```
 
 使用方式：
 
-```js
+```javascript
 var classNames = require('classnames');
 classNames('foo', 'bar'); // => 'foo bar'
 
@@ -60,7 +60,7 @@ classNames(null, false, 'bar', undefined, 0, 1, { baz: null }, ''); // => 'bar 1
 
 单个/多个对象作为参数：
 
-```js
+```javascript
 classNames({ 'foo-bar': true }); // => 'foo-bar'
 classNames({ 'foo-bar': false }); // => ''
 classNames({ foo: true }, { bar: true }); // => 'foo bar'
@@ -69,7 +69,7 @@ classNames({ foo: true, bar: true }); // => 'foo bar'
 
 数组作为参数同样有效：
 
-```js
+```javascript
 var arr = ['b', { c: true, d: false }];
 classNames('a', arr); // => 'a b c'
 ```
@@ -78,7 +78,7 @@ classNames('a', arr); // => 'a b c'
 
 有时候可能会遇见这样的场景：
 
-```js
+```javascript
 constructor(props) {
 	super(props);
 	this.state = {
@@ -106,7 +106,7 @@ useDataSomewhere() {
 ```
 多层嵌套的state需要改变，或者需要取出数据做一些操作（使数据变化）的时候，直接通过：
 
-```js
+```javascript
 myData.x.y.z = 7;
 // or...
 myData.a.b.push(9);
@@ -117,12 +117,12 @@ myData.a.b.push(9);
 
 需要先通过npm安装依赖：
 
-```js
+```javascript
 npm install react-addons-update --save
 ```
 命令介绍：
 
-```js
+```javascript
 //以$为前缀的键被称作命令。他们“改变”的数据结构被称为目标
 
 {$push: array} 利用push()把目标上所有的元素放进数组
@@ -140,14 +140,14 @@ npm install react-addons-update --save
 
 例子：
 
-```js
+```javascript
 // 入栈
 
 var initialArray = [1, 2, 3];
 var newArray = update(initialArray, {$push: [4]}); // => [1, 2, 3, 4]
 ```
 
-```js
+```javascript
 // 嵌入的集合
 
 var collection = [1, 2, {a: [12, 17, 15]}];
@@ -156,7 +156,7 @@ var newCollection = update(collection, {2: {a: {$splice: [[1, 1, 13, 14]]}}});
 ```
 获取 collection 中索引是2的对象，然后取得该对象键为 a 的值，删掉索引从 1 开始的 1 个元素（即移除 17 ），插入 13 和 14
 
-```js
+```javascript
 // 根据现有的值更新
 
 var obj = {a: 5, b: 3};
@@ -166,7 +166,7 @@ var newObj = update(obj, {b: {$apply: function(x) {return x * 2;}}});
 var newObj2 = update(obj, {b: {$set: obj.b * 2}});
 ```
 
-```js
+```javascript
 // （浅）合并
 
 var obj = {a: 5, b: 3};

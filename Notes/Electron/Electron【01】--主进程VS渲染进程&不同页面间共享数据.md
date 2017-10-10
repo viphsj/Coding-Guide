@@ -23,7 +23,7 @@ Electron使用了网页页面作为App的GUI，因此你可以将它看做是一
 
 主进程看起来就是一段脚本：
 
-```js
+```javascript
 const electron = require('electron');
 const app = electron.app;
 const BrowserWindow = electron.BrowserWindow;
@@ -44,7 +44,7 @@ app.on('ready', function() {
 
 渲染进程如同传统的HTML，但它可以直接使用Node模块：
 
-```js
+```javascript
 <!DOCTYPE html>
 <html>
   <body>
@@ -74,14 +74,14 @@ app.on('ready', function() {
 
 你还可以使用Electron中提供的`IPC`系统。它在主进程中将一个对象储存为全局变量，然后可以通过`remote`模块操作它们：
 
-```js
+```javascript
 // 在主进程里
 global.sharedObject = {
   someProperty: 'default value'
 };
 ```
 
-```js
+```javascript
 // In page 1.
 require('remote').getGlobal('sharedObject').someProperty = 'new value';
 

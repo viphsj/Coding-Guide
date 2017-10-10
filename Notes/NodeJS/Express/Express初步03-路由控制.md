@@ -10,7 +10,7 @@
 
 ## Express初步03 - 路由控制
 
-```js
+```javascript
 app.get(path, function(req, res) {});
 
 app.post(path, function(req, res) {});
@@ -23,7 +23,7 @@ app.post(path, function(req, res) {});
 - `req.body` 处理post请求，获取post请求体
 - `req.param()` 处理post和get请求，查找优先级由高到低为 `req.params`->`req.body`->`req.query`
 
-```js
+```javascript
 // GET /search?word=test+one&order[color]=blue
 req.query.word; // test one
 req.query.order.color; // blue
@@ -42,7 +42,7 @@ req.param('name'); // ecmadao
 
 在`./routes/index.js`中新增路由：
 
-```js
+```javascript
 var express = require('express');
 var router = express.Router();
 
@@ -60,7 +60,7 @@ module.exports = router;
 
 在`./app.js`中注册路由：
 
-```js
+```javascript
 var express = require('express');
 var routes = require('./routes/index');
 

@@ -29,14 +29,14 @@ class DefaultComponent extends Component {
 
 - React组件的文件名应与包含的React组件一致，同样使用大驼峰式命名法
 
-```js
+```javascript
 DefaultComponent.jsx
 	- 包含一个 <DefaultComponent />组件
 ```
 
 - `import`与`export`React组件的时候，同样使用大驼峰式命名法
 
-```js
+```javascript
 import DefaultComponent from './DefaultComponent'
 
 export default ComponentDemo;
@@ -46,7 +46,7 @@ export default ComponentDemo;
 	- 总组件名与文件夹名一致
 	- 包含总组件的jsx文件命名为index.jsx
 
-```js
+```javascript
 [folder] ComponentDemo
 	- [file] index.jsx
 		- [React Component] <ComponentDemo />
@@ -58,7 +58,7 @@ export default ComponentDemo;
 
 - 对齐方式
 
-```js
+```javascript
 <DefaultComponent
   num="222"
   data={this.props.data}
@@ -74,7 +74,7 @@ export default ComponentDemo;
 
 - 如果组件的属性可以放在一行就保持在当前一行中
 
-```js
+```javascript
 <DefaultComponent num="222" data={this.props.data}/>
 ```
 
@@ -85,7 +85,7 @@ export default ComponentDemo;
 	- 属性名使用驼峰命名法
 	- 当属性值等于true的时候，省略该属性的赋值
 
-```js
+```javascript
 <DefaultComponent defaultData={this.props.defaultData} />
 
 <DefaultComponent isTrue={true} /> //bad

@@ -34,7 +34,7 @@
 
 原始值 "I am a string" 并不是一个对象，它只是一个字面量，并且是一个不可变的值。如果要在这个字面量上执行一些操作，比如获取长度、访问其中某个字符，则需要将它转换为`String`对象。不过引擎会帮我们自动转换。
 
-```js
+```javascript
 var str = 'I am a string';
 
 console.log(str.length); // 13
@@ -64,7 +64,7 @@ console.log(str.charAt(0)); // I
 
 **访问器属性不能直接定义，必须使用Object.defineProperty()定义**
 
-```js
+```javascript
 //`_year`前面的下划线_是一种常用的符号，用于表示只能通过对象方法访问的属性
 var book = {
   _year = 2015,
@@ -93,7 +93,7 @@ console.log(book.edition); //2
 
 - 添加一个属性或者修改一个已有属性（如果它是configurable）:
 
-```js
+```javascript
 var myObj = {};
 
 Object.defineProperty(myObj, "a", {
@@ -108,7 +108,7 @@ myObj.a; //2
 
 - 一次定义多个属性
 
-```js
+```javascript
 var book = {};
 Object.defineProperties(
   _year : {
@@ -157,7 +157,7 @@ console.log(typeof descriptor.get); //function
 
 第一个参数是目标对象，之后可以跟一个或多个源对象。它会遍历一个或多个源对象的所有可枚举(enumerable)的自有键(owned key)，并把它们复制到目标对象，最后返回目标对象：
 
-```js
+```javascript
 var myObject = {
 	a : 2,
 	b : [],
@@ -190,7 +190,7 @@ newObj.d === anotherFun; //true
 
 > `Object.preventExtensions(obj);`
 
-```js
+```javascript
 var myObj = {
 	a: 2,
 };
@@ -249,7 +249,7 @@ myObj.b; // undefined
 
 遍历数组和有迭代器的对象
 
-```js
+```javascript
 var myArray = [1, 2, 3];
 for (var v of myArray){
 	console.log(v);
@@ -260,7 +260,7 @@ for (var v of myArray){
 
 #### 构造器模式
 
-```js
+```javascript
 function Person(name,age,job){
   this.name = name;
   this.age = age;
@@ -284,7 +284,7 @@ person2.sayName(); //edward
 
 person1和person2分别保存着Person的不同实例。他们都有一个`constructor`(指向构造实例的函数)属性，该属性指向Person：
 
-```js
+```javascript
 console.log(person1.constructor == Person); //true
 console.log(person2.constructor == Person); //true
 ```
@@ -296,7 +296,7 @@ console.log(person2.constructor == Person); //true
 `.constructor`并不表示被构造
 它不可被枚举，但值可写
 
-```js
+```javascript
 var Person = function(){};
 var person = new Person();
 person.constructor === Person(); // true,指向构造person的原型函数Person
@@ -307,7 +307,7 @@ Person.prototype.constructor === Person; // true
 
 应该使用`instanceof`来检测对象属性：
 
-```js
+```javascript
 console.log(person1 instanceof Object); //true 因为所有对象都继承自Object
 console.log(person1 instanceof Person); //true
 ```

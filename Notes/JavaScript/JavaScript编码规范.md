@@ -22,7 +22,7 @@
 
 - 使用对象方法的简写
 
-```js
+```javascript
 // bad
 const atom = {
   value: 1,
@@ -44,7 +44,7 @@ const atom = {
 
 - 使用对象属性的简写
 
-```js
+```javascript
 const lukeSkywalker = 'Luke Skywalker';
 
 // bad
@@ -54,7 +54,7 @@ const obj = {
 
 // good
 const obj = {
-	lukeSkywalker,
+  lukeSkywalker,
 };
 ```
 
@@ -62,7 +62,7 @@ const obj = {
 
 > 因为这样能清楚地看出哪些属性使用了简写
 
-```js
+```javascript
 const example = 'example';
 const count = 100;
 
@@ -87,7 +87,7 @@ const obj = {
 
 - 使用拓展运算符 `...` 复制数组
 
-```js
+```javascript
 // bad
 const len = items.length;
 const itemsCopy = [];
@@ -105,7 +105,7 @@ const itemsCopy = [...items];
 
 - 静态常量分离，命名使用 "大写"+"_"
 
-```js
+```javascript
 // create a file named ConstValue.js
 
 export var CONST_VALUE = 'constValue';
@@ -123,7 +123,7 @@ import {
 
 - 字符串使用单引号 `''`
 
-```js
+```javascript
 // bad
 const name = "Capt. Janeway";
 
@@ -137,7 +137,7 @@ const name = 'Capt. Janeway';
 
 > 解构能减少临时引用属性
 
-```js
+```javascript
 // bad
   function getFullName(user) {
     const firstName = user.firstName;
@@ -160,7 +160,7 @@ const name = 'Capt. Janeway';
 
 - 对数组使用解构赋值
 
-```js
+```javascript
 const arr = [1, 2, 3, 4];
 
 // bad
@@ -175,7 +175,7 @@ const [first, second] = arr;
 
 > 增加属性或者改变排序不会改变调用时的位置
 
-```js
+```javascript
  // bad
   function processInput(input) {
     // then a miracle occurs
@@ -203,7 +203,7 @@ const [first, second] = arr;
 >
 > 此外，函数声明会把整个函数提升（hoisted），而函数表达式只会把函数的引用变量名提升
 
-```js
+```javascript
 // bad
 const foo = function () {
 };
@@ -213,7 +213,7 @@ function foo() {
 }
 ```
 
-```js
+```javascript
 // 函数声明的名称和函数体都会被提升
 
 function example() {
@@ -227,7 +227,7 @@ function example() {
 
 - 直接给函数的参数指定默认值，不要使用一个变化的函数参数
 
-```js
+```javascript
 // bad
 function handleThings(opts) {
   // 不应该改变函数参数。
@@ -251,12 +251,12 @@ function handleThings(opts = {}) {
 
 - 当需要传递一个匿名函数，或使用函数表达式时，使用箭头函数
 
-```js
+```javascript
 // bad
 [1, 2, 3].map(function (x) {
 	return x * x;
 });
-	
+
 // good
 [1, 2, 3].map((x) => {
 	return x * x;
@@ -267,7 +267,7 @@ function handleThings(opts = {}) {
 
 - 使用 `.` 来访问对象的属性
 
-```js
+```javascript
 const person = {
   name: ecmadao,
   age: 24,
@@ -292,7 +292,7 @@ const myName = person.name;
 
 - 使用简写
 
-```js
+```javascript
 let name = '';
 if(!name) {
 	console.log('don\'t have name yet');
@@ -306,10 +306,10 @@ if(list.length) {
 
 - 使用 // 作为单行注释。在评论对象上面另起一行使用单行注释。在注释前插入空行
 
-```js
+```javascript
 function example(){
 	const name = 'ecmadao';
-	
+
 	// this is an example
 	function sayName() {
 		console.log(name);
@@ -328,7 +328,7 @@ function example(){
 - 在花括号前放一个空格
 - 在控制语句（if、while 等）的小括号前放一个空格
 
-```js
+```javascript
 function example() {}
 
 if(true) {}
@@ -336,7 +336,7 @@ if(true) {}
 
 - 在使用长方法链时进行缩进。使用前面的点 `.` 强调这是方法调用而不是新语句
 
-```js
+```javascript
 // bad
 $('#items').find('.selected').highlight().end().find('.open').updateCount();
 
@@ -380,7 +380,7 @@ const leds = stage.selectAll('.led')
 - 把null当做占位符，初始化变量的时候赋值
 - 如果所期望的值真的会是null，则可以直接和null比较
 
-```js
+```javascript
 let person = null;
 console.log(person === null); // true
 console.log(person === undefined); // false
@@ -398,7 +398,7 @@ typeof undefined; // undefined
 - 使用大驼峰式命名构造函数或类
 - 使用下划线 `_` 开头命名私有属性
 
-```js
+```javascript
 const exampleThree = 3;
 function exampleController() {}
 
@@ -414,7 +414,7 @@ this._name = 'ecmadao';
 
 - 使用 $ 作为存储 jQuery 对象的变量名前缀
 
-```js
+```javascript
 // bad
 const sidebar = $('.sidebar');
 

@@ -92,7 +92,7 @@ node.js中提供一个名为fs的模块来支持I/O操作，fs模块的文件I/O
 
 #### access
 
-```js
+```javascript
 fs.access(path[, mode], callback);
 
 fs.accessSync(path[, mode]);
@@ -121,14 +121,14 @@ fs.accessSync(path[, mode]);
 
 > 检查一个文件是否存在
 
-```js
+```javascript
 fs.existe(path, callback);
 
 fs.existsSync(path);
 ```
 - callback(exists); exists为是否存在的布尔值
 
-```js
+```javascript
 var fs= require("fs");
  
 fs.exists('/etc/passwd', function (exists) {
@@ -140,7 +140,7 @@ fs.exists('/etc/passwd', function (exists) {
 
 #### appendFile
 
-```js
+```javascript
 fs.appendFile(filename, data, [options], callback);
 
 fs.appendFileSync(filename, data, [options]);
@@ -158,7 +158,7 @@ fs.appendFileSync(filename, data, [options]);
 
 example: 
 
-```js
+```javascript
 fs.appendFile('message.txt', 'data to append', 'utf8', (err) => {
   if (err) throw err;
   console.log('The "data to append" was appended to file!');
@@ -175,7 +175,7 @@ fs.appendFile('message.txt', 'data to append', 'utf8', (err) => {
 
 #### rename
 
-```js
+```javascript
 fs.rename(oldPath, newPath, callback);
 
 fs.renameSync(oldPath, newPath);
@@ -187,7 +187,7 @@ callback是失败时的回调，接收可能的异常信息作为参数
 
 #### close
 
-```js
+```javascript
 fs.close(fd, callback)
 
 fs.closeSync(fd)
@@ -197,7 +197,7 @@ fs.closeSync(fd)
 
 #### createReadStream
 
-```js
+```javascript
 fs.createReadStream(path[, options])
 ```
 Returns a new ReadStream object
@@ -210,7 +210,7 @@ Returns a new ReadStream object
 > 
 > options可以包含start和end值，以便读取file中的一段数据而不必全部读取
 
-```js
+```javascript
 {
   flags: 'r',
   encoding: null,
@@ -240,7 +240,7 @@ Returns a new ReadStream object
 
 #### createWriteStream
 
-```js
+```javascript
 fs.createWriteStream(path[, options])
 ```
 
@@ -248,7 +248,7 @@ Returns a new WriteStream object
 
 > options is an object or string with the following defaults:
 
-```js
+```javascript
 {
   flags: 'w',
   defaultEncoding: 'utf8',
@@ -276,7 +276,7 @@ Returns a new WriteStream object
 
 #### open
 
-```js
+```javascript
 fs.open(path, flags[, mode], callback)
 
 fs.openSync(path, flags[, mode])
@@ -301,7 +301,7 @@ fs.openSync(path, flags[, mode])
 
 #### read
 
-```js
+```javascript
 fs.read(fd, buffer, offset, length, position, callback)
 ```
 
@@ -317,7 +317,7 @@ Read data from the file specified by fd.
 
 #### write
 
-```js
+```javascript
 fs.write(fd, buffer, offset, length[, position], callback)
 fs.writeSync(fd, buffer, offset, length[, position])
 
@@ -329,7 +329,7 @@ fs.writeSync(fd, data[, position[, encoding]])
 
 #### readdir
 
-```js
+```javascript
 fs.readdir(path, callback)
 
 fs.readdirSync(path)
@@ -345,7 +345,7 @@ fs.readdirSync(path)
 
 #### readFile
 
-```js
+```javascript
 fs.readFile(file[, options], callback)
 
 fs.readFileSync(file[, options])
@@ -357,7 +357,7 @@ fs.readFileSync(file[, options])
 	- `flag` default = `r`
 - `callback(error, data)`
 
-```js
+```javascript
 fs.readFile('/etc/passwd', (err, data) => {
   if (err) throw err;
   console.log(data);
@@ -370,7 +370,7 @@ fs.readFile('/etc/passwd', 'utf8', callback);
 
 #### writeFile
 
-```js
+```javascript
 fs.writeFile(file, data[, options], callback)
 fs.writeFileSync(file, data[, options])
 ```
@@ -382,7 +382,7 @@ fs.writeFileSync(file, data[, options])
 	- `flag` String, default = `w`
 - `callback(error)` // 回调只有error
 
-```js
+```javascript
 fs.writeFile('message.txt', 'Hello Node.js', (err) => {
   if (err) throw err;
   console.log('It\'s saved!');
@@ -399,7 +399,7 @@ fs.writeFile('message.txt', 'Hello Node.js', 'utf8', callback);
 
 #### rename
 
-```js
+```javascript
 fs.rename(oldPath, newPath, callback)
 
 fs.renameSync(oldPath, newPath)
@@ -409,7 +409,7 @@ fs.renameSync(oldPath, newPath)
 
 #### rmdir & mkdir
 
-```js
+```javascript
 // 删除目录
 fs.rmdir(path, callback)
 fs.rmdirSync(path)
@@ -426,14 +426,14 @@ fs.mkdirSync(path, [mode])
 
 #### unlink
 
-```js
+```javascript
 fs.unlink(path, callback);
 
 fs.unlinkSync(path);
 ```
 > 删除文件
 
-```js
+```javascript
 var fs = require('fs');
  
 fs.unlink(文件, function(err) {

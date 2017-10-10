@@ -78,7 +78,7 @@ export function decrease(number, index) {
 
 > Reducer 会注册给 store,用于处理 action 事件
 
-```js
+```javascript
 // Reducer/Reducers.js
 import {
 	ADD_NEW,
@@ -127,7 +127,7 @@ Reducer 传入(state, action), 通过判断`action`的`type`, 进行事件分发
 
 每个 Reducer 都要有明确的返回值,当`siwtch`到`default`的时候则返回传入的`state`本身。在处理`state`的时候，不要在原有参数上修改, 而应该返回一个新的参数, 例如
 
-```js
+```javascript
 return Object.assign({}, state[0], {number: action.number});
 // 通过Object.assign获取一份state[0]的拷贝, 并修改state[0]中的number数据
 
@@ -137,7 +137,7 @@ return [...state, action.obj];
 
 ### combineReducers
 
-```js
+```javascript
 // Reducer/index.js
 import { combineReducers } from 'redux';
 
@@ -152,7 +152,7 @@ export const AppReducer = combineReducers(appReducers);
 
 每个 Reducer 的名称, 必须与它获取的 state 参数名称一样, 例如:
 
-```js
+```javascript
 export function objList(state=objList, action){}
 
 export function number(state=objList[0].number, action){}
@@ -160,7 +160,7 @@ export function number(state=objList[0].number, action){}
 
 如果你任性的不想那么写, 那么就要:
 
-```js
+```javascript
 // Reducer/Reducers.js
 export function reducerA(state=objList, action){}
 export function reducerB(state=objList[0].number, action){}
@@ -190,7 +190,7 @@ sudo npm install --save react-redux
 
 **只有一个Store**
 
-```js
+```javascript
 // App/index.js
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
@@ -228,7 +228,7 @@ export default ContentComponent;
 
 ### 子组价获取props和dispatch
 
-```js
+```javascript
 // App/ContentComponent.js
 import {
 	increase,
@@ -286,7 +286,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(ContentComponent);
 
 在通过`connect`进行注入的时候, `dispatch`已经作为组件的 props 而存在了。所以当需要传入的事件很多, 感觉写`mapDispatchToProps`很繁琐的时候, 还有另外一种写法:
 
-```js
+```javascript
 // App/ContentComponent.js
 import {
 	increase,

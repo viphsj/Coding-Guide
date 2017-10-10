@@ -51,7 +51,7 @@
 - 全局命名空间（使用一个对象作为库的全局命名空间，从对象中暴露接口给外界）
 - 模块管理
 
-```js
+```javascript
 var $ = {
 	child: child(),
 	each: each(),
@@ -63,7 +63,7 @@ var $ = {
 
 - 函数声明
 
-```js
+```javascript
 var a = 2;
 
 function foo(){
@@ -78,7 +78,7 @@ console.log(a); // 2
 
 - 函数表达式
 
-```js
+```javascript
 a = 2;
 
 (function f00(){
@@ -107,7 +107,7 @@ console.log(a); // 2
 
 - 现有声明，后有赋值
 
-```js
+```javascript
 foo();
 
 function foo(){
@@ -128,7 +128,7 @@ foo();
 
 - 函数声明会被提升，但函数表达式不会被提升：
 
-```js
+```javascript
 foo(); // 不是ReferenceError，而是TypeError
 
 var foo = function bar(){...}
@@ -140,7 +140,7 @@ var foo = function bar(){...}
 
 在函数执行完毕之后，依旧能获得其内部完整的语法作用域而不被回收，并在其语法作用域以外的区域执行。
 
-```js
+```javascript
 function wait(message){
 	setTimeout(function timer(){
 		console.log(message);
@@ -158,7 +158,7 @@ wait('you have a new message');
 
 **延迟函数的回调会在循环结束后才执行**
 
-```js
+```javascript
 for(var i = 1; i < 5; i++){
 	setTimeout(function timer(){
 		console.log(i);
@@ -170,7 +170,7 @@ for(var i = 1; i < 5; i++){
 
 我们试图假设循环中的每个迭代在运行中都会给自己捕获一个i的副本，但是根据作用域的工作原理，实际情况是尽管循环中的五个函数是在各个迭代中定义的，但它们都被封闭在一个共享的全局作用域中，因此实际上只有一个i
 
-```js
+```javascript
 for(var i = 1; i < 5; i++){
 	(function(j){
 		setTimeout(function timer(){
@@ -186,7 +186,7 @@ for(var i = 1; i < 5; i++){
 
 #### 模块
 
-```js
+```javascript
 function CoolModule(name){
 	var something = 'cool';
 	function doSomething() {

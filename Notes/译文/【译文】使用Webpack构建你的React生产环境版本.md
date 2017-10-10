@@ -28,7 +28,7 @@ Warning: It looks like you're using a minified copy of the development build of 
 
 通过下面的配置，你可以将`process.env.NODE_ENV`变量设置为`production`：
 
-```js
+```javascript
 // webpack.config.prod.js
 module.exports = {
   //...

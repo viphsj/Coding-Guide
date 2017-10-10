@@ -25,7 +25,7 @@
 
 `require`函数用于加载其他模块，传入一个模块名，返回一个模块导出对象:
 
-```js
+```javascript
 var foo = require('./example.js');
 // 等价于
 var foo = require('./example');
@@ -40,7 +40,7 @@ var data = require('./data.json');
 
 通过`exports`导出当前模块中的对象
 
-```js
+```javascript
 // example.js
 
 function example() {
@@ -51,7 +51,7 @@ function example() {
 exports.example = example;
 ```
 
-```js
+```javascript
 // index.js
 
 var example = require('./example');
@@ -65,7 +65,7 @@ example.example(); // do something
 
 文件结构目录就像这样：
 
-```js
+```javascript
 -- demo_package
 ---- main.js
 ---- side.js
@@ -73,7 +73,7 @@ example.example(); // do something
 ```
 其中，`main.js`是总出口，它引用并使用了`side.js`和`example.js`
 
-```js
+```javascript
 var side = require('./side');
 var example = require('./example');
 
@@ -87,12 +87,12 @@ exports.main = function (name) {
 ```
 在其它模块里使用包的时候，需要加载包的入口模块（main.js）。在现在这种情况下，需要安装下面的方式加载：
 
-```js
+```javascript
 require('./demo_package/main.js');
 ```
 **但是，如果我们把`main.js`改名为`index.js`，则可通过只加载包名而加载包**
 
-```js
+```javascript
 // 将 ./demo_package/main.js 改名为 ./demo_package/index.js
 require('./demo_package');
 ```
@@ -103,7 +103,7 @@ require('./demo_package');
 
 我们先看一下 `demo_package` 的整体文件路径：
 
-```js
+```javascript
 -- home
 ---- demo
 ------ package
@@ -116,7 +116,7 @@ require('./demo_package');
 ------------ example.js
 ```
 
-```js
+```javascript
 // package.json 配置文件
 
 {
@@ -131,7 +131,7 @@ require('./demo_package');
 
 An example:
 
-```js
+```javascript
 - /home/user/workspace/node-echo/   # 工程目录
     - bin/                          # 存放命令行相关代码
         node-echo

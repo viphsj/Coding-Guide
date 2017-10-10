@@ -17,7 +17,7 @@
 
 用于发送异步请求，返回 Promise 对象
 
-```js
+```javascript
 fetch(request).then(function(response) {
   // handle HTTP response
   if(response.ok) {
@@ -32,7 +32,7 @@ fetch(request).then(function(response) {
 
 更详细的例子:
 
-```js
+```javascript
 // 提交GET请求
 fetch(url).then(function(res) {
 
@@ -67,7 +67,7 @@ fetch(url, {
 
 - Headers
 
-```js
+```javascript
 // 不同的构造方法
 
 // key-value
@@ -179,7 +179,7 @@ Promise 对象所拥有的几种状态:
 
 - example
 
-```js
+```javascript
 function example(data) {
 	console.log(data)
 	// resolve 和 reject 分别表示异步操作执行成功或失败后的回调函数
@@ -200,7 +200,7 @@ function example(data) {
 ```
 - usage
 
-```js
+```javascript
 // then方法可以接受两个参数，第一个对应resolve的回调，第二个对应reject的回调
 // 但这种方法无法捕获resolve回调中产生的异常
 example().then(
@@ -226,7 +226,7 @@ example().then((result) => {
 `Promise.then()`和`Promise.catch()`都返回 Promise 对象，因此可以链式调用
 如果只想对异常进行处理，可以采用`promise.then(undefined, callback);`方法
 
-```js
+```javascript
 /**
 * Promise 的链式操作
 * 可以保证按照顺序依次执行异步操作，并能利用上一步异步操作的结果
@@ -267,7 +267,7 @@ promise(XXX).then((result) => {
 接收一个数组作为参数，数组内是多个 Promise 对象。 `.then()`会在**全部 Promise 执行完毕**之后返回一个包含所有异步操作结果的 list
 传递给 Promise.all 的promise并不是一个个的顺序执行的，而是同时开始、并行执行的
 
-```js
+```javascript
 Promise.all([example(1), example(2), example(3)])
 	.then((result) => {
 		console.log(result);

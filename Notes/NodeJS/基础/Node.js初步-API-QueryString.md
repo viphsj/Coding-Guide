@@ -21,7 +21,7 @@
 
 #### stringify
 
-```js
+```javascript
 querystring.stringify(obj[, sep][, eq][, options])
 ```
 
@@ -31,7 +31,7 @@ querystring.stringify(obj[, sep][, eq][, options])
 > 
 > 默认的分割符 `&`, 分配符 `=`
 
-```js
+```javascript
 var querystring= require('querystring');
 var result = querystring.stringify({foo:'bar',cool:['xux', 'yys']});
 console.log(result);
@@ -45,14 +45,14 @@ querystring.stringify({foo: 'bar', baz: 'qux'}, ';', ':')
 
 #### parse
 
-```js
+```javascript
 querystring.parse(str[, sep][, eq][, options])
 ```
 > 反序列化字符串为对象
 > 
 > 默认的分割符 `&`, 分配符 `=`
 
-```js
+```javascript
 var querystring = require('querystring');
 var result = querystring.parse('foo@bar$cool@xux$cool@yys','@','$');
 console.log(result);

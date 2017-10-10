@@ -38,7 +38,7 @@ $ npm install webpack-dev-server --save-dev # 安装webpack调试工具
 
 ### basic config
 
-```js
+```javascript
 // config/webpack.config.js
 const webpack = require('webpack');
 
@@ -109,7 +109,7 @@ $ npm install babel-loader babel-core babel-preset-es2015 --save-dev
 
 #### config loaders
 
-```js
+```javascript
 // config/webpack.config.js
 
 module.exports = {
@@ -150,7 +150,7 @@ module.exports = {
 $ npm install extract-text-webpack-plugin --save-dev
 ```
 
-```js
+```javascript
 // config/webpack.config.js
 
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
@@ -182,7 +182,7 @@ $ npm install expose-loader --save-dev
 $ npm install exports-loader --save-dev
 ```
 
-```js
+```javascript
 // config/webpack.config.js
 
 module: {
@@ -204,7 +204,7 @@ plugins: [
 
 #### `CommonsChunkPlugin`抽取公共资源
 
-```js
+```javascript
 // config/webpack.config.js
 
 entry: {
@@ -225,7 +225,7 @@ plugins: [
 
 #### `UglifyJsPlugin`代码压缩混淆
 
-```js
+```javascript
 // config/webpack.config.js
 
 plugins: [
@@ -266,7 +266,7 @@ $ npm install babel-preset-react --save-dev
 
 #### config
 
-```js
+```javascript
 loaders: [
   {
     test: /\.jsx?$/,
@@ -293,7 +293,7 @@ Warning: It looks like you're using a minified copy of the development build of 
 
 在Webpack的plugins里添加：
 
-```js
+```javascript
 new webpack.DefinePlugin({
   "process.env": { 
      NODE_ENV: JSON.stringify("production") 

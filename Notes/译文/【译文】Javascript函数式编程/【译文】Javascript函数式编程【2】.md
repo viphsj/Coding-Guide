@@ -26,7 +26,7 @@
 
 还记得上篇文章中提到的DRY代码吗。我们认识到了函数对于消除重复代码的重要性。但如果要重复性的使用函数呢？举个栗子：
 
-```js
+```javascript
 function addColour(colour) {
     var rainbowEl = document.getElementById('rainbow');
     var div = document.createElement('div');
@@ -45,7 +45,7 @@ addColour('purple');
 
 `addColour`被调用了很多次。有一个可以避免这样的方法是，将所有颜色放进列表里，通过循环进行调用：
 
-```js
+```javascript
 var colours = [
     'red', 'orange', 'yellow',
     'green', 'blue', 'purple'
@@ -62,7 +62,7 @@ for (var i = 0; i < colours.length; i = i + 1) {
 
 因为JavaScript允许函数作为参数传递，因此我们可以写一个简单的`forEach`函数：
 
-```js
+```javascript
 function forEach(callback, array) {
     for (var i = 0; i < array.length; i = i + 1) {
         callback(array[i], i);
@@ -74,13 +74,13 @@ function forEach(callback, array) {
 
 在我们这个例子里，想对Array中的每个元素调用`addColour`函数。此时就能使用这个`forEach`函数，仅仅一行就能搞定：
 
-```js
+```javascript
 forEach(addColour, colours);
 ```
 
 给列表中的每个元素一个回调非常有用，现代JavaScript语言也已经支持了这个特性，因此我们可以直接使用它：
 
-```js
+```javascript
 var colours = [
     'red', 'orange', 'yellow',
     'green', 'blue', 'purple'
@@ -96,7 +96,7 @@ colours.forEach(addColour);
 
 举个栗子，我们有一个由ID组成的列表，并想获取到相符的由DOM元素组成的列表。使用循环遍历它：
 
-```js
+```javascript
 var ids = ['unicorn', 'fairy', 'kitten'];
 var elements = [];
 for (var i = 0; i < ids.length; i = i + 1) {
@@ -107,7 +107,7 @@ for (var i = 0; i < ids.length; i = i + 1) {
 
 再一次的，我们每次都要手动创建遍历并递归它--但这些东西我们并不想关心。我们把这些代码封装到一个叫`map`的函数里，像之前那个`forEach`函数一样重构它：
 
-```js
+```javascript
 var map = function(callback, array) {
     var newArray = [];
     for (var i = 0; i < array.length; i = i + 1) {
@@ -119,7 +119,7 @@ var map = function(callback, array) {
 
 现在我们拥有了一个`map`函数了，可以这样使用它：
 
-```js
+```javascript
 var getElement = function(id) {
   return document.getElementById(id);
 };
@@ -131,7 +131,7 @@ var elements = map(getElement, ids);
 
 跟`forEach`一样，`map`也已经被现代的JavaScript函数语法所支持。你可以这样使用原生的`map`方法：
 
-```js
+```javascript
 var ids = ['unicorn', 'fairy', 'kitten'];
 var getElement = function(id) {
   return document.getElementById(id);
@@ -154,7 +154,7 @@ var elements = ids.map(getElement, ids);
 
 回到正题。解决这谢问题最高效的方法就是遍历：
 
-```js
+```javascript
 // Given an array of numbers, calculate the sum
 var numbers = [1, 3, 5, 7, 9];
 var total = 0;
@@ -176,7 +176,7 @@ for (i = 0; i < words.length; i++) {
 
 将循环体内部的代码封装成函数试试：
 
-```js
+```javascript
 var add = function(a, b) {
     return a + b;
 }
@@ -204,7 +204,7 @@ for (i = 0; i < words.length; i++) {
 
 这样变得简洁多了。重构出来的两个方法都以上一次的结果作为第一个参数，遍历的Array中的当前值作为第二个参数。我们可以把这些凌乱的循环体放进函数里：
 
-```js
+```javascript
 var reduce = function(callback, initialValue, array) {
     var working = initialValue;
     for (var i = 0; i < array.length; i = i + 1) {
@@ -216,14 +216,14 @@ var reduce = function(callback, initialValue, array) {
 
 现在我们拥有这个迷人的`reduce`函数了。拿它做下尝试：
 
-```js
+```javascript
 var total = reduce(add, 0, numbers);
 var sentence = reduce(joinWord, '', words);
 ```
 
 `reduce`也已经被现代化JavaScript语法支持了：
 
-```js
+```javascript
 var total = numbers.reduce(add, 0);
 var sentence = words.reduce(joinWord, '');
 ```
@@ -236,7 +236,7 @@ var sentence = words.reduce(joinWord, '');
 
 来做点复杂的。写点假的样板数据，使用`map`和`reduce`把它们转换到HTML的列表里。数据在这儿：
 
-```js
+```javascript
 var ponies = [
     [
         ['name', 'Fluttershy'],
@@ -258,7 +258,7 @@ var ponies = [
 
 数据不是很干净，如果这些内部的列表是Object的话会好很多。在这以前，我们使用`reduce`函数返回简单的结果，例如数组或字符串。但没人规定它只能返回简单的结果。我们可以让它返回Object，Array，甚至DOM元素。现在来创建和函数，以一个Array作为参数（例如['name', 'Fluttershy']），将列表内部的数据转换为key/value形式的Object。
 
-```js
+```javascript
 var addToObject = function(obj, arr) {
     obj[arr[0]] = arr[1];
     return obj;
@@ -267,7 +267,7 @@ var addToObject = function(obj, arr) {
 
 通过这个`addToObject`方法，我们就能把ponies列表中的第一层列表里的各个列表转换为一个Object：
 
-```js
+```javascript
 var ponyArrayToObject = function(ponyArray) {
     return reduce(addToObject, {}, ponyArray);
 };
@@ -275,7 +275,7 @@ var ponyArrayToObject = function(ponyArray) {
 
 转换为后成如下形式：
 
-```js
+```javascript
 var ponies = [
   [
     {
@@ -295,13 +295,13 @@ var ponies = [
 
 如果使用`map`函数，则可以把ponies列表中的第一层列表转为Object：
 
-```js
+```javascript
 var tidyPonies = map(ponyArrayToObject, ponies);
 ```
 
 现在，我们就取得了一个满是Object的列表了。通过[Thomas Fuchs’ tweet-sized模板引擎](http://mir.aculo.us/2011/03/09/little-helpers-a-tweet-sized-javascript-templating-engine/)，我们可以利用`reduce`将它转换为HTML片段。模板方法使用模板字符串或Object，当它发现占位符（例如{name}或{image}）的时候，就会从Object中取出相应的数据进行替换。例如：
 
-```js
+```javascript
 var data = { name: "Fluttershy" };
 t("Hello {name}!", data);
 // "Hello Fluttershy!"
@@ -313,7 +313,7 @@ t("Hello {name}! It's {time} ms since epoch.", data);
 
 因此，如果我们想要把列表里面的pony object转换为HTML list，可以这么做：
 
-```js
+```javascript
 var ponyToListItem = function(pony) {
     var template = '<li><img src="{image}" alt="{name}"/>' +
                    '<div><h3>{name}</h3><p>{description}</p>' +
@@ -324,7 +324,7 @@ var ponyToListItem = function(pony) {
 
 这是把一个单独的Object转为HTML。如果要转换整个list，则要使用`reduce`函数和`joinWord`函数：
 
-```js
+```javascript
 var ponyList = map(ponyToListItem, tidyPonies);
 var html = '<ul>' + reduce(joinWord, '', ponyList) + '</ul>';
 ```

@@ -36,7 +36,7 @@
 
 让我们先来看看一些使得函数式编程变的可能的JavaScript特性。在JavaScript中有两种方式可以制造块：变量`variables`和函数`functions`。变量是一些放置东西的容器。可以这样定义：
 
-```js
+```javascript
 var myContainer = "Hey everybody! Come see how good I look!";
 ```
 
@@ -44,7 +44,7 @@ var myContainer = "Hey everybody! Come see how good I look!";
 
 另一方面，函数则是包含了一些指令的容器。你可以重复使用它们或者仅仅用一次就扔在一边。可以这样定义函数：
 
-```js
+```javascript
 function log(someVariable) {
     console.log(someVariable);
     return someVariable;
@@ -53,14 +53,14 @@ function log(someVariable) {
 
 可以这样调用：
 
-```js
+```javascript
 log(myContainer);
 // Hey everybody! Come see how good I look!
 ```
 
 当然如果你见识过足够多JavaScript代码，就会知道我们也可以这样使用函数：
 
-```js
+```javascript
 var log = function(someVariable) {
     console.log(someVariable);
     return someVariable;
@@ -74,7 +74,7 @@ log(myContainer);
 
 来试试。或许可以将函数作为参数，传递给其他函数？
 
-```js
+```javascript
 var classyMessage = function() {
     return "Stay classy San Diego!";
 }
@@ -85,7 +85,7 @@ log(classyMessage);
 
 嗯。。好像没什么实际作用。换种方式试试看：
 
-```js
+```javascript
 var doSomething = function(thing) {
     thing();
 }
@@ -107,7 +107,7 @@ doSomething(sayBigDeal);
 
 来看个例子。我们想把三个行李放在行李传送带上：
 
-```js
+```javascript
 var el1 = document.getElementById('main-carousel');
 var slider1 = new Carousel(el1, 3000);
 slider1.init();
@@ -123,7 +123,7 @@ slider3.init();
 
 代码重复了好几次。我们想在页面上初始化传送带，每一个都有自己独特的ID。因此，应该新建一个函数，描述初始化传送带的过程，然后将ID作为参数调用这个函数。
 
-```js
+```javascript
 function initialiseCarousel(id, frequency) {
     var el = document.getElementById(id);
     var slider = new Carousel(el, frequency);
@@ -138,7 +138,7 @@ initialiseCarousel('events-carousel', 7000);
 
 代码变的清晰且易于维护了。你可以遵循这个模式：如果有基于不同数据的相同行为，就可以把数据作为变量，将行为封装起来。但如果行为也各不相同呢？
 
-```js
+```javascript
 var unicornEl = document.getElementById('unicorn');
 unicornEl.className += ' magic';
 spin(unicornEl);
@@ -154,7 +154,7 @@ rainbowTrail(kittenEl);
 
 这段代码不太好重构。它确实有重复，但是使用了不同的方法调用。或许我们可以把`document.getElementById()`封装起来并把`className`作为参数传入。这样的话会好一丢丢：
 
-```js
+```javascript
 function addMagicClass(id) {
     var element = document.getElementById(id);
     element.className += ' magic';
@@ -173,7 +173,7 @@ rainbow(kittenEl);
 
 但其实还能更进一步的优化。还记得JavaScript允许函数作为参数传入吗：
 
-```js
+```javascript
 function addMagic(id, effect) {
     var element = document.getElementById(id);
     element.className += ' magic';

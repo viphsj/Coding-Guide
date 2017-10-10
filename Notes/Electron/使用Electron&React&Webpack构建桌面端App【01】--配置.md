@@ -43,7 +43,7 @@ $ npm install && npm start
 |--package.json
 ```
 
-```js
+```javascript
 // main.js
 const electron = require('electron')
 // app用于控制应用的生命周期
@@ -75,7 +75,7 @@ app.on('active', function() {
 </script>
 ```
 
-```js
+```javascript
 // renderer.js
 // 在这里可以使用Node.js API
 // 例如，可以调用渲染进程的专用API，如remote（用于在主进程和渲染进程间建立联系，并可获取当前窗口），clipboard（用于粘贴渲染进程的相应文字）
@@ -109,7 +109,7 @@ React搭配Webpack时，关于`production`和`development`需要注意的点：
 
 配好webpack，先不急搭建目录。先使用根目录下的`renderer.js`：
 
-```js
+```javascript
 // renderer.js
 // remote用于在主进程和渲染进程之间建立联系
 // clipboard可以提供复制文本的功能
@@ -122,7 +122,7 @@ console.log(currentWindow); // It's an Object
 
 然后以`renderer.js`作为webpack`entry`中的入口：
 
-```js
+```javascript
 //config/webpack.config.js
 
 module.exports = {
@@ -148,7 +148,7 @@ Module not found: Error: Cannot resolve module 'electron' in /Users/ecmadao1/Dev
 
 在webpack中配置：
 
-```js
+```javascript
 module.exports = {
   externals: [
     (function () {

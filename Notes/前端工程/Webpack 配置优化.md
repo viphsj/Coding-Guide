@@ -19,7 +19,7 @@
 直接指定 `require` 或者 `import` 的包的位置，可以指定到 `.min` 以便缩减编译时间
 
 
-```js
+```javascript
 var webpack = require('webpack');
 var ExtractTextPlugin = require("extract-text-webpack-plugin");
 

@@ -36,13 +36,13 @@ tags: webpack
 
 Installation
 
-```js
+```javascript
 $ npm install --save-dev webpack-dev-server react-hot-loader
 ```
 
 Configuration
 
-```js
+```javascript
 module: {
   loaders: [
     {
@@ -62,7 +62,7 @@ plugins: [
 启动一个服务器
 在本地3000端口起个服务器吧，在项目根目录下面建个server.js
 
-```js
+```javascript
 var webpack = require('webpack');
 var WebpackDevServer = require('webpack-dev-server');
 var config = require('./webpack.config');
@@ -88,7 +88,7 @@ new WebpackDevServer(webpack(config), {
 
 为了不让 Webpack 去遍历 React JS 及其依赖，你可以在开发中重写它的行为。
 
-```js
+```javascript
 //webpack.config.js
 var path = require('path');
 var node_modules = path.resolve(__dirname, 'node_modules');
@@ -131,7 +131,7 @@ module.exports = config;
 
 在package.json中添加一个命令:
 
-```js
+```javascript
 "scripts": {
     "start": "webpack-dev-server --hot --inline",
     "build": "webpack --progress --profile --colors --config webpack.production.config.js"
@@ -140,7 +140,7 @@ module.exports = config;
 
 当要上线的时候,运行:
 
-```js
+```javascript
 $ npm run build
 ```
 
@@ -154,7 +154,7 @@ $ npm run build
 
 #### 修改entry入口文件
 
-```js
+```javascript
 var path = require('path');
 var ROOT_PATH = path.resolve(__dirname);
 var APP_PATH = path.resolve(ROOT_PATH, 'app');
@@ -171,11 +171,11 @@ entry: {
 
 **添加CommonsChunkPlugin**
 
-```js
+```javascript
 $ sudo npm install extract-text-webpack-plugin --save
 ```
 
-```js
+```javascript
 var webpack = require('webpack');
 
 plugins: [
@@ -209,13 +209,13 @@ plugins: [
 
 添加完毕 运行：
 
-```js
+```javascript
 $ npm run build
 ```
 
 在build文件夹中发现如下结构
 
-```js
+```javascript
 budle.js
 index.html
 vendors.bundle.js
@@ -225,13 +225,13 @@ vendors.bundle.js
 
 - Installation
 
-```js
+```javascript
 $ npm install extract-text-webpack-plugin -–save-dev //安装插件
 ```
 
 - Configuration
 
-```js
+```javascript
 var ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 
@@ -259,7 +259,7 @@ plugins: [
 
 在config里面配置：
 
-```js
+```javascript
 var path = require('path');
 var ROOT_PATH = path.resolve(__dirname);
 var APP_PATH = path.resolve(ROOT_PATH, 'app');
@@ -317,7 +317,7 @@ output: {
 
 继续配置config.js,现在让HtmlwebpackPlugin可以生成多个文件
 
-```js
+```javascript
 var path = require('path');
 var HtmlwebpackPlugin = require('html-webpack-plugin');
 //定义了一些文件夹的路径
@@ -365,7 +365,7 @@ module.exports = {
 
 运行：
 
-```js
+```javascript
 $ npm run build
 ```
 
@@ -375,7 +375,7 @@ $ npm run build
 
 基于文件的md5,通过直接在文件名后面加参数，防止浏览器的缓存
 
-```js
+```javascript
 output: {
   path: BUILD_PATH,
   //只要再加上hash这个参数就可以了
@@ -392,7 +392,7 @@ output: {
 
 例如某个需求场景，根据url参数，加载不同的两个UI组件，示例代码如下：
 
-```js
+```javascript
 var component = getUrlQuery('component');
 
 if('dialog' === component) {
@@ -412,7 +412,7 @@ if('toast' === component) {
 
 webpack会将require.ensure()包裹的部分单独打包
 
-```js
+```javascript
 if (window.location.pathname === '/feed') {
   showLoadingState();
   require.ensure([], function() { // this syntax is weird but it works
@@ -436,12 +436,12 @@ if (window.location.pathname === '/feed') {
 
 懒就是第一生产力，是时候把jQuery暴露到全局了：
 
-```js
+```javascript
 // 安装 expose-loader
 $ sudo npm install exports-loader --save
 ```
 
-```js
+```javascript
 // 配置 expose-loader
 // expose-loader将需要的变量从依赖包中暴露出来
 loaders: [

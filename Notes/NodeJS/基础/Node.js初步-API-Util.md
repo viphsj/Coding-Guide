@@ -19,7 +19,7 @@
 
 #### inspect
 
-```js
+```javascript
 util.inspect(object[, options])
 ```
 > 将任意对象转换为字符串，在代码调试的时候非常有用
@@ -31,7 +31,7 @@ util.inspect(object[, options])
 - `colors` 如果设为true，将会以ANSI颜色代码风格进行输出. 默认是false。颜色是可定制的
 - `customInspect` 如果设为 false，那么定义在被检查对象上的inspect(depth, opts) 方法将不会被调用。 默认为true
 
-```js
+```javascript
 // 检查util对象上的所有属性
 console.log(util.inspect(util, { showHidden: true, depth: null }));
 ```
@@ -52,18 +52,18 @@ console.log(util.inspect(util, { showHidden: true, depth: null }));
 
 - 如果占位符没有相对应的参数，占位符将不会被替换
 
-```js
+```javascript
 util.format('%s:%s', 'foo'); // 'foo:%s'
 ```
 
 - 如果有多个参数占位符，额外的参数将会调用util.inspect()转换为字符串。这些字符串被连接在一起，并且以空格分隔
 
-```js
+```javascript
 util.format('%s:%s', 'foo', 'bar', 'baz'); // 'foo:bar baz'
 ```
 
 - 如果第一个参数是一个非格式化字符串，则会把所有的参数转成字符串并以空格隔开拼接在一块，而且返回该字符串
 
-```js
+```javascript
 util.format(1, 2, 3); // '1 2 3'
 ```

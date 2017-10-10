@@ -32,7 +32,7 @@
 
 #### url.parse
 
-```js
+```javascript
 url.parse(urlStr[, parseQueryString][, slashesDenoteHost])
 ```
 
@@ -41,7 +41,7 @@ url.parse(urlStr[, parseQueryString][, slashesDenoteHost])
 - `parseQueryString` 布尔值，是否将查询条件解析成为json格式的对象
 - `slashesDenoteHost` 布尔值，是否将url的"//"和第一个"/"之间的部分解析为主机名
 
-```js
+```javascript
 var url = require('url');
 url.parse('http://www.baidu.com?page=1', true, false);
 
@@ -78,12 +78,12 @@ url.parse('http://www.baidu.com/news?page=1', true, true);
 
 #### url.format
 
-```js
+```javascript
 url.format(urlObj)
 ```
 > 作用与parse相反，接收一个Json对象，返回一个组装好的URL地址
 
-```js
+```javascript
 var url = require('url');
 url.format({
 	protocol: 'http:',
@@ -98,7 +98,7 @@ url.format({
 
 #### url.resolve
 
-```js
+```javascript
 url.resolve(from, to)
 ```
 
@@ -106,7 +106,7 @@ url.resolve(from, to)
 > 
 > 第一个路径是开始的路径或者说当前路径，第二个则是想要去往的路径，返回值是一个组装好的url
 
-```js
+```javascript
 url.resolve('/one/two/three', 'four')         // '/one/two/four'
 url.resolve('http://example.com/', '/one')    // 'http://example.com/one'
 url.resolve('http://example.com/one', '/two') // 'http://example.com/two'

@@ -25,7 +25,7 @@
 
 以下代码在根路径 (/) 的路由之前装入 myLogger 中间件函数。应用程序每次收到请求时，会在终端上显示消息“LOGGED”：
 
-```js
+```javascript
 var express = require('express');
 var app = express();
 
@@ -59,7 +59,7 @@ app.listen(3000);
 
 使用 `app.use()` 和 `app.METHOD()` 将应用层中间件绑定到应用程序对象的实例
 
-```js
+```javascript
 var app = express();
 
 // 没有安装路径的中间件函数, 应用程序每次收到请求时执行该函数
@@ -78,7 +78,7 @@ app.use('/user/:id', function (req, res, next) {
 要跳过路由器中间件堆栈中剩余的中间件函数，请调用 next('route') 将控制权传递给下一个路由。 
 > 注：next('route') 仅在使用 app.METHOD() 或 router.METHOD() 函数装入的中间件函数中有效
 
-```js
+```javascript
 app.get('/user/:id', function (req, res, next) {
   // if the user ID is 0, skip to the next route
   if (req.params.id == 0) next('route');
@@ -101,7 +101,7 @@ app.get('/user/:id', function (req, res, next) {
 
 使用 router.use() 和 router.METHOD() 函数装入路由器层中间件
 
-```js
+```javascript
 var app = express();
 var router = express.Router();
 
@@ -147,7 +147,7 @@ app.use('/', router);
 > 
 > 即使无需使用 next 对象，也必须指定该对象以保持特征符的有效性
 
-```js
+```javascript
 app.use(function(err, req, res, next) {
   console.error(err.stack);
   res.status(500).send('Something broke!');
@@ -167,7 +167,7 @@ app.use(function(err, req, res, next) {
 
 options使用实例:
 
-```js
+```javascript
 var options = {
   dotfiles: 'ignore',
   etag: false,
@@ -189,7 +189,7 @@ app.use(express.static('public', options));
 
 `$ npm install cookie-parser`
 
-```js
+```javascript
 var express = require('express');
 var app = express();
 var cookieParser = require('cookie-parser');

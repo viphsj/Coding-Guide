@@ -28,7 +28,7 @@
 
 ### 独立函数调用
 
-```js
+```javascript
 function foo() {
 	console.log(this.a);
 }
@@ -44,7 +44,7 @@ foo(); // 2
 
 #### 隐式绑定
 
-```js
+```javascript
 function foo(){
 	console.log(this.a);
 }
@@ -62,7 +62,7 @@ obj.foo(); // 2
 > 对象属性引用链中只有上一层或者说最后一层在调用位置中起作用
 
 
-```js
+```javascript
 function foo(){
 	console.log(this.a);
 }
@@ -89,7 +89,7 @@ doFoo(obj.foo); // I am global
 - `bind(...)`
 - 第一个参数是一个对象（为this准备），在调用函数时将它绑定到this
 
-```js
+```javascript
 function foo(){
 	console.log(this.a);
 }
@@ -129,7 +129,7 @@ console.log(b); // 5
 3. 这个新对象会被绑定到函数调用的`this`
 4. 如果函数没有返回其他对象，那么`new`表达式中的函数调用会自动返回这个新对象
 
-```js
+```javascript
 function foo(a) {
 	this.a = a;
 }
@@ -152,7 +152,7 @@ console.log(bar.a); //2
 
 - 如果把`null`、`undefined`作为`this`的绑定对象传入`call`、`apply`或者`bind`，这些值在调用时会被忽略，实际应用的是默认绑定规则
 
-```js
+```javascript
 //显式绑定到 null 的应用
 
 //使用 apply(..) 来展开一个数组，并当做参数传入一个函数
@@ -172,7 +172,7 @@ bar(3); // a : 2, b : 3
 
 更安全的做法 --- 创建一个空对象进行绑定：
 
-```js
+```javascript
 function foo(a, b){
 	console.log("a : " + a + ", b : " + b);
 }
@@ -189,7 +189,7 @@ bar(3); // a : 2, b : 3
 
 箭头函数不适用`this`的四种标准规则，而是根据外层（函数或者全局）作用域来决定`this`
 
-```js
+```javascript
 function foo(){
 //返回一个箭头函数
 	return (a) => {

@@ -40,7 +40,7 @@ tags: webpack
 - 确定已经有 package.json，没有就通过 npm init 创建
 - 安装 webpack 依赖
 
-```js
+```javascript
 $ npm init // 在项目根目录创建npm
 $ npm install webpack --save-dev // 安装webpack依赖
 //或者
@@ -52,7 +52,7 @@ $ npm install webpack-dev-server --save-dev // 安装webpack开发工具(可选)
 
 假设文件路径如下：
 
-```js
+```javascript
 -- app
 ------ modules
 ----------- MyModule.js
@@ -62,7 +62,7 @@ $ npm install webpack-dev-server --save-dev // 安装webpack开发工具(可选)
 
 打开 main.js 然后可以通过下面两种方式引入 app/modules/MyModule.js
 
-```js
+```javascript
 // app/main.js
 
 // ES6
@@ -76,7 +76,7 @@ var MyModule = require('./modules/MyModule.js');
 
 让我们打开 MyModule.js 然后引入 app/utils：
 
-```js
+```javascript
 // app/modules/MyModule.js
 
 // ES6 相对路径
@@ -94,7 +94,7 @@ var utils = require('/utils.js');
 
 **相对路径是相对当前目录。绝对路径是相对入口文件，这个案例中是 main.js。**
 
-```js
+```javascript
 var path = require('path');
 
 // 当前config文件所在目录
@@ -115,7 +115,7 @@ var BUILD_PATH = path.join(ROOT_PATH, './public/assets')
 
 ([CommonsChunkPlugin的配置](./webpack入门-2.md))
 
-```js
+```javascript
 var webpack = require('webpack');
 //公共资源文件
 var commonsPlugin = new webpack.optimize.CommonsChunkPlugin('common.js');
@@ -180,7 +180,7 @@ module.exports = {
 
 - plugins: 这里定义了需要使用的插件，比如commonsPlugin在打包多个入口文件时会提取出公用的部分，生成common.js
 
-```js
+```javascript
 resolve: {
         //查找module的话从这里开始查找
         root: '/pomy/github/flux-example/src', //绝对路径
@@ -202,7 +202,7 @@ resolve: {
 
 ---
 
-```js
+```javascript
 module: {
         //加载器配置
         loaders: [
@@ -224,7 +224,7 @@ module: {
 
 给css和less还有图片添加了loader之后，我们不仅可以像在node中那样require js文件了，我们还可以require css、less甚至图片文件：
 
-```js
+```javascript
  require('./bootstrap.css');
  require('./myapp.less');
  var img = document.createElement('img');
@@ -235,7 +235,7 @@ module: {
 loaders是一个数组，包含要处理这些程序的loaders.
 举个栗子：
 
-```js
+```javascript
 module: {
     loaders: [
       {
@@ -252,7 +252,7 @@ module: {
 ## 常用webpack配置代码
 [list-of-loaders](https://webpack.github.io/docs/list-of-loaders.html)
 
-```js
+```javascript
 //Installing loaders：
 $ npm install xxx-loader --save-dev
 ```
@@ -263,13 +263,13 @@ $ npm install xxx-loader --save-dev
 
 - Installation
 
-```js
+```javascript
 $ npm install extract-text-webpack-plugin --save-dev
 ```
 
 - Configuration
 
-```js
+```javascript
 var ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 ...
@@ -295,7 +295,7 @@ plugins: [
 
 - Installation
 
-```js
+```javascript
 $ npm install babel-loader babel-core babel-preset-es2015 babel-preset-react --save-dev //支持了es6语法
 ```
 
@@ -304,7 +304,7 @@ babel-preset-react react语法包，这个包，是专门作为react的优化，
 
 - Configuration
 
-```js
+```javascript
 module: {
   loaders: [
     {
@@ -325,7 +325,7 @@ module: {
 
 - Installation
 
-```js
+```javascript
 $ npm install react --save-dev
 $ npm i react-tap-event-plugin
 $ npm install react-dom --save
@@ -333,7 +333,7 @@ $ npm install react-dom --save
 
 - Usage
 
-```js
+```javascript
 var React = require('react');
 //es6:
 //import React from 'react'
@@ -345,13 +345,13 @@ var React = require('react');
 
 - Installation
 
-```js
+```javascript
 $ npm install jquery --save-dev
 ```
 
 - Usage
 
-```js
+```javascript
 var $ = require('jquery');
 //es6
 //import $ from 'jquery';
@@ -363,13 +363,13 @@ var $ = require('jquery');
 
 - Installation
 
-```js
+```javascript
 $ npm install css-loader style-loader --save-dev //install style-loader, css-loader
 ```
 
 - Configuration
 
-```js
+```javascript
 module: {
   loaders: [
     {
@@ -389,13 +389,13 @@ css-loader会把css按字符串导出，这两个基本都是组合使用的
 
 - Installation
 
-```js
+```javascript
 $ npm install less less-loader --save-dev //基于style-loader,css-loader
 ```
 
 - Configuration
 
-```js
+```javascript
 module: {
   loaders: [
     {
@@ -412,14 +412,14 @@ module: {
 
 - Installation
 
-```js
+```javascript
 $ npm install file-loader --save-dev
 $ npm install url-loader --save-dev
 ```
 
 - Configuration
 
-```js
+```javascript
 module: {
   loaders: [
   		{ test: /\.(woff|woff2|eot|ttf|otf)$/i, loader: 'url-loader?limit=40000&name=[name].[ext]'},
@@ -435,14 +435,14 @@ module: {
 
 - Installation
 
-```js
+```javascript
 $ npm install -g jshint //安装jshit依赖
 $ npm install jshint-loader --save-dev
 ```
 
 - Configuration
 
-```js
+```javascript
 module.exports = {
     module: {
         preLoaders: [
@@ -477,13 +477,13 @@ module.exports = {
 
 - Installation
 
-```js
+```javascript
 $ npm install html-webpack-plugin --save-dev
 ```
 
 - Configuration
 
-```js
+```javascript
 var HtmlwebpackPlugin = require('html-webpack-plugin');
 //定义了一些文件夹的路径
 var path = require('path');
@@ -512,7 +512,7 @@ module.exports = {
 
 在项目根目录运行:
 
-```js
+```javascript
 $ webpack
 ```
 
@@ -522,7 +522,7 @@ $ webpack
 
 - 在你的主入口文件中个，比如 app/main.js 你可以为整个项目加载所有的 CSS：
 
-```js
+```javascript
 import './project-styles.css';
 import './project-styles2.css';
 import './project-styles3.css';
@@ -536,7 +536,7 @@ import './project-styles3.css';
 
 - 发挥应用中多重入口文件的优势，在每个入口点包含各自的 CSS:
 
-```js
+```javascript
 //app/main.js
 import './style.css';
 // 其他 JS 代码
@@ -556,7 +556,7 @@ import './style.css';
 
 - 为每个组件创建 CSS 文件，可以让组件名和 CSS 中的 class 使用一个命名空间，来避免一个组件中的一些 class 干扰到另外一些组件的 class
 
-```js
+```javascript
 import './MyComponent.css';
 import React from 'react';
 
@@ -575,7 +575,7 @@ export default React.createClass({
 
 ### 编译文件
 
-```js
+```javascript
 $ webpack ./js/react.jsx ./js/bundle.js
 //$ webpack 待编译的文件 编译完成的出口文件
 
@@ -587,7 +587,7 @@ $ webpack
 
 ES6 模块
 
-```js
+```javascript
 //导入模块
 import MyModule from './MyModule.js';
 
@@ -609,7 +609,7 @@ export default HelloWorldComponent
 
 CommonJS
 
-```js
+```javascript
 //导入模块
 var MyModule = require('./MyModule.js');
 
@@ -627,7 +627,7 @@ module.exports = HelloWorldComponent;
 
 AMD
 
-```js
+```javascript
 define(['./MyModule.js'], function (MyModule) {
 });
 ```

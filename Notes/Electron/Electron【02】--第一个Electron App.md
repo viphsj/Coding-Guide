@@ -41,7 +41,7 @@ your-app/
 
 `main.js`应当创建一个窗口并处理系统事件。一个典型的例子如下：
 
-```js
+```javascript
 'use strict';
 
 const electron = require('electron');

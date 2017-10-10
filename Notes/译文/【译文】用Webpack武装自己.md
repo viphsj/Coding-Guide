@@ -466,7 +466,7 @@ if (document.querySelectorAll('h1').length) {
 
 瞅瞅使用了`--display-chunks --display-modules`标记后Webpack的output输出：
 
-```js
+```javascript
 $ webpack --display-modules --display-chunks
 Hash: 178b46d1d1570ff8bceb
 Version: webpack 1.12.14
@@ -503,7 +503,7 @@ chunk    {2} 2.bundle.js 290 kB {0} [rendered]
 
 现在，我们想要把共同的依赖包从入口中剔除。如果所有的页面都用到了jQuery和Mustache，那么就要把它们提取出来。更新下配置吧：
 
-```js
+```javascript
 var webpack = require('webpack');
 
 module.exports = {
@@ -526,7 +526,7 @@ module.exports = {
 
 再跑次Webpack，可以看出现在就好多了。其中，`main`是我们的默认依赖。
 
-```js
+```javascript
 chunk    {0} bundle.js (main) 287 kB [rendered]
     [0] ./src/index.js 550 bytes {0} [built]
     [2] ./~/jquery/dist/jquery.js 259 kB {0} [built]
@@ -547,7 +547,7 @@ chunk    {2} 2.bundle.js 2.92 kB {0} [rendered]
 
 如果我们改变下名字`name: 'vendor'`：
 
-```js
+```javascript
 new webpack.optimize.CommonsChunkPlugin({
     name: 'vendor',
     children: true,
@@ -570,7 +570,7 @@ Webpack有很多这样给力的优化方案。我没法一个一个介绍它们�
 
 首先，要在设置中添加几个插件，但要求只有当`NODE_ENV`为`production`的时候才运行它们：
 
-```js
+```javascript
 var webpack = require('webpack');
 var production = process.env.NODE_ENV === 'production';
 
@@ -602,7 +602,7 @@ module.exports = {
 
 Webpack也提供了一些可以切换生产环境的设置：
 
-```js
+```javascript
 module.exports = {
     debug: !production,
     devtool: production ? false : 'eval',
@@ -613,7 +613,7 @@ module.exports = {
 
 现在来添加生产环境下的插件吧：
 
-```js
+```javascript
 if (production) {
     plugins = plugins.concat([
         // 这个插件用来寻找相同的包和文件，并把它们合并在一起
@@ -654,7 +654,7 @@ if (production) {
 
 还有一个关于生产环境的优化是给资源提供版本的概念。还记得`output.filename`里的`bundle.js`吗？在这个配置里面，你可以使用一些变量，而`[hash]`则会给文件提供一段随机的字符串。除此以外，我们想要包可以被版本化，因此添加了`output.chunkFilename`：
 
-```js
+```javascript
 output: {
     path: 'builds',
     filename: production ? '[name]-[hash].js' : 'bundle.js',
@@ -665,13 +665,13 @@ output: {
 
 因为无法得知每次打包生成的文件名，所以我们只在生产环境下使用它。除此之外，我们还想保证每次打包的时候，builds文件夹都会被清空以节约空间，因此使用了一个第三方插件：
 
-```js
+```javascript
 $ npm install clean-webpack-plugin --save-dev
 ```
 
 并将它添加到配置中：
 
-```js
+```javascript
 var webpack = require('webpack');
 var CleanPlugin = require('clean-webpack-plugin');
 // ...
@@ -683,14 +683,14 @@ if (production) {
 
 做完这些漂亮的优化，来比较下结果的不同吧：
 
-```js
+```javascript
 $ webpack
                 bundle.js   314 kB       0  [emitted]  main
 1-21660ec268fe9de7776c.js  4.46 kB       1  [emitted]
 2-fcc95abf34773e79afda.js  4.15 kB       2  [emitted]
 ```
 
-```js
+```javascript
 $ NODE_ENV=production webpack
 main-937cc23ccbf192c9edd6.js  97.2 kB       0  [emitted]  main
 ```
@@ -711,13 +711,13 @@ main-937cc23ccbf192c9edd6.js  97.2 kB       0  [emitted]  main
 
 可能你已经注意到了，从这个教程一开始，Webpack打包好之后，我们的样式就直接插在网页页面上，简直不能更难看了。能通过Webpack把打包过的CSS生成独立的文件吗？当然没问题：
 
-```js
+```javascript
 $ npm install extract-text-webpack-plugin --save-dev
 ```
 
 这个插件所做的就是我刚刚说的那些：从打出的最终包里面，提取出某一类内容分离开来单独引用。它通常被用于提取CSS文件：
 
-```js
+```javascript
 var webpack = require('webpack');
 var CleanPlugin = require('clean-webpack-plugin');
 var ExtractPlugin = require('extract-text-webpack-plugin');
@@ -757,7 +757,7 @@ body {
 }
 ```
 
-```js
+```javascript
 // src/index.js
 import './styles.scss';
 
@@ -766,7 +766,7 @@ import './styles.scss';
 
 跑下Webpack，就能看见已经生成了`bundle.css`，可以把它引用进HTML里：
 
-```js
+```javascript
 $ webpack
                 bundle.js    318 kB       0  [emitted]  main
 1-a110b2d7814eb963b0b5.js   4.43 kB       1  [emitted]
@@ -802,11 +802,11 @@ body {
 
 很难说两种方法谁好谁坏：如果你的图片大于2M的话那你一定不希望它直接夹杂在代码中，而是独立出去；而如果仅仅是2kb左右的小图标。那么合并在一起减少HTTP请求会更好。因此，我们两个都要设置：
 
-```js
+```javascript
 $ npm install url-loader file-loader --save-dev
 ```
 
-```js
+```javascript
 {
     test: /\.(png|gif|jpe?g|svg)$/i,
     loader: 'url?limit=10000',
@@ -815,7 +815,7 @@ $ npm install url-loader file-loader --save-dev
 
 在这里，我们给`url-loader`了一个`limit`参数，这样，当文件大小小于10kb的时候，会采取行内样式，否则的话，会转到`file-loader`进行处理。你也可以通过`query`传递一个Object来实现它：
 
-```js
+```javascript
 {
     test: /\.(png|gif|jpe?g|svg)$/i,
     loader: 'url',
@@ -827,7 +827,7 @@ $ npm install url-loader file-loader --save-dev
 
 来瞅一眼Webpack的输出：
 
-```js
+```javascript
 bundle.js   15 kB       0  [emitted]  main
 1-b8256867498f4be01fd7.js  317 kB       1  [emitted]
 2-e1bc215a6b91d55a09aa.js  317 kB       2  [emitted]
@@ -848,13 +848,13 @@ bundle.js   15 kB       0  [emitted]  main
 
 为了能够使用HMR，我们需要一个server来启动热加载。Webpack提供的`dev-server`可以完成这个任务：
 
-```js
+```javascript
 $ npm install webpack-dev-server --save-dev
 ```
 
 安装下面的命令启动server，不能再简单了：
 
-```js
+```javascript
 $ webpack-dev-server --inline --hot
 ```
 
@@ -864,7 +864,7 @@ $ webpack-dev-server --inline --hot
 
 你可以把webpack-dev-server作为自己本地的server。如果你打算一直使用HMR，就需要这么配置：
 
-```js
+```javascript
 output: {
     path: 'builds',
     filename: production ? '[name]-[hash].js' : 'bundle.js',
@@ -882,13 +882,13 @@ devServer: {
 
 如果你一直跟着本教程走，那或许会有这样的疑问：为什么loader都在`module.loaders`中而插件不在？那当然是因为还有其他可以配置进`module`的东西~Webpack不只是有loader，也有pre-loader和post-loader：在main-loader运行之前和之后发动的玩意。举个栗子：我基本可以确信自己在这个文章里面写的代码很糟糕，所以使用ESLint进行代码检查：
 
-```js
+```javascript
 $ npm install eslint eslint-loader babel-eslint --save-dev
 ```
 
 新建一个肯定会引发错误的`.eslintrc`文件：
 
-```js
+```javascript
 // .eslintrc
 parser: 'babel-eslint'
 rules:
@@ -897,7 +897,7 @@ rules:
 
 现在增加pre-loader，语法和之前的一样，只不过加在`module.preLoaders`里：
 
-```js
+```javascript
 module:  {
     preLoaders: [
         {
@@ -909,7 +909,7 @@ module:  {
 
 启动Webpack，然后淡定的看它失败：
 
-```js
+```javascript
 $ webpack
 Hash: 33cc307122f0a9608812
 Version: webpack 1.12.2
@@ -936,11 +936,11 @@ ERROR in ./src/index.js
 
 再举个pre-loader的例子：每个组件里我们都引用了stylesheet，而它们都有相同命名的对应模板。使用一个pre-loader可以自动将有相同名称的文件作为一个module载入：
 
-```js
+```javascript
 $ npm install baggage-loader --save-dev
 ```
 
-```js
+```javascript
 {
     test: /\.js/,
     loader: 'baggage?[file].html=template&[file].scss',
@@ -951,7 +951,7 @@ $ npm install baggage-loader --save-dev
 
 将：
 
-```js
+```javascript
 import $ from 'jquery';
 import template from './Button.html';
 import Mustache from 'mustache';
@@ -960,7 +960,7 @@ import './Button.scss';
 
 改为：
 
-```js
+```javascript
 import $ from 'jquery';
 import Mustache from 'mustache';
 ```
@@ -971,7 +971,7 @@ import Mustache from 'mustache';
 
 现在我们的应用还很小，当它变的庞大的时候，观测依赖树就变的非常有用了，从中可以看出我们做的是对是错，应用的瓶颈在哪里等等。Webpack知晓这一切，不过我们得礼貌的请教它才能知晓答案。为了做到这点，你可以通过下面的命令运行Webpack：
 
-```js
+```javascript
 webpack --profile --json > stats.json
 ```
 
@@ -989,7 +989,7 @@ webpack --profile --json > stats.json
 
 对我而言，Webpack已经取代了Grunt或者Gulp：大部分的功能可以使用Webpack替代，其他的则使用NPM脚本就够了。在以前，每个任务中我们都要通过Aglio，把API文档转换为HTML，而现在只需要这么做：
 
-```js
+```javascript
 // package.json
 {
   "scripts": {
@@ -1001,7 +1001,7 @@ webpack --profile --json > stats.json
 
 即便是一些不需要打包和构建的Glup任务，Webpack都贴心的提供了对应的服务。下面是一个将Glup融合进Webpack的例子：
 
-```js
+```javascript
 var gulp = require('gulp');
 var gutil = require('gutil');
 var webpack = require('webpack');

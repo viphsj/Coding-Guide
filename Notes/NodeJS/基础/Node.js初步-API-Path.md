@@ -23,12 +23,12 @@
 
 #### path.normalize
 
-```js
+```javascript
 path.normalize(pathString)
 ```
 > Normalize a string path, taking care of '..' and '.' parts.
 
-```js
+```javascript
 path.normalize('/foo/bar//baz/asdf/quux/..')
 // returns
 '/foo/bar/baz/asdf'
@@ -40,12 +40,12 @@ path.normalize('/foo/bar//baz/asdf/quux/..')
 
 #### path.parse & path.format
 
-```js
+```javascript
 path.parse(pathString)
 ```
 > 将path解析为object
 
-```js
+```javascript
 path.parse('/home/user/dir/file.txt')
 // returns
 {
@@ -59,13 +59,13 @@ path.parse('/home/user/dir/file.txt')
 
 ---
 
-```js
+```javascript
 path.format(pathObject);
 ```
 
 > 与 `path.parse` 作用相反，将object合成为path
 
-```js
+```javascript
 path.format({
     root : "/",
     dir : "/home/user/dir",
@@ -79,14 +79,14 @@ path.format({
 
 #### path.relative & path.resolve
 
-```js
+```javascript
 path.relative(from, to);
 ```
 > 解析出一段从from到to的相对路径
 
 `path.relative` examples:
 
-```js
+```javascript
 // 用 path.relative 获取从 from 到 to 的相对路径
 
 path.relative('C:\\orandea\\test\\aaa', 'C:\\orandea\\impl\\bbb')
@@ -99,7 +99,7 @@ path.relative('/data/orandea/test/aaa', '/data/orandea/impl/bbb')
 ```
 ---
 
-```js
+```javascript
 path.resolve([from ...], to);
 ```
 > 将 to 解析为一段绝对路径
@@ -112,12 +112,12 @@ path.resolve([from ...], to);
 
 `path.resolve` examples:
 
-```js
+```javascript
 path.resolve('foo/bar', '/tmp/file/', '..', 'a/../subfile')
 ```
 > 把它看做一系列 cd 命令
 
-```js
+```javascript
 path.resolve('foo/bar', '/tmp/file/', '..', 'a/../subfile')
 
 //相当于
@@ -128,7 +128,7 @@ cd a/../subfile
 pwd
 ```
 
-```js
+```javascript
 path.resolve('/foo/bar', './baz')
 // returns
 '/foo/bar/baz'
@@ -146,7 +146,7 @@ path.resolve('wwwroot', 'static_files/png/', '../gif/image.gif')
 
 > The platform-specific file separator. `\\` or `/`
 
-```js
+```javascript
 'foo/bar/baz'.split(path.sep)
 
 // returns
@@ -155,14 +155,14 @@ path.resolve('wwwroot', 'static_files/png/', '../gif/image.gif')
 
 #### path.join
 
-```js
+```javascript
 path.join([path1][, path2][, ...])
 ```
 > Join all arguments together and normalize the resulting path.
 > 
 > 将参数合并为 normalize 路径
 
-```js
+```javascript
 path.join('/foo', 'bar', 'baz/asdf', 'quux', '..')
 // returns
 '/foo/bar/baz/asdf'
@@ -177,12 +177,12 @@ TypeError: Arguments to path.join must be strings
 
 #### path.isAbsolute
 
-```js
+```javascript
 path.isAbsolute(path);
 ```
 > 判断是否是绝对路径
 
-```js
+```javascript
 path.isAbsolute('/foo/bar') // true
 path.isAbsolute('/baz/..')  // true
 path.isAbsolute('qux/')     // false
@@ -191,12 +191,12 @@ path.isAbsolute('.')        // false
 
 #### path.dirname & path.extname
 
-```js
+```javascript
 path.dirname(pathString);
 ```
 > 返回路径中的目录名
 
-```js
+```javascript
 path.dirname('/foo/bar/baz/asdf/quux')
 
 // returns
@@ -205,14 +205,14 @@ path.dirname('/foo/bar/baz/asdf/quux')
 
 ---
 
-```js
+```javascript
 path.extname(pathString)
 ```
 > 返回扩展名。从最后的一个`.`到路径末尾
 > 
 > 如果在路径的最后一部分中不存在`.`，或者以`.`开头的话，则返回空
 
-```js
+```javascript
 path.extname('index.html')
 // returns
 '.html'
@@ -236,12 +236,12 @@ path.extname('.index')
 
 #### path.basename
 
-```js
+```javascript
 path.basename(pathString[, ext]);
 ```
 > basename函数可返回路径中的最后一部分，并且可以对其进行条件排除
 
-```js
+```javascript
 path.basename('/foo/bar/baz/asdf/quux.html')
 // returns
 'quux.html'

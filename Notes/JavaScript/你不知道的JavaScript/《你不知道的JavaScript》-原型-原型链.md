@@ -20,7 +20,7 @@
 
 **这个对象的用途是包含可以由特定类型的所有实例共享的属性和方法==>使用原型对象的好处是可以让所有对象实例共享它所包含的属性和方法。**
 
-```js
+```javascript
 function Person(){};
 //或者：
 var Person = function(){};
@@ -43,7 +43,7 @@ person2.sayName(); //ecmadao;
 
 ### 属性设置与屏蔽
 
-```js
+```javascript
 var anotherObj = {
 	a: 2,
 	foo: 'test'
@@ -67,7 +67,7 @@ myObj.foo = 'foo'; //将会屏蔽原型链上的原有foo属性
 
 所有的函数默认都会拥有一个名为`prototype`的公有并且不可枚举的属性，它会指向另一个对象
 
-```js
+```javascript
 function Foo(){
 	//....
 }
@@ -85,7 +85,7 @@ Object.getPrototypeOf(a) === Foo.prototype; // true
 
 #### 构造函数
 
-```js
+```javascript
 function Foo(){
 	//....
 }
@@ -108,7 +108,7 @@ a.constructor === Foo; // true
 
 **`a.constructor`只是通过默认的`[[Prototype]]`委托指向Foo**
 
-```js
+```javascript
 function Foo(){ /*...*/ }
 
 Foo.prototype = { /*...*/ }; //创建一个新原型对象(不包含constructor属性)
@@ -128,7 +128,7 @@ a1并没有`.constructor`属性，所以它会委托`[[Prototype]]`链上的`Foo
 
 #### 原型继承
 
-```js
+```javascript
 function Foo(name){
 	this.name = name;
 }
@@ -164,7 +164,7 @@ a.myLabel(); // obj a
 
 - `instanceof`
 
-```js
+```javascript
 function Foo(){
 	//....
 }
@@ -184,7 +184,7 @@ a instanceof Foo; //true
 
 - `isPrototypeOf(..)`
 
-```js
+```javascript
 Foo.prototype.isPrototypeOf(a); //true
 
 // isPrototypeOf 回答的问题是：在a的整条 [[Prototype]] 链中是否出现过Foo.prototype
@@ -192,7 +192,7 @@ Foo.prototype.isPrototypeOf(a); //true
 
 - `Object.getPrototypeOf(..)`
 
-```js
+```javascript
 Object.getPrototypeOf(a) === Foo.prototype; //true
 
 // getPrototypeOf 可直接获取一个对象的 [[Prototype]] 链
@@ -208,7 +208,7 @@ Object.getPrototypeOf(a) === Foo.prototype; //true
 
 **即使是先创建了实例后再修改原型也是这样：**
 
-```js
+```javascript
 var friend = new Person();
 Person.prototype.sayHi = function(){
   console.log('hi');
@@ -222,7 +222,7 @@ friend.sayHi(); //hi
 
 **给原型添加方法的代码一定要放在替换原型的语句之后**
 
-```js
+```javascript
 function Father(){
   this.father_name = 'ecmadao';
 };
@@ -254,7 +254,7 @@ child.getFatherName(); //hahaha
 
 **包含引用类型值的原型属性会被所有实例共享**
 
-```js
+```javascript
 //bad example
 
 function Father(){
@@ -276,7 +276,7 @@ console.log(child2.colors); //red,black,yellow
 
 **要在构造函数中，而不是原型对象中定义属性**
 
-```js
+```javascript
 function Father(){
   this.name = 'ecmadao';
 };
@@ -295,7 +295,7 @@ console.log(child.name); //edward
 console.log(child.age); //24
 ```
 
-```js
+```javascript
 //good example
 
 function Father(){
