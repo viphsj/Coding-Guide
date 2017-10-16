@@ -22,19 +22,28 @@
 
 ## Linux
 
+### Recommend
+
+- [快乐的 Linux 命令行](http://billie66.github.io/TLCL/index.html)
+- [linux基础命令介绍](https://segmentfault.com/a/1190000007258280)
+- [Linux工具快速教程](http://linuxtools-rst.readthedocs.io/zh_CN/latest/index.html)
+- [Linux 文本处理三利器](https://segmentfault.com/a/1190000007993999)
+
 ### 文件和目录管理
 
 #### 文件与目录
 
 - `cd`
+
 ```bash
 $ cd path # 切换目录到 path
-$ cd - # 输出当前目录路径（不是完整的绝对路径）
 ```
 
-- `mkdir`
+- `mkdir [-p] dirpath`
 
 ```bash
+# -p: 递归的创建联级目录结构
+
 $ mkdir dirname # 创建单个文件夹
 $ mkdir -p dirpath # 创建联级目录结构
 ```
@@ -45,24 +54,33 @@ $ mkdir -p dirpath # 创建联级目录结构
 $ rmdir dir1 dirpath.. # 删除多个文件夹，但文件夹内必须为空
 ```
 
-- `rm [option] target`
+- `rm [-r/-f] target`
 
 ```bash
+# -r: 递归的删除目录下的文件
+# -f: 强制删除
+
 $ rm -r dirpath # 相当于 rmdir，删除一个联级目录结构
 $ rm -f dir # 无论是否为空，强制删除
 $ rm -rf
 ```
 
-- `cp [option] source target`
+- `cp [-r/-i] source target`
 
 ```bash
+# -r: 递归的复制目录下的文件
+# -i: 如果目标已经存在，会询问是否覆盖
+
 $ cp -r dir1 dir2 # 复制一个目录
-$ cp -i source target # 如果目标已经存在，会询问是否覆盖
+$ cp -i source target
 ```
 
-- `mv [option] source target`
+- `mv [-i/-f] source target`
 
 ```bash
+# -i: 如果目标已经存在，会询问是否覆盖
+# -f: 强制移动，覆盖重复
+
 # 如果 target 是目录：
 # 1. target 存在，则会把 source 放在 target 内
 # 2. target 不存在，则相当于把 source 重命名
@@ -73,7 +91,7 @@ $ cp -i source target # 如果目标已经存在，会询问是否覆盖
 
 #### 文档
 
-- `cat [option] filename`
+- `cat [-n] filename`
 
 ```bash
 $ cat filename # 输出文件的内推
@@ -88,10 +106,13 @@ $ more filename # 带分页的输出文件内容
 $ less filename # 带分页的输出文件内容
 ```
 
-- `head [option] filename`
-- `tail [option] filename`
+- `head [-n/-f] filename`
+- `tail [-n/-f] filename`
 
 ```bash
+# -n: n 代表数字，表示输出 n 行文件
+# -f: 随文件内容改变动态的输出
+
 $ head filename # 显示文件前 10 行
 $ head -100 filename # 显示文件前 100 行
 
@@ -102,12 +123,13 @@ $ tail -f filename # 动态的显示文件的最后 10 行
 
 #### 属性和权限
 
-- `ll`, `ls -l`
+- `ll`
+- `ls -l`
 
 ```bash
 $ ll
--rw-r--r--    1 ecmadao  staff   8456 10  2 21:33 README.md
-drwxr-xr-x  100 ecmadao  staff   3200 10  2 21:32 leetcode
+# -rw-r--r--    1 ecmadao  staff   8456 10  2 21:33 README.md
+# drwxr-xr-x  100 ecmadao  staff   3200 10  2 21:32 leetcode
 
 # 第一列一共 11 位（或 10 位）字符：
 # 第一个字符代表文件类型：
@@ -135,6 +157,7 @@ drwxr-xr-x  100 ecmadao  staff   3200 10  2 21:32 leetcode
 
 ```bash
 # 把文件或目录归属到 user 下
+# -R 会递归的作用于文件夹下的所有文件
 $ chown ecmadao README.md
 $ chown -R ecmadao ./foler
 ```
@@ -147,8 +170,8 @@ $ chown -R ecmadao ./foler
 # x 代表 1
 # - 代表 0
 # 则 rwx 为 7
-$ chmod 750 test.md
-# 把 test.md 文件权限设置为 rwxr-x---
+# -R 会递归的作用于文件夹下的所有文件
+$ chmod 750 test.md # 把 test.md 文件权限设置为 rwxr-x---
 ```
 
 - `chattr [+-=][A/s/a/c/i] filename`
@@ -163,6 +186,7 @@ $ chmod 750 test.md
 ```
 
 - `find [path] [option]`
+- `find [path] [option] -exec cmd`
 
 ```bash
 # -atime +n/-n: 表示访问或执行时间大于或小于 n 天的文件。atime -> access time, 在读取文件或执行文件时被修改
@@ -175,6 +199,39 @@ $ find /tmp/ -name test.md
 
 # -type filetype: 根据文件类型搜索，可使用的类型包括 f, b, c, d, l, s 等
 $ find /tmp/ -type d # 搜索 tmp 文件夹下的搜索文件夹
+
+# -exec 和下面的 xargs 有类似的效果，也是以前面的命令执行结果作为参数来执行下面的命令
+$ find . -mtime +10 -exec rm -rf {} \; # 找到当前目录创建时间大于 10 天的文件并删除，其中 {} 代表变量
+```
+
+- `crontab [-u/user] file`
+- `crontab [-u/user] {-l/-r/-e}`
+- [Linux 下执行定时任务 crontab 命令详解](https://segmentfault.com/a/1190000002628040)
+- [crontab 定时任务](http://linuxtools-rst.readthedocs.io/zh_CN/latest/tool/crontab.html)
+
+```bash
+$ crontab file filepath # 用指定的文件替代目前的 crontab
+$ crontab -l # 查看当前用户的定时任务
+$ crontab -e # 编辑当前用户的定时任务
+$ crontab -d # 删除当前用户的定时任务
+$ sudo crontab -u ecmadao -l # 使用 -u 查看指定用户的定时任务，执行时必须有 root 权限
+```
+
+crontan 各时间段意义：
+
+```bash
+# * * * * * cmd
+# 分 时 日期 月 星期 命名
+
+# 分：0-59, * 表示每分钟都要执行
+# 时：0-59, * 表示每小时都要执行
+# 日期：1-31, * 表示每天都要执行
+# 月：1-12, * 表示每月都要执行
+# 星期：0-7, 0 或 7 代表星期日
+
+# 当设定为 a-b 时，表示 a-b 的时间段内都要执行
+# 当设定为 */n 时，表示每隔 n 个时间段后要执行
+# 当设定为 a,b,c 时，表示第 a,b,c 个时间段要执行
 ```
 
 ### 用户和用户组
@@ -237,7 +294,7 @@ $ passwd user1 # 更改 user1 用户密码（当前必须以 root 用户登录�
 
 ### 磁盘管理
 
-- `df [option]`
+- `df [-i/-h/-k/-m]`
 
 ```bash
 # df 可查看已挂载磁盘的总容量、使用容量、剩余容量等。默认以 KB 为单位
@@ -260,6 +317,7 @@ $ df -m # 以 M 为单位
 # -h: 自动调节到合适的单位
 # -c: 在最后显示总和
 # -s: 只列出总和
+
 $ du -sh folder # 列出某文件夹占空间的总大小，并根据大小自动选择合适的单位
 ```
 
@@ -354,6 +412,8 @@ $ unzip result.zip
 # -p: 使用原文件的属性
 # -P: 表示可以使用绝对路径
 # --exclude filename: 在打包或压缩时，不要包含该文件
+
+########################################################
 
 # 利用 tar，可以打包文件和目录，且原文件/目录保留。如果遇到重名则会覆盖
 $ tar -cvf result.tar folder # 打包文件夹
