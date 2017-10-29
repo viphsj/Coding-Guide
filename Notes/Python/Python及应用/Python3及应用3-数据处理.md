@@ -619,10 +619,10 @@ print(table)
 ```
 
 ```bash
- column1  column2  column3 
- 0           1        2    
- 0           1        2    
- 0           1        2  
+ column1  column2  column3
+ 0           1        2
+ 0           1        2
+ 0           1        2
 ```
 
 ### 数据库

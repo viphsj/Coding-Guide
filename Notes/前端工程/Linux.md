@@ -3,6 +3,7 @@
 **Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
 - [Linux](#linux)
+  - [Recommend](#recommend)
   - [文件和目录管理](#%E6%96%87%E4%BB%B6%E5%92%8C%E7%9B%AE%E5%BD%95%E7%AE%A1%E7%90%86)
     - [文件与目录](#%E6%96%87%E4%BB%B6%E4%B8%8E%E7%9B%AE%E5%BD%95)
     - [文档](#%E6%96%87%E6%A1%A3)

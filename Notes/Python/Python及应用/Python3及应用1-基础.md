@@ -305,7 +305,7 @@ dict(examples)
 
 获取字典中的元素
 
-- `d.[key]` 
+- `d.[key]`
 - `d.get(key, defaultValue)` 获取指定 key 的 value，并指定了默认值
 - `d.keys()` 获取所有键组成的list
 - `d.values()` 获取所有值组成的list
@@ -348,7 +348,7 @@ print('a is %(a)s but b is %(b)s' % dict_example)
 `|` or `a.union(b)`
 
 **获取差集**(出现在第一个集合而没有在第二个集合中的元素)
-`-` or `a.difference(b)` 
+`-` or `a.difference(b)`
 
 **判断包含关系**
 `<=` or `a.issubset(b)` 判断a是否是b的子集
@@ -492,7 +492,7 @@ for i in range(5):
 ```python
 def larger_than_ten(a):
 	return a > 10
-	
+
 list1 = [10, 11, 9, 8, 7]
 
 for i in filter(larger_than_ten, list1):
@@ -518,7 +518,7 @@ from functools import reduce
 
 def add(x, y):
 	return x + y
-	
+
 list1 = [1, 2, 3, 4]
 result = reduce(add, list1)
 print(result)
@@ -618,7 +618,7 @@ num = [1, 4, -5, 10, -7, 2, 3, -1]
 double_result_g = ( x*2 for x in num if x > 0 )
 print(double_result_g)
 # <generator object <genexpr> at 0x00583E18>
- 
+
 for item in double_result_g:
 	print(item)
 # 2
@@ -637,7 +637,7 @@ try:
 	print('1' + example)
 except TypeError as e:
 	print(e)
-else: 
+else:
 	# 当没有catch到except的时候走else
 	# else语句必须在finally之前
 	print('no except')
@@ -699,7 +699,7 @@ fun(a = 0, b = 1, c = 2) # {'c': 2, 'a': 0, 'b': 1}
 def example_fun(a, b):
 	print(a)
 	print(b)
-	
+
 # 字典的key必须和函数的参数名对应
 example_dict = {
 	"a": 1,
@@ -735,7 +735,7 @@ def upstr(word):
 
 print_upstr('this is a test', upstr)
 # This
-# Is 
+# Is
 # A
 # Test
 
@@ -761,7 +761,7 @@ def decorator_fun(fun):
 		print(result)
 		return result
 	return new_fun
-	
+
 def add(a, b):
 	return a + b
 add(3, 2) # 5
@@ -821,7 +821,7 @@ def fun():
 	const_value = '2'
 	print(const_value)
 
-fun() 
+fun()
 # error: local variable 'const_value' referenced before assignment
 # 认为函数中第一次使用的const_value是局部变量，尚未声明
 
@@ -831,7 +831,7 @@ def fun():
 	print(const_value)
 
 fun() # 2
-print(const_value) 
+print(const_value)
 # const_value
 # 函数中使用的const_value为局部变量
 ```

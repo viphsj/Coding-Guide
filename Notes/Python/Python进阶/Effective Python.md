@@ -245,7 +245,7 @@ def decorator_fun(fun):
 		print(result)
 		return result
 	return new_fun
-	
+
 @decorator_fun
 def add(a, b):
 	return a + b
@@ -265,7 +265,7 @@ def read_file(filename='results.txt'):
 		def new_fun(*args, **kwargs):
 			result = fun(*args, **kwargs)
 			with open(filename, 'a') as f:
-                f.write(result + '\n')
+				f.write(result + '\n')
 			return result
 		return new_fun
 	return decorator_fun
@@ -303,7 +303,7 @@ def decorator_fun(fun):
 		print(result)
 		return result
 	return new_fun
-	
+
 @decorator_fun
 def add(a, b):
 	return a + b
@@ -320,17 +320,17 @@ from functools import wraps
 class logResult(object):
 	def __init__(self, filename='results.txt'):
 		self.filename = filename
-	
+
 	def __call__(self, fun):
 		@wraps(fun)
 		def new_fun(*args, **kwargs):
 			result = fun(*args, **kwargs)
 			with open(filename, 'a') as f:
-                f.write(result + '\n')
+				f.write(result + '\n')
 			return result
 		self.send_notification()
 		return new_fun
-	
+
 	def send_notification(self):
 		pass
 
@@ -587,7 +587,7 @@ get_indexs(array, 1, True)
 ```python
 def get_default(value=[]):
 	return value
-	
+
 result = get_default()
 result.append(1)
 result2 = get_default()
@@ -603,7 +603,7 @@ def get_default(value=None):
 	if value is None:
 		return []
 	return value
-	
+
 result = get_default()
 result.append(1)
 result2 = get_default()
@@ -684,7 +684,7 @@ class Date(object):
 		self.year = year
 		self.month = month
 		self.day = day
-	
+
 	@property
 	def time(self):
 		return "{year}-{month}-{day}".format(
@@ -787,10 +787,10 @@ finally:
 class ReadFile(object):
 	def __init__(self, filename):
 		self.file = open(filename, 'r')
-	
+
 	def __enter__(self):
 		return self.file
-	
+
 	def __exit__(self, type, value, traceback):
 		# type, value, traceback 分别代表错误的类型、值、追踪栈
 		self.file.close()
