@@ -1,3 +1,22 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [Pandas 操作乱记](#pandas-%E6%93%8D%E4%BD%9C%E4%B9%B1%E8%AE%B0)
+  - [Recommend](#recommend)
+  - [基本信息](#%E5%9F%BA%E6%9C%AC%E4%BF%A1%E6%81%AF)
+  - [数学计算](#%E6%95%B0%E5%AD%A6%E8%AE%A1%E7%AE%97)
+  - [数据操作](#%E6%95%B0%E6%8D%AE%E6%93%8D%E4%BD%9C)
+    - [数据索引](#%E6%95%B0%E6%8D%AE%E7%B4%A2%E5%BC%95)
+    - [数据删除](#%E6%95%B0%E6%8D%AE%E5%88%A0%E9%99%A4)
+    - [数据操作](#%E6%95%B0%E6%8D%AE%E6%93%8D%E4%BD%9C-1)
+    - [数据聚合](#%E6%95%B0%E6%8D%AE%E8%81%9A%E5%90%88)
+    - [数据合并](#%E6%95%B0%E6%8D%AE%E5%90%88%E5%B9%B6)
+  - [时间序列](#%E6%97%B6%E9%97%B4%E5%BA%8F%E5%88%97)
+  - [输出 & 转换](#%E8%BE%93%E5%87%BA--%E8%BD%AC%E6%8D%A2)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 ## Pandas 操作乱记
 
 ### Recommend
@@ -5,6 +24,7 @@
 - [10 Minutes to pandas](http://pandas.pydata.org/pandas-docs/stable/10min.html)
 - [十分钟入门pandas](https://ask.hellobi.com/blog/wangdawei/8695)
 - [Pandas Exercises](https://github.com/guipsamora/pandas_exercises)
+- [【量化投资利器Python】基本类库-pandas进阶](https://www.joinquant.com/post/550)
 
 ### 基本信息
 
@@ -30,7 +50,9 @@ df.size # 返回单元格总数
 df.dtypes # 获取各个 column 的类型
 df.dtype['ColunmName'] # 获取某一列的类型
 df.index # 获取各行的索引
+df.columns # 获取各列的索引
 df.info() # 输出行、列的基本信息
+df.T # 转置
 
 df.describe() # 输出类型为数字的列的统计信息
 df.describe(include = "all") # 输出所有列的统计信息
@@ -38,6 +60,20 @@ df['ColunmName'].describe(include = "all") # 输出某一列的统计信息
 
 df.values # 以嵌套数组的形式返回所有的值
 df['ColunmName'].values # 以数组的形式返回某一列的值
+
+# --------------- is_unique ---------------
+df.index.is_unique # 检查列名是否有重复
+df.columns.is_unique # 检查行名是否有重复
+df['ColumnName'].is_unique # 检查列中各值是否有重复
+
+# -------------- rank --------------
+df['ColumnName'].rank() # 返回数的排序位置
+df['ColumnName'].rank(method='first') # 返回数的排序位置
+# method 取值：
+# average: 当值相等时，将其排名平均分配
+# min: 使用更小的那个排名
+# max: 使用更大的那个排名
+# first: 按照原始的排列顺序排名
 ```
 
 ### 数学计算
@@ -46,9 +82,11 @@ df['ColunmName'].values # 以数组的形式返回某一列的值
 df.mean() # 对各列求均值
 df['ColumnName'].mean() # 对某一列求均值，返回一个 Series
 
-df.median() # 求中位数
-df.max() # 求最大值
-df.min() # 求最小值
+df.median() # 中位数
+df.max() # 最大值
+df.min() # 最小值
+df.std() # 标准差
+df.var() # 方差
 
 df.groupby('ColumnName').ColumnName.mean().max() # 对各个 group 中的指定列先求平均数，返回一个 Series，然后再从中求出最大值
 
@@ -110,6 +148,15 @@ df.iloc[rowStartIndex:rowEndIndex:step, columnStartIndex, columnEndIndex:step]
 df.iloc[rowStartIndex:rowEndIndex:step, [columnName1, columnName2]]
 df.iloc[[rowIndex1, rowIndex2], columnStartIndex:columnEndIndex:step]
 df.iloc[[rowIndex1, rowIndex2], [columnName1, columnName2]]
+
+# ------------ 按照条件表达式索引 ------------
+# http://pandas.pydata.org/pandas-docs/version/0.13.1/indexing.html#query-use-cases
+df[df.age > 18] # 索引 age 列中所有大于 18 的行
+df[(df.age > 18) | (df.name == 'ecmadao')]
+df[(df.age > 18) & (df.name == 'ecmadao')]
+# 等效于
+df.query('name > 18')
+df.query('(a < b) & (b < c)')
 ```
 
 #### 数据删除
@@ -120,13 +167,17 @@ del df['ColumnName'] # 删除某列
 df.drop(['rowIndex1', 'rowIndex2']) # 删除多行或一行
 df.drop(df.loc[:, 'ColumnName1':'ColumnNameN'], axis=1) # 删除多列或一列
 
-# 去除指定列中的重复值 -> 包含重复值的行会被整行去除
+# 去除全部列/指定列中的重复值 -> 包含重复值的行会被整行去除
 # 不会修改原对象，返回新的对象
+df.drop_duplicates()
 df.drop_duplicates(['ColumnName1', 'ColumnName2'])
 
 # 过滤无效值
 df.dropna(how='any') # to drop if any value in the row has a nan
 df.dropna(how='all') # to drop if all values in the row are nan
+
+# 填充无效值
+df.fillna(value=5)
 ```
 
 #### 数据操作
@@ -145,20 +196,25 @@ df.reindex(index=['index1', 'index2'], columns=['column1', 'column2'])
 # 获取某个单元格的数据
 df.ix['IndexName or index', 'ColumnName or columnIndex']
 
-# 获取各列/某列取到最大值时，所对应的 Index
+# ---------------- idxmax/idxmin ----------------
+# 获取各列/某列取到最大、最小值时，所对应的 Index
 df.idxmax(axis=0)
 df['Column'].idxmax(axis=0)
+df.idxmin(axis=0)
+df['Column'].idxmin(axis=0)
 
-# 获取各行/某行取到最大值时，所对应的 Column
+# 获取各行/某行取到最大、最小值时，所对应的 Column
 df.idxmax(axis=1)
 df.iloc[1].idxmax()
+df.idxmin(axis=1)
+df.iloc[1].idxmin()
 ```
 
 ```python
 # 对某列进行操作
 
 # ------------------ 统计 ------------------
-df['ColumnName'].count() # 统计该列有多少行值 -> df.shape[0]
+df['ColumnName'].count() # 统计该列有多少行非 nan 值 -> df.shape[0]
 df['ColunmName'].unique() # 以数组形式输出某一列的所有不同的值
 
 df['ColunmName'].value_counts() # 输出某一列的统计信息：不同的值分别出现的次数
@@ -176,9 +232,11 @@ df['ColumnName'].str.lower() # 把某列的各个值转为小写
 df['ColumnName'].str.capitalize() # 把某列的各个值转为大写
 
 # 其他类型方法
-df['ColumnName'].add(1) # 某列的各值都递增 1
+df.add(1) # 每个元素都递增 1，不修改原对象
+df['ColumnName'].add(1) # 某列的各值都递增 1，不修改原对象
 df['ColumnName'].eq(5) # 判断各值是否相等
 df['ColumnName'].isnull() # 判断各列的值是否存在
+df['ColumnName'].notnull() # 判断各列的值是否存在
 ```
 
 ```python
@@ -221,17 +279,36 @@ df.groupby('ColumnName').size() # 输出聚合后各个 group 的数量信息
 df.groupby(['ColumnName1', 'ColumnName2'])
 ```
 
-### 时间
+#### 数据合并
+
+- [Merge, join, and concatenate](http://pandas.pydata.org/pandas-docs/stable/merging.html)
+
+### 时间序列
 
 ```python
-# 时间操作
+#  ------------------ 时间操作 ------------------
 pd.to_datetime(df['ColumnName'], format='')
-```
 
-```python
-# 时间序列
+# ------------------ 时间序列 ------------------
+# 生成一个 Series 类型的时间序列
+pd.date_range('20150101', periods=30) # 默认时间间隔为 D，即天
+pd.date_range('2017-01-01', periods=30)
+pd.date_range(start='2017-01-01', end='2017-01-10')
+pd.date_range('2017-01-01', periods=30, freq='M') # 令时间间隔为 月
+# 可用的时间间隔（freq）：
+# a/A: year
+# [number]as/[number]AS: number 年 -> 10AS 每十年作为一个间隔
+# m/M: month
+# w/W: week
+# d/D: day
+# h/H: hour
+# min/Min: minute
+# s/S: second
 
-# 时间聚合
+# 不能同时设置 start, end 和 periods
+pd.date_range(start='20150101', end='20150110', periods=30) # ERROR!
+
+# ------------------ 时间聚合 ------------------
 # 按照指定规则将时间序列进行聚合，规则可见
 # pandas resample documentation:
 # https://stackoverflow.com/questions/17001389/pandas-resample-documentation
@@ -239,5 +316,28 @@ df.resample(rule)
 df['ColumnName'].resample(rule)
 # 例：
 df.resample('10AS').sum() # 每十年进行聚合，并求十年数据的总和
+
+# 可以设定聚合方式
+df.resample('W', how='sum')
+df.resample('W', how='mean')
+
+time_series = pd.date_range('20150101', periods=3)
+# --> DatetimeIndex(['2015-01-01', '2015-01-02', '2015-01-03'], dtype='datetime64[ns]', freq='D')
+time_series = time_series.to_period()
+# --> PeriodIndex(['2015-01-01', '2015-01-02', '2015-01-03'], dtype='period[D]', freq='D')
+time_series = time_series.to_timestamp()
+# --> DatetimeIndex(['2015-01-01', '2015-01-02', '2015-01-03'], dtype='datetime64[ns]', freq='D')
 ```
 
+### 输出 & 转换
+
+```python
+# 转换为字典
+df.to_dict(orient='dict')
+
+# 转换为数组
+df.values
+
+# 输出为 CSV
+df.to_csv(path, sep=',', line_terminator='\n')
+```
