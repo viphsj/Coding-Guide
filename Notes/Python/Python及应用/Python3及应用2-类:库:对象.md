@@ -67,7 +67,7 @@ Counter(example_list1) + Counter(example_list2)
 # Counter({'a': 5, 'b': 2, 'c': 1})
 
 # - 第一个计数器有，而第二个没有的元素
-Counter(example_list1) - Counter(example_list2) 
+Counter(example_list1) - Counter(example_list2)
 # Counter({'c': 1})
 
 # & 交集，取两者共有的项的较小计数
@@ -261,12 +261,12 @@ animal.name = 'man'
 class Animal():
 	def __init__(self, name):
 		self.hiden_name = name
-		
+
 	@property
 	def name(self):
 		print('get my name')
 		return self.hiden_name
-		
+
 	@name.setter # 如果设定的是其他属性，例如sex，则使用 @sex.setter
 	def name(self, new_name):
 		print('set my name')
@@ -321,11 +321,11 @@ class A():
 	count = 0 # 类属性
 	def __init__(self):
 		A.count += 1
-		
+
 	@classmethod
 	def kids(cls):
 		print('A has', cls.count, 'objects')
-	
+
 	@staticmethod
 	def intro():
 		print('this is a example')

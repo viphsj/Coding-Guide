@@ -140,17 +140,17 @@ print(name) # ecmadao
 ```python
 # 列表切片不会改变原有列表，而是生成新的列表
 old_list = [0, 1, 2, 3, 4]
-# list切片
+# list 切片
 new_list = old_list[0:2] # [0, 1]
 print(old_list) # [0, 1, 2, 3, 4]
 
-# list逆序排列
+# list 逆序排列
 new_list = old_list[::-1] # [4, 3, 2, 1, 0]
 
 # 可以通过切片赋空值的形式达到删除的效果
 old_list[0:2] = []
 print(old_list) # [2, 3, 4]
-# 或者del进行删除
+# 或者 del 进行删除
 del old_list[0:1]
 print(old_list) # [3, 4]
 ```
@@ -169,7 +169,7 @@ print(old_list) # [3, 4]
 - `list.pop()` 获取并删除指定位置的元素
 
 ```python
-# pop(0)返回列表的头元素，pop()或pop(-1)则返回列表的尾元素
+# pop(0) 返回列表的头元素，pop() 或 pop(-1) 则返回列表的尾元素
 old_list = [0, 1, 2, 3, 4]
 old_list.pop() # 4
 print(old_list) # [0, 1, 2, 3]
@@ -786,7 +786,7 @@ def decorator_fun(fun):
 		print(result)
 		return result
 	return new_fun
-	
+
 @decorator_fun
 def add(a, b):
 	return a + b
