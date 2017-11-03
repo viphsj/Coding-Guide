@@ -22,18 +22,49 @@
 ### Recommend
 
 - [10 Minutes to pandas](http://pandas.pydata.org/pandas-docs/stable/10min.html)
-- [十分钟入门pandas](https://ask.hellobi.com/blog/wangdawei/8695)
+- [Pandas Cookbook](http://pandas.pydata.org/pandas-docs/stable/cookbook.html)
 - [Pandas Exercises](https://github.com/guipsamora/pandas_exercises)
-- [【量化投资利器Python】基本类库-pandas进阶](https://www.joinquant.com/post/550)
 
 ### 基本信息
 
 ```python
 import pandas as pd
 
+# ------------------ 创建 Series ------------------
+se = pd.Series(dict) # 默认会用 key 作为 Index
+se = pd.Series(array, index=array) # 传入数组创建 Series，可指定 Index
+
+# 创建 DataFrame
+# pd.DataFrame(dict)
+# pd.DataFrame(dict, columns=array)
+# pd.DataFrame(嵌套数组, columns=array)
+# pd.DataFrame.from_dict()
+# pd.DataFrame.from_csv()
+# pd.DataFrame.from_items()
+df = pd.DataFrame.from_dict(dict, orient='index'/'columns')
+
+# ------------------ 读取 CSV 文件 ------------------
 df = pd.read_csv('filepath or url')
 df = pd.read_csv('filepath or url', sep='|') # 可以指定每行的分隔符
 df = pd.read_csv('filepath or url', index_col='user_id') # 可以指定某列作为 Index
+
+# 其他读取方式
+pd.read_csv
+pd.read_sql
+pd.read_html
+pd.read_json
+pd.read_excel
+pd.read_table
+pd.read_clipboard
+
+# ------------------ 逐块读取数据 ------------------
+# 给出 chunksize 参数可以加载为一个迭代器，每次读取 chunksize 行数的文件，读取出的格式为 DataFrame
+file_chunk = pd.read_csv(filepath, chunksize=2000) # 每次读取 2000 行
+for piece in file_chunk:
+  print(piece.values)
+
+# ------------------ 读取指定行数 ------------------
+pd.read_csv(filepath, nrows=2000) # 只读取开头的 2000 行
 ```
 
 ```python
@@ -44,12 +75,16 @@ type(df.loc[0:1,:]) # pandas.core.frame.DataFrame
 ```
 
 ```python
+# --------------- 信息概览 ---------------
 df.shape # 返回一个元组：(行数, 列数)
 df.size # 返回单元格总数
 
 df.dtypes # 获取各个 column 的类型
 df.dtype['ColunmName'] # 获取某一列的类型
+
 df.index # 获取各行的索引
+df.index.max() # 获取行索引的最大值
+df.index.min() # 获取行索引的最小值
 df.columns # 获取各列的索引
 df.info() # 输出行、列的基本信息
 df.T # 转置
@@ -58,8 +93,14 @@ df.describe() # 输出类型为数字的列的统计信息
 df.describe(include = "all") # 输出所有列的统计信息
 df['ColunmName'].describe(include = "all") # 输出某一列的统计信息
 
+# --------------- values ---------------
 df.values # 以嵌套数组的形式返回所有的值
+# --> 等同于
+df.get_values()
 df['ColunmName'].values # 以数组的形式返回某一列的值
+df.get_value(index, column)
+df.at(indexName, columnName)
+df.iat(indexPosition, columnPosition)
 
 # --------------- is_unique ---------------
 df.index.is_unique # 检查列名是否有重复
@@ -79,14 +120,17 @@ df['ColumnName'].rank(method='first') # 返回数的排序位置
 ### 数学计算
 
 ```python
+# 直接对 DataFrame 进行操作
 df.mean() # 对各列求均值
-df['ColumnName'].mean() # 对某一列求均值，返回一个 Series
-
 df.median() # 中位数
 df.max() # 最大值
 df.min() # 最小值
 df.std() # 标准差
 df.var() # 方差
+df.cummax() # 逐步累加
+# 也可对 Series 进行同样的操作
+df['ColumnName'].mean() # 对某一列求均值，返回一个 Series
+df['ColumnName'].cummax() # 逐步累加
 
 df.groupby('ColumnName').ColumnName.mean().max() # 对各个 group 中的指定列先求平均数，返回一个 Series，然后再从中求出最大值
 
@@ -178,6 +222,10 @@ df.dropna(how='all') # to drop if all values in the row are nan
 
 # 填充无效值
 df.fillna(value=5)
+# 针对不同 column 的缺失值，填入不同数据
+df.fillna({
+  'columnName': fill_value
+})
 ```
 
 #### 数据操作
@@ -186,6 +234,8 @@ df.fillna(value=5)
 # 按照列名传入的顺序，对该列的值进行排序
 df.sort_values('ColumnName')
 df.sort_values(['ColumnName1', 'ColumnName2'])
+# 按照索引大小来改变横轴排列
+df.sort_index(ascending=True/False)
 
 # 改变索引
 df.set_index('ColumnName') # 将某列转为行索引。不改变原对象，返回新对象
@@ -279,6 +329,39 @@ df.groupby('ColumnName').size() # 输出聚合后各个 group 的数量信息
 df.groupby(['ColumnName1', 'ColumnName2'])
 ```
 
+#### 多层索引（MultiIndex）
+
+- [Cookbook - multiindexing](http://pandas.pydata.org/pandas-docs/stable/cookbook.html#multiindexing)
+- [How to iterate over pandas multiindex dataframe using index](https://stackoverflow.com/questions/25929319/how-to-iterate-over-pandas-multiindex-dataframe-using-index)
+
+```python
+import numpy as np
+
+# --------------------- 创建多层索引 ---------------------
+data = pd.Series(
+  np.random.randn(10),
+  index=[
+    ['a', 'a', 'a', 'b', 'b', 'b', 'c', 'c', 'd', 'd'],
+    [1, 2, 3, 1, 2, 3, 1, 2, 2, 3]
+  ]
+)
+
+# 通过 pd.MultiIndex 或者 groupby(array)，以及 groupby 之后再进行 column 数据的合并，即可创建多层索引
+# 例如：
+df.groupby('id').resample('d').sum()
+df.set_index(['column1', 'column2'])
+df.read_csv(url, index_col=['column1', 'column2'])
+
+# --------------------- 获取多层索引 ---------------------
+# 直接通过 index 获取时，会输出多个元组，每个元组从左向右分别代表各层的索引
+data.index
+# --> [(a, 1), (a, 2), (a, 3), (b, 1), (b, 2), (b, 3), (c, 1), (c, 2), (d, 2), (d, 3)]
+
+# 遍历多层索引
+df.index.get_level_values(0) # 获取全部的第一层索引
+df.index.get_level_values(1) # 获取全部的第二层索引
+```
+
 #### 数据合并
 
 - [Merge, join, and concatenate](http://pandas.pydata.org/pandas-docs/stable/merging.html)
@@ -317,14 +400,15 @@ df['ColumnName'].resample(rule)
 # 例：
 df.resample('10AS').sum() # 每十年进行聚合，并求十年数据的总和
 
-# 可以设定聚合方式
+# 旧版本的 pandas 中可以通过如下形式设定聚合方式
+# 但现在已经不再建议这样调用
 df.resample('W', how='sum')
 df.resample('W', how='mean')
 
 time_series = pd.date_range('20150101', periods=3)
-# --> DatetimeIndex(['2015-01-01', '2015-01-02', '2015-01-03'], dtype='datetime64[ns]', freq='D')
+# --> DatetimeIndex(['2015-01-01', '2015-01-02', '2015-01-03'], dtype='datetime64[ns]', freq='D') -> DatetimeIndex 储存了纳秒级的时间戳
 time_series = time_series.to_period()
-# --> PeriodIndex(['2015-01-01', '2015-01-02', '2015-01-03'], dtype='period[D]', freq='D')
+# --> PeriodIndex(['2015-01-01', '2015-01-02', '2015-01-03'], dtype='period[D]', freq='D') -> PeriodIndex 储存的是时间间隔
 time_series = time_series.to_timestamp()
 # --> DatetimeIndex(['2015-01-01', '2015-01-02', '2015-01-03'], dtype='datetime64[ns]', freq='D')
 ```
@@ -340,4 +424,42 @@ df.values
 
 # 输出为 CSV
 df.to_csv(path, sep=',', line_terminator='\n')
+```
+
+```python
+# --------------------------- 输出为图片 ---------------------------
+# http://pandas.pydata.org/pandas-docs/stable/visualization.html
+import matplotlib.pyplot as plt
+
+# 可以对图片样式进行设定
+import matplotlib
+matplotlib.style.use('ggplot')
+
+%matplotlib inline # 在 jupyter 内开启图片显示
+
+# 使用 Series 进行作图时，默认使用 Index 作为横轴
+ts = pd.Series(np.random.randn(1000), index=pd.date_range('1/1/2000', periods=1000))
+ts = ts.cumsum()
+ts.plot()
+
+# 使用 DataFrame 进行作图时，多个 column 会画出多条线
+df = pd.DataFrame(np.random.randn(1000, 4), index=ts.index, columns=list('ABCD'))
+df = df.cumsum()
+plt.figure()
+df.plot()
+# 或者指定横轴和纵轴
+df.plot(x='A', y='B')
+
+# 在调用 plot 方法的时候，可以通过 kind 参数指定绘图的方式：
+# - 'line' : line plot (default)
+# - 'bar' : vertical bar plot
+# - 'barh' : horizontal bar plot
+# - 'hist' : histogram
+# - 'box' : boxplot
+# - 'kde' : Kernel Density Estimation plot
+# - 'density' : same as 'kde'
+# - 'area' : area plot
+# - 'pie' : pie plot
+# - 'scatter' : scatter plot
+# - 'hexbin' : hexbin plot
 ```
