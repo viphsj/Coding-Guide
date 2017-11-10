@@ -127,10 +127,13 @@ df.max() # 最大值
 df.min() # 最小值
 df.std() # 标准差
 df.var() # 方差
-df.cummax() # 逐步累加
 # 也可对 Series 进行同样的操作
 df['ColumnName'].mean() # 对某一列求均值，返回一个 Series
-df['ColumnName'].cummax() # 逐步累加
+
+# 可用在时间序列分析的便捷方法
+df.cumsum() # 各列从上到下逐步累加
+df.diff() # 各列从上到下，依次和上一行该列的数据做差
+df['ColumnName'].cumsum() # 指定列逐步累加
 
 df.groupby('ColumnName').ColumnName.mean().max() # 对各个 group 中的指定列先求平均数，返回一个 Series，然后再从中求出最大值
 
@@ -203,7 +206,7 @@ df.query('name > 18')
 df.query('(a < b) & (b < c)')
 ```
 
-#### 数据删除
+#### 数据删除与替换
 
 ```python
 # 删除数据
@@ -215,17 +218,30 @@ df.drop(df.loc[:, 'ColumnName1':'ColumnNameN'], axis=1) # 删除多列或一列
 # 不会修改原对象，返回新的对象
 df.drop_duplicates()
 df.drop_duplicates(['ColumnName1', 'ColumnName2'])
+df.drop_duplicates(take_last=True) # 默认保留重复元素的第一个，通过 take_last 则保留最后一个
 
 # 过滤无效值
 df.dropna(how='any') # to drop if any value in the row has a nan
 df.dropna(how='all') # to drop if all values in the row are nan
 
-# 填充无效值
+# 替换无效值
 df.fillna(value=5)
 # 针对不同 column 的缺失值，填入不同数据
 df.fillna({
   'columnName': fill_value
 })
+
+# 替换指定值
+df.replace(target, new_value)
+df.replace([target1, target2...], new_value)
+df.replace([target1, target2...], [new_value1, new_value2...])
+df.replace({
+  'target': new_value
+})
+
+# 修改 IndexName
+df.index = df.index.map(str.upper)
+df.rename(index=str.title, columns=str.upper) # 修改 IndexName 和 ColumnName
 ```
 
 #### 数据操作
@@ -305,6 +321,15 @@ df['ColumnName'].apply(func) # 对某一列的各个值应用 func，返回一�
 
 # ---------- map ----------
 # 作用于某一列上的各个元素
+```
+
+#### DataFrame 遍历
+
+```python
+for index, row in df.iterrows():
+  print(index) # index 是 DataFrame 各个 Index 的名称
+  print(type(row)) # 每行以 Series 的形式输出
+  print(row['columnName']) # 可以获取到各个 column 的值
 ```
 
 #### 数据聚合
@@ -445,7 +470,9 @@ ts.plot()
 # 使用 DataFrame 进行作图时，多个 column 会画出多条线
 df = pd.DataFrame(np.random.randn(1000, 4), index=ts.index, columns=list('ABCD'))
 df = df.cumsum()
-plt.figure()
+# plt.figure()
+plt.axhline(number, color='k') # 在 y = number 的地方画一条黑色直线
+plt.axhline(number, color='k--') # 在 y = number 的地方画一条黑色虚线
 df.plot()
 # 或者指定横轴和纵轴
 df.plot(x='A', y='B')
