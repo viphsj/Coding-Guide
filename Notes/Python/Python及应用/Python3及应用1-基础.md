@@ -5,7 +5,7 @@
 - [Python3及应用1-基础](#python3%E5%8F%8A%E5%BA%94%E7%94%A81-%E5%9F%BA%E7%A1%80)
   - [数字、字符串和变量](#%E6%95%B0%E5%AD%97%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%92%8C%E5%8F%98%E9%87%8F)
   - [列表和元组](#%E5%88%97%E8%A1%A8%E5%92%8C%E5%85%83%E7%BB%84)
-    - [ 列表](#%E5%88%97%E8%A1%A8)
+    - [列表](#%E5%88%97%E8%A1%A8)
     - [元组](#%E5%85%83%E7%BB%84)
   - [字典与集合](#%E5%AD%97%E5%85%B8%E4%B8%8E%E9%9B%86%E5%90%88)
     - [字典](#%E5%AD%97%E5%85%B8)
@@ -84,13 +84,13 @@ name[0] = 'm';
 ```
 
 - 使用`[start:end:step]`分片
-  - 右侧end从-1开始依次减小
+  - 右侧 end 从 -1 开始依次减小
   - `[0:]`和`[0: -1]`都是提取整个字符串
   - 设定step为-1可以用于反转字符串
 - `len(params)`获取长度
 
-- `str.split(params)` 将String通过params进行分割成为列表
-- `params.join(list)` 将一个list通过params进行连接成为字符串
+- `str.split(params)` 将 str 通过 params 进行分割成为列表
+- `params.join(list)` 将一个 list 通过 params 进行连接成为字符串
 
 ---
 
@@ -119,23 +119,23 @@ print(name) # ecmadao
 - `str.lower()` 所有字母都小写
 - `str.swapcase()` 字符串大小写调转
 
-- `str.replace(target, replace, max)` replace字符串中target元素，最多修改max处
+- `str.replace(target, replace, max)` replace 字符串中 target 元素，最多修改 max 处
 
-- `str.strip()` 去除string两侧的空格(含tab)
-- `str.rstrip()` 去除string右侧的空格(含tab)
-- `str.lstrip()` 去除string左侧的空格(含tab)
+- `str.strip()` 去除 string 两侧的空格(含 tab)
+- `str.rstrip()` 去除 string 右侧的空格(含 tab)
+- `str.lstrip()` 去除 string 左侧的空格(含 tab)
 
 ### 列表和元组
 
-列表和元组（tuple）中的元素可以是任意类型的Python数据对象。
+列表和元组（tuple）中的元素可以是任意类型的 Python 数据对象。
 元组不可变，列表可变
 
-####  列表
+#### 列表
 
 - `list()` 创建一个空列表
-- `list(str)` 将string类型的数据转换为列表
+- `list(str)` 将 string 类型的数据转换为列表
 
-- `list[start:end:step]` 列表切片，不包含位于end-index的元素
+- `list[start:end:step]` 列表切片，不包含位于 end-index 的元素
 
 ```python
 # 列表切片不会改变原有列表，而是生成新的列表
@@ -185,7 +185,7 @@ print(old_list) # [0, 1, 2, 3]
 
 - `list.sort()` 对列表进行排序，改变原有列表
 - `list.sorted()` 返回排好序的列表副本，不改变原有列表
-- `sort(reverse = True)` 默认的排序为升序，将reverse设为True则可进行倒序排列
+- `sort(reverse = True)` 默认的排序为升序，将 reverse 设为 True 则可进行倒序排列
 
 **如果将一个列表赋值给了多个变量，改变其中的任何一处，则会造成其他变量对应的值也被改变**
 ```python
@@ -295,7 +295,7 @@ dict(examples)
 
 ---
 
-- `d1.update(d2)` 将字典d2合并到字典d1中，若有重复的键，则新归入字典的值会取代原有的值
+- `d1.update(d2)` 将字典d2合并到字典 d1 中，若有重复的键，则新归入字典的值会取代原有的值
 - `d.clear()` 删除字典中全部元素
 - `in` 判断某个键是否存在于字典中
 - `d.copy()` 浅拷贝，只复制字典中的父对象，对子对象采用引用的方法
@@ -307,9 +307,9 @@ dict(examples)
 
 - `d.[key]`
 - `d.get(key, defaultValue)` 获取指定 key 的 value，并指定了默认值
-- `d.keys()` 获取所有键组成的list
-- `d.values()` 获取所有值组成的list
-- `d.items()` 获取所有键值对，返回一个list，里面的元素是(键，值)组成的元组
+- `d.keys()` 获取所有键组成的 list
+- `d.values()` 获取所有值组成的 list
+- `d.items()` 获取所有键值对，返回一个 list，里面的元素是(键，值)组成的元组
 
 当使用`d.[key]`获取字典中不存在的元素时会报错
 
@@ -317,7 +317,7 @@ dict(examples)
 
 字典的格式化字符串
 
-通过`'%(key)s' % dict`，可以取出字典中对应key的value
+通过`'%(key)s' % dict`，可以取出字典中对应 key 的 value
 
 ```python
 dict_example = {
@@ -351,8 +351,8 @@ print('a is %(a)s but b is %(b)s' % dict_example)
 `-` or `a.difference(b)`
 
 **判断包含关系**
-`<=` or `a.issubset(b)` 判断a是否是b的子集
-`>=` or `a.issuperset(b)` 判断b是否是a的子集
+`<=` or `a.issubset(b)` 判断 a 是否是 b 的子集
+`>=` or `a.issuperset(b)` 判断 b 是否是 a 的子集
 
 ### 代码结构
 
@@ -375,7 +375,7 @@ for item in example_dict.items():
 
 ##### `enumerate`创建迭代器
 
-对于list，`for..in..`循环只能迭代value，无法或许index。此时，可以通过`enumerate`创建一个迭代器：
+对于 list，`for..in..`循环只能迭代 value，无法或许 index。此时，可以通过`enumerate`创建一个迭代器：
 
 ```python
 example_list = [1, 2, 3]
@@ -386,7 +386,7 @@ for index, value in enumerate(example_list):
 # 2 : 3
 ```
 
-`enumerate`还可以接受第二个参数，表示index的起始值：
+`enumerate`还可以接受第二个参数，表示 index 的起始值：
 
 ```python
 example_list = [1, 2, 3]
@@ -464,7 +464,7 @@ for i in map(abc, list1, list2, list3):
 ```
 
 ```python
-# map不仅仅可以接受变量参数list，也可以接受函数list
+# map 不仅仅可以接受变量参数 list，也可以接受函数 list
 
 def multiply(x):
 	return x * x
@@ -502,15 +502,15 @@ for i in filter(larger_than_ten, list1):
 
 **记一个坑：**
 
-`filter`返回一个filter对象，该对象可以被`for`迭代，或者通过`list()`转换为列表
+`filter`返回一个 filter 对象，该对象可以被`for`迭代，或者通过`list()`转换为列表
 
 ##### `reduce()`
 
 ```python
 from functools import reduce
 reduce(fun, sequence[, initial])
-# fun是一个接收两个参数的函数
-# 提供initial参数，会以sequence中的第一个元素和initial作为参数调用fun
+# fun 是一个接收两个参数的函数
+# 提供 initial 参数，会以 sequence 中的第一个元素和 initial 作为参数调用 fun
 ```
 
 ```python
@@ -544,7 +544,7 @@ print(number_list) # [1, 3, 5]
 rows = range(1, 4)
 cols = range(1, 3)
 cells = [(row, col) for row in rows for col in cols]
-# by the way, for row...和for col...都可以有自己的if判断
+# by the way, for row...和 for col...都可以有自己的if判断
 print(cells) # [(1, 1), (1, 2), (2, 1), (2, 2), (3, 1), (3, 2)]
 ```
 
@@ -555,7 +555,7 @@ print(cells) # [(1, 1), (1, 2), (2, 1), (2, 2), (3, 1), (3, 2)]
 ```python
 word = 'letter'
 letter_counts = {letter: word.count(letter) for letter in set(word)}
-# 在set(word)中遍历，避免了重复元素的遍历
+# 在 set(word) 中遍历，避免了重复元素的遍历
 print(letter_counts) # {'r': 1, 'l': 1, 't': 2, 'e': 2}
 ```
 
@@ -589,7 +589,7 @@ by the way，提一句`for...else`
 
 ```python
 # else 语句块会在循环结束后执行，除非在循环块中执行 break
-# 即如果for循环中break了，则不会执行for后面紧跟的else
+# 即如果 for 循环中 break 了，则不会执行 for 后面紧跟的 else
 for i in (1, 4, 5):
 	if i % 2 == 0:
 		break
@@ -807,7 +807,7 @@ const_value = 'const_value'
 
 # example 1
 def fun():
-	global const_value # 要使用并修改全局变量前需要显示的通过global进行声明
+	global const_value # 要使用并修改全局变量前需要显示的通过 global 进行声明
 	print('before is:', const_value)
 	const_value = '2'
 	print(const_value)
@@ -823,7 +823,7 @@ def fun():
 
 fun()
 # error: local variable 'const_value' referenced before assignment
-# 认为函数中第一次使用的const_value是局部变量，尚未声明
+# 认为函数中第一次使用的 const_value 是局部变量，尚未声明
 
 # example 3
 def fun():
@@ -833,7 +833,7 @@ def fun():
 fun() # 2
 print(const_value)
 # const_value
-# 函数中使用的const_value为局部变量
+# 函数中使用的 const_value 为局部变量
 ```
 
 ### 自省（`introspection`）
@@ -874,7 +874,7 @@ id(test) # 43134560 每次运行时 id 都不同
 
 [Understanding Generators in Python](http://stackoverflow.com/questions/1756096/understanding-generators-in-python)
 
-generator内部有`yield`声明，每次调用`next()`都会使函数在`yield`处暂停，并由`yield`抛出一个返回值。
+generator 内部有`yield`声明，每次调用`next()`都会使函数在`yield`处暂停，并由`yield`抛出一个返回值。
 当函数调用完全之后再次调用`next()`会报`StopIteration`错，但如果是使用`for`循环调用生成器，则会则生成器完全调用之后自动返回
 
 ```python

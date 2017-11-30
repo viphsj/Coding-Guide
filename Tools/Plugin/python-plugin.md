@@ -39,8 +39,10 @@
 - [delorean](https://github.com/myusuf3/delorean)
 
 > Delorean is a library for clearing up the inconvenient truths that arise dealing with datetimes in Python. 
-> 
+>
 > 说实话我没用过。。
+
+- [python-dateutil](https://github.com/paxan/python-dateutil) Arrow 的底层依赖
 
 ### 网络
 
@@ -71,7 +73,7 @@
 - [openpyxl](https://bitbucket.org/openpyxl/openpyxl)
 
 > 读写excel
-> 
+>
 > 教程可见[用 Python 处理 Excel 文件](http://www.jianshu.com/p/220b01d38f2c)
 
 - [python-markdown2](https://github.com/trentm/python-markdown2)

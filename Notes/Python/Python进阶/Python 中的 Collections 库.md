@@ -53,7 +53,7 @@ Counter(example_list1) + Counter(example_list2)
 # Counter({'a': 5, 'b': 2, 'c': 1})
 
 # - 第一个计数器有，而第二个没有的元素
-Counter(example_list1) - Counter(example_list2) 
+Counter(example_list1) - Counter(example_list2)
 # Counter({'c': 1})
 
 # & 交集，取两者共有的项的较小计数

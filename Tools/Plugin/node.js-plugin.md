@@ -20,6 +20,7 @@
     - [Tools](#tools)
     - [Intro](#intro)
   - [矩阵运算](#%E7%9F%A9%E9%98%B5%E8%BF%90%E7%AE%97)
+  - [Schema](#schema)
   - [Others](#others)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -94,6 +95,7 @@
 
 - [nodemon](https://github.com/remy/nodemon)
 - [http-server](https://github.com/indexzero/http-server)
+- [json-server](https://github.com/typicode/json-server)
 
 ### GraphQL
 
@@ -175,6 +177,12 @@
 - [机器学习入门资源不完全汇总](http://ml.memect.com/article/machine-learning-guide.html#%E5%85%A5%E9%97%A8%E6%94%BB%E7%95%A5)
 - [MachineLearning](https://github.com/apachecn/MachineLearning)
 - [py-ml-tutorials](https://github.com/MorvanZhou/tutorials)
+
+### Schema
+
+- [node-orm2](https://github.com/dresende/node-orm2)
+- [joi](https://github.com/hapijs/joi)
+- [normalizr](https://github.com/paularmstrong/normalizr)
 
 ### Others
 
