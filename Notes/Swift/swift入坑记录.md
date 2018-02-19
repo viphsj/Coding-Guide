@@ -9,7 +9,7 @@
   - [基础](#%E5%9F%BA%E7%A1%80)
     - [元组](#%E5%85%83%E7%BB%84)
     - [可选项展开](#%E5%8F%AF%E9%80%89%E9%A1%B9%E5%B1%95%E5%BC%80)
-    - [区间](#%E5%8C%BA%E9%97%B4)
+    - [区间`...`](#%E5%8C%BA%E9%97%B4)
     - [字符串](#%E5%AD%97%E7%AC%A6%E4%B8%B2)
   - [集合](#%E9%9B%86%E5%90%88)
     - [数组](#%E6%95%B0%E7%BB%84)
@@ -21,21 +21,27 @@
       - [结合元组](#%E7%BB%93%E5%90%88%E5%85%83%E7%BB%84)
       - [值绑定](#%E5%80%BC%E7%BB%91%E5%AE%9A)
       - [where](#where)
-    - [guard](#guard)
-  - [闭包](#%E9%97%AD%E5%8C%85)
+    - [`guard`](#guard)
+  - [闭包`closures`](#%E9%97%AD%E5%8C%85closures)
     - [闭包表达式](#%E9%97%AD%E5%8C%85%E8%A1%A8%E8%BE%BE%E5%BC%8F)
     - [尾随闭包](#%E5%B0%BE%E9%9A%8F%E9%97%AD%E5%8C%85)
-  - [类和结构体](#%E7%B1%BB%E5%92%8C%E7%BB%93%E6%9E%84%E4%BD%93)
-    - [延迟存储属性](#%E5%BB%B6%E8%BF%9F%E5%AD%98%E5%82%A8%E5%B1%9E%E6%80%A7)
-    - [计算属性](#%E8%AE%A1%E7%AE%97%E5%B1%9E%E6%80%A7)
+  - [类和结构体`struct/class`](#%E7%B1%BB%E5%92%8C%E7%BB%93%E6%9E%84%E4%BD%93structclass)
+    - [延迟存储属性`lazy`](#%E5%BB%B6%E8%BF%9F%E5%AD%98%E5%82%A8%E5%B1%9E%E6%80%A7lazy)
+    - [计算属性`get/set`](#%E8%AE%A1%E7%AE%97%E5%B1%9E%E6%80%A7getset)
     - [只读属性](#%E5%8F%AA%E8%AF%BB%E5%B1%9E%E6%80%A7)
-    - [属性观察者](#%E5%B1%9E%E6%80%A7%E8%A7%82%E5%AF%9F%E8%80%85)
-    - [类型属性](#%E7%B1%BB%E5%9E%8B%E5%B1%9E%E6%80%A7)
+    - [属性观察者`willSet/didSet`](#%E5%B1%9E%E6%80%A7%E8%A7%82%E5%AF%9F%E8%80%85willsetdidset)
+    - [类型属性`static`](#%E7%B1%BB%E5%9E%8B%E5%B1%9E%E6%80%A7static)
     - [实例方法/类型方法](#%E5%AE%9E%E4%BE%8B%E6%96%B9%E6%B3%95%E7%B1%BB%E5%9E%8B%E6%96%B9%E6%B3%95)
-    - [下标](#%E4%B8%8B%E6%A0%87)
+    - [下标`subscript`](#%E4%B8%8B%E6%A0%87subscript)
     - [类的继承](#%E7%B1%BB%E7%9A%84%E7%BB%A7%E6%89%BF)
-    - [初始化](#%E5%88%9D%E5%A7%8B%E5%8C%96)
-    - [反初始化](#%E5%8F%8D%E5%88%9D%E5%A7%8B%E5%8C%96)
+    - [初始化`init`](#%E5%88%9D%E5%A7%8B%E5%8C%96init)
+    - [反初始化`deinit`](#%E5%8F%8D%E5%88%9D%E5%A7%8B%E5%8C%96deinit)
+  - [枚举`enum`](#%E6%9E%9A%E4%B8%BEenum)
+  - [可选链](#%E5%8F%AF%E9%80%89%E9%93%BE)
+  - [协议`protocol`](#%E5%8D%8F%E8%AE%AEprotocol)
+    - [初始化器要求](#%E5%88%9D%E5%A7%8B%E5%8C%96%E5%99%A8%E8%A6%81%E6%B1%82)
+    - [将协议作为类型](#%E5%B0%86%E5%8D%8F%E8%AE%AE%E4%BD%9C%E4%B8%BA%E7%B1%BB%E5%9E%8B)
+  - [扩展`extension`](#%E6%89%A9%E5%B1%95extension)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -121,7 +127,7 @@ let assumedString: String! = "An implicitly unwrapped optional string."
 let implicitString: String = assumedString // no need for an exclamation mark
 ```
 
-#### 区间
+#### 区间`...`
 
 ```Swift
 // 闭区间
@@ -153,24 +159,28 @@ for character in str {
   print(character)
 }
 
+/* 将字符串转换为数组 */
+Array(str)
+
 /* 获取字符串长度（Character 数量） */
 str.count
 
 /* 字符串索引
-使用 startIndex属性来访问 String中第一个 Character 的位置
-endIndex属性就是 String中最后一个字符后的位置
+使用 startIndex 属性来访问 String 中第一个 Character 的位置
+endIndex 属性就是 String 中最后一个字符后的位置
 使用 index(before:) 和 index(after:) 方法来访问给定索引的前后
+注意，string.startIndex, string.endIndex. string.index(..) 返回的是 String.index 类型，
+不能直接使用 string[int] 来获取某个位置上的 Character
 */
 let greeting = "Guten Tag!"
-greeting[greeting.startIndex]
-// G
-greeting[greeting.index(before: greeting.endIndex)]
-// !
-greeting[greeting.index(after: greeting.startIndex)]
-// u
+greeting[greeting.startIndex] // G
+greeting[greeting.index(before: greeting.endIndex)] // !
+greeting[greeting.index(after: greeting.startIndex)] // u
 let index = greeting.index(greeting.startIndex, offsetBy: 7)
-greeting[index]
-// a
+greeting[index] // a
+greeting[greeting.startIndex..<greeting.endIndex] // Guten Tag!
+greeting[greeting.startIndex...greeting.endIndex] // ERROR
+
 
 /* indices 属性可获取字符串中独立字符的索引范围 Range */
 for index in greeting.characters.indices {
@@ -292,12 +302,19 @@ if condition1 {
 
 // 每一个 case 的函数体必须包含至少一个可执行的语句
 switch value {
-case value 1:
+  case value 1:
     respond to value 1
-case value 2, value 3:
+  case value 2, value 3:
     respond to value 2 or 3
-default:
+  default:
     otherwise, do something else
+}
+
+// 使用 stride 进行遍历
+// stride(from:to:by:)
+let minuteInterval = 5
+for tickMark in stride(from: 0, to: minutes, by: minuteInterval) {
+  // render the tick mark every 5 minutes (0, 5, 10, 15 ... 45, 50, 55)
 }
 ```
 
@@ -338,11 +355,11 @@ switch point {
 ```Switch
 let anotherPoint = (2, 0)
 switch anotherPoint {
-case (let x, 0):
+  case (let x, 0):
     print("on the x-axis with an x value of \(x)")
-case (0, let y):
+  case (0, let y):
     print("on the y-axis with a y value of \(y)")
-case let (x, y):
+  case let (x, y):
     print("somewhere else at (\(x), \(y))")
 }
 // prints "on the x-axis with an x value of 2"
@@ -354,17 +371,17 @@ case let (x, y):
 // 使用 where 分句来检查额外的情况
 let yetAnotherPoint = (1, -1)
 switch yetAnotherPoint {
-case let (x, y) where x == y:
+  case let (x, y) where x == y:
     print("(\(x), \(y)) is on the line x == y")
-case let (x, y) where x == -y:
+  case let (x, y) where x == -y:
     print("(\(x), \(y)) is on the line x == -y")
-case let (x, y):
+  case let (x, y):
     print("(\(x), \(y)) is just some arbitrary point")
 }
 prints "(1, -1) is on the line x == -y"
 ```
 
-#### guard
+#### `guard`
 
 `guard`语句和`if`类似，但是不会产生多层的嵌套。如果`guard`条件满足，则代码会继续正常向下执行
 
@@ -377,7 +394,7 @@ func greeting(person: [String:String]) {
 }
 ```
 
-### 闭包
+### 闭包`closures`
 
 > **闭包是引用类型**
 
@@ -412,7 +429,7 @@ reversedNames = names.sorted() {
 reversedNames = names.sorted { $0 > $1 }
 ```
 
-### 类和结构体
+### 类和结构体`struct/class`
 
 类和结构体非常类型，但有如下不同：
 
@@ -425,18 +442,18 @@ reversedNames = names.sorted { $0 > $1 }
 
 ```Swift
 class TestClass {
-    // 将属性默认初始化
-    var name: String = "ecmadao"
-    var age: Int = 25
+  // 将属性默认初始化
+  var name: String = "ecmadao"
+  var age: Int = 25
 }
 var testClass
 testClass = TestClass() // OK
 testClass = TestClass(name: "27") // ERROR
 
 struct TestStruct {
-    // 将属性默认初始化
-    var name: String = "ecmadao"
-    var age: Int = 25
+  // 将属性默认初始化
+  var name: String = "ecmadao"
+  var age: Int = 25
 }
 var testStruct
 testStruct = TestStruct() // OK
@@ -450,7 +467,7 @@ let testStruct2 = TestStruct() // OK
 testStruct2.name = "27" // ERROR
 ```
 
-#### 延迟存储属性
+#### 延迟存储属性`lazy`
 
 一个属性的初始值可能依赖于某些外部因素，而这些外部因素的值只有在实例的初始化完成后才能得到。此时可以使用延迟储存属性
 
@@ -463,7 +480,7 @@ class Example {
 }
 ```
 
-#### 计算属性
+#### 计算属性`get/set`
 
 ```Swift
 class ExampleArea {
@@ -504,7 +521,7 @@ exampleArea.info // (width 9, height 1)
 exampleArea.info = (width: 10, height: 100) // ERROR
 ```
 
-#### 属性观察者
+#### 属性观察者`willSet/didSet`
 
 属性观察者会观察并对属性值的变化做出回应。当属性的值被设置时，属性观察者都会被调用，即使这个值与该属性当前的值相同。
 
@@ -529,7 +546,7 @@ counter.count += 1
 // Set done. Old value is 0
 ```
 
-#### 类型属性
+#### 类型属性`static`
 
 使用`static`定义类型属性。类型属性只能被类/结构体直接调用，而不能被其实例调用
 
@@ -574,7 +591,7 @@ struct ExampleStruct {
 }
 ```
 
-#### 下标
+#### 下标`subscript`
 
 类、结构体和枚举可以定义下标，它可以作为访问集合、列表或序列成员元素的快捷方式
 
@@ -644,7 +661,7 @@ class SubClass: SuperClass {
 }
 ```
 
-#### 初始化
+#### 初始化`init`
 
 当你给一个存储属性分配默认值，或者在一个初始化器里设置它的初始值的时候，属性的值就会被直接设置，*不会调用任何属性监听器*。
 
@@ -703,7 +720,7 @@ class SomeClass {
 }
 ```
 
-#### 反初始化
+#### 反初始化`deinit`
 
 在类实例被释放的时候，反初始化器就会立即被调用。反初始化器不接收任何形式参数，并且不需要写圆括号。
 
@@ -717,6 +734,207 @@ class SomeClass {
 class Example {
   deinit {
     // 清理工作
+  }
+}
+```
+
+### 枚举`enum`
+
+枚举为一组相关值定义了一个通用类型
+
+```Swift
+// 通过 enum 关键字来定义枚举
+// case 后跟随的是枚举的成员
+enum CompassPoint {
+  case north
+  case south
+  case east
+  case west
+}
+
+var directionToHead = CompassPoint.west
+// 初始化之后，可以直接通过 . 语法来改变枚举成员
+directionToHead = .south
+
+// switch 语句可以用来遍历枚举值
+switch directionToHead {
+  case .north:
+    print("Is north")
+  case .south:
+    print("Is south")
+  case .east:
+    print("Is east")
+  default:
+    print("Others")
+}
+```
+
+注意，当判断一个枚举成员时，`switch`语句要么覆盖了所有的枚举成员，要么提供一个`default`判断。
+要求覆盖所有枚举成员是因为这样可以保证枚举成员不会意外的被漏掉。
+
+```Switch
+// 枚举成员可以用**相同类型**的默认值预先填充（称为原始值）
+enum AlarmClock: String {
+  case morning: "08:00"
+  case noon: "12:00"
+  case night: "21:00"
+}
+
+// 在没有显示赋值时，枚举会给各枚举成员隐式的分配相同类型的原始值
+enum CompassPoint: Int {
+  case north = 1
+  case south // 将会被赋予 2 的原始值
+  case east // rawValue -> 3
+  case west // rawValue -> 4
+}
+// 通过 rawValue 属性来访问原始值
+var directionToHead = CompassPoint.west // "west"
+directionToHead.rawValue // 4
+
+// 从原始值来初始化
+// 继续利用上面的 CompassPoint 枚举，第一个 north 的原始值是 1，从它之后，各个枚举成员的原始值会被隐式赋予，并逐个增加 1
+
+// 指定初始化原始值是 3 的枚举成员。
+// 需要注意的是，当传入的 rawValue 在枚举中不存在时，会返回 nil，因此，通过这种方式，返回的是 Optional 类型的值
+directionToHead = CompassPoint(rawValue: 3)! // 强制展开
+directionToHead == CompassPoint.west // true
+
+if let direction = CompassPoint(rawValue: 3) {}
+
+// will print ERROR
+if let direction = CompassPoint(rawValue: 10) {
+
+} else {
+  print("ERROR")
+}
+```
+
+### 可选链
+
+可选链是一个调用和查询可选属性、方法和下标的过程，当多个可选属性连续的出现时使用尤为方便，可以避免强制展开带来的错误、太多的 if 嵌套，并在某一环节展开失败时自动返回 nil
+
+```Swift
+class A {
+  var b: B?
+}
+
+class B {
+  var c: Int = 1
+}
+
+var example = A()
+if let c = example.b?.c {
+  print("c = \(c)")
+} else {
+  print("has no c")
+}
+// has no c
+```
+
+### 协议`protocol`
+
+协议要求所有遵循该协议的类型提供特定名字和类型的实例属性或类型属
+
+```Swift
+// SomeProtocol 要求，所有采纳该协议的类或结构体，都必须实现：
+// 1. 名为 mustBeSettable 的可读写属性
+// 2. 名为 doesNotNeedToBeSettable 的可读属性（是否可写无要求）
+// 3. 名为 someTypeMethod 的方法，并且返回指定的类型
+// 4. 名为 someTypeProperty 的可读写的类型属性
+protocol SomeProtocol {
+  var mustBeSettable: Int { get set }
+  var doesNotNeedToBeSettable: Int { get }
+  var func someTypeMethod() -> someType
+  static var someTypeProperty: Int { get set }
+}
+
+// 结构体采纳多个协议
+struct SomeStructure: FirstProtocol, AnotherProtocol {
+  // structure definition goes here
+}
+// 类继承某父类，并采纳多个协议（继承先写在前面）
+class SomeClass: SomeSuperclass, FirstProtocol, AnotherProtocol {
+  // class definition goes here
+}
+```
+
+#### 初始化器要求
+
+协议可以要求遵循协议的类型实现合法的初始化器
+
+```Swift
+protocol SomeProtocol {
+  init(someParameter: Int)
+}
+
+// 在实现协议要求的初始化器时，必须使用 require 关键字
+class SomeClass: SomeProtocol {
+  required init(someParameter: Int) {
+    // initializer implementation goes here
+  }
+}
+
+// 如果一个子类重写了父类指定的初始化器，而父类遵循了协议实现了初始化器要求，
+// 那么就要为这个初始化器的实现添加 required 和 override 两个修饰符
+class SomeSubClass: SomeClass, SomeProtocol {
+  // "required" from SomeProtocol conformance; "override" from SomeSuperClass
+  required override init(someParameter: Int) {
+    // initializer implementation goes here
+  }
+}
+```
+
+#### 将协议作为类型
+
+由于协议也是个类型，因此协议可以：
+
+1. 在函数、方法或者初始化器里作为形式参数类型或者返回类型
+2. 作为常量、变量或者属性的类型
+3. 作为数组、字典或者其他存储器的元素的类型
+
+```Swift
+protocol SomeProtocol {
+  init(someParameter: Int)
+}
+
+class SomeClass {
+  // 要求属性必须是采纳了 SomeProtocol 协议的实例
+  var someTypeProperty: SomeProtocol?
+}
+
+class SomeClassExample: SomeProtocol {
+  required init(someParameter: Int) {}
+  var someTypeProperty: Int = 100
+}
+let example: SomeProtocol = SomeClassExample(someParameter: 1) // OK
+example.someTypeProperty // ERROR, 因为 example 是 SomeProtocol 类型的 Protocol，并没有把 SomeClassExample 独有的 someTypeProperty 传递过去
+```
+
+### 扩展`extension`
+
+```Swift
+extension SomeType {
+  // new functionality to add to SomeType goes here
+}
+```
+
+扩展可以使已有的类型遵循一个或多个协议。在这种情况下，协议名的书写方式与类或结构体完全一样
+
+extension SomeType: SomeProtocol, AnotherProtocol {
+  // implementation of protocol requirements goes here
+}
+
+```Swift
+// 扩展 Dictionary，增加一个只读属性，在字典只有一个键值对的时候获取其键
+// 可以通过 self 获取到自身
+extension Dictionary {
+  var oneAndOnlyKey: Key? {
+    get {
+      if self.count >= 2 {
+        return nil
+      }
+      return self.keys.first
+    }
   }
 }
 ```
