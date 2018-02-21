@@ -41,6 +41,7 @@
   - [协议`protocol`](#%E5%8D%8F%E8%AE%AEprotocol)
     - [初始化器要求](#%E5%88%9D%E5%A7%8B%E5%8C%96%E5%99%A8%E8%A6%81%E6%B1%82)
     - [将协议作为类型](#%E5%B0%86%E5%8D%8F%E8%AE%AE%E4%BD%9C%E4%B8%BA%E7%B1%BB%E5%9E%8B)
+    - [委托`delegation`](#%E5%A7%94%E6%89%98delegation)
   - [扩展`extension`](#%E6%89%A9%E5%B1%95extension)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -352,7 +353,7 @@ switch point {
 
 ##### 值绑定
 
-```Switch
+```Swift
 let anotherPoint = (2, 0)
 switch anotherPoint {
   case (let x, 0):
@@ -367,7 +368,7 @@ switch anotherPoint {
 
 ##### where
 
-```Switch
+```Swift
 // 使用 where 分句来检查额外的情况
 let yetAnotherPoint = (1, -1)
 switch yetAnotherPoint {
@@ -743,8 +744,10 @@ class Example {
 枚举为一组相关值定义了一个通用类型
 
 ```Swift
-// 通过 enum 关键字来定义枚举
-// case 后跟随的是枚举的成员
+/*
+通过 enum 关键字来定义枚举
+case 后跟随的是枚举的成员
+*/
 enum CompassPoint {
   case north
   case south
@@ -772,12 +775,12 @@ switch directionToHead {
 注意，当判断一个枚举成员时，`switch`语句要么覆盖了所有的枚举成员，要么提供一个`default`判断。
 要求覆盖所有枚举成员是因为这样可以保证枚举成员不会意外的被漏掉。
 
-```Switch
+```Swift
 // 枚举成员可以用**相同类型**的默认值预先填充（称为原始值）
 enum AlarmClock: String {
-  case morning: "08:00"
-  case noon: "12:00"
-  case night: "21:00"
+  case morning = "08:00"
+  case noon = "12:00"
+  case night = "21:00"
 }
 
 // 在没有显示赋值时，枚举会给各枚举成员隐式的分配相同类型的原始值
@@ -807,6 +810,29 @@ if let direction = CompassPoint(rawValue: 10) {
 } else {
   print("ERROR")
 }
+
+// 枚举内的各枚举成员可以是不同类型，此时枚举本身定义时不能指定返回的类型
+enum Barcode {
+    case upc(Int, Int, Int, Int)
+    case qrCode(String)
+}
+var barcode = Barcode.qrCode("100")
+
+// 但是，在没有指定枚举返回的类型时，不能直接给枚举成员赋值
+enum Rank {
+  // error: enum case cannot have a raw value if the enum does not have a raw type
+  case ace = 1
+  case face(String)
+  case numeric(pipsCount: Int)
+}
+
+// 在枚举内可以定义方法
+enum WeekDay :String {
+  case Monday
+  case Tuesday
+  func day() ->String { return self.rawValue }
+}
+print(WeekDay.Monday.day()) // prints Monday
 ```
 
 ### 可选链
@@ -909,6 +935,8 @@ class SomeClassExample: SomeProtocol {
 let example: SomeProtocol = SomeClassExample(someParameter: 1) // OK
 example.someTypeProperty // ERROR, 因为 example 是 SomeProtocol 类型的 Protocol，并没有把 SomeClassExample 独有的 someTypeProperty 传递过去
 ```
+
+#### 委托`delegation`
 
 ### 扩展`extension`
 
