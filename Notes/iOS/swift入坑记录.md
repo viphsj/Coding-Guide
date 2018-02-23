@@ -41,8 +41,9 @@
   - [协议`protocol`](#%E5%8D%8F%E8%AE%AEprotocol)
     - [初始化器要求](#%E5%88%9D%E5%A7%8B%E5%8C%96%E5%99%A8%E8%A6%81%E6%B1%82)
     - [将协议作为类型](#%E5%B0%86%E5%8D%8F%E8%AE%AE%E4%BD%9C%E4%B8%BA%E7%B1%BB%E5%9E%8B)
-    - [委托`delegation`](#%E5%A7%94%E6%89%98delegation)
+    - [委托`delegate`](#%E5%A7%94%E6%89%98delegate)
   - [扩展`extension`](#%E6%89%A9%E5%B1%95extension)
+  - [错误处理](#%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -692,6 +693,27 @@ class ExampleClass {
 
 let exampleClass = ExampleClass(name: "27") // 初始化时不会触发属性监听
 exampleClass.gender // nil
+
+// convenience
+// 类在初始化的时候，还没有值的属性必须明确的传入 init 函数中进行赋值
+// 或者可以通过 convenience 关键字定义一个便捷方法
+// What is the difference between convenience init vs init in swift, explicit examples better
+// -> https://stackoverflow.com/questions/40093484/what-is-the-difference-between-convenience-init-vs-init-in-swift-explicit-examp
+class Example {
+  var name: String
+  var age: Int
+  var gender: String
+
+  init(name: String, age: String, gender: String) {
+    self.name = name
+    self.age = age
+    self.gender = gender
+  }
+
+  convenience init(name: String) {
+    self.init(name, age: 1, gender: "male")
+  }
+}
 ```
 
 ```Swift
@@ -882,6 +904,11 @@ struct SomeStructure: FirstProtocol, AnotherProtocol {
 class SomeClass: SomeSuperclass, FirstProtocol, AnotherProtocol {
   // class definition goes here
 }
+
+// 通过添加 AnyObject 关键字到协议的继承列表，你就可以限制协议只能被类类型采纳（并且不是结构体或者枚举）
+protocol SomeClassOnlyProtocol: AnyObject, SomeInheritedProtocol {
+  // class-only protocol definition goes here
+}
 ```
 
 #### 初始化器要求
@@ -936,7 +963,13 @@ let example: SomeProtocol = SomeClassExample(someParameter: 1) // OK
 example.someTypeProperty // ERROR, 因为 example 是 SomeProtocol 类型的 Protocol，并没有把 SomeClassExample 独有的 someTypeProperty 传递过去
 ```
 
-#### 委托`delegation`
+#### 委托`delegate`
+
+委托是利用协议实现的一种设计模式，可戳：
+
+- [Delegate vs Protocol](https://stackoverflow.com/questions/6361958/delegate-vs-protocol)
+- [Difference between protocol and delegates?](https://stackoverflow.com/questions/5431413/difference-between-protocol-and-delegates)
+- [Quick Guide to Swift Delegates](https://useyourloaf.com/blog/quick-guide-to-swift-delegates/)
 
 ### 扩展`extension`
 
@@ -963,6 +996,56 @@ extension Dictionary {
       }
       return self.keys.first
     }
+  }
+}
+```
+
+### 错误处理
+
+```Swift
+// 定义一个可能会抛出错误的方法
+func exampleFunc() throws -> String {}
+
+// do-catch
+do {
+    try expression
+    statements
+} catch pattern 1 {
+    statements
+} catch pattern 2 where condition {
+    statements
+}
+
+do {
+    try exampleFunc()
+} catch let err {
+    print(err)
+}
+
+// try? 语句，把结果转为可选项
+// 如果错误抛出，则返回 nil，否则正常运行
+let result = try? exampleFunc() // result 的类型应该是 Option(String)
+
+// try! 语句，强制展开
+// 如果有错，则抛出异常
+let result = try! exampleFunc()
+```
+
+定义`defer`语句，可以在代码离开当前代码块前执行预定义的内容，可用于抛出错误时进行清理工作
+
+```Swift
+// 预先在 defer 中定义了 close，因此当 processFile 函数执行完毕之后，
+// 不论是否有错误抛出，都会执行 close 操作
+func processFile(filename: String) throws {
+  if exists(filename) {
+    let file = open(filename)
+    defer {
+      close(file)
+    }
+    while let line = try file.readline() {
+      // Work with the file.
+    }
+    // close(file) is called here, at the end of the scope.
   }
 }
 ```
