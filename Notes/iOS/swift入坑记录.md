@@ -1049,3 +1049,8 @@ func processFile(filename: String) throws {
   }
 }
 ```
+
+更多资料：
+
+- [Magical Error Handling in Swift](https://www.raywenderlich.com/130197/magical-error-handling-swift)
+- [Generate your own Error code in swift 3](https://stackoverflow.com/questions/40671991/generate-your-own-error-code-in-swift-3)
