@@ -12,13 +12,19 @@
     - [日期](#%E6%97%A5%E6%9C%9F)
     - [本地化](#%E6%9C%AC%E5%9C%B0%E5%8C%96)
     - [HMAC](#hmac)
+    - [定时器`Timer`](#%E5%AE%9A%E6%97%B6%E5%99%A8timer)
+    - [扩展`Equatable`&`Comparable`](#%E6%89%A9%E5%B1%95equatablecomparable)
+    - [status bar](#status-bar)
+    - [使用`CustomStringConvertible`](#%E4%BD%BF%E7%94%A8customstringconvertible)
+    - [Swift Playground](#swift-playground)
   - [HTTP 请求和线程](#http-%E8%AF%B7%E6%B1%82%E5%92%8C%E7%BA%BF%E7%A8%8B)
     - [JSON 解析](#json-%E8%A7%A3%E6%9E%90)
       - [`JSONSerialization`](#jsonserialization)
       - [`Codable`/`Encodable`/`Decodable`](#codableencodabledecodable)
     - [线程和阻塞](#%E7%BA%BF%E7%A8%8B%E5%92%8C%E9%98%BB%E5%A1%9E)
-    - [利用`DispatchSemaphore`进行主线程阻塞](#%E5%88%A9%E7%94%A8dispatchsemaphore%E8%BF%9B%E8%A1%8C%E4%B8%BB%E7%BA%BF%E7%A8%8B%E9%98%BB%E5%A1%9E)
-    - [在请求完成之后回到主线程进行绘制](#%E5%9C%A8%E8%AF%B7%E6%B1%82%E5%AE%8C%E6%88%90%E4%B9%8B%E5%90%8E%E5%9B%9E%E5%88%B0%E4%B8%BB%E7%BA%BF%E7%A8%8B%E8%BF%9B%E8%A1%8C%E7%BB%98%E5%88%B6)
+      - [利用`DispatchSemaphore`进行主线程阻塞](#%E5%88%A9%E7%94%A8dispatchsemaphore%E8%BF%9B%E8%A1%8C%E4%B8%BB%E7%BA%BF%E7%A8%8B%E9%98%BB%E5%A1%9E)
+      - [在请求完成之后回到主线程进行绘制](#%E5%9C%A8%E8%AF%B7%E6%B1%82%E5%AE%8C%E6%88%90%E4%B9%8B%E5%90%8E%E5%9B%9E%E5%88%B0%E4%B8%BB%E7%BA%BF%E7%A8%8B%E8%BF%9B%E8%A1%8C%E7%BB%98%E5%88%B6)
+    - [多线程](#%E5%A4%9A%E7%BA%BF%E7%A8%8B)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -229,6 +235,105 @@ extension String {
 }
 
 print("test".hmac(key: "233"))
+```
+
+#### 定时器`Timer`
+
+- [Build a count down timer with Swift 3.0](https://medium.com/ios-os-x-development/build-an-stopwatch-with-swift-3-0-c7040818a10f)
+
+#### 扩展`Equatable`&`Comparable`
+
+通过扩展`Equatable`，我们可以自己实现`==`比较符操作
+
+```Swift
+struct Item {
+  var text: String
+  var id: String = {
+    return UUID().uuidString.components(separatedBy: "-").first!
+  }()
+
+  init(text: String) {
+    self.text = text
+  }
+}
+
+extension Item: Equatable {
+  static func == (lhs: Photo, rhs: Photo) -> Bool {
+    return lhs.id == rhs.id
+  }
+}
+
+// 这样就可以直接通过 item1 == item2 来比较是否相等
+```
+
+而扩展`Comparable`，则需要实现`<`和`==`比较符
+
+```Swift
+struct Bill {
+  var amount: Int
+}
+
+extension Bill: Comparable {
+  static func <(lhs: Bill, rhs: Bill) -> Bool {
+    return lhs.amount < rhs.amount
+  }
+
+  static func ==(lhs: Bill, rhs: Bill) -> Bool {
+    return lhs.amount == rhs.amount
+  }
+}
+```
+
+更多关于复写操作符的介绍，可戳：
+
+- [Overloading Custom Operators in Swift](https://www.raywenderlich.com/157556/overloading-custom-operators-swift)
+
+#### status bar
+
+改变 status bar 的背景色/字体色
+
+- [How to change the status bar background color and text color on iOS 7?](https://stackoverflow.com/questions/19063365/how-to-change-the-status-bar-background-color-and-text-color-on-ios-7)
+- [Change the Color of the Status Bar Tutorial](https://www.ioscreator.com/tutorials/change-color-status-bar-tutorial)
+
+#### 使用`CustomStringConvertible`
+
+让类/结构体扩展`CustomStringConvertible`协议后，会要求实现`description`属性。改属性可以在打印该类/结构体的实例时，返回更友好的输出，便于调试
+
+```Swift
+struct Bill {
+  var amount: Int
+}
+let bill = Bill(amount: 100)
+print(bill) // Bill(amount: 100)
+
+extension Bill: CustomStringConvertible {
+  var description: String {
+    return "Bill amount is: \(self.amount)"
+  }
+}
+
+print(bill) // Bill amount is: 100
+```
+
+#### Swift Playground
+
+在`Playground`中执行代码时，会按照从上到下的顺序直接执行，并不等待异步、其他线程，在主线程执行完毕后退出。
+如果需要阻止其自动退出，则需要标记手动退出：
+
+```Swift
+import PlaygroundSupport
+
+// 标记需要手动退出
+PlaygroundPage.current.needsIndefiniteExecution = true
+
+// 创建异步代码
+let workItem = DispatchWorkItem {
+    print("233333")
+    // 执行完之后需要手动退出
+    PlaygroundPage.current.finishExecution()
+}
+// 延迟一秒后执行
+DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: workItem)
 ```
 
 ### HTTP 请求和线程
@@ -453,7 +558,7 @@ struct Photo: Decodable {
 
 - [stackoverflow - Send make synchronous http request](https://stackoverflow.com/questions/40491502/swift-3-send-make-synchronous-http-request)
 
-#### 利用`DispatchSemaphore`进行主线程阻塞
+##### 利用`DispatchSemaphore`进行主线程阻塞
 
 - [A Quick Look at Semaphores in Swift](https://medium.com/swiftly-swift/a-quick-look-at-semaphores-6b7b85233ddb)
 
@@ -501,7 +606,7 @@ func httpRequest() -> Void {
 }
 ```
 
-#### 在请求完成之后回到主线程进行绘制
+##### 在请求完成之后回到主线程进行绘制
 
 ```Swift
 let task = session.dataTask(with: request) {
@@ -518,3 +623,10 @@ let task = session.dataTask(with: request) {
 // 执行异步请求
 task.resume()
 ```
+
+#### 多线程
+
+- [Swift - 多线程实现方式](http://www.hangge.com/blog/cache/detail_743.html)
+- [GCD精讲（Swift 3&4）](http://blog.csdn.net/Hello_Hwc/article/details/54293280)
+- [All about Concurrency in Swift - Part 1: The Present](https://www.uraimo.com/2017/05/07/all-about-concurrency-in-swift-1-the-present/)
+- [Grand Central Dispatch (GCD) and Dispatch Queues in Swift 3](https://www.appcoda.com/grand-central-dispatch/)

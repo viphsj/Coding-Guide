@@ -6,17 +6,22 @@
   - [资料](#%E8%B5%84%E6%96%99)
     - [Swift 语言](#swift-%E8%AF%AD%E8%A8%80)
     - [开发 iOS](#%E5%BC%80%E5%8F%91-ios)
+    - [推荐网站](#%E6%8E%A8%E8%8D%90%E7%BD%91%E7%AB%99)
   - [基础](#%E5%9F%BA%E7%A1%80)
     - [元组](#%E5%85%83%E7%BB%84)
     - [可选项展开](#%E5%8F%AF%E9%80%89%E9%A1%B9%E5%B1%95%E5%BC%80)
     - [区间`...`](#%E5%8C%BA%E9%97%B4)
     - [字符串](#%E5%AD%97%E7%AC%A6%E4%B8%B2)
+    - [函数](#%E5%87%BD%E6%95%B0)
+      - [使用可变参数`...`](#%E4%BD%BF%E7%94%A8%E5%8F%AF%E5%8F%98%E5%8F%82%E6%95%B0)
+      - [默认参数](#%E9%BB%98%E8%AE%A4%E5%8F%82%E6%95%B0)
   - [集合](#%E9%9B%86%E5%90%88)
     - [数组](#%E6%95%B0%E7%BB%84)
     - [集合](#%E9%9B%86%E5%90%88-1)
     - [字典](#%E5%AD%97%E5%85%B8)
   - [控制流](#%E6%8E%A7%E5%88%B6%E6%B5%81)
-    - [switch](#switch)
+    - [`for..in`](#forin)
+    - [`switch`](#switch)
       - [区间匹配](#%E5%8C%BA%E9%97%B4%E5%8C%B9%E9%85%8D)
       - [结合元组](#%E7%BB%93%E5%90%88%E5%85%83%E7%BB%84)
       - [值绑定](#%E5%80%BC%E7%BB%91%E5%AE%9A)
@@ -25,6 +30,7 @@
   - [闭包`closures`](#%E9%97%AD%E5%8C%85closures)
     - [闭包表达式](#%E9%97%AD%E5%8C%85%E8%A1%A8%E8%BE%BE%E5%BC%8F)
     - [尾随闭包](#%E5%B0%BE%E9%9A%8F%E9%97%AD%E5%8C%85)
+    - [自动闭包`@autoclosure`](#%E8%87%AA%E5%8A%A8%E9%97%AD%E5%8C%85autoclosure)
   - [类和结构体`struct/class`](#%E7%B1%BB%E5%92%8C%E7%BB%93%E6%9E%84%E4%BD%93structclass)
     - [延迟存储属性`lazy`](#%E5%BB%B6%E8%BF%9F%E5%AD%98%E5%82%A8%E5%B1%9E%E6%80%A7lazy)
     - [计算属性`get/set`](#%E8%AE%A1%E7%AE%97%E5%B1%9E%E6%80%A7getset)
@@ -44,6 +50,8 @@
     - [委托`delegate`](#%E5%A7%94%E6%89%98delegate)
   - [扩展`extension`](#%E6%89%A9%E5%B1%95extension)
   - [错误处理](#%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86)
+  - [值类型和引用类型](#%E5%80%BC%E7%B1%BB%E5%9E%8B%E5%92%8C%E5%BC%95%E7%94%A8%E7%B1%BB%E5%9E%8B)
+  - [GCD - Grand Central Dispatch](#gcd---grand-central-dispatch)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -60,7 +68,8 @@
 - [速览：Guide Tour - Playground](https://developer.apple.com/library/content/documentation/Swift/Conceptual/Swift_Programming_Language/GuidedTour.playground.zip)
 - [速览：Standard Library - Playground](https://developer.apple.com/sample-code/swift/downloads/Standard-Library.zip)
 - [其他官方资源](https://developer.apple.com/swift/resources/)
-- [Swift Algorithm Club](https://www.raywenderlich.com/category/swift)
+- [Swift Algorithm Club](https://github.com/raywenderlich/swift-algorithm-club)
+- [Swift 编码规范](https://github.com/Artwalk/swift-style-guide/blob/master/README_CN.md)
 
 #### 开发 iOS
 
@@ -68,6 +77,10 @@
 - [Developing iOS 11 Apps with Swift 字幕翻译](https://github.com/ApolloZhu/Developing-iOS-11-Apps-with-Swift)
 - [iOS 各组件入门](https://www.ioscreator.com/)
 - [How To Make a Gesture-Driven To-Do List App Like Clear in Swift](https://www.raywenderlich.com/77974/making-a-gesture-driven-to-do-list-app-like-clear-in-swift-part-1)
+
+#### 推荐网站
+
+- [raywenderlich](https://www.raywenderlich.com)
 
 ### 基础
 
@@ -186,7 +199,7 @@ greeting[greeting.startIndex...greeting.endIndex] // ERROR
 
 /* indices 属性可获取字符串中独立字符的索引范围 Range */
 for index in greeting.characters.indices {
-    print("\(greeting[index]) ", terminator: "")
+  print("\(greeting[index]) ", terminator: "")
 }
 // Prints "G u t e n   T a g ! "
 
@@ -211,6 +224,29 @@ welcome.insert(contentsOf:" there".characters, at: welcome.index(before: welcome
 检查字符串是否拥有特定的字符串前缀：hasPrefix(_:)
 检查字符串是否拥有特定的字符串后缀：hasSuffix(_:)
 */
+```
+
+#### 函数
+
+##### 使用可变参数`...`
+
+```Swift
+func add(_ nums: Int...) -> Int {
+  return nums.reduce(0, {(x, y) in x + y})
+}
+
+add(1,2,3,4,5) // 15
+```
+
+##### 默认参数
+
+```Swift
+func someFunction(parameterWithDefault: Int = 12) {
+  // In the function body, if no arguments are passed to the function
+  // call, the value of parameterWithDefault is 12.
+}
+someFunction(parameterWithDefault: 6) // parameterWithDefault is 6
+someFunction() // parameterWithDefault is 12
 ```
 
 ### 集合
@@ -243,6 +279,11 @@ arr.removeLast() // 直接删除最后一位
 
 for value in arr {}
 for (index, value) in arr.enumerated() {}
+
+// 交互两个位置上的值
+var numbers = [1,2,3,4,5]
+numbers.swapAt(0,1)
+numbers // [2, 1, 3, 4, 5]
 ```
 
 #### 集合
@@ -265,6 +306,12 @@ for value in set.sorted() {}
 
 // 集合的合集操作
 // 略
+
+// 可以 filter
+let set: Set = [1,2,3,4,5]
+let filteredSet = set.filter { $0 % 2 == 0 }
+type(of: filteredSet) // Set<Int>.Type
+filteredSet // {2, 4}
 ```
 
 #### 字典
@@ -279,6 +326,35 @@ dict.removeValue(forKey:) // 移除后返回 Optional 类型的 value 的值
 for (key, value) in dict {}
 for key in dict.keys {}
 for value in dict.values {}
+
+let names = ["Cagney", "Lacey", "Bensen"]
+let dict = Dictionary(uniqueKeysWithValues: zip(1..., names)) // [2: "Lacey", 3: "Bensen", 1: "Cagney"]
+dict[2] // Lacey
+
+// 字典合并
+var dictionary = ["a": 1, "b": 2]
+
+// Keeping existing value for key "a":
+dictionary.merge(["a": 3, "c": 4]) { (current, _) in current }
+// ["b": 2, "a": 1, "c": 4]
+
+// Taking the new value for key "a":
+dictionary.merge(["a": 5, "d": 6]) { (_, new) in new }
+// ["b": 2, "a": 5, "c": 4, "d": 6]
+
+// 可以在获取值时提供默认值
+dict[4, default: "(unknown)"]
+
+// 还可以进行 filter 和 map
+let filtered = dict.filter {
+  $0.key % 2 == 0
+}
+type(of: filtered) // Dictionary<Int, String>.Type
+
+let mapped = dict.mapValues { value in
+  value.uppercased()
+}
+mapped // 返回一个新的 map
 ```
 
 注意：Swift 的`Dictionary`类型是无序的。要以特定的顺序遍历字典的键或值，使用键或值的`sorted()`方法。
@@ -320,7 +396,23 @@ for tickMark in stride(from: 0, to: minutes, by: minuteInterval) {
 }
 ```
 
-#### switch
+#### `for..in`
+
+```Swift
+// for _ in what where condition {}
+for i in 0...10 where i % 2 == 0 {
+  print(i)
+}
+
+// for (i1, i2...) in zip(sequence1, sequence2..) {}
+let numbers = [1, 2, 3]
+let letters = ["a", "b", "c"]
+for (number, letter) in zip(numbers, letters) {
+  print("number: \(number), letter: \(letter)")
+}
+```
+
+#### `switch`
 
 Swift 里的`switch`语句不会默认从每个情况的末尾贯穿到下一个情况里，整个`switch`语句会在匹配到第一个`switch`情况执行完毕之后退出，不再需要显式的`break`语句
 
@@ -390,8 +482,8 @@ prints "(1, -1) is on the line x == -y"
 ```Swift
 func greeting(person: [String:String]) {
   guard let name = person["name"] else {
-        return
-    }
+    return
+  }
   print("Hello \(name)!")
 }
 ```
@@ -431,6 +523,32 @@ reversedNames = names.sorted() {
 reversedNames = names.sorted { $0 > $1 }
 ```
 
+#### 自动闭包`@autoclosure`
+
+- [How to use Swift @autoclosure](https://stackoverflow.com/questions/24102617/how-to-use-swift-autoclosure)
+
+使用`@autoclosure`后可以省略
+
+```Swift
+func f(pred: () -> Bool) {
+  if pred() {
+    print("It's true")
+  }
+}
+
+// 普通调用
+f(pred: {2 > 1}) // "It's true"
+
+// 将原函数修改为支持自动闭包
+func f(pred: @autoclosure () -> Bool) {
+  if pred() {
+    print("It's true")
+  }
+}
+// 调用
+f(pred: 2 > 1)
+```
+
 ### 类和结构体`struct/class`
 
 类和结构体非常类型，但有如下不同：
@@ -441,6 +559,7 @@ reversedNames = names.sorted { $0 > $1 }
 - 引用计数允许不止一个对类实例的引用；结构体在代码中通过复制来传递，并且并不会使用引用计数
 - 所有的结构体都有一个自动生成的成员初始化器，类需要手动创建，或者使用默认初始化
 - **结构体是值类型，默认情况下，值类型属性不能被自身的实例方法修改**
+- 类的实例可以使用`===`比较符来判断其引用是否相等
 
 ```Swift
 class TestClass {
@@ -634,6 +753,9 @@ struct Matrix {
     }
   }
 }
+
+var matrix = Matrix(rows: 2, columns: 2)
+matrix[0, 1] = 1.5
 ```
 
 #### 类的继承
@@ -642,9 +764,7 @@ struct Matrix {
 class SuperClass {
   var someProperty: Int = 0
 
-  func someMethod() {
-
-  }
+  func someMethod() {}
 
   // 通过 fianl 可以禁止重写
   fianl func methodCanNotOverride() -> Int {
@@ -828,17 +948,26 @@ if let direction = CompassPoint(rawValue: 3) {}
 
 // will print ERROR
 if let direction = CompassPoint(rawValue: 10) {
-
+  // do something
 } else {
   print("ERROR")
 }
 
 // 枚举内的各枚举成员可以是不同类型，此时枚举本身定义时不能指定返回的类型
 enum Barcode {
-    case upc(Int, Int, Int, Int)
-    case qrCode(String)
+  case upc(Int, Int, Int, Int)
+  case qrCode(String)
 }
 var barcode = Barcode.qrCode("100")
+
+switch productBarcode {
+case .upc(let numberSystem, let manufacturer, let product, let check):
+    print("UPC: \(numberSystem), \(manufacturer), \(product), \(check).")
+case .qrCode(let productCode):
+    print("QR code: \(productCode).")
+}
+// Prints "QR code: 100."
+
 
 // 但是，在没有指定枚举返回的类型时，不能直接给枚举成员赋值
 enum Rank {
@@ -849,10 +978,10 @@ enum Rank {
 }
 
 // 在枚举内可以定义方法
-enum WeekDay :String {
+enum WeekDay: String {
   case Monday
   case Tuesday
-  func day() ->String { return self.rawValue }
+  func day() -> String { return self.rawValue }
 }
 print(WeekDay.Monday.day()) // prints Monday
 ```
@@ -884,11 +1013,13 @@ if let c = example.b?.c {
 协议要求所有遵循该协议的类型提供特定名字和类型的实例属性或类型属
 
 ```Swift
-// SomeProtocol 要求，所有采纳该协议的类或结构体，都必须实现：
-// 1. 名为 mustBeSettable 的可读写属性
-// 2. 名为 doesNotNeedToBeSettable 的可读属性（是否可写无要求）
-// 3. 名为 someTypeMethod 的方法，并且返回指定的类型
-// 4. 名为 someTypeProperty 的可读写的类型属性
+/*
+SomeProtocol 要求，所有采纳该协议的类或结构体，都必须实现：
+1. 名为 mustBeSettable 的可读写属性
+2. 名为 doesNotNeedToBeSettable 的可读属性（是否可写无要求）
+3. 名为 someTypeMethod 的方法，并且返回指定的类型
+4. 名为 someTypeProperty 的可读写的类型属性
+*/
 protocol SomeProtocol {
   var mustBeSettable: Int { get set }
   var doesNotNeedToBeSettable: Int { get }
@@ -1008,18 +1139,18 @@ func exampleFunc() throws -> String {}
 
 // do-catch
 do {
-    try expression
-    statements
+  try expression
+  statements
 } catch pattern 1 {
-    statements
+  statements
 } catch pattern 2 where condition {
-    statements
+  statements
 }
 
 do {
-    try exampleFunc()
+  try exampleFunc()
 } catch let err {
-    print(err)
+  print(err)
 }
 
 // try? 语句，把结果转为可选项
@@ -1054,3 +1185,94 @@ func processFile(filename: String) throws {
 
 - [Magical Error Handling in Swift](https://www.raywenderlich.com/130197/magical-error-handling-swift)
 - [Generate your own Error code in swift 3](https://stackoverflow.com/questions/40671991/generate-your-own-error-code-in-swift-3)
+
+### 值类型和引用类型
+
+- [Reference vs Value Types in Swift: Part 1/2](https://www.raywenderlich.com/112027/reference-value-types-in-swift-part-1)
+- [Reference vs Value Types in Swift: Part 2/2](https://www.raywenderlich.com/112029/reference-value-types-in-swift-part-2)
+
+在 Swift 中，大部分类型都是值传递，例如`String`，`Array`，`Set`，`Dictionary`，`struct`；而类`class`则是引用传递。
+什么时候使用值传递、引用传递，官方给出的建议如下：
+
+如下情况时使用值传递：
+
+- 想要利用`==`来比较实例对象
+- 想要让复制的对象有自己独立的状态
+- 会在多线程使用时
+
+而如下情况则可以使用引用传递：
+
+- 想要利用`==`来比较实例对象的指针
+- 想创建可以被多个地方共享状态的对象
+
+当面临复杂情况，比如值传递、引用传递的对象相互嵌套时：
+
+```Swift
+class Person {
+  var name: String
+  init(name: String) {
+    self.name = name
+  }
+}
+
+// 在值传递的结构体中加入引用传递的属性
+struct Bill {
+  let amount: Float
+  // 引用传递
+  let billedTo: Person
+
+  init(amount: Float, billedTo: Person) {
+    self.amount = amount
+    // Create a new Person reference from the parameter
+    self.billedTo = Person(name: billedTo.name)
+  }
+}
+extension Bill: Equatable { }
+func ==(lhs: Bill, rhs: Bill) -> Bool {
+  return lhs.amount == rhs.amount && lhs.billedTo === rhs.billedTo
+}
+
+let billPayer = Person(name: "Robert")
+
+var bill1 = Bill(amount: 1, billedTo: billPayer)
+var bill2 = bill1
+
+// 虽然 bill2 是新复制出的值传递数据，但它 billedTo 属性和 bill1 的 billedTo 属性引用的还是同一个对象
+bill1.billedTo.name = "ecmadao"
+bill1.billedTo.name // ecmadao
+bill2.billedTo.name // ecmadao
+bill1 == bill2 // true
+```
+
+可以通过自带的`isKnownUniquelyReferenced`方法来检查对象是否只有唯一的引用：
+
+```Swift
+// isKnownUniquelyReferenced(&object: T)
+var billPayer = Person(name: "Robert")
+isKnownUniquelyReferenced(&billPayer) // true
+
+var billPayer2 = billPayer
+isKnownUniquelyReferenced(&billPayer) // false
+isKnownUniquelyReferenced(&billPayer2) // false
+```
+
+### GCD - Grand Central Dispatch
+
+利用`DispatchWorkItem`创建一个异步执行的代码，并且可以取消
+
+```Swift
+let workItem = DispatchWorkItem {
+  // Your async code goes in here
+}
+
+// 延迟一秒后执行
+DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: workItem)
+
+// 取消异步代码，不再指向
+workItem.cancel()
+
+// 在当前线程立即执行
+workItem.perform()
+// 在全局线程执行
+DispatchQueue.global().async(execute: workItem)
+```
