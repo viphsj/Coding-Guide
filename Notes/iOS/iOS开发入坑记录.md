@@ -3,11 +3,18 @@
 **Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
 - [iOS 开发入坑记录](#ios-%E5%BC%80%E5%8F%91%E5%85%A5%E5%9D%91%E8%AE%B0%E5%BD%95)
+  - [文章](#%E6%96%87%E7%AB%A0)
   - [应用生命周期](#%E5%BA%94%E7%94%A8%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F)
   - [View Controller](#view-controller)
   - [布局](#%E5%B8%83%E5%B1%80)
   - [Multiple MVCs](#multiple-mvcs)
-  - [实践](#%E5%AE%9E%E8%B7%B5)
+  - [UIKit](#uikit)
+    - [UIView 的图层等级](#uiview-%E7%9A%84%E5%9B%BE%E5%B1%82%E7%AD%89%E7%BA%A7)
+    - [UIView Bounds vs Frame vs Center - Coordinate systems](#uiview-bounds-vs-frame-vs-center---coordinate-systems)
+    - [Gesture Recognizers](#gesture-recognizers)
+    - [UI Animations](#ui-animations)
+    - [Auto Layout](#auto-layout)
+    - [版本检测](#%E7%89%88%E6%9C%AC%E6%A3%80%E6%B5%8B)
     - [UITextField](#uitextfield)
     - [日期](#%E6%97%A5%E6%9C%9F)
     - [本地化](#%E6%9C%AC%E5%9C%B0%E5%8C%96)
@@ -24,14 +31,17 @@
     - [线程和阻塞](#%E7%BA%BF%E7%A8%8B%E5%92%8C%E9%98%BB%E5%A1%9E)
       - [利用`DispatchSemaphore`进行主线程阻塞](#%E5%88%A9%E7%94%A8dispatchsemaphore%E8%BF%9B%E8%A1%8C%E4%B8%BB%E7%BA%BF%E7%A8%8B%E9%98%BB%E5%A1%9E)
       - [在请求完成之后回到主线程进行绘制](#%E5%9C%A8%E8%AF%B7%E6%B1%82%E5%AE%8C%E6%88%90%E4%B9%8B%E5%90%8E%E5%9B%9E%E5%88%B0%E4%B8%BB%E7%BA%BF%E7%A8%8B%E8%BF%9B%E8%A1%8C%E7%BB%98%E5%88%B6)
-    - [多线程](#%E5%A4%9A%E7%BA%BF%E7%A8%8B)
+  - [多线程 GCD - Grand Central Dispatch](#%E5%A4%9A%E7%BA%BF%E7%A8%8B-gcd---grand-central-dispatch)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 ## iOS 开发入坑记录
 
+### 文章
+
 - [官方文档：View Controller Programming Guide for iOS](https://developer.apple.com/library/content/featuredarticles/ViewControllerPGforiPhoneOS/index.html#//apple_ref/doc/uid/TP40007457-CH2-SW1)
 - [官方 Tutorial，开发一个小 Demo](https://developer.apple.com/library/content/referencelibrary/GettingStarted/DevelopiOSAppsSwift/index.html#//apple_ref/doc/uid/TP40015214-CH2-SW1)
+- [iOS11 中出现的新 API](https://chariotsolutions.com/tags/ios11/)
 
 ### 应用生命周期
 
@@ -165,7 +175,125 @@ override func awakeFromNib() {
 
 ### Multiple MVCs
 
-### 实践
+### [UIKit](https://developer.apple.com/documentation/uikit)
+
+- [Apple Developer Documentation](https://developer.apple.com/documentation/)
+- [UIColor](https://developer.apple.com/documentation/uikit/uicolor)
+
+官方系列教程
+
+- [UIView 概览](https://developer.apple.com/documentation/uikit/uiview)
+- [View Programming Guide for iOS](https://developer.apple.com/library/content/documentation/WindowsViews/Conceptual/ViewPG_iPhoneOS/WindowsandViews/WindowsandViews.html#//apple_ref/doc/uid/TP40009503-CH2-SW1)
+
+```Swift
+// 创建 View 的时候，要把 View 放入到一个`frame`里，也就是需要指定其父 View
+let rect = CGReat(x: 10, y: 10, width: 100, height: 100)
+let myView = UIView(frame: rect)
+
+// 而父 View 也可以通过 addSubView 等方式来添加子 View
+view.addSubview(subView)
+view.insertSubview(subView, at: index)
+view.insertSubview(subView, aboveSubview: aboveSubview)
+view.insertSubview(subView, belowSubview: belowSubview)
+view.exchangeSubview(at: index1, withSubviewAt: index2)
+
+// 当 View 的内容更新时，可以通过 setNeedsDisplay() 或者setNeedsDisplay(_:) 来请求 UI 更新
+// 该方法不会立即更新 UI，而是在下一次绘制的生命周期时进行批量的更新、
+
+// 除此以外，有关 UI 的更新必须在主线程进行
+OperationQueue.main.addOperation {
+  // 更新主线程 UI
+}
+```
+
+#### UIView 的图层等级
+
+- [UIView subviews' order?](https://stackoverflow.com/questions/18636227/uiview-subviews-order)
+- [UIView Positioning for iPhone: Any concept of “Z-Index”?](https://stackoverflow.com/questions/6346144/uiview-positioning-for-iphone-any-concept-of-z-index)
+- [When is layoutSubviews called?](https://stackoverflow.com/questions/728372/when-is-layoutsubviews-called)
+
+总结而言：
+
+- index 越小，越在底层。也就是相对于用户更加远的图层，会被 index 大的图层遮挡
+- `view.addSubview(subView)` 把子视图添加到最顶部，即 index 最大
+- `view.insertSubview(subView, at)` 把子视图添加到指定位置
+- `view.insertSubview(subView, aboveSubview)` 将子视图插入到指定视图上面
+- `view.insertSubview(subView, belowSubview)` 将子视图插入到指定视图下面
+- `view.exchangeSubview(at:withSubviewAt:)` 把两个子视图的层级调换
+
+#### UIView Bounds vs Frame vs Center - Coordinate systems
+
+- [Swift: UIView Bounds vs Frame vs Center](https://gabrielghe.github.io/swift/2015/03/22/swift-uiview-bounds-vs-frame-vs-center)
+- [Cocoa: What's the difference between the frame and the bounds?](https://stackoverflow.com/questions/1210047/cocoa-whats-the-difference-between-the-frame-and-the-bounds)
+
+---
+
+- `bounds`: UIView 自身的大小和位置
+- `frame`: UIView 相对于其父 View 的大小和位置
+- `center`: UIView 相对于其父 View 的中点。如果要获取 UIView 自身绝对中点（相对于屏幕），则`convertPoint(center, fromView: superview)`
+
+当父 View 和子 View 都没有旋转时，子 View 的`frame`/`center`/`bounds`之间会有这样的关系：
+
+- `frame.origin = center - (bounds.size / 2.0)`
+- `center = frame.origin + (bounds.size / 2.0)`
+- `frame.size = bounds.size`
+
+#### Gesture Recognizers
+
+- [Swift 3 Gesture Recognizers](https://swift3tutorials.com/swift-3-gesture-recognizers/)
+- [Swift 4 - Adding UITapGestureRecognizer to a subview image](https://stackoverflow.com/questions/46583964/swift-4-adding-uitapgesturerecognizer-to-a-subview-image-the-methiod-is-not)
+- [How to call gesture tap on UIView programmatically in swift](https://stackoverflow.com/questions/28675209/how-to-call-gesture-tap-on-uiview-programmatically-in-swift)
+- [UIGestureRecognizer Tutorial - Getting Started](https://www.raywenderlich.com/162745/uigesturerecognizer-tutorial-getting-started)
+
+#### UI Animations
+
+- [iOS Animation Tutorial](https://www.raywenderlich.com/173544/ios-animation-tutorial-getting-started-3)
+- [UIViewPropertyAnimator](https://developer.apple.com/documentation/uikit/uiviewpropertyanimator)
+- [Quick Guide: Animations with UIViewPropertyAnimator](http://www.thinkandbuild.it/quick-guide-animations-with-uiviewpropertyanimator/)
+
+`UIViewPropertyAnimator`和`UIView.animation`很相似，也可以将 View 的一些属性进行逐步的转换来达到动态的效果，也能够设定延迟动画。但通过`UIViewPropertyAnimator`，可以在动画的过程中进行动态的调整，并随时将动画在`stop`/`pause`/`start`状态间切换
+
+```Swift
+// Create a UIViewPropertyAnimator object. Here's a simple one with a UIKit animation curve:
+let colorChange = UIViewPropertyAnimator(duration: 0.3, curve: .easeIn, animations: { [weak self] in
+  self?.view.backgroundColor = UIColor(red: 255.0/255.0, green: 80.0/255.0, blue: 43.0/255.0, alpha: 1.0)
+})
+
+// There's also support for easy spring-based animations - all you need to set is a damping ratio (a value between 0 and 1). Alternatively, you can create your own curves by adopting the UITimingCurveProvider protocol.
+let alphaChange = UIViewPropertyAnimator(duration: 0.3, dampingRatio: 0.6, animations: { [weak self] in
+  self?.circleView.alpha = 0.0
+})
+
+// 开始动画
+alphaChange.startAnimation()
+
+// 暂停动画
+alphaChange.pauseAnimation()
+
+// 利用手势识别，在外部动态的改变一个动画的进度
+@IBAction func handlePan(recognizer: UIPanGestureRecognizer) {
+  let translation = recognizer.translationInView(self.view)
+  let translatedCenterY = view.center.y + translation.y
+  let progress = translatedCenterY / self.view.bounds.size.height
+  colorChange.fractionComplete = progress
+}
+
+// 停止动画
+colorChange?.stopAnimation(true)
+```
+
+#### Auto Layout
+
+- [Auto Layout Guide](https://developer.apple.com/library/content/documentation/UserExperience/Conceptual/AutolayoutPG/index.html)
+- 在 Storyboard 中以可视化的形式进行 Auto Layout: [Auto Layout Tutorial in iOS 11: Getting Started](https://www.raywenderlich.com/160527/auto-layout-tutorial-ios-11-getting-started)
+- 利用`NSLayoutConstraint`在代码中创建 Auto Layout: [Programmatically Creating Constraints](https://developer.apple.com/library/content/documentation/UserExperience/Conceptual/AutolayoutPG/ProgrammaticallyCreatingConstraints.html)
+- [Working with Auto Layout Visual Format Language and Programmatically Creating Constraints](https://www.appcoda.com/auto-layout-programmatically/)
+
+#### 版本检测
+
+- [Swift检测iOS系统版本方法汇总](https://www.jianshu.com/p/1bc825db26c9)
+- [Hi! I'm #available!](https://www.bignerdranch.com/blog/hi-im-available/)
+- [Availability Attributes in Swift](https://www.raywenderlich.com/139077/availability-attributes-swift)
 
 #### UITextField
 
@@ -175,6 +303,22 @@ override func awakeFromNib() {
 - [How do I check when a UITextField changes?](http://ioscake.com/how-do-i-check-when-a-uitextfield-changes.html)
 - [Close iOS Keyboard by touching anywhere using Swift](https://stackoverflow.com/questions/24126678/close-ios-keyboard-by-touching-anywhere-using-swift)
 - [Best way to dismiss Keyboard in a View Controller iOS (Swift)](https://medium.com/@KaushElsewhere/how-to-dismiss-keyboard-in-a-view-controller-of-ios-3b1bfe973ad1)
+
+
+```Swift
+// Swift4, iOS11: 点击任意地点关闭键盘
+extension UIViewController {
+  func hideKeyboardWhenTappedAround() {
+    let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(UIViewController.dismissKeyboard))
+    tap.cancelsTouchesInView = false
+    view.addGestureRecognizer(tap)
+  }
+
+  func dismissKeyboard() {
+    view.endEditing(true)
+  }
+}
+```
 
 #### 日期
 
@@ -624,9 +768,28 @@ let task = session.dataTask(with: request) {
 task.resume()
 ```
 
-#### 多线程
+### 多线程 GCD - Grand Central Dispatch
 
 - [Swift - 多线程实现方式](http://www.hangge.com/blog/cache/detail_743.html)
 - [GCD精讲（Swift 3&4）](http://blog.csdn.net/Hello_Hwc/article/details/54293280)
 - [All about Concurrency in Swift - Part 1: The Present](https://www.uraimo.com/2017/05/07/all-about-concurrency-in-swift-1-the-present/)
 - [Grand Central Dispatch (GCD) and Dispatch Queues in Swift 3](https://www.appcoda.com/grand-central-dispatch/)
+
+利用`DispatchWorkItem`创建一个异步执行的代码，并且可以取消
+
+```Swift
+let workItem = DispatchWorkItem {
+  // Your async code goes in here
+}
+
+// 延迟一秒后执行
+DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: workItem)
+
+// 取消异步代码，不再指向
+workItem.cancel()
+
+// 在当前线程立即执行
+workItem.perform()
+// 在全局线程执行
+DispatchQueue.global().async(execute: workItem)
+```

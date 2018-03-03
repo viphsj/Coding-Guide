@@ -123,6 +123,10 @@
 - [disque](https://github.com/antirez/disque)
 - [disqueue-node](https://github.com/gideonairex/disqueue-node)
 - [disq](https://github.com/djanowski/disq)
+- [bull](https://github.com/OptimalBits/bull)
+- [node-resque](https://github.com/taskrabbit/node-resque)
+- [rsmq](https://github.com/smrchy/rsmq)
+- [kue](https://github.com/Automattic/kue)
 
 文章
 
@@ -183,6 +187,7 @@
 - [node-orm2](https://github.com/dresende/node-orm2)
 - [joi](https://github.com/hapijs/joi)
 - [normalizr](https://github.com/paularmstrong/normalizr)
+- [sequelize](https://github.com/sequelize/sequelize)
 
 ### Others
 

@@ -51,7 +51,11 @@
   - [扩展`extension`](#%E6%89%A9%E5%B1%95extension)
   - [错误处理](#%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86)
   - [值类型和引用类型](#%E5%80%BC%E7%B1%BB%E5%9E%8B%E5%92%8C%E5%BC%95%E7%94%A8%E7%B1%BB%E5%9E%8B)
-  - [GCD - Grand Central Dispatch](#gcd---grand-central-dispatch)
+  - [内存管理](#%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86)
+    - [引用计数](#%E5%BC%95%E7%94%A8%E8%AE%A1%E6%95%B0)
+    - [引用循环](#%E5%BC%95%E7%94%A8%E5%BE%AA%E7%8E%AF)
+      - [对象相互引用](#%E5%AF%B9%E8%B1%A1%E7%9B%B8%E4%BA%92%E5%BC%95%E7%94%A8)
+      - [闭包](#%E9%97%AD%E5%8C%85)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -168,6 +172,8 @@ for index in 1... {
 ```Swift
 var str: String = String()
 str.isEmpty // 检查字符串是否是空
+
+String(repeating: str, count: 20) // 字符串的 repeat 操作
 
 /* 遍历字符串中的每一个 Character */
 for character in str {
@@ -322,6 +328,7 @@ dict.count
 dict.isEmpty
 dict.updateValue(_:forKey:) // 更新之后返回 Optional 类型的旧的值（如果失败则是 nil）
 dict.removeValue(forKey:) // 移除后返回 Optional 类型的 value 的值
+dict[key, default: defaultValue] // 取值时提供默认值
 
 for (key, value) in dict {}
 for key in dict.keys {}
@@ -1256,23 +1263,91 @@ isKnownUniquelyReferenced(&billPayer) // false
 isKnownUniquelyReferenced(&billPayer2) // false
 ```
 
-### GCD - Grand Central Dispatch
+### 内存管理
 
-利用`DispatchWorkItem`创建一个异步执行的代码，并且可以取消
+#### 引用计数
+
+- [自动引用计数](https://www.cnswift.org/automatic-reference-counting)
+
+#### 引用循环
+
+##### 对象相互引用
+
+当对象相互引用时会造成引用循环。当它们相互强引用时，就会使得涉及的对象无法释放，将一直占用内存
 
 ```Swift
-let workItem = DispatchWorkItem {
-  // Your async code goes in here
+class A {
+  var b: B?
+
+  deinit() {
+    print("deinit of A")
+  }
 }
 
-// 延迟一秒后执行
-DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: workItem)
+class B {
+  var a: A?
 
-// 取消异步代码，不再指向
-workItem.cancel()
+  deinit() {
+    print("deinit of B")
+  }
+}
 
-// 在当前线程立即执行
-workItem.perform()
-// 在全局线程执行
-DispatchQueue.global().async(execute: workItem)
+var a: A? = A()
+var b: B? = B()
+a.b = b
+b.a = a
+
+// 当手动释放内存时，可以发现 deinit 不会被调用，即对象并没有被消除
+a = nil
+b = nil
+```
+
+为了避免这种情况，应该使用弱引用`weak`
+
+```Swift
+class A {
+  weak var b: B?
+}
+
+class B {
+  weak var a: A?
+}
+```
+
+##### 闭包
+
+在闭包中引用到的对象也可能会造成内存无法释放
+
+```Swift
+class ClosureExample {
+  let name: String = "example"
+
+  lazy var example: () -> String = {
+    return "name: \(self.name)"
+  }
+
+  deinit {
+    print("deinit of ClosureExample")
+  }
+}
+
+var closureExample: ClosureExample? = ClosureExample()
+print(closureExample!.example()) // name: example
+
+closureExample = nil // 没有打印 deinit
+```
+
+类`ClosureExample`具有其强引用`example`闭包，而`example`闭包强引用了`self`，也就是该类自己，因此造成了强引用循环，使得内存无法被释放。但在这种情况下无法直接通过`weak`来转换为弱引用，因为`weak`只能作用在**引用类型**上，而不能作用于值类型，否则报错：`'weak' may only be applied to class and class-bound protocol types, not '() -> String'`
+
+- [Why can the keyword “weak” only be applied to class and class-bound protocol types](https://stackoverflow.com/questions/38841127/why-can-the-keyword-weak-only-be-applied-to-class-and-class-bound-protocol-typ)
+
+想要断开闭包内的引用循环，需要在闭包内加入一个声明，表示在销毁的时候不保留`self`对象：
+
+```Swift
+class ClosureExample {
+  lazy var example: () -> String = {
+    [unowned self] in
+    return "name: \(self.name)"
+  }
+}
 ```
