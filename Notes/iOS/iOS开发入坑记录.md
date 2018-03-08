@@ -32,6 +32,18 @@
       - [利用`DispatchSemaphore`进行主线程阻塞](#%E5%88%A9%E7%94%A8dispatchsemaphore%E8%BF%9B%E8%A1%8C%E4%B8%BB%E7%BA%BF%E7%A8%8B%E9%98%BB%E5%A1%9E)
       - [在请求完成之后回到主线程进行绘制](#%E5%9C%A8%E8%AF%B7%E6%B1%82%E5%AE%8C%E6%88%90%E4%B9%8B%E5%90%8E%E5%9B%9E%E5%88%B0%E4%B8%BB%E7%BA%BF%E7%A8%8B%E8%BF%9B%E8%A1%8C%E7%BB%98%E5%88%B6)
   - [多线程 GCD - Grand Central Dispatch](#%E5%A4%9A%E7%BA%BF%E7%A8%8B-gcd---grand-central-dispatch)
+  - [设计模式](#%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F)
+    - [单例模式](#%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F)
+    - [观察者模式](#%E8%A7%82%E5%AF%9F%E8%80%85%E6%A8%A1%E5%BC%8F)
+      - [`NotificationCenter`](#notificationcenter)
+      - [Key-Value 观察者（`KVO`）](#key-value-%E8%A7%82%E5%AF%9F%E8%80%85kvo)
+  - [缓存](#%E7%BC%93%E5%AD%98)
+    - [App 状态缓存](#app-%E7%8A%B6%E6%80%81%E7%BC%93%E5%AD%98)
+    - [UserDefaults](#userdefaults)
+    - [NSUbiquitousKeyValueStore](#nsubiquitouskeyvaluestore)
+    - [FileManager](#filemanager)
+    - [NSCache](#nscache)
+    - [URLCache](#urlcache)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -177,13 +189,13 @@ override func awakeFromNib() {
 
 ### [UIKit](https://developer.apple.com/documentation/uikit)
 
-- [Apple Developer Documentation](https://developer.apple.com/documentation/)
-- [UIColor](https://developer.apple.com/documentation/uikit/uicolor)
-
 官方系列教程
 
-- [UIView 概览](https://developer.apple.com/documentation/uikit/uiview)
-- [View Programming Guide for iOS](https://developer.apple.com/library/content/documentation/WindowsViews/Conceptual/ViewPG_iPhoneOS/WindowsandViews/WindowsandViews.html#//apple_ref/doc/uid/TP40009503-CH2-SW1)
+- [Apple Developer Documentation](https://developer.apple.com/documentation/)
+- [Apple developer - UIColor](https://developer.apple.com/documentation/uikit/uicolor)
+- [Apple developer - UIView 概览](https://developer.apple.com/documentation/uikit/uiview)
+- [Apple developer - View Programming Guide for iOS](https://developer.apple.com/library/content/documentation/WindowsViews/Conceptual/ViewPG_iPhoneOS/WindowsandViews/WindowsandViews.html#//apple_ref/doc/uid/TP40009503-CH2-SW1)
+- [Apple developer - Implement a Custom Control](https://developer.apple.com/library/content/referencelibrary/GettingStarted/DevelopiOSAppsSwift/ImplementingACustomControl.html#//apple_ref/doc/uid/TP40015214-CH19-SW1)
 
 ```Swift
 // 创建 View 的时候，要把 View 放入到一个`frame`里，也就是需要指定其父 View
@@ -253,6 +265,8 @@ OperationQueue.main.addOperation {
 
 `UIViewPropertyAnimator`和`UIView.animation`很相似，也可以将 View 的一些属性进行逐步的转换来达到动态的效果，也能够设定延迟动画。但通过`UIViewPropertyAnimator`，可以在动画的过程中进行动态的调整，并随时将动画在`stop`/`pause`/`start`状态间切换
 
+- [Advanced Animations with UIKit](https://developer.apple.com/videos/play/wwdc2017/230/)
+
 ```Swift
 // Create a UIViewPropertyAnimator object. Here's a simple one with a UIKit animation curve:
 let colorChange = UIViewPropertyAnimator(duration: 0.3, curve: .easeIn, animations: { [weak self] in
@@ -286,6 +300,7 @@ colorChange?.stopAnimation(true)
 
 - [Auto Layout Guide](https://developer.apple.com/library/content/documentation/UserExperience/Conceptual/AutolayoutPG/index.html)
 - 在 Storyboard 中以可视化的形式进行 Auto Layout: [Auto Layout Tutorial in iOS 11: Getting Started](https://www.raywenderlich.com/160527/auto-layout-tutorial-ios-11-getting-started)
+- 在代码中进行 Auto Layout: [Easier Auto Layout: Coding Constraints in iOS 9](https://www.raywenderlich.com/125718/coding-auto-layout)
 - 利用`NSLayoutConstraint`在代码中创建 Auto Layout: [Programmatically Creating Constraints](https://developer.apple.com/library/content/documentation/UserExperience/Conceptual/AutolayoutPG/ProgrammaticallyCreatingConstraints.html)
 - [Working with Auto Layout Visual Format Language and Programmatically Creating Constraints](https://www.appcoda.com/auto-layout-programmatically/)
 
@@ -793,3 +808,292 @@ workItem.perform()
 // 在全局线程执行
 DispatchQueue.global().async(execute: workItem)
 ```
+
+### 设计模式
+
+#### 单例模式
+
+限制创建多个实例
+
+```Swift
+// 首先保证类不会被继承
+final class SingletonExample {
+  // 仅仅进行一次实例化
+  static let instance = SingletonExample()
+  // 私有实例化方法，使外部不能进行类的实例化
+  private init() {}
+
+  func publicFunc() {}
+}
+
+// Usage
+SingletonExample.instance.publicFunc()
+```
+
+#### 观察者模式
+
+##### `NotificationCenter`
+
+在 iOS 中可通过`NotificationCenter`来发送/监听某消息，因此，消息的发送者和接收者需要对应起来。在`Notification`模式中，利用`Notification.Name`来指定发送和监听的频道，发送者和监听者也就依次得以对应。
+
+```Swift
+// 可以对 Notification.Name 进行扩展，创建新的 name，避免将同一个常量写在多个地方
+extension Notification.Name {
+  static let DownloadImage = Notification.Name("DownloadImageNotification")
+}
+```
+
+消息发送利用`NotificationCenter.default.post(name:object:)`或者`Notification.default.post(name:object:userInfo:)`
+
+- `name`: `Notification.Name`
+- `object`: `Any`，代表发送消息的对象
+- `userInfo`: `[AnyHashable: Any]?` 消息可附带的额外信息，通过字典的形式传送
+
+消息的监听则使用`NotificationCenter.default.addObserver(_:selector:name:object:)`
+
+- `_ observer`: 监听者
+- `selector`: 收到消息之后的处理回调
+- `name`: `Notification.Name`
+- `object`: 如果指定，则监听者只会接收由该对象发送的消息
+
+```Swift
+class Sender {
+  init() {
+    NotificationCenter.default.post(
+      name: .DownloadImage,
+      object: self,
+      userInfo: ["imageUrl": "/exampleURL"]
+    )
+  }
+}
+
+class Observer {
+  init() {
+    NotificationCenter.default.addObserver(
+      self,
+      selector: #selector(downloadImage(with:)),
+      name: .DownloadImage,
+      object: nil
+    )
+  }
+
+  @objec func downloadImage(with notification: Notification) {
+    // 消息通过 userInfo 附带的数据存在 notification.userInfo 里
+    guard let userInfo = notification.userInfo else {
+      return
+    }
+    print("Image url is: \(userInfo.imageUrl)")
+  }
+}
+```
+
+##### Key-Value 观察者（`KVO`）
+
+- [Is key-value observation (KVO) available in Swift?](https://stackoverflow.com/questions/24092285/is-key-value-observation-kvo-available-in-swift)
+
+如其名，就是通过对键的监听，来获取键所对应的值的变化。所有继承自`NSObject`的对象都可以直接使用`KVO`，因此，对于 Swift 的原生数据结构，可以直接对某个键进行监听
+
+```Swift
+class Foo: NSObject {
+  @objc dynamic var bar = 0
+}
+
+class MyObject {
+  private var token: NSKeyValueObservation
+
+  var objectToObserve = Foo()
+
+  init() {
+    token = objectToObserve.observe(\.bar) {
+      // the `[weak self]` is to avoid strong reference cycle; obviously, if you don't reference `self` in the closure, then `[weak self]` is not needed
+      [weak self] object, change in
+      print("bar property is now \(object.bar)")
+    }
+  }
+}
+```
+
+### 缓存
+
+- [How to save local data in a Swift app?](https://stackoverflow.com/questions/28628225/how-to-save-local-data-in-a-swift-app)
+
+#### App 状态缓存
+
+为了能够直接储存并复原 App 状态，可以利用 iOS 里自带的`state restoration`
+
+- 确保各个 ViewController 在 StoryBoard 里指定了唯一的`Restoration ID`
+- 在`AppDelegate.swift`里添加如下两个方法：
+
+```Swift
+// 当应用处于后台时，缓存应用当前状态
+func application(_ application: UIApplication, shouldSaveApplicationState coder: NSCoder) -> Bool {
+  return true
+}
+
+// 当应用回到前台时，释放缓存的状态
+func application(_ application: UIApplication, shouldRestoreApplicationState coder: NSCoder) -> Bool {
+  return true
+}
+```
+
+- 每个指定了`Restoration ID`的 controller，会在 App 状态被保存时收到`encodeRestorableState(with:)`回调，此时应该进行缓存操作；在 App 状态被释放时收到`decodeRestorableState(with:)`回调，此时可以获取之前的缓存来恢复 App 的状态
+
+```Swift
+class ViewController {
+  override func encodeRestorableState(with coder: NSCoder) {
+    // 将 class 的 data 属性进行缓存，并指定一个用来之后获取数据的 key
+    coder.encode(self.data, forKey: "the_key_you_wanna_use")
+    super.encodeRestorableState(with: coder)
+  }
+
+  override func decodeRestorableState(with coder: NSCoder) {
+    super.decodeRestorableState(with: coder)
+    data = coder.decodeInteger(forKey: "the_key_you_wanna_use")
+    // do something to restore the app state
+  }
+
+  // 除此以外，还有一个方法会在 decodeRestorableState 之后被调用，可以在这里用恢复的属性/状态来进行 UI 操作
+  override func applicationFinishedRestoringState() {
+    // do something with the UI
+  }
+}
+```
+
+#### UserDefaults
+
+- [Apple developer - UserDefaults](https://developer.apple.com/documentation/foundation/userdefaults)
+- [NSUserDefaults — A Swift Introduction](http://www.codingexplorer.com/nsuserdefaults-a-swift-introduction/)
+
+`UserDefaults`可以用来储存一些仅需本地缓存的参数，比如用户自定义的一些本地设置。它在底层使用了一个自带的数据库进行储存，不过为了优化 IO 而进行了一些额外操作：当你取数据的时候，结果会被缓存，避免之后不必要的查询操作；当插入数据时，会在当前进程直接返回新的值，但在其他进程进行异步的储存。
+
+`UserDefaults`只能在当前机器的本地进行储存，如果需要设备间进行同步，则需要使用`NSUbiquitousKeyValueStore`
+
+```Swift
+// 可储存 NSData, NSString, NSNumber, NSDate, NSArray, NSDictionary 的实例或者它们构成的 collection
+UserDefaults.standard.set(xxx, forKey: xxx);
+
+UserDefaults.standard.object(forKey: xxx);
+UserDefaults.standard.url(forKey: xxx);
+UserDefaults.standard.data(forKey: xxx);
+UserDefaults.standard.bool(forKey: xxx);
+UserDefaults.standard.string(forKey: xxx);
+UserDefaults.standard.stringArray(forKey: xxx);
+UserDefaults.standard.integer(forKey: xxx);
+UserDefaults.standard.float(forKey: xxx);
+UserDefaults.standard.double(forKey: xxx);
+UserDefaults.standard.array(forKey: xxx);
+UserDefaults.standard.dictionary(forKey: xxx);
+UserDefaults.standard.dictionaryRepresentation(forKey: xxx);
+
+UserDefaults.standard.removeObject(forKey: xxx);
+```
+
+```Swift
+// 可以配合 key-value observing 或者 Notification 来监听数据变化
+// UserDefaults 有一个 didChangeNotification 属性，是 Notification.Name 类型，
+NotificationCenter.default.addObserver(
+  self,
+  selector: #selector(userdefaultsDidChange(with:)),
+  name: UserDefaults.didChangeNotification,
+  object: nil
+)
+```
+
+#### NSUbiquitousKeyValueStore
+
+- [Apple developer - NSUbiquitousKeyValueStore](https://developer.apple.com/documentation/foundation/nsubiquitouskeyvaluestore)
+
+`NSUbiquitousKeyValueStore`类似于`UserDefaults`，但是可以调用`synchronize`方法，利用 iCloud 在不同设备之间进行同步。当用户没有登录 iCloud 时，数据只会储存在本地，而一旦登录 iCloud，则会自动进行同步
+
+```Swift
+// 当本地储存的数据在同步时被 iCloud 上的数据更改时，可以利用 didChangeExternallyNotification 和 NotificationCenter 监听
+NotificationCenter.default.addObserver(
+  self,
+  selector: #selector(userdefaultsDidChange(with:)),
+  name: NSUbiquitousKeyValueStore.didChangeExternallyNotification,
+  object: nil
+)
+
+// 当本地数据更改时，可以通过 synchronize() 方法同步到 iCloud
+// 在整个 App 生命周期里，只需要在 App Launch 或者来到前台时调用一次 synchronize 方法就够。该方法不会推送数据到 iCloud，而是告知 iCloud 这里有新的数据需要同步，然后 App 会在合适的时间自动进行同步。
+```
+
+#### FileManager
+
+`FileManager`利用本机的文档系统进行数据储存
+
+```Swift
+// 获取 FileManager 的实例
+let fileManager: FileManager = FileManager.default
+
+// 获取应用的文件路径
+let documentsURL: [URL] = FileManager.default.urls(
+  for: .documentDirectory,
+  in: .userDomainMask
+)
+let documentURL: URL = documentsURL.first!
+// 获取路径 String 类型的值
+let documentPath: String = documentURL.path
+
+// 构造一个路径用于储存数据
+let fileURL: URL = documentDirectory.appendingPathComponent("file.archive")
+
+// 数据写入，以 UIImage 为例
+if let data = UIImageJPEGRepresentation(image) {
+  do {
+    try data.write(to: fileURL, options: .atomic)
+  } catch let error {
+    print("Image write failed: \(error)")
+  }
+}
+
+// 数据删除
+do {
+  try fileManager.removeItem(at: fileURL)
+} catch let error {
+  print("Remove failed: \(error)")
+}
+
+// 获取某文件夹下的所有文件
+do {
+  let files = try fileManager.contentsOfDictionary(atPath: documentPath)
+  for file in files {
+    print(file.path)
+  }
+} cache let error {
+  print("Files get error: \(error)")
+}
+```
+
+#### NSCache
+
+`NSCache`的表现和可变的集合（mutable collections）类似，都是通过 key-value 的形式在内存中储存数据。但有一些不同：
+- 当内存不足时，系统会自动从`NSCache`中释放内存
+- 线程安全，不用加锁
+
+```Swift
+// 以缓存 UIImage 对象为例
+let cache = NSCache<AnyObject, UIImage>()
+
+let key = "imageName"
+// 储存
+cache.setObject(image, forKey: key as AnyObject)
+
+// 获取
+if let existingImage = cache.object(forKey: key as AnyObject) {
+  return existingImage
+}
+
+// 删除
+cache.removeObject(forKey: key as AnyObject)
+
+// 删除全部
+cache.removeAllObjects()
+```
+
+#### URLCache
+
+将 HTTP 请求的结果进行缓存
+
+- [Accessing Cached Data](https://developer.apple.com/documentation/foundation/url_loading_system/accessing_cached_data)
+- [Synchronizing remote JSON data to local cache storage in iOS Swift](https://stackoverflow.com/questions/28418035/synchronizing-remote-json-data-to-local-cache-storage-in-ios-swift)

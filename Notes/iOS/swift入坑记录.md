@@ -80,7 +80,13 @@
 - [Developing iOS 11 Apps with Swift](https://www.bilibili.com/video/av16339375)
 - [Developing iOS 11 Apps with Swift 字幕翻译](https://github.com/ApolloZhu/Developing-iOS-11-Apps-with-Swift)
 - [iOS 各组件入门](https://www.ioscreator.com/)
-- [How To Make a Gesture-Driven To-Do List App Like Clear in Swift](https://www.raywenderlich.com/77974/making-a-gesture-driven-to-do-list-app-like-clear-in-swift-part-1)
+- How To Make a Gesture-Driven To-Do List App Like Clear in Swift
+  - [Part 1/2](https://www.raywenderlich.com/77974/making-a-gesture-driven-to-do-list-app-like-clear-in-swift-part-1)
+  - [Part 2/2](https://www.raywenderlich.com/77975/making-a-gesture-driven-to-do-list-app-like-clear-in-swift-part-2)
+- Core Graphics Tutorial
+  - [Part 1/3](https://www.raywenderlich.com/162315/core-graphics-tutorial-part-1-getting-started)
+  - [Part 2/3](https://www.raywenderlich.com/162313/core-graphics-tutorial-part-2-gradients-contexts)
+  - [Part 3/3](https://www.raywenderlich.com/167352/core-graphics-tutorial-part-3-patterns-playgrounds)
 
 #### 推荐网站
 
@@ -208,6 +214,8 @@ for index in greeting.characters.indices {
   print("\(greeting[index]) ", terminator: "")
 }
 // Prints "G u t e n   T a g ! "
+for index in greeting.indices {}
+
 
 /* 字符串修改
 在特定位置插入字符 insert(_:at:)
@@ -230,6 +238,15 @@ welcome.insert(contentsOf:" there".characters, at: welcome.index(before: welcome
 检查字符串是否拥有特定的字符串前缀：hasPrefix(_:)
 检查字符串是否拥有特定的字符串后缀：hasSuffix(_:)
 */
+```
+
+```Swift
+// 字符串的索引不能超过其自身范围
+string.index(string.startIndex, offsetBy: -1) // Error!
+
+// 字符串通过索引范围获取到的类型为 SubString
+let subStr = string[string.startIndex..<string.endIndex]
+type(of: subStr)  // SubString
 ```
 
 #### 函数
@@ -290,6 +307,22 @@ for (index, value) in arr.enumerated() {}
 var numbers = [1,2,3,4,5]
 numbers.swapAt(0,1)
 numbers // [2, 1, 3, 4, 5]
+
+// 获取范围索引
+numbers[0..<4]
+
+// 组合成为 String
+// 只有当数组元素为 String/Character 类型时，才能直接转换为 String
+// -> How do I convert a Swift Array to a String?
+// -> https://stackoverflow.com/questions/25827033/how-do-i-convert-a-swift-array-to-a-string
+
+let charArr: [Character] = ["a", "b"]
+String(charArr) // "ab"
+
+let intArr: [Int] = [1, 2]
+var int2StrArr = intArr.flatMap { String($0) }
+print(int2StrArr) // ["1", "2"]
+String(int2StrArr) // "12"
 ```
 
 #### 集合
