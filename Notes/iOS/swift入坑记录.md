@@ -88,6 +88,12 @@
   - [Part 2/3](https://www.raywenderlich.com/162313/core-graphics-tutorial-part-2-gradients-contexts)
   - [Part 3/3](https://www.raywenderlich.com/167352/core-graphics-tutorial-part-3-patterns-playgrounds)
 
+基础 UI 和布局
+
+- [UIView Fundamentals](https://www.weheartswift.com/uiview-fundamentals/)
+- [Bezier Paths and Gesture Recognizers](https://www.weheartswift.com/bezier-paths-gesture-recognizers/)
+- [Auto Layout 101](https://www.weheartswift.com/auto-layout-101/)
+
 #### 推荐网站
 
 - [raywenderlich](https://www.raywenderlich.com)
@@ -102,6 +108,8 @@
 
 Double代表 64 位的浮点数，Float 代表 32 位的浮点数。
 如果没有指明，Swift 在推断浮点值的时候始终会选择 Double
+
+- [What is the difference between Int and Int32 in Swift?](https://stackoverflow.com/questions/27440100/what-is-the-difference-between-int-and-int32-in-swift)
 
 #### 元组
 
@@ -243,10 +251,14 @@ welcome.insert(contentsOf:" there".characters, at: welcome.index(before: welcome
 ```Swift
 // 字符串的索引不能超过其自身范围
 string.index(string.startIndex, offsetBy: -1) // Error!
+string.index(string.endIndex, offsetBy: 1) // Error!
 
 // 字符串通过索引范围获取到的类型为 SubString
 let subStr = string[string.startIndex..<string.endIndex]
 type(of: subStr)  // SubString
+
+let strIndex = string.startIndex
+strIndex.encodedOffset // 将 Index 转为 Int
 ```
 
 #### 函数
@@ -323,6 +335,9 @@ let intArr: [Int] = [1, 2]
 var int2StrArr = intArr.flatMap { String($0) }
 print(int2StrArr) // ["1", "2"]
 String(int2StrArr) // "12"
+
+// 查找第一个符合条件的值
+arr.first(where:)
 ```
 
 #### 集合
@@ -394,7 +409,7 @@ type(of: filtered) // Dictionary<Int, String>.Type
 let mapped = dict.mapValues { value in
   value.uppercased()
 }
-mapped // 返回一个新的 map
+mapped // 返回一个新的字典
 ```
 
 注意：Swift 的`Dictionary`类型是无序的。要以特定的顺序遍历字典的键或值，使用键或值的`sorted()`方法。

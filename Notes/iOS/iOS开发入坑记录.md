@@ -3,7 +3,7 @@
 **Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
 - [iOS 开发入坑记录](#ios-%E5%BC%80%E5%8F%91%E5%85%A5%E5%9D%91%E8%AE%B0%E5%BD%95)
-  - [文章](#%E6%96%87%E7%AB%A0)
+  - [Document](#document)
   - [应用生命周期](#%E5%BA%94%E7%94%A8%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F)
   - [View Controller](#view-controller)
   - [布局](#%E5%B8%83%E5%B1%80)
@@ -44,16 +44,19 @@
     - [FileManager](#filemanager)
     - [NSCache](#nscache)
     - [URLCache](#urlcache)
+    - [NSKeyedArchiver](#nskeyedarchiver)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 ## iOS 开发入坑记录
 
-### 文章
+### Document
 
 - [官方文档：View Controller Programming Guide for iOS](https://developer.apple.com/library/content/featuredarticles/ViewControllerPGforiPhoneOS/index.html#//apple_ref/doc/uid/TP40007457-CH2-SW1)
 - [官方 Tutorial，开发一个小 Demo](https://developer.apple.com/library/content/referencelibrary/GettingStarted/DevelopiOSAppsSwift/index.html#//apple_ref/doc/uid/TP40015214-CH2-SW1)
 - [iOS11 中出现的新 API](https://chariotsolutions.com/tags/ios11/)
+- [Developer Design Guide](https://developer.apple.com/design/)
+- [Human Interface Guidelines - iOS](https://developer.apple.com/ios/human-interface-guidelines/overview/themes/)
 
 ### 应用生命周期
 
@@ -1097,3 +1100,51 @@ cache.removeAllObjects()
 
 - [Accessing Cached Data](https://developer.apple.com/documentation/foundation/url_loading_system/accessing_cached_data)
 - [Synchronizing remote JSON data to local cache storage in iOS Swift](https://stackoverflow.com/questions/28418035/synchronizing-remote-json-data-to-local-cache-storage-in-ios-swift)
+
+#### NSKeyedArchiver
+
+- [Using NSKeyedArchiver to Persist Data (Swift 3)](https://medium.com/yay-its-erica/using-nskeyedarchiver-to-persist-data-976ab2f28006)
+- [Saving Game Data with NSCoding in Swift](http://meandmark.com/blog/2016/03/saving-game-data-with-nscoding-in-swift/)
+- [How to save and load objects with NSKeyedArchiver and NSKeyedUnarchiver](https://www.hackingwithswift.com/example-code/system/how-to-save-and-load-objects-with-nskeyedarchiver-and-nskeyedunarchiver)
+
+只有继承了`NSObject`, `NSCoding`的对象才能被`NSKeyedArchiver`序列化的储存。
+
+```Swift
+class Item: NSObject, NSCoding {
+  var name: String
+  var value: Int
+
+  init(name: String, value: Int) {
+    this.name = name
+    this.value = value
+  }
+
+  // 覆写 init，用以获取存储过的数据时进行解析复原
+  required init?(coder: aDecoder: NSCoder) {
+    name = aDecoder.decodeObject(forKey: "name") as! String
+    value = aDecoder.decodeObject(forKey: "value") as! Int
+    super.init()
+  }
+
+  // 必须声明 encode 方法，以便储存的时候进行序列化
+  func encode(with aCoder: NSCoder) {
+    aCoder.encode(name, forKey: "name")
+    aCoder.encode(value, forKey: "value")
+  }
+}
+
+// 利用 NSKeyedArchiver 进行储存
+let item = Item(name: "27", value: 28)
+let documentsDirectories = FileManager.default.urls(
+  for: .documentDirectory,
+  in: .userDomainMask
+)
+let documentDirectory = documentsDirectories.first!
+let archiveURL = documentDirectory.appendingPathComponent("items.archive")
+NSKeyedArchiver.archiveRootObject(item, toFile: archiveURL.path)
+
+// 利用 NSKeyedUnarchiver 获取数据
+if let archivedItem = NSKeyedUnarchiver.unarchiveObject(withFile: archiveURL.path) as? Item {
+  // do something
+}
+```
