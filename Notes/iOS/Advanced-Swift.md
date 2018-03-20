@@ -22,6 +22,8 @@
       - [`BidirectionalCollection`双向索引](#bidirectionalcollection%E5%8F%8C%E5%90%91%E7%B4%A2%E5%BC%95)
       - [`RandomAccessCollection`随机存取](#randomaccesscollection%E9%9A%8F%E6%9C%BA%E5%AD%98%E5%8F%96)
       - [`MutableCollection`可下标赋值](#mutablecollection%E5%8F%AF%E4%B8%8B%E6%A0%87%E8%B5%8B%E5%80%BC)
+  - [可选值](#%E5%8F%AF%E9%80%89%E5%80%BC)
+    - [可选值的`map`和`flatMap`](#%E5%8F%AF%E9%80%89%E5%80%BC%E7%9A%84map%E5%92%8Cflatmap)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -109,6 +111,9 @@ var dict = ["a": 1, "b": 2, "c": 3]
 dict["a"] = nil
 dict.removeValue(forKey: "b")
 dict // ["c": 3]
+
+// 获取值时设置缺省值
+dict["d", default: 4]
 ```
 
 字典的合并，可以指定如何处理键相同的键值对（选用两个字典中的某一个值）
@@ -617,5 +622,15 @@ extension FIFOQueue: MutableCollection {
 
 注意，`MutableCollection`只允许改变集合中已有的元素值，但是不允许改变集合的长度或者元素的顺序
 
-<!-- ## 可选值 -->
+## 可选值
+
+### 可选值的`map`和`flatMap`
+
+
+
+
+
+
+
+
 

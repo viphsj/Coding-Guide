@@ -57,6 +57,7 @@
   - [Elm](./Notes/Elm)
   - [Ember](./Notes/ember)
   - [Swift4 & iOS](./Notes/iOS)
+  - [Haskell](./Notes/Haskell)
 
 ## 专题
 
