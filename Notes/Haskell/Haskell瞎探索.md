@@ -19,6 +19,18 @@
     - [`where`](#where)
     - [`let`](#let)
     - [`case`](#case)
+  - [递归](#%E9%80%92%E5%BD%92)
+    - [用递归实现 Haskell 中的自带函数](#%E7%94%A8%E9%80%92%E5%BD%92%E5%AE%9E%E7%8E%B0-haskell-%E4%B8%AD%E7%9A%84%E8%87%AA%E5%B8%A6%E5%87%BD%E6%95%B0)
+    - [用递归实现快速排序](#%E7%94%A8%E9%80%92%E5%BD%92%E5%AE%9E%E7%8E%B0%E5%BF%AB%E9%80%9F%E6%8E%92%E5%BA%8F)
+  - [高阶函数](#%E9%AB%98%E9%98%B6%E5%87%BD%E6%95%B0)
+    - [柯里化](#%E6%9F%AF%E9%87%8C%E5%8C%96)
+      - [多元函数的本质](#%E5%A4%9A%E5%85%83%E5%87%BD%E6%95%B0%E7%9A%84%E6%9C%AC%E8%B4%A8)
+      - [柯里化的截断](#%E6%9F%AF%E9%87%8C%E5%8C%96%E7%9A%84%E6%88%AA%E6%96%AD)
+    - [高阶函数](#%E9%AB%98%E9%98%B6%E5%87%BD%E6%95%B0-1)
+    - [匿名函数](#%E5%8C%BF%E5%90%8D%E5%87%BD%E6%95%B0)
+    - [折叠函数](#%E6%8A%98%E5%8F%A0%E5%87%BD%E6%95%B0)
+    - [`$`函数](#%E5%87%BD%E6%95%B0)
+    - [函数组合](#%E5%87%BD%E6%95%B0%E7%BB%84%E5%90%88)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -229,7 +241,7 @@ zip [1..] ['a', 'b'] -- [(1, 'a'), (2, 'b')]
 -- 函数的类型
 -- a 不是类型而是类型变量，代表其可以是任意类型
 -- 使用了类型变量的函数叫做多态函数
--- 函数的多个参数之间仍使用 -> 连接
+-- 函数的多个参数之间仍使用 -> 连接。因为 Haskell 的函数本质上都是一元函数，而多参数的函数则是柯里化的一元函数
 :t head
 -- head :: [a] -> a
 
@@ -369,13 +381,17 @@ judgeNumber 1000 10 -- "1000.0 is much bigger than 10.0"
 可以利用`where`来保存计算的中间结果，**在`where`中定义的变量可以作用于当前函数的当前模式**
 
 ```hashell
+-- 在 where 中定义变量
 judgeNumber :: Double -> Double -> String
 judgeNumber numberA numberB
-  | number < 5.0 = "Less than five"
-  | number < 10.0 = "Less than ten"
-  | number < 15.0 = "Less than fifteen"
+  | number < small = "Less than five"
+  | number < mid = "Less than ten"
+  | number < big = "Less than fifteen"
   | otherwise = show numberA ++ " is much bigger than " ++ show numberB
   where number = numberA / numberB
+        small = 5.0
+        mid = 10.0
+        big = 15.0
 
 judgeNumber 1000 10 -- "1000.0 is much bigger than 10.0"
 ```
@@ -393,7 +409,7 @@ headOfList [1, 2, 3] -- "List head is 1"
 
 #### `let`
 
-`let`是一个表达式，允许在任何位置定义局部变量。在一个哨卫中通过`let`的变量，对其他哨卫不可见。
+`let`是一个表达式，一定会有返回值，允许在任何位置定义局部变量。在一个哨卫中通过`let`的变量，对其他哨卫不可见。
 
 ```haskell
 -- let <binding> in <expression>
@@ -429,3 +445,118 @@ listLength [] -- "List length is empty"
 listLength [1] -- "List length is a singleton list"
 listLength [1, 2] -- "List length is a longer list"
 ```
+
+### 递归
+
+#### 用递归实现 Haskell 中的自带函数
+
+```haskell
+-- maximum 从列表中获取最大值
+maximum' :: (Ord a) => [a] -> a
+maximum' [] = error "Empty list"
+maximum' [x] = x
+maximum' (x:xs) = max x (maximum' xs)
+
+-- replicate 将一个参数 x 重复 n 次，返回列表
+replicate' :: Int -> a -> [a]
+replicate' n x
+  | n <= 0 = []
+  | otherwise = x:(replicate' (n - 1) x)
+
+-- repeat 将一个参数重复无限次，返回无限长度的列表
+repeat' :: a -> [a]
+repeat' x = x:repeat' x
+
+-- take 截取数组的前 n 个元素，返回列表
+take' :: Int -> [a] -> [a]
+take' n _
+  | n <= 0 = []
+take' _ [] = []
+take' n (x:xs) = x:take' (n - 1) xs
+
+-- reverse 将数组反转
+reverse' :: [a] -> [a]
+reverse' [] = []
+reverse' (x:xs) = reverse' xs ++ [x]
+
+-- zip 以两个列表为参数，将列表对应位置的元素组合成元组，返回新的列表
+zip' :: [a] -> [b] -> [(a, b)]
+zip' [] _ = []
+zip' _ [] = []
+zip' (x:xs) (y:ys) = (x, y):zip' xs ys
+
+-- elem 以一个元素和列表为参数，检查该元素是否存在于列表中，返回布尔值
+elem' :: (Eq a) => a -> [a] -> Bool
+elem' _ [] = False
+elem' t (x:xs)
+  | t == x = True
+  | otherwise = elem' t xs
+```
+
+#### 用递归实现快速排序
+
+0. 将数组升序排列
+1. 以一个数为基准，将小于该数的值全部排在其左边，大于等于该数的值排在其右边
+2. 左右分别快排，即左右两边的数组都递归的进行上一步操作，最后将结果合并起来
+
+```haskell
+quickSort :: [a] -> [a]
+quickSort [] = []
+quickSort [a] = [a]
+quickSort (x:xs) =
+  quickSort smaller ++ [x] ++ bigger
+  where smaller = [a | a <- xs, a < x]
+        bigger = [a | a <- xs, a >= x]
+
+quickSort [5,2,3,5,7,1,0,9] -- [0,1,2,3,5,5,7,9]
+```
+
+### 高阶函数
+
+#### 柯里化
+
+##### 多元函数的本质
+
+**Haskell 中的函数实质上只接收一个参数**，对于接收多参数的函数而言，其实是在传入一个参数之后返回的新的函数，这就是柯里化函数
+
+```haskell
+-- 自定义一个将三个数求和的函数
+multTree a b c = a + b + c
+
+-- 查看该函数类型
+:t multTree
+-- multTree :: Int -> Int -> Int -> Int
+
+-- 我们知道 -> 后应该是代表了函数返回的结果，但三个参数之所以全部使用 -> 连接，是因为它本质上的类型其实是
+-- Int -> (Int -> (Int -> Int))
+-- 即在传入 Int 作为参数之后，返回了新的函数，如此这样重复三次，最终返回的 Int 才是函数调用后返回的结果
+```
+
+##### 柯里化的截断
+
+```haskell
+-- 以上面的 multTree 函数为例，可以利用截断不必一次性的调用函数，而是返回一个中间阶段
+
+-- 正常使用多元函数
+multTree 1 2 3
+-- 如果传入参数的数量不对则会报错
+multTree 1 2 -- error
+
+-- 利用截断，不必一次性调用
+-- 使用括号对函数进行截断
+let multThree' = (multTree 1 2)
+-- 之后再进行调用
+multThree' 3 -- 6
+multThree' 4 -- 7
+```
+
+#### 高阶函数
+
+#### 匿名函数
+
+#### 折叠函数
+
+#### `$`函数
+
+#### 函数组合
+
