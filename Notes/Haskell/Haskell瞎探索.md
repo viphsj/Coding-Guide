@@ -40,6 +40,14 @@
       - [`Data.List`模块](#datalist%E6%A8%A1%E5%9D%97)
       - [`Data.Char`模块](#datachar%E6%A8%A1%E5%9D%97)
       - [`Data.Map`模块](#datamap%E6%A8%A1%E5%9D%97)
+  - [类型和类型类](#%E7%B1%BB%E5%9E%8B%E5%92%8C%E7%B1%BB%E5%9E%8B%E7%B1%BB)
+    - [自定义类型和值构造器](#%E8%87%AA%E5%AE%9A%E4%B9%89%E7%B1%BB%E5%9E%8B%E5%92%8C%E5%80%BC%E6%9E%84%E9%80%A0%E5%99%A8)
+    - [值构造器的记录语法](#%E5%80%BC%E6%9E%84%E9%80%A0%E5%99%A8%E7%9A%84%E8%AE%B0%E5%BD%95%E8%AF%AD%E6%B3%95)
+    - [类型构造器](#%E7%B1%BB%E5%9E%8B%E6%9E%84%E9%80%A0%E5%99%A8)
+      - [参数化构造](#%E5%8F%82%E6%95%B0%E5%8C%96%E6%9E%84%E9%80%A0)
+    - [派生实例](#%E6%B4%BE%E7%94%9F%E5%AE%9E%E4%BE%8B)
+    - [类型别名](#%E7%B1%BB%E5%9E%8B%E5%88%AB%E5%90%8D)
+    - [类型类](#%E7%B1%BB%E5%9E%8B%E7%B1%BB-1)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -59,7 +67,7 @@ Haskell 是一门纯函数式编程语言。
 - 命名
 
 1. 用于命名值、变量、函数名和类型变量的标识符，必须从小写字母开始
-2. 类型名、模块名、类名，必须以大写字母开始
+2. 类型、模块、值构造器、类型类，必须以大写字母开始
 
 - 对于基本运算而言，和其他语言几乎一致，但需要注意的是，如果表达式内存在负数，则最好用括号将其包裹起来
 
@@ -895,4 +903,175 @@ Map.size map -- 2
 -- Map.map 取一个函数和映射为参数，将函数应用到映射键值对的每个值上，返回新的映射
 -- :t Map.map
 Map.map :: (a -> b) -> Map.Map k a -> Map.Map k b
+```
+
+### 类型和类型类
+
+#### 自定义类型和值构造器
+
+使用`data`关键字定义类型
+
+```haskell
+-- Bool 类型的定义
+data Bool = False | True
+-- 等号左侧为类型名称；等号右侧为值构造器，指明了该类型所有可能的值
+```
+
+可以自定义类型和值构造器，例如，定义一个`Shape`类型，其可能的值有`Circle`和`Rectangle`
+
+```haskell
+-- 值构造器的表示方式和函数类似，即 名称 + 参数
+data Shape = Circle Float Float Float | Rectangle Float Float Float Float
+:t Circle
+-- Circle :: Float -> Float -> Float -> Shape
+:t Rectangle
+-- Rectangle :: Float -> Float -> Float -> Float -> Shape
+
+-- 编写一个计算面积的函数，它以 Shape 类型作为参数，并根据不同的值构造器来进行计算
+area :: Shape -> Float
+area (Circle _ _ r) = pi * r ^ 2
+area (Rectangle x1 y1 x2 y2) = (abs $ x2 - x1) * (abs $ y2 - y1)
+area $ Circle 1 2 3
+-- 28.274334
+
+-- 令类型派生 Show 类型类的协议，则可以让值构造器被输出
+data Shape = Circle Float Float Float | Rectangle Float Float Float Float
+:t Circle
+  deriving (Show)
+Circle 1 1 1
+-- 输出：Circle 1 1 1
+
+-- 由于值构造器本质上是函数，因此可以对它进行所有可以对函数做的事情
+map (Circle 10 20) [4, 5, 6, 6]
+```
+
+将自定义类型导出
+
+```haskell
+module Shapes
+(
+  Shape(..) -- 将 Shape 的所有值构造器都导出
+  -- 或者通过 Shape(Circle, Rectangle) 导出特定的某些值构造器
+) where
+```
+
+#### 值构造器的记录语法
+
+当值构造器需要接受很多参数时，通过旧的参数依次传递的方法会显得非常麻烦，例如：
+
+```haskell
+data Person = Person String String Int -- 等等很多参数.......
+```
+
+利用*记录语法*来实现等价功能
+
+```haskell
+data Person = Person {
+  name :: String,
+  age :: Int,
+  job :: String
+} deriving (Show)
+
+-- 在构造时可以不必在意各个参数的顺序
+Person { age: 999, job: "whatever", name: "ecmadao" }
+```
+
+#### 类型构造器
+
+使用`data`构造类型时，以类型作为参数产生新的类型
+
+```haskell
+data Maybe a = Nothing | Just a
+```
+
+`a`是一个类型参数，因此`Maybe`是一个类型构造器，可以生产出诸如`Maybe Int`，`Maybe String`这样的类型
+
+```haskell
+-- 将 Char 类型传入 Maybe，即可得到 Maybe Char 类型
+-- 因此，Just 'a' 的类型就应该是 Maybe Char
+:t Just 'a'
+Just 'a' :: Maybe Char
+```
+
+##### 参数化构造
+
+之前在生成值构造器的时候，我们直接指定了各个参数的类型，例如`data Person = Person String String Int`，这样的话，在运用的时候，就必须确实的使用该类型的参数。而如果参数化构造器，则不再对其进行限制：
+
+```haskell
+data Person a b c = Person a b c
+
+descOfPerson :: (Show c) => (Person String String c) -> String
+descOfPerson (Person a b c) = "Name: " ++ a ++ ", Job: " ++ b ++ ", Age: " ++ c
+```
+
+#### 派生实例
+
+类型类是定义了某些行为的接口。如果类型想拥有该行为，则需要通过`deriving`成为该类型类的实例。
+
+例如，通过派生`Show`使得`Person`可以被直接输出。通过派生`Eq`则使两个`Person`实例之间可以被`==`和`/=`比较：a, b, c 三个值都相等的`Person`实例被认为是相等的，因此，这又要求 a, b, c 三个参数都是派生了`Eq`了的类型
+
+```haskell
+data Person a b c = Person a b c deriving (Show, Eq)
+Person "a" "b" 1 == Person "a" "b" 1 -- True
+Person "a" "b" 1 == Person "a" "b" 2 -- False
+```
+
+如果类型派生了`Ord`类型类，则可以进行比较操作。对于拥有多个值构造器的类型而言，排在前面的值被认为较小；而如果是同一个值构造器，则依次比较各个参数的大小。例如：
+
+```haskell
+data Bool = False | True deriving (Ord)
+False > True -- False
+False < True -- True
+```
+
+#### 类型别名
+
+通过`type`关键字来给某个类型定义别名。例如，`String`本质上是`Char`组成的列表，因此，`type String = [Char]`
+
+类型别名可以带有参数：
+
+```haskell
+import Data.Map
+
+type AssocList k v = [(k, v)] -- 定义另一个类型表示关联列表
+type IntMap v = Map.Map Int -- 表示从整数到某东西之间的映射关系的类型
+```
+
+#### 类型类
+
+类型类定义了某些行为，派生了特定类型类的类型，可以实现这些行为。`class`关键字用于定义新的类型类，而`instance`关键字则用于将类型转为某一类型类的实例
+
+```haskell
+-- Eq 类型类
+class Eq a where
+  (==) :: a -> a -> Bool
+  (/=) :: a -> a -> Bool
+  x == y = not (x /= y)
+  x /= y = not (x == y)
+```
+
+自定义一个类型，并让其实现为`Eq`的实例：
+
+```haskell
+data TrafficLight = Red | Yellow | Green
+
+instance Eq TrafficLight where
+  Red == Red = true
+  Yellow == Yellow = true
+  Green == Green = true
+  _ == _ = false
+```
+
+```haskell
+-- 可以将一个类型类实现为另一个类型类的子类
+class (Eq a) => Num a where
+  -- ...
+
+-- 将带参数的类型（类型构造器）实现为类型类的实例
+-- 而且带有类型约束
+-- Maybe 是一个类型构造器，因此不能用来实现类型类的定义；而 Maybe m 则是具体的类型
+instance (Eq m) => Eq (Maybe m) where
+  Nothing == Nothing = true
+  Just x == Just y = x == y
+  _ == _ = False
 ```
