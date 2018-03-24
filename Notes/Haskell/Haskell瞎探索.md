@@ -33,6 +33,13 @@
       - [`foldr`/`foldr1`](#foldrfoldr1)
     - [`$`函数](#%E5%87%BD%E6%95%B0)
     - [函数组合](#%E5%87%BD%E6%95%B0%E7%BB%84%E5%90%88)
+  - [模块](#%E6%A8%A1%E5%9D%97)
+    - [模块导入](#%E6%A8%A1%E5%9D%97%E5%AF%BC%E5%85%A5)
+    - [模块导出](#%E6%A8%A1%E5%9D%97%E5%AF%BC%E5%87%BA)
+    - [Haskell 中的常用模块](#haskell-%E4%B8%AD%E7%9A%84%E5%B8%B8%E7%94%A8%E6%A8%A1%E5%9D%97)
+      - [`Data.List`模块](#datalist%E6%A8%A1%E5%9D%97)
+      - [`Data.Char`模块](#datachar%E6%A8%A1%E5%9D%97)
+      - [`Data.Map`模块](#datamap%E6%A8%A1%E5%9D%97)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -714,4 +721,178 @@ map (\x -> negate (abs x)) [5, -3, 1, -7]
 
 -- 或者使用函数组合
 map (negate . abs) [5, -3, 1, -7]
+```
+
+### 模块
+
+Haskell 可以导入导出模块，使各个部分的代码可以松耦合，方便重用和管理
+
+#### 模块导入
+
+```haskell
+-- 模块名称必须大写字母开头
+-- import 语句要放在代码头部
+import ModuleName
+
+-- 只选择性的导入模块中的一些函数
+import ModuleName (func1, func2)
+
+--  导入模块中除了某个函数以外的其他函数
+-- import ModuleName hiding (func3)
+
+-- 限定导入，处理可能的命名冲突（模块内函数名和文件内函数名冲突）
+-- import qualified ModuleName
+-- 之后只能通过 ModuleName.func 来调用函数
+
+-- 限定导入，并设置别名
+-- import qualified ModuleName as Module
+-- Module.func
+```
+
+#### 模块导出
+
+模块的导出也需要在文件的开头就进行标识，指明该模块的名称以及导出的函数名，然后在导出语句的下部，在给出具体的函数实现。
+
+```haskell
+-- example.hs
+module Example
+(
+  func1,
+  func2,
+  func3
+) where
+
+func1 x = x * x
+-- ...func2, func3
+```
+
+#### Haskell 中的常用模块
+
+##### `Data.List`模块
+
+```haskell
+import qualified Data.List as List
+
+-- List.words 函数，可以将字符串转换为一组单词组成的列表（用空格分隔）
+List.words "these are words"
+["these", "are", "words"]
+
+-- List.group 函数，将列表中相邻且相同的元素分到子列表里
+List.group [0, 0, 1, 1, 1, 2]
+[[0, 0], [1, 1, 1], [2]]
+
+-- List.sort 以可排序的元素组成的列表为参数，返回从小到大排序的结果
+List.sort [4, 3, 2, 5, 0]
+[0, 2, 3, 4, 5]
+
+-- List.tails 返回一个列表的所有尾部子列表（包含一个空列表）
+List.tails "hello"
+["hello", "ello", "llo", "lo", "o", ""]
+
+List.tails [1, 2, 3]
+[[1, 2, 3], [2, 3], [3], []]
+
+-- List.isPrefixOf 判断一个列表是否是另一个列表的开头
+List.isPrefixOf [1, 2] [1, 2, 3]
+True
+
+List.isPrefixOf "he" "hello"
+True
+
+-- List.any 以一个限制条件和一个列表为参数，判断列表中是否存在元素满足该限制条件
+List.any (\x -> x > 0) [-1, -2, 0, 1]
+True
+```
+
+---
+
+关于列表折叠：
+
+由于 Haskell 的延迟计算属性，在折叠操作的每一步计算时，只有到真正计算时才进行运算。但折叠时，需要依赖上一步的累加值。鉴于这种延迟计算之间的依赖关系，Haskell 会把每步的延迟计算放在内存中保留起来。随着折叠的进行，会造成大量延迟计算的遗留，占据内存，可能导致栈溢出错误。
+
+```haskell
+-- Haskell 的折叠运行过程
+-- 构建了一个大的延迟计算栈，直到折叠的目标数组为空时，才开始对之前的延迟进行计算，而延迟计算都是按照递归的形式进行求值
+foldl (+) 0 [1, 2, 3] =
+foldl (+) (0 + 1) [2, 3] =
+foldl (+) ((0 + 1) + 2) [3] =
+foldl (+) (((0 + 1) + 2) + 3) [] =
+(((0 + 1) + 2) + 3) =
+(1 + 2) + 3 =
+3 + 3 =
+6
+
+-- List.foldl' 提供了非延迟计算版本的折叠方法
+List.foldl' (+) 0 [1, 2, 3] =
+List.foldl' (+) 1 [2, 3] =
+List.foldl' (+) 3 [3] =
+List.foldl' (+) 6 [] =
+6
+```
+
+##### `Data.Char`模块
+
+```haskell
+import qualified Data.Char as Char
+
+-- Char.ord 将字符转换为数值
+-- 两个字符 ord 值的差，即代表他们在 Unicode 编码表中的距离
+Char.ord 'a' -- 97
+
+-- Char.chr 将数值转换为字符
+Char.chr 97 -- 'a'
+
+-- Char.digitToInt 把 Char 类型的参数转为 Int 类型
+-- 可用于 '0' ~ '9' 以及 'A'/'a' ~ 'F'/'f'
+Char.digitToInt '2' -- 2
+Char.digitToInt 'F' -- 15
+
+-- Char.isDigit 以一个字符为参数，判断是否是数字
+Char.isDigit 'a' -- False
+Char.isDigit '1' -- True
+```
+
+##### `Data.Map`模块
+
+```haskell
+-- 映射
+import qualified Data.Map as Map
+
+-- 关联列表：即字典，将数据按照键值对的形式进行储存。可以有重复的键。例如，
+-- [('a', 1), ('b', 2)]
+-- [('a', 1), ('b', 2), ('a', 2)]
+-- 关联列表的键必须是可判断是否相等的，即必须是 Eq 类型类的实例
+
+-- Map.fromList 将一组关联列表转换为映射（Map.Map）。重复键的键值对会被覆盖
+Map.fromList [('a', 1), ('b', 2), ('a', 2)]
+fromList [('b', 2), ('a', 2)]
+
+-- 映射的键必须是可排序的，即 Ord 类型类的实例
+-- :t Map.fromList
+-- Map.fromList :: (Ord k) => [(k, v)] -> Map.Map k v
+
+-- Map.fromList 会令关联列表中重复键的键值对丢失。如果需要全部转为映射，则需要使用 Map.fromListWith 函数，该函数需要你自己提供一个函数来确定处理重复键的情况
+Map.fromListWith (+) [('a', 1), ('b', 2), ('a', 2)]
+[('a', 3), ('b', 2)]
+```
+
+```haskell
+-- Map.lookup 以一个键和 Map.Map 为参数，查找映射中该键对应的值
+map = Map.fromList [('a', 1), ('b', 2), ('a', 2)]
+Map.lookup 'a' map
+-- Just 2
+Map.lookup 'c' map
+-- Nothing
+
+-- Map.insert 插入键值对，返回新的映射
+newMap = Map.insert 'c' 9 map
+map -- fromList [('a', 2), ('b', 2)]
+newMap -- fromList [('a', 2), ('b', 2), ('c', 9)]
+
+-- Map.size -- 返回映射中键值对总数
+Map.size map -- 2
+
+-- Map.map 取一个函数和映射为参数，将函数应用到映射键值对的每个值上，返回新的映射
+-- :t Map.map
+Map.map :: (a -> b) -> Map.Map k a -> Map.Map k b
 ```
