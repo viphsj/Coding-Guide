@@ -56,9 +56,20 @@
       - [两条函子定律](#%E4%B8%A4%E6%9D%A1%E5%87%BD%E5%AD%90%E5%AE%9A%E5%BE%8B)
     - [`applicative`函子](#applicative%E5%87%BD%E5%AD%90)
       - [`<$>`函数](#%E5%87%BD%E6%95%B0)
-      - [`Maybe` applicative 函子](#maybe-applicative-%E5%87%BD%E5%AD%90)
-      - [列表 applicative 函子](#%E5%88%97%E8%A1%A8-applicative-%E5%87%BD%E5%AD%90)
-      - [函数 applicative 函子](#%E5%87%BD%E6%95%B0-applicative-%E5%87%BD%E5%AD%90)
+      - [`Maybe`函子](#maybe%E5%87%BD%E5%AD%90)
+      - [列表函子](#%E5%88%97%E8%A1%A8%E5%87%BD%E5%AD%90)
+      - [`ZipList`函子](#ziplist%E5%87%BD%E5%AD%90)
+      - [函数函子](#%E5%87%BD%E6%95%B0%E5%87%BD%E5%AD%90)
+      - [`applicative`的实用函数](#applicative%E7%9A%84%E5%AE%9E%E7%94%A8%E5%87%BD%E6%95%B0)
+  - [`newtype`](#newtype)
+  - [`Monoid`类型类](#monoid%E7%B1%BB%E5%9E%8B%E7%B1%BB)
+    - [什么是`Monoid`](#%E4%BB%80%E4%B9%88%E6%98%AFmonoid)
+    - [`Monoid`的一些实例](#monoid%E7%9A%84%E4%B8%80%E4%BA%9B%E5%AE%9E%E4%BE%8B)
+      - [列表](#%E5%88%97%E8%A1%A8-1)
+      - [`Product`和`Sum`](#product%E5%92%8Csum)
+      - [`All`和`Any`](#all%E5%92%8Cany)
+      - [`Maybe`](#maybe)
+  - [`Monad`](#monad)
   - [输入和输出](#%E8%BE%93%E5%85%A5%E5%92%8C%E8%BE%93%E5%87%BA)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -986,6 +997,11 @@ data Person = Person {
 
 -- 在构造时可以不必在意各个参数的顺序
 Person { age: 999, job: "whatever", name: "ecmadao" }
+
+-- 并且自动提供了获取值的函数
+name Person -- "ecmadao"
+:t name
+-- name :: Person -> String
 ```
 
 #### 类型构造器
@@ -1211,7 +1227,7 @@ f <$> x = fmap f x
 -- f <$> x <*> y，把函数 f 映射到两个 applicative 函子值上
 ```
 
-##### `Maybe` applicative 函子
+##### `Maybe`函子
 
 ```haskell
 instance Applicative Maybe where
@@ -1241,19 +1257,38 @@ pure f <*> x <*> y <*> ... === fmap f x <*> y <*>...
 (*) <$> Just 2 <*> Just 3 -- Just 6
 ```
 
-##### 列表 applicative 函子
+##### 列表函子
 
 ```haskell
 instance Applicative [] where
   pure x = [x]
-  fs <*> xs = [f x | f <- fs, x <- xs]
+  fs <*> xs = [f x | f <- fs, x <- xs] -- 两个列表组成的列表推导式
 
 -- fs <*> xs = [f x | f <- fs, x <- xs]
 -- 以一个函数列表和普通列表为参数，将两者内的元素进行组合
 [(*0), (*2), (^2)] <*> [1, 3] -- [0, 0, 2, 6, 1, 9]
 ```
 
-##### 函数 applicative 函子
+##### `ZipList`函子
+
+如上述列表函子所示，`list1 <*> list2`实质上就是两个列表的列表推导式，一个列表里的函数会以此作用在第二个列表的所有元素里。而如果想实现`Zip`的功能，即各列表只有同样位置上的元素才会相互作用，则需要使用`ZipList`函子
+
+```haskell
+instance Applicative ZipList where
+  pure x = ZipList (repeat x)
+  ZipList fs <*> ZipList xs = ZipList (zipWith (\f x -> f x) fs xs)
+
+-- 因为 ZipList 不是 Show 的实例，因此需要用 getZipList 从中取出原生的列表
+getZipList $ (+) <$> ZipList [1, 2, 3] <*> ZipList [100, 100, 100, 100]
+-- [101, 102, 103]
+
+getZipList $ (,,) <$> ZipList "ab" <*> ZipList "cd" <*> ZipList "ef"
+[('a', 'c', 'e'), ('b', 'd', 'f')]
+-- (,,) 函数等同于 \x y z -> (x, y, z)
+-- 类似的，(,) 等同于 \x y -> (x, y)
+```
+
+##### 函数函子
 
 ```haskell
 instance Applicative ((->) r) where
@@ -1270,6 +1305,181 @@ instance Applicative ((->) r) where
 -- 2. (+3) <*> (*100) $ 5 = (+3) 5 ((*100) 5) = 8 500
 -- 3. (+) <$> (+3) <*> (*100) $ 5 = 把 + 作用在得到的结果上，即 508
 ```
+
+##### `applicative`的实用函数
+
+```haskell
+-- 在两个 applicative 之间应用普通函数
+liftA2 :: (Applicative f) => (a -> b -> c) -> f a -> f b -> f c
+listA2 f a b = f <$> a <*> b
+
+listA (:) (Just 3) (Just [4]) -- Just [3, 4]
+```
+
+### `newtype`
+
+> 高达里的新人类（大雾）
+
+通过`newtype`关键字可以根据现有数据类型来创建新的类型：接收一个类型，然后包裹成另一个类型
+
+可以对`newtype`使用`deriving`关键字，但要求被包裹的类型已经是派生的类型类的实例
+
+```haskell
+-- 创建一个 CharList newtype
+newtype CharList = CharList { getCharList :: [Char] } deriving (Eq, Show)
+
+CharList "this is test"
+-- CharList {getCharList = "this is test"}
+CharList "test" == CharList "test" -- True
+```
+
+```haskell
+-- 用 newtype 创建类型类的实例
+-- 对于 Functor 类型类而言，只接收一个参数的类型构造器可以成为其实例，例如 Maybe
+-- instance Functor Maybe where
+-- 但是对于多参数的类型，比如二元组 (a, b)，则无法直接成为 Functor 实例，可以先用 newtype 创建一个新类型
+newtype Tuple a b = Tuple { getTuple :: (a, b) }
+
+-- 然后另其成为 Functor 的实例
+-- 让一个作用在二元组上的函数仅作用在第二个元素上
+instance Functor (Tuple a) where
+  fmap f (Tuple (x, y)) = Tuple (f x, y)
+
+getTuple $ fmap (*100) (Tuple (1, 2)) -- (1, 200)
+```
+
+`newtype`把一个已有的类型转换为新的类型，因此在 Haskell 内部，新、旧类型的值是一样的。
+
+关于`type`/`newtype`/`data`的对比：
+
+- `type`用于创建类型别名，即仅仅赋予一个新的名称
+- `newtype`将已有类型包裹成新的类型
+- `data`则用于创建全新的类型
+
+### `Monoid`类型类
+
+#### 什么是`Monoid`
+
+- [什么是 Monoid？](http://www.jdon.com/idea/monoid.html)
+
+`Monoid`是类型类。一个`monoid`由一个满足结合律的二元函数和一个单位元组成。
+
+- 结合律：`(a b) c` = `a (b c)`
+- 单位元：一个值被称为某函数的单位元，是指当它和函数的其他参数作用时，结果总是返回其他参数。例如，`*`运算的单位元是`1`，`:`运算的单位元是`[]`
+
+```haskell
+class Monoid m where
+  mempty :: m
+  mappend :: m -> m -> m
+  mconcat :: [m] -> m
+  mconcat :: foldr mappend mempty
+```
+
+`monoid`定律：
+
+- mempty `mappend` x = x
+- x `mappend` mempty = x
+- (x `mappend` y) `mappend` z = x `mappend` (y `mappend` z)
+
+#### `Monoid`的一些实例
+
+##### 列表
+
+```haskell
+instance Monoid [a] where
+  mempty = []
+  mappend = (++)
+
+-- 注：instance Monoid [a] where 中使用 [a] 而不是 []
+-- [] 是类型构造器
+-- [a] 是类型 --> 具体含有某种类型的元素的列表
+
+[1, 2] `mappend` [3, 4] -- [1, 2, 3, 4]
+-- monoid 没有要求 a `mappend` b = b `mappend` a
+```
+
+##### `Product`和`Sum`
+
+把`Num`看成`monoid`有两种方式：
+
+1. 二元函数为乘法`*`，且单位元为`1`
+2. 二元函数为加法`+`，且单位元为`0`
+
+**当有多种方式把一个类型变成某个类型类的实例时，可以把那个类型包裹到 newtype 里，然后把新的类型变成那个类型类的实例。**
+
+因此，为了把`Num`变成`Monoid`类型类的实例，且支持上述两种`monoid`，在`Data.Monoid`模块里导出了两个`newtype`：`Product`和`Sum`：
+
+```haskell
+newtype Product a = Product { getProduct: a } deriving (Eq, Ord, Read, Show, Bounded)
+newtype Sum a = Sum { getSum: a } deriving (Eq, Ord, Read, Show, Bounded)
+```
+
+两个新类型的`Monoid`实例定义如下：
+
+```haskell
+instance Num a => Monoid (Product a) where
+  mempty = Product 1
+  Product x `mappend` Product y = Product (x * y)
+
+instance Num a => Monoid (Sum a) where
+  mempty = Sum 0
+  Sum x `mappend` Sum y = Sum (x + y)
+```
+
+```haskell
+getProduct $ (Product 3) `mappend` (Product 9) -- 27
+getSum $ (Sum 3) `mappend` (Sum 4) -- 7
+```
+
+##### `All`和`Any`
+
+把`Bool`看成`monoid`有两种方式：
+
+1. 二元函数为`||`，单位元为`False`
+2. 二元函数为`&&`，单位元为`True`
+
+因此，为了把`Bool`变成`Monoid`类型类的实例，且支持上述两种`monoid`，在`Data.Monoid`模块里导出了两个`newtype`：`Any`和`All`：
+
+```haskell
+newtype Any = Any { getAny :: Bool } deriving (Eq, Ord, Read, Show, Bounded)
+newtype All = All { getAll :: Bool } deriving (Eq, Ord, Read, Show, Bounded)
+```
+
+实例定义如下：
+
+```haskell
+instance Monoid Any where
+  mempty = Any False
+  Any x `mappend` Any y = Any (x || y)
+
+instance Monoid All where
+  menpty = All True
+  All x `mappend` All y = All (x && y)
+```
+
+```haskell
+getAny $ Any True `mappend` Any False -- True
+getAll $ All True `mappend` All False -- False
+```
+
+##### `Maybe`
+
+```haskell
+-- 具有类约束，a 必须是 Monoid 的实例
+instance Monoid a => Monoid (Maybe a) where
+  mempty = Nothing
+  Nothing `mappend` m = m
+  m `mappend` Nothing = m
+  (Just m) `mappend` (Just n) = Just (m `mappend` n)
+
+Nothing `mappend` (Just 1) -- Just 1
+```
+
+### `Monad`
+
+> A monad is just a monoid in the category of endofunctors, what's the problem?
+
+- [什么是 Monad？](http://www.jdon.com/idea/monad.html)
 
 ### 输入和输出
 
