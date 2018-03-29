@@ -70,6 +70,14 @@
       - [`All`和`Any`](#all%E5%92%8Cany)
       - [`Maybe`](#maybe)
   - [`Monad`](#monad)
+    - [回顾函子](#%E5%9B%9E%E9%A1%BE%E5%87%BD%E5%AD%90)
+    - [`Monad`类型类](#monad%E7%B1%BB%E5%9E%8B%E7%B1%BB)
+    - [`Maybe`的`Monad`实例](#maybe%E7%9A%84monad%E5%AE%9E%E4%BE%8B)
+    - [列表的`Monad`实例](#%E5%88%97%E8%A1%A8%E7%9A%84monad%E5%AE%9E%E4%BE%8B)
+    - [`monad`定律](#monad%E5%AE%9A%E5%BE%8B)
+      - [左单位元](#%E5%B7%A6%E5%8D%95%E4%BD%8D%E5%85%83)
+      - [右单位元](#%E5%8F%B3%E5%8D%95%E4%BD%8D%E5%85%83)
+      - [结合律](#%E7%BB%93%E5%90%88%E5%BE%8B)
   - [输入和输出](#%E8%BE%93%E5%85%A5%E5%92%8C%E8%BE%93%E5%87%BA)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -1264,7 +1272,7 @@ instance Applicative [] where
   pure x = [x]
   fs <*> xs = [f x | f <- fs, x <- xs] -- 两个列表组成的列表推导式
 
--- fs <*> xs = [f x | f <- fs, x <- xs]
+-- fs <*> xs = [f x | f 4 fs, x <- xs]
 -- 以一个函数列表和普通列表为参数，将两者内的元素进行组合
 [(*0), (*2), (^2)] <*> [1, 3] -- [0, 0, 2, 6, 1, 9]
 ```
@@ -1480,6 +1488,124 @@ Nothing `mappend` (Just 1) -- Just 1
 > A monad is just a monoid in the category of endofunctors, what's the problem?
 
 - [什么是 Monad？](http://www.jdon.com/idea/monad.html)
+
+#### 回顾函子
+
+对于普通函子而言，解决了这样一类问题：有一个类型为`a -> b`的函数和某个类型为`f a`的数据，把函数映射到数据上得到`f b`
+
+```haskell
+fmap :: (Functor f) => (a -> b) -> f a -> f b
+```
+
+而`applicative`函子则解决了这样的问题：有类型为`f (a -> b)`的函数和类型为`f a`的数据，把数据作用到函数上得到`f b`
+
+```haskell
+(<*>) :: (Applicative f) => f (a -> b) -> f a -> f b
+```
+
+而`monad`则是对`applicative`函子概念的延伸，它是为了解决这样的问题：如果有带着上下文的值`m a`，和一个函数`a -> m b`，把值作用到函数上得到`m b`。即把参数的值从上下文中抽离出来后作用在函数上返回一个新的带有上下文的数据。
+
+```haskell
+(>>=) :: (Monad m) => m a -> (a -> m b) -> m b
+```
+
+#### `Monad`类型类
+
+```haskell
+class Monad m where
+  return :: a -> m a -- 类似于 applicative 函子中的 pure
+  (>>=) :: m a -> (a -> mb) -> m b
+
+  (>>) :: m a -> m b -> m b
+  x >> y = x >>= \_ -> y -- >> 方法总是会忽略左边的参数
+
+  fail :: String -> m a
+  fail msg = error msg
+```
+
+#### `Maybe`的`Monad`实例
+
+```haskell
+instance Monad Maybe where
+  return x = Just x
+  Nothing >>= f = Nothing
+  Just x >>= f = f x
+  fail _ = Nothing
+```
+
+```haskell
+return "WHAT" :: Maybe String
+-- Just "WHAT"
+
+Just 9 >>= \x -> return (x*10)
+-- Just 90
+
+Nothing >>= \x -> return (x*10)
+-- Nothing
+
+Just 4 >> Just 3
+-- Just 3
+```
+
+#### 列表的`Monad`实例
+
+```haskell
+instance Monad [] where
+  return x = [x]
+  xs >>= f = concat (map f xs)
+  fail _ = []
+
+-- concat 用来展平列表
+:t concat
+-- concat :: Foldable t => t [a] -> [a]
+concat [[1], [2], [3, 4]]
+-- [1, 2, 3, 4]
+```
+
+```haskell
+[3, 4, 5] >>= \x -> [x, -x]
+-- [3, -3, 4, -4, 5, -5]
+
+[1, 2] >>= \n -> ['a', 'b'] >>= \ch -> return (n, ch)
+-- [1, 2] 中的各个元素被绑定到 n
+-- ['a', 'b' 中的各个元素被绑定到 ch]
+-- 对于 [1, 2] 中的每个元素，遍历 ['a', 'b'] 组合成一个二元组 (n, ch)
+-- [(1, 'a'), (1, 'b'), (2, 'a'), (2, 'b')]
+-- 其作用相当于列表推导式：[(n, ch) | n <- [1, 2], ch <- ['a', 'b']]
+
+-- 用 do 语法改写
+listOfTuples :: [(Int, Char)]
+listOfTuples = do
+  n <- [1, 2]
+  ch <- ['a', 'b']
+  return (n, ch)
+```
+
+#### `monad`定律
+
+##### 左单位元
+
+```haskell
+return x >>= f == f x
+
+return "ab" >>= \x -> [x, x]
+-- ["ab", "ab"]
+```
+
+##### 右单位元
+
+```haskell
+m >>= return == m
+
+"ab" >>= return
+-- "ab"
+```
+
+##### 结合律
+
+```haskell
+(m >>= f) >>= g == m >>= (\x -> f x >>= g)
+```
 
 ### 输入和输出
 
