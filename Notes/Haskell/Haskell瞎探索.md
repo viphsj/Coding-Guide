@@ -19,6 +19,7 @@
     - [`where`](#where)
     - [`let`](#let)
     - [`case`](#case)
+    - [优先级](#%E4%BC%98%E5%85%88%E7%BA%A7)
   - [递归](#%E9%80%92%E5%BD%92)
     - [用递归实现 Haskell 中的自带函数](#%E7%94%A8%E9%80%92%E5%BD%92%E5%AE%9E%E7%8E%B0-haskell-%E4%B8%AD%E7%9A%84%E8%87%AA%E5%B8%A6%E5%87%BD%E6%95%B0)
     - [用递归实现快速排序](#%E7%94%A8%E9%80%92%E5%BD%92%E5%AE%9E%E7%8E%B0%E5%BF%AB%E9%80%9F%E6%8E%92%E5%BA%8F)
@@ -40,6 +41,7 @@
       - [`Data.List`模块](#datalist%E6%A8%A1%E5%9D%97)
       - [`Data.Char`模块](#datachar%E6%A8%A1%E5%9D%97)
       - [`Data.Map`模块](#datamap%E6%A8%A1%E5%9D%97)
+      - [`Data.Set`模块](#dataset%E6%A8%A1%E5%9D%97)
   - [类型和类型类](#%E7%B1%BB%E5%9E%8B%E5%92%8C%E7%B1%BB%E5%9E%8B%E7%B1%BB)
     - [自定义类型和值构造器](#%E8%87%AA%E5%AE%9A%E4%B9%89%E7%B1%BB%E5%9E%8B%E5%92%8C%E5%80%BC%E6%9E%84%E9%80%A0%E5%99%A8)
     - [值构造器的记录语法](#%E5%80%BC%E6%9E%84%E9%80%A0%E5%99%A8%E7%9A%84%E8%AE%B0%E5%BD%95%E8%AF%AD%E6%B3%95)
@@ -107,10 +109,13 @@ Haskell 是一门纯函数式编程语言。
   + 加
   - 减
   * 乘
-  / 除
+  / 除 -- 默认除法返回浮点数
   == 相等
   /= 不等
+  div/quot 整除
+  mod/rem 求余
 -}
+-- Exact difference between div and quot: https://stackoverflow.com/questions/24149832/exact-difference-between-div-and-quot
 5 * (-1)
 ```
 
@@ -121,6 +126,18 @@ Haskell 中的 if 语句里，else 部分不可省略。在 Haskell 里，if 语
 - 列表，字符，字符串
 
 字符串实质上是字符组成的列表，且字符串只能用双引号`""`表示，而字符则用单引号`''`表示
+
+```haskell
+-- 字符串处理函数
+
+-- lines 将字符串用 \n 分割
+-- unlines 将字符串组成的列表用 \n 合并
+lines "123\n456" -- ["123", "456"]
+
+-- words 将字符串用空格分割
+-- unwords 将字符串组成的列表用空格连接
+words "123 456" -- ["123", "456"]
+```
 
 ### 列表
 
@@ -163,6 +180,8 @@ last [1, 2, 3] -- 3
 init [1, 2, 3] -- [1, 2]
 
 -- 获取列表长度 length
+:t length -- [a] -> Int
+-- 返回的长度不是任意精度的整数，而是 Int 类型，因此，如果处理过长的列表，不应使用 length，而是 Data.List.genericLength
 length [1, 2, 3] -- 3
 
 -- 检查列表是否为空 null
@@ -176,9 +195,15 @@ reverse [1, 2, 3] -- [3, 2, 1]
 -- 如果 N 超过列表长度，则返回原列表的复制（纯函数，因此不会返回原列表，而是原列表的拷贝）
 take 2 [1, 2, 3] -- [1, 2]
 
+-- takeWhile 给定一个条件，从列表头部开始取出元素，直到不符合条件为止
+:t takeWhile -- takeWhile :: (a -> Bool) -> [a] -> [a]
+takeWhile (>0) [1, 2, -1] -- [1, 2]
+
 -- 删除列表中指定的前 N 个元素 drop
 -- 返回的是删除了前 N 个元素的新列表，不会修改原列表
 drop 2 [1, 2, 3] -- [3]
+
+-- dropWhile 需要指定条件版的 drop
 
 -- 获取列表中最大值/最小值 maximum/minimum
 maximum [1, 2, 3] -- 3
@@ -191,6 +216,40 @@ product [1, 2, 3, 4] -- 24
 -- 判断某个元素是否包含在列表里 elem
 elem 2 [1, 2, 3] -- True
 4 `elem` [1, 2, 3] -- False
+
+-- 相反的，判断一个元素不在列表里，使用 notElem
+notElem 2 [1, 3] -- True
+
+-- span/break 将列表根据条件分割成两个列表，放在一个二元组里
+:t span -- or :t break
+span :: (a -> Bool) -> [a] -> ([a], [a])
+-- 对于 span 而言，给定一个条件，从左到右遍历列表，当遇见第一个不符合条件的值时停止遍历，并从当前位置进行分割；而对于 break 而言，则是遍历到第一个符合条件的位置后进行分割
+span even [2, 4, 6, 7, 8] -- ([2, 4, 6], [7, 8])
+
+-- splitAt 在指定位置上分割列表，返回二元组
+splitAt 5 "Hello World"
+-- ("Hello", "World")
+
+-- and/or
+-- 把列表中所有的布尔值用 &&/|| 连接起来
+and [True, True, False]
+
+-- iterate 将第一个参数中的函数应用到第二个参数上，并将结果重复应用到函数上，形成无限长的列表
+:t iterate -- iterate :: (a -> a) -> a -> [a]
+take 10 $ iterate (+3) 1
+-- [1,4,7,10,13,16,19,22,25,28]
+
+-- until 迭代的生成数据，直至满足给定的条件为止
+:t until -- until :: (a -> Bool) -> (a -> a) -> a -> a
+until (>10) (+2) 0 -- 12
+
+-- concat 将一个列表中的列表相连接 [[a]] -> [a]
+concat [[1], [2]] -- [1, 2]
+
+-- concatMap 先对列表进行 map，然后再 concat
+:t concatMap -- concatMap :: Foldable t => (a -> [b]) -> t a -> [b]
+map (replicate 3) [1, 2, 3] -- [[1, 1, 1], [2, 2, 2], [3, 3, 3]]
+concatMap (replicate 3) [1, 2, 3] -- [1, 1, 1, 2, 2, 2, 3, 3, 3]
 ```
 
 #### 区间
@@ -475,7 +534,7 @@ let a = 1; b = 2 in a * b -- 2
 
 #### `case`
 
-函数定义中的模式匹配本质上就是`case`表达式的语法糖
+函数定义中的模式匹配本质上就是`case`表达式的语法糖。不需要使用`break`关键字，匹配到之后自动退出后续匹配
 
 ```haskell
 {-
@@ -493,6 +552,18 @@ listLength [] -- "List length is empty"
 listLength [1] -- "List length is a singleton list"
 listLength [1, 2] -- "List length is a longer list"
 ```
+
+`case..of`和模式匹配是对于类型值不同形式的分析，而哨卫和`if..then..else..`则是对参数的条件讨论的表达式。
+
+#### 优先级
+
+运算符可能有三种属性：优先级、结合性、位置。
+
+- 优先级：运算符号共有 0~9 总共 10 个优先级
+- 结合性：左结合、右结合、无结合
+- 位置：前缀、中缀、后缀
+
+函数默认有着最高的优先级，且左结合，即`f j g == (f g) h`
 
 ### 递归
 
@@ -817,8 +888,12 @@ List.words "these are words"
 ["these", "are", "words"]
 
 -- List.group 函数，将列表中相邻且相同的元素分到子列表里
+:t List.group
+-- List.group :: Eq a => [a] -> [[a]]
 List.group [0, 0, 1, 1, 1, 2]
-[[0, 0], [1, 1, 1], [2]]
+-- [[0, 0], [1, 1, 1], [2]]
+List.group "hello"
+-- ["h", "e", "ll", "o"]
 
 -- List.sort 以可排序的元素组成的列表为参数，返回从小到大排序的结果
 List.sort [4, 3, 2, 5, 0]
@@ -831,16 +906,41 @@ List.tails "hello"
 List.tails [1, 2, 3]
 [[1, 2, 3], [2, 3], [3], []]
 
--- List.isPrefixOf 判断一个列表是否是另一个列表的开头
-List.isPrefixOf [1, 2] [1, 2, 3]
-True
+-- List.isPrefixOf 判断一个列表是否是另一个列表的前缀
+List.isPrefixOf [1, 2] [1, 2, 3] -- True
+List.isPrefixOf "he" "hello" -- True
 
-List.isPrefixOf "he" "hello"
-True
+-- List.isSuffixOf 判断一个列表是否是另一个列表的后缀
+List.isSuffixOf [1, 2] [1, 2, 3] -- False
+List.isSuffixOf "lo" "hello" -- True
+
+-- List.isInfixOf 判断一个 String 是否是另一个 String 的 中缀
+:t isInfixOf -- isInfixOf :: Eq a => [a] -> [a] -> Bool
+isInfixOf "abc" "1abc2" -- True
+isInfixOf "abc" "1absc2" -- False
 
 -- List.any 以一个限制条件和一个列表为参数，判断列表中是否存在元素满足该限制条件
 List.any (\x -> x > 0) [-1, -2, 0, 1]
 True
+
+-- List.\\ 求两个列表的差集（第一个列表减去第二个列表）
+(List.\\) :: Eq a => [a] -> [a] -> [a]
+[1, 2, 3, 4] List.\\ [1, 2, 3] -- [4]
+[1, 2, 3] List.\\ [1, 2, 3, 4] -- []
+
+-- List.nub 列表去重
+:t List.nub -- List.nub :: Eq a => [a] -> [a]
+List.nub [1, 1, 2, 3] -- [1, 2, 3]
+
+-- List.findIndex 返回第一个满足条件的元素的位置
+:t List.findIndex -- List.findIndex :: (a -> Bool) -> [a] -> Maybe Int
+List.findIndex (>0) [0, 1, 2] -- Just 1
+List.findIndex (>0) [0, -1, -2] -- Nothing
+
+-- List.findIndices 返回所有满足条件的元素的索引
+:t List.findIndices -- List.findIndices :: (a -> Bool) -> [a] -> [Int]
+List.findIndices (>0) [0, 1, 2] -- [1, 2]
+List.findIndices (>0) [0, -1, -2] -- []
 ```
 
 ---
@@ -934,6 +1034,18 @@ Map.size map -- 2
 -- Map.map 取一个函数和映射为参数，将函数应用到映射键值对的每个值上，返回新的映射
 -- :t Map.map
 Map.map :: (a -> b) -> Map.Map k a -> Map.Map k b
+```
+
+##### `Data.Set`模块
+
+```haskell
+import qualified Data.Set as Set
+
+-- 将数组转为 Set
+Set.fromList [1, 2, 3, 4, 4] -- fromList [1, 2, 3, 4]
+
+-- 将 Set 转为 List
+Set.elems $ Set.fromList [1, 2, 3, 4, 4] -- [1, 2, 3, 4]
 ```
 
 ### 类型和类型类
