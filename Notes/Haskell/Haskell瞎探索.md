@@ -92,6 +92,8 @@ Haskell 是一门纯函数式编程语言。
 
 - Haskell 是**惰性**的。若非指明，在需要结果之前，Haskell 不会执行函数。它会尽量推迟计算、执行最少的计算，直到你需要的数据为止
 - Haskell 是**静态类型，并支持类型推导**。因此，不必要每次都手动表明变量的类型
+- Haskell 里面没有`for`或者`while`这样的循环，而是用递归代替迭代
+- [Why doesn't Haskell have loops (e.g. for or while)?](https://www.quora.com/Why-doesnt-Haskell-have-loops-e-g-for-or-while)
 
 ### 基础
 
@@ -122,6 +124,10 @@ Haskell 是一门纯函数式编程语言。
 - if,else
 
 Haskell 中的 if 语句里，else 部分不可省略。在 Haskell 里，if 语句是一个必然返回结果的表达式，而非语句
+
+```haskell
+haskell = if 1 == 1 then "awesome" else "awful" -- haskell = "awesome"
+```
 
 - 列表，字符，字符串
 
@@ -941,6 +947,14 @@ List.findIndex (>0) [0, -1, -2] -- Nothing
 :t List.findIndices -- List.findIndices :: (a -> Bool) -> [a] -> [Int]
 List.findIndices (>0) [0, 1, 2] -- [1, 2]
 List.findIndices (>0) [0, -1, -2] -- []
+
+{-
+----- Data.List.Split 模块 -----
+https://hackage.haskell.org/package/split-0.2.3.3/docs/Data-List-Split.html
+-}
+
+-- splitOn 方法，根据指定字符分割字符串
+splitOn " " "   1" -- ["", "", "", "1"]
 ```
 
 ---
@@ -989,6 +1003,10 @@ Char.digitToInt 'F' -- 15
 -- Char.isDigit 以一个字符为参数，判断是否是数字
 Char.isDigit 'a' -- False
 Char.isDigit '1' -- True
+
+-- 将字符转为大写
+-- Char.toUpper
+Char.toUpper 'a' -- A
 ```
 
 ##### `Data.Map`模块
@@ -1023,6 +1041,10 @@ Map.lookup 'a' map
 Map.lookup 'c' map
 -- Nothing
 
+-- Map.! 以一个键和 Map.Map 为参数，查找映射中该键对应的值
+-- 如果查找到键，则直接返回值（不是 Maybe），但如果键不存在则抛出错误
+(Map.!) map 'key'
+
 -- Map.insert 插入键值对，返回新的映射
 newMap = Map.insert 'c' 9 map
 map -- fromList [('a', 2), ('b', 2)]
@@ -1046,6 +1068,15 @@ Set.fromList [1, 2, 3, 4, 4] -- fromList [1, 2, 3, 4]
 
 -- 将 Set 转为 List
 Set.elems $ Set.fromList [1, 2, 3, 4, 4] -- [1, 2, 3, 4]
+
+-- 检查元素是否存在于 Set 内
+Set.member a set
+
+-- 检查元素是否不存在于 Set 内
+Set.notMember a set
+
+-- 检查 Set 是否为空
+Set.empty set
 ```
 
 ### 类型和类型类

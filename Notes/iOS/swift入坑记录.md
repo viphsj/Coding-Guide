@@ -582,7 +582,7 @@ reversedNames = names.sorted { $0 > $1 }
 
 - [How to use Swift @autoclosure](https://stackoverflow.com/questions/24102617/how-to-use-swift-autoclosure)
 
-使用`@autoclosure`后可以省略
+使用`@autoclosure`后，在使用匿名函数时，可以省略`{}`
 
 ```Swift
 func f(pred: () -> Bool) {

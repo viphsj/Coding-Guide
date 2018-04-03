@@ -46,6 +46,7 @@ $ pip3 install -U lxml
 
 ```python
 from lxml import etree
+
 text = '''
 <div>
 	 <ul>
@@ -57,6 +58,7 @@ text = '''
 	</ul>
 </div>
 '''
+
 html = etree.HTML(text)
 # 匹配到所有的 li
 for li in html.xpath('//li'):
