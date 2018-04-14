@@ -24,9 +24,10 @@
     - [用递归实现 Haskell 中的自带函数](#%E7%94%A8%E9%80%92%E5%BD%92%E5%AE%9E%E7%8E%B0-haskell-%E4%B8%AD%E7%9A%84%E8%87%AA%E5%B8%A6%E5%87%BD%E6%95%B0)
     - [用递归实现快速排序](#%E7%94%A8%E9%80%92%E5%BD%92%E5%AE%9E%E7%8E%B0%E5%BF%AB%E9%80%9F%E6%8E%92%E5%BA%8F)
   - [高阶函数](#%E9%AB%98%E9%98%B6%E5%87%BD%E6%95%B0)
-    - [柯里化](#%E6%9F%AF%E9%87%8C%E5%8C%96)
+    - [柯里化`curry`](#%E6%9F%AF%E9%87%8C%E5%8C%96curry)
       - [多元函数的本质](#%E5%A4%9A%E5%85%83%E5%87%BD%E6%95%B0%E7%9A%84%E6%9C%AC%E8%B4%A8)
       - [柯里化的截断](#%E6%9F%AF%E9%87%8C%E5%8C%96%E7%9A%84%E6%88%AA%E6%96%AD)
+    - [`uncurry`和`curry`](#uncurry%E5%92%8Ccurry)
     - [高阶函数](#%E9%AB%98%E9%98%B6%E5%87%BD%E6%95%B0-1)
     - [匿名函数](#%E5%8C%BF%E5%90%8D%E5%87%BD%E6%95%B0)
     - [折叠函数](#%E6%8A%98%E5%8F%A0%E5%87%BD%E6%95%B0)
@@ -42,6 +43,7 @@
       - [`Data.Char`模块](#datachar%E6%A8%A1%E5%9D%97)
       - [`Data.Map`模块](#datamap%E6%A8%A1%E5%9D%97)
       - [`Data.Set`模块](#dataset%E6%A8%A1%E5%9D%97)
+      - [`Data.Array`模块](#dataarray%E6%A8%A1%E5%9D%97)
   - [类型和类型类](#%E7%B1%BB%E5%9E%8B%E5%92%8C%E7%B1%BB%E5%9E%8B%E7%B1%BB)
     - [自定义类型和值构造器](#%E8%87%AA%E5%AE%9A%E4%B9%89%E7%B1%BB%E5%9E%8B%E5%92%8C%E5%80%BC%E6%9E%84%E9%80%A0%E5%99%A8)
     - [值构造器的记录语法](#%E5%80%BC%E6%9E%84%E9%80%A0%E5%99%A8%E7%9A%84%E8%AE%B0%E5%BD%95%E8%AF%AD%E6%B3%95)
@@ -52,6 +54,7 @@
     - [类型类](#%E7%B1%BB%E5%9E%8B%E7%B1%BB-1)
       - [`Eq`类型类](#eq%E7%B1%BB%E5%9E%8B%E7%B1%BB)
       - [`Functor`类型类](#functor%E7%B1%BB%E5%9E%8B%E7%B1%BB)
+      - [`Show`类型类](#show%E7%B1%BB%E5%9E%8B%E7%B1%BB)
   - [函子](#%E5%87%BD%E5%AD%90)
     - [普通函子](#%E6%99%AE%E9%80%9A%E5%87%BD%E5%AD%90)
       - [函数类型的函子值](#%E5%87%BD%E6%95%B0%E7%B1%BB%E5%9E%8B%E7%9A%84%E5%87%BD%E5%AD%90%E5%80%BC)
@@ -63,6 +66,7 @@
       - [`ZipList`函子](#ziplist%E5%87%BD%E5%AD%90)
       - [函数函子](#%E5%87%BD%E6%95%B0%E5%87%BD%E5%AD%90)
       - [`applicative`的实用函数](#applicative%E7%9A%84%E5%AE%9E%E7%94%A8%E5%87%BD%E6%95%B0)
+      - [`applicative`函子定律](#applicative%E5%87%BD%E5%AD%90%E5%AE%9A%E5%BE%8B)
   - [`newtype`](#newtype)
   - [`Monoid`类型类](#monoid%E7%B1%BB%E5%9E%8B%E7%B1%BB)
     - [什么是`Monoid`](#%E4%BB%80%E4%B9%88%E6%98%AFmonoid)
@@ -75,6 +79,7 @@
     - [回顾函子](#%E5%9B%9E%E9%A1%BE%E5%87%BD%E5%AD%90)
     - [`Monad`类型类](#monad%E7%B1%BB%E5%9E%8B%E7%B1%BB)
     - [`Maybe`的`Monad`实例](#maybe%E7%9A%84monad%E5%AE%9E%E4%BE%8B)
+    - [`do`记法](#do%E8%AE%B0%E6%B3%95)
     - [列表的`Monad`实例](#%E5%88%97%E8%A1%A8%E7%9A%84monad%E5%AE%9E%E4%BE%8B)
     - [`monad`定律](#monad%E5%AE%9A%E5%BE%8B)
       - [左单位元](#%E5%B7%A6%E5%8D%95%E4%BD%8D%E5%85%83)
@@ -119,6 +124,13 @@ Haskell 是一门纯函数式编程语言。
 -}
 -- Exact difference between div and quot: https://stackoverflow.com/questions/24149832/exact-difference-between-div-and-quot
 5 * (-1)
+
+-- even 判断一个数是否是偶数
+-- odd 判断一个数是否是奇数
+
+-- until 迭代的生成数据，直至满足给定的条件为止，否则无限循环
+:t until -- until :: (a -> Bool) -> (a -> a) -> a -> a
+until (>10) (+2) 0 -- 12
 ```
 
 - if,else
@@ -229,12 +241,15 @@ notElem 2 [1, 3] -- True
 -- span/break 将列表根据条件分割成两个列表，放在一个二元组里
 :t span -- or :t break
 span :: (a -> Bool) -> [a] -> ([a], [a])
--- 对于 span 而言，给定一个条件，从左到右遍历列表，当遇见第一个不符合条件的值时停止遍历，并从当前位置进行分割；而对于 break 而言，则是遍历到第一个符合条件的位置后进行分割
+-- 对于 span 而言，给定一个条件，从左到右遍历列表，当遇见第一个不符合条件的值时停止遍历，并从当前位置进行分割；
+-- 而对于 break 而言，则是遍历到第一个符合条件的位置后进行分割
 span even [2, 4, 6, 7, 8] -- ([2, 4, 6], [7, 8])
 
 -- splitAt 在指定位置上分割列表，返回二元组
 splitAt 5 "Hello World"
 -- ("Hello", "World")
+splitAt 2 [0,1,2,3,4]
+-- ([0, 1], [2, 3, 4])
 
 -- and/or
 -- 把列表中所有的布尔值用 &&/|| 连接起来
@@ -244,10 +259,6 @@ and [True, True, False]
 :t iterate -- iterate :: (a -> a) -> a -> [a]
 take 10 $ iterate (+3) 1
 -- [1,4,7,10,13,16,19,22,25,28]
-
--- until 迭代的生成数据，直至满足给定的条件为止
-:t until -- until :: (a -> Bool) -> (a -> a) -> a -> a
-until (>10) (+2) 0 -- 12
 
 -- concat 将一个列表中的列表相连接 [[a]] -> [a]
 concat [[1], [2]] -- [1, 2]
@@ -335,12 +346,19 @@ zip [1..] ['a', 'b'] -- [(1, 'a'), (2, 'b')]
 #### 常见类型
 
 - `Int` 整数，有边界（bounded）
-- `Integer` 整数，无边界，销量比`Int`低
+- `Integer` 整数，无边界，开销比`Int`低
 - `Float` 单精度浮点数
 - `Double` 双精度浮点数
 - `Bool`
 - `Char` 一个 Unicode 字符
 - 元组类型 - 由元组长度和内部数据类型决定
+
+`Integer`和`Int`是`Integral`的实例
+
+- [Haskell Convert Integer to Int?](https://stackoverflow.com/questions/7964766/haskell-convert-integer-to-int)
+- [Converting numbers](https://wiki.haskell.org/Converting_numbers)
+- [Haskell Int and Integer](https://stackoverflow.com/questions/3429291/haskell-int-and-integer)
+
 
 类型的首字母必然大写
 
@@ -405,6 +423,7 @@ compare 5 3
 `Show`类型类的实例为可以表示为字符串的类型
 
 ```haskell
+-- convert Int to String
 show 3 -- "3"
 ```
 
@@ -416,6 +435,11 @@ show 3 -- "3"
 [LT..GT] -- [LT, EQ, GT]
 [1..3] -- [1, 2, 3]
 ['a'..'c'] -- ['a', 'b', 'c']
+```
+
+```haskell
+succ 'a' -- 'b'
+pred 2 -- 1
 ```
 
 - `Num`类型类
@@ -573,6 +597,8 @@ listLength [1, 2] -- "List length is a longer list"
 
 ### 递归
 
+- [Haskell/递归](https://zh.wikibooks.org/wiki/Haskell/%E9%80%92%E5%BD%92)
+
 #### 用递归实现 Haskell 中的自带函数
 
 ```haskell
@@ -638,7 +664,7 @@ quickSort [5,2,3,5,7,1,0,9] -- [0,1,2,3,5,5,7,9]
 
 ### 高阶函数
 
-#### 柯里化
+#### 柯里化`curry`
 
 ##### 多元函数的本质
 
@@ -673,6 +699,31 @@ let multThree' = (multTree 1 2)
 -- 之后再进行调用
 multThree' 3 -- 6
 multThree' 4 -- 7
+```
+
+#### `uncurry`和`curry`
+
+对于柯里化，举例而言，`(a -> b) -> c`可转换为`a -> b -> c`，简单来说即一个接受两个参数的函数，可以拆分成两个接受一个参数的函数。而反柯里化则直接逆反该过程：将多个接受一个参数的函数转为一个接受多参数的函数。
+
+Haskell 标准函数库中有一个`uncurry`方法，虽然不是严格意义上的反柯里化，但也借助了其思想：
+
+```haskell
+:t uncurry
+uncurry :: (a -> b -> c) -> (a, b) -> c
+
+-- 由函数类型可知，uncurry 函数可将一个接受两个参数的函数，转为接受一个二元组的函数
+product' = uncurry (*)
+product' (2,3) -- 6
+```
+
+同理，其`curry`方法则将一个接受二元组的函数转为一个接受两个参数的函数：
+
+```haskell
+:t curry
+curry :: ((a, b) -> c) -> a -> b -> c
+
+product'' = curry product'
+product'' 3 4 -- 12
 ```
 
 #### 高阶函数
@@ -744,9 +795,32 @@ lambda (2, 3, 4) -- error Couldn't match expected type ‘(a, a)’
 foldl :: Foldable t => (b -> a -> b) -> b -> t a -> b
 foldr :: Foldable t => (a -> b -> b) -> b -> t a -> b
 
+-- foldl 的实现
+foldl f v [] = v
+foldl f v (x:xs) = foldl f (f v x) xs
+
+-- foldr 的实现
+foldr f v [] = v
+foldr f v (x:xs) = f x (foldr f v xs)
+
 -- 除此以外，还有 foldl1 和 foldr1 函数，它们默认以列表的第一个/最后一个元素作为初始的累加值
 foldl1 :: Foldable t => (a -> a -> a) -> t a -> a
 foldr1 :: Foldable t => (a -> a -> a) -> t a -> a
+
+-- fold 系列函数是类似 reduce 的函数，返回的是最后一步计算得到的结果，同时也有 scanl/scanr 函数，会记录每一步计算产生的中间值
+-- scanl 的实现
+scanl :: (a -> b -> a) -> a -> [b] -> [a]
+scanl f a [] = [a]
+scanl f a (x:xs) = a : scanl f (f a x) xs
+
+scanl (\a b -> a + b) 1 [1,2,3] -- [1,2,4,7]
+
+-- scanr 的实现
+scanr :: (b -> a -> a) -> a -> [b] -> [a]
+scanr f a [] = [a]
+scanr f a (x:xs) = scanr f (f x a) xs ++ [a]
+
+scanr (\a b -> a + b) 1 [1,2,3] -- [7,4,2,1]
 ```
 
 `l/r`两种折叠有一大差别：左折叠无法处理无限列表，而右折叠可以
@@ -908,9 +982,12 @@ List.sort [4, 3, 2, 5, 0]
 -- List.tails 返回一个列表的所有尾部子列表（包含一个空列表）
 List.tails "hello"
 ["hello", "ello", "llo", "lo", "o", ""]
-
 List.tails [1, 2, 3]
-[[1, 2, 3], [2, 3], [3], []]
+-- [[1, 2, 3], [2, 3], [3], []]
+
+-- List.subsequences 返回一个列表的所有组合
+List.subsequences [1, 2, 3]
+-- [[],[1],[2],[1,2],[3],[1,3],[2,3],[1,2,3]]
 
 -- List.isPrefixOf 判断一个列表是否是另一个列表的前缀
 List.isPrefixOf [1, 2] [1, 2, 3] -- True
@@ -947,6 +1024,16 @@ List.findIndex (>0) [0, -1, -2] -- Nothing
 :t List.findIndices -- List.findIndices :: (a -> Bool) -> [a] -> [Int]
 List.findIndices (>0) [0, 1, 2] -- [1, 2]
 List.findIndices (>0) [0, -1, -2] -- []
+
+-- List.intercalate 列表各元素 join
+List.intercalate "," ["1", "2"] -- "1,2"
+List.intercalate [2] [[1], [3]] -- [1,2,3]
+
+-- List.transpose 矩阵转换
+List.transpose [[1, 2], [3, 4]] -- [[1, 3], [2, 4]]
+-- 自己实现 transpose
+transpose [[]] = []
+transpose xss = [x | (x:_) <- xss] : transpose [xs | (_:xs) <- xss]
 
 {-
 ----- Data.List.Split 模块 -----
@@ -1079,7 +1166,17 @@ Set.notMember a set
 Set.empty set
 ```
 
+##### `Data.Array`模块
+
+```haskell
+import qualified Data.Array as Array
+
+-- TODO:
+```
+
 ### 类型和类型类
+
+- [Yet Another Haskell Tutorial/Type advanced](https://en.wikibooks.org/wiki/Yet_Another_Haskell_Tutorial/Type_advanced)
 
 #### 自定义类型和值构造器
 
@@ -1089,7 +1186,20 @@ Set.empty set
 -- Bool 类型的定义
 data Bool = False | True
 -- 等号左侧为类型名称；等号右侧为值构造器，指明了该类型所有可能的值
+
+-- 自定义全新的数据类型
+-- 并另其实现为某些类型类的实例
+data Day = Mon | Tue | Wed | Thu | Fri | Sat | Sun deriving (Show, Eq, Ord, Enum)
+-- Ord 类型类使得 Day 类型的各个值之间可以进行比较
+Mon < Tue -- True
+-- Enum 类型类使其可以被遍历
+[Mon .. Sun] -- [Mon,Tue,Wed,Thu,Fri,Sat,Sun]
+-- 除此以外，还可以通过 succ、pred 获取其后序和前序
+succ Mon -- Tue
+pred Sun -- Sat
 ```
+
+如果一个数据类型`a`是可读的，另一个数据类型`b`也可读，则两者结合的数据类型也是可读的，例如`[Mon]`
 
 可以自定义类型和值构造器，例如，定义一个`Shape`类型，其可能的值有`Circle`和`Rectangle`
 
@@ -1157,7 +1267,7 @@ name Person -- "ecmadao"
 
 #### 类型构造器
 
-使用`data`构造类型时，以类型作为参数产生新的类型
+使用`data`构造类型时，以类型作为参数产生新的类型 - **参数化类型，需要类型参数的类型**
 
 ```haskell
 data Maybe a = Nothing | Just a
@@ -1182,6 +1292,8 @@ data Person a b c = Person a b c
 descOfPerson :: (Show c) => (Person String String c) -> String
 descOfPerson (Person a b c) = "Name: " ++ a ++ ", Job: " ++ b ++ ", Age: " ++ c
 ```
+
+**参数化类型是需要类型参数的类型**
 
 #### 派生实例
 
@@ -1218,7 +1330,9 @@ type IntMap v = Map.Map Int -- 表示从整数到某东西之间的映射关系�
 
 #### 类型类
 
-类型类定义了某些行为，派生了特定类型类的类型，可以实现这些行为。`class`关键字用于定义新的类型类，而`instance`关键字则用于将类型转为某一类型类的实例
+类型类定义了某些行为，派生了特定类型类的类型，可以实现这些行为。**`class`关键字用于定义新的类型类，而`instance`关键字则用于将类型转为某一类型类的实例**
+
+- [Haskell 中的类型类和重载](http://www.cse.chalmers.se/edu/year/2017/course/TDA452/lectures/OverloadingAndTypeClasses.html)
 
 ##### `Eq`类型类
 
@@ -1261,9 +1375,11 @@ instance (Eq m) => Eq (Maybe m) where
 
 `Functor`表示可以映射的事务，又可被称作“函子”。在范畴论中，函子是范畴间的一类映射。在 Haskell 中，凡是拥有容器性质的类型都可以被视为函子，例如列表（可以为空，也可以装某种类型的数据），`Maybe`（可以是`Nothing`，也可以是`Just a`）
 
+**一个类型构造器必须恰好接受一个类型参数，才能成为`Functor`的实例**
+
 ```haskell
 {-
-  定义了一个函数 fmap
+  在 Functor 中，定义了一个函数 fmap
   而其中的 f 则代表一个取一个类型参数的类型构造器，例如 Maybe
   总结而言，fmap 函数取一个参数类型和返回值类型不同的函数，和一个应用到某类型的函子（functor）值作为参数，
   返回一个应用到另一个类型的函子值
@@ -1273,7 +1389,7 @@ class Functor f where
 
 -- map 函数就是一种仅处理列表的 fmap 方法
 :t map
--- map :: (a -> b) -> [a] -> [b]
+map :: (a -> b) -> [a] -> [b]
 
 -- 列表作为 Functor 类型类的实例的实现如下
 instance Functor [] where
@@ -1287,6 +1403,23 @@ instance Functor Maybe where
 -- 由 Maybe 的实现可知，函数可以直接作用在 Maybe 内可能包含的值上，并最终返回一个 Maybe 类型，比如：
 fmap (*2) $ Just 2 -- Just 4
 fmap (*2) Nothing -- Nothing
+
+-- Example, 在函子值上映射函数
+fmap (replicate 2) [1, 2, 3] -- [[1, 1], [2, 2], [3, 3]]
+fmap (replicate 2) (Just 1) -- Just [1, 1]
+```
+
+##### `Show`类型类
+
+利用`instance`自定义`Show`的展现
+
+```haskell
+data TrafficLight = Red | Yellow | Green
+
+instance Show TrafficLight where
+  show Red = "红灯"
+  show Yellow = "黄灯"
+  show Green = "绿灯"
 ```
 
 ### 函子
@@ -1334,6 +1467,8 @@ instance Functor ((->) r) where
 
 ##### 两条函子定律
 
+所有的`Functor`实例都应该遵守如下的定律
+
 1. **如果在函子值上映射`id`函数，则返回的函子值应该和之前的一样**
 
 ```haskell
@@ -1342,12 +1477,21 @@ id :: a -> a
 
 fmap id (Just 3) -- Just 3
 id (Just 3) -- Just 3
+
+-- 即
+fmap id x == id x
 ```
 
 2. **如果把两个函数组合起来，映射在一个函子上，则得到的结果和 先用一个函数映射函子，再用另一个函数映射后得到的结果相同**
 
 ```haskell
 fmap (f . g) = fmap f . fmap g
+
+-- 即对于任何函子值，都有：
+fmap (f . g) x = fmap f (fmap g x)
+
+-- Example
+fmap (f . g) Nothing == fmap f (fmap g Nothing)
 ```
 
 #### `applicative`函子
@@ -1376,6 +1520,7 @@ f <$> x = fmap f x
 
 -- 使用 <$>
 -- f <$> x <*> y，把函数 f 映射到两个 applicative 函子值上
+pure f <*> x == fmap f x == f <$> x
 ```
 
 ##### `Maybe`函子
@@ -1408,6 +1553,16 @@ pure f <*> x <*> y <*> ... === fmap f x <*> y <*>...
 (*) <$> Just 2 <*> Just 3 -- Just 6
 ```
 
+```haskell
+($) :: (a -> b) -> a -> b
+(<*>) :: f (a -> b) -> f a -> f b
+(<$>) :: (a -> b) -> f a -> f b
+
+-- Example
+(+) <$> Just 5 <*> Just 4 -- Just 9
+pure (+) <*> Just5 <*> Just 4 -- Just 9
+```
+
 ##### 列表函子
 
 ```haskell
@@ -1415,9 +1570,19 @@ instance Applicative [] where
   pure x = [x]
   fs <*> xs = [f x | f <- fs, x <- xs] -- 两个列表组成的列表推导式
 
+pure "hello" :: [String] -- ["hello"]
+
 -- fs <*> xs = [f x | f 4 fs, x <- xs]
 -- 以一个函数列表和普通列表为参数，将两者内的元素进行组合
 [(*0), (*2), (^2)] <*> [1, 3] -- [0, 0, 2, 6, 1, 9]
+
+[(+), (*)] <*> [1, 2] <*> [3, 4]
+-- [3, 4, 4, 5, 6, 8, 5, 6]
+
+-- 作为列表推导式的替代
+[x * y | x <- [1, 2, 3], y <- [4, 5, 6]]
+-- 相当于
+(*) <$> [1, 2, 3] <*> [4, 5, 6]
 ```
 
 ##### `ZipList`函子
@@ -1459,7 +1624,13 @@ instance Applicative ((->) r) where
 
 ##### `applicative`的实用函数
 
+更简化的进行表达。对于普通函数而言，之前需要`pure f <*> a`或者`f <$> a`来让它成为被上下文包裹的中间值，而通过`liftA`或者`liftA2`可以简化这种操作
+
 ```haskell
+-- 将普通函数转为被上下文包裹的函数
+liftA :: (Applicative f) => (a -> b) -> f a -> f b
+liftA f a = pure f <*> a
+
 -- 在两个 applicative 之间应用普通函数
 liftA2 :: (Applicative f) => (a -> b -> c) -> f a -> f b -> f c
 listA2 f a b = f <$> a <*> b
@@ -1467,9 +1638,16 @@ listA2 f a b = f <$> a <*> b
 listA (:) (Just 3) (Just [4]) -- Just [3, 4]
 ```
 
+##### `applicative`函子定律
+
+- `pure id <*> v = v`
+- `pure (.) <*> u <*> v <*> w = u <*> (v <*> w)`
+- `pure f <*> pure x = pure (f x)`
+- `u <*> pure y = pure ($ y) <*> u`
+
 ### `newtype`
 
-> 高达里的新人类（大雾）
+> 新人类（大雾）
 
 通过`newtype`关键字可以根据现有数据类型来创建新的类型：接收一个类型，然后包裹成另一个类型
 
@@ -1506,12 +1684,21 @@ getTuple $ fmap (*100) (Tuple (1, 2)) -- (1, 200)
 - `type`用于创建类型别名，即仅仅赋予一个新的名称
 - `newtype`将已有类型包裹成新的类型
 - `data`则用于创建全新的类型
+- `newtype` 只能定义单一构造器，并且该构造器只能有且仅有一个参数，而`data`则没有限制（可以是零个、一个、多个）
+- `newtype`比`data`速度快
+
+```haskell
+newtype T = One | Two -- Error，定义了两个构造器
+newtype T a b = NewType a b -- Error，构造器多参数
+```
 
 ### `Monoid`类型类
 
 #### 什么是`Monoid`
 
 - [什么是 Monoid？](http://www.jdon.com/idea/monoid.html)
+- [Haskell/Monoids](https://en.wikibooks.org/wiki/Haskell/Monoids)
+- [Monoids Tour](https://www.schoolofhaskell.com/user/mgsloan/monoids-tour)
 
 `Monoid`是类型类。一个`monoid`由一个满足结合律的二元函数和一个单位元组成。
 
@@ -1520,17 +1707,27 @@ getTuple $ fmap (*100) (Tuple (1, 2)) -- (1, 200)
 
 ```haskell
 class Monoid m where
-  mempty :: m
-  mappend :: m -> m -> m
+  mempty :: m -- 提供单位元
+  mappend :: m -> m -> m -- 定义如何结合数据
   mconcat :: [m] -> m
   mconcat :: foldr mappend mempty
+
+-- (<>) 操作符是 mappend 的语法糖
+infixr 6 (<>)
+
+(<>) :: Monoid a => a -> a -> a
+(<>) = mappend
 ```
+
+当把一个类型变成`Monoid`的实例时，只定义`mempty`和`mappend`就行。
 
 `monoid`定律：
 
-- mempty `mappend` x = x
-- x `mappend` mempty = x
-- (x `mappend` y) `mappend` z = x `mappend` (y `mappend` z)
+- ```mempty `mappend` x = x```
+- ```x `mappend` mempty = x```
+- ```(x `mappend` y) `mappend` z = x `mappend` (y `mappend` z)```
+
+前两条定律要求`mempty`在`mappend`中必须是单位元，而第三条则规定`mappend`必须满足结合律
 
 #### `Monoid`的一些实例
 
@@ -1547,6 +1744,7 @@ instance Monoid [a] where
 
 [1, 2] `mappend` [3, 4] -- [1, 2, 3, 4]
 -- monoid 没有要求 a `mappend` b = b `mappend` a
+[3, 4] `mappend` [1, 2] -- [3, 4, 1, 2]
 ```
 
 ##### `Product`和`Sum`
@@ -1575,9 +1773,8 @@ instance Num a => Monoid (Product a) where
 instance Num a => Monoid (Sum a) where
   mempty = Sum 0
   Sum x `mappend` Sum y = Sum (x + y)
-```
 
-```haskell
+-- example
 getProduct $ (Product 3) `mappend` (Product 9) -- 27
 getSum $ (Sum 3) `mappend` (Sum 4) -- 7
 ```
@@ -1606,9 +1803,8 @@ instance Monoid Any where
 instance Monoid All where
   menpty = All True
   All x `mappend` All y = All (x && y)
-```
 
-```haskell
+-- example
 getAny $ Any True `mappend` Any False -- True
 getAll $ All True `mappend` All False -- False
 ```
@@ -1631,6 +1827,7 @@ Nothing `mappend` (Just 1) -- Just 1
 > A monad is just a monoid in the category of endofunctors, what's the problem?
 
 - [什么是 Monad？](http://www.jdon.com/idea/monad.html)
+- [来看几种基本 Monad](http://blog.forec.cn/2017/03/01/talk-about-some-simple-monads/)
 
 #### 回顾函子
 
@@ -1659,6 +1856,7 @@ class Monad m where
   return :: a -> m a -- 类似于 applicative 函子中的 pure
   (>>=) :: m a -> (a -> mb) -> m b
 
+  -- 把某个值传递给一个总是忽略参数、返回预先决定好的 monad 值的函数，则结果就是那个决定好的值
   (>>) :: m a -> m b -> m b
   x >> y = x >>= \_ -> y -- >> 方法总是会忽略左边的参数
 
@@ -1674,9 +1872,9 @@ instance Monad Maybe where
   Nothing >>= f = Nothing
   Just x >>= f = f x
   fail _ = Nothing
-```
 
-```haskell
+-- example
+
 return "WHAT" :: Maybe String
 -- Just "WHAT"
 
@@ -1689,6 +1887,28 @@ Nothing >>= \x -> return (x*10)
 Just 4 >> Just 3
 -- Just 3
 ```
+
+#### `do`记法
+
+```haskell
+-- 对于普通语法使用 monad，例如
+Just 3 >>= (\x -> Just (show x ++ "!"))
+
+-- 如果嵌套更多层级，则为
+Just 3 >>= (\x -> Just "!" >>= (\y -> Just (show x ++ y)))
+
+-- 可以看出，Just 3 中的 3 被赋予给 x，而 Just "!" 中的 "!" 则赋予给 y，
+-- 两者在最内层的 lambda 表达式内结合，类似于：
+let x = 3; y = "!" in show x ++ y
+
+-- 使用 do 记法可以便捷的实现上述赋值操作
+foo = do
+  x <- Just 3
+  y <- Just "!"
+  Just (show x ++ y)
+```
+
+在`do`表达式内，每一个不带`let`的行都是一个`monad`值，使用`<-`获取其内部被包裹的值；而最后一个表达式则是整个`do`表达式的结果。如果某一行不带`<-`，则相当于进行了`<<`操作，即直接使用该行提供的值，忽略输入
 
 #### 列表的`Monad`实例
 
@@ -1728,27 +1948,38 @@ listOfTuples = do
 
 ##### 左单位元
 
+如果用`return`把一个值放在默认上下文里，然后用`>>=`喂给一个函数，则结果必须和直接对这个值应用那个函数一样
+
 ```haskell
 return x >>= f == f x
 
-return "ab" >>= \x -> [x, x]
--- ["ab", "ab"]
+-- example
+return "ab" >>= \x -> [x, x] -- ["ab", "ab"]
+(\x -> [x, x]) "ab" -- ["ab", "ab"]
 ```
 
 ##### 右单位元
 
+如果有一个`monad`值，可以用`>>=`把它喂给`return`，则结果还是原来的`monad`值
+
 ```haskell
 m >>= return == m
 
-"ab" >>= return
--- "ab"
+-- example
+"ab" >>= return -- "ab"
 ```
 
 ##### 结合律
 
+如果有一条`>>=`串起来的`monad`函数应用链，则它们的嵌套顺序应该无关紧要
+
 ```haskell
-(m >>= f) >>= g == m >>= (\x -> f x >>= g)
+(m >>= f) >>= g
+-- 等价于
+m >>= (\x -> f x >>= g)
 ```
+
+
 
 ### 输入和输出
 
