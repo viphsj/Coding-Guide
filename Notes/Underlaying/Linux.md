@@ -18,6 +18,8 @@
     - [压缩/打包命令](#%E5%8E%8B%E7%BC%A9%E6%89%93%E5%8C%85%E5%91%BD%E4%BB%A4)
   - [shell 基础](#shell-%E5%9F%BA%E7%A1%80)
   - [正则表达式](#%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F)
+  - [日期](#%E6%97%A5%E6%9C%9F)
+  - [系统](#%E7%B3%BB%E7%BB%9F)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -604,3 +606,56 @@ $ sed '/al/'d filename # 删除有 al 的行
 $ sed 's@a@bbbbbbbbbbbbbbbbbbbbbbbbbb@' README.md # 把每行第一个匹配的 a 替换为 bbbbbbbbbbbbbbbbbbbbbbbbbb
 $ sed '1,3s@about@abort@g' README.md # 把 1~3 行全部匹配的 about 替换为 abort
 ```
+
+### 日期
+
+```bash
+$ date # 读取当前时间和日期
+$ date +%s # 将时间转换为时间戳，以秒为单位
+$ date --date "2017-04-01" # 将字符串类型日期输入，转换为时间
+$ date --date "2017-04-01" +%s # 将字符串类型日期输入，并转换格式
+```
+
+```bash
+# 时间格式 format
+# === 星期 ===
+%a # Sun
+%A # Sunday
+
+# === 月 ===
+%b # Nov
+%B # November
+
+# === 日 ===
+%d # 31
+
+# === 固定格式 ===
+%D # mm/dd/yy
+
+# === 年 ===
+%y # 18
+%Y # 2018
+
+# === 小时 ===
+%I # 09
+%H # 09
+
+# === 分钟 ===
+%M # 33
+
+# === 秒 ===
+%S # 10
+
+# === 时间戳（秒）===
+%s
+```
+
+### 系统
+
+查看机器内网和外网 IP
+
+```bash
+$ hostname -I
+# 内网 IP 外网 IP
+```
+

@@ -1015,6 +1015,11 @@ True
 :t List.nub -- List.nub :: Eq a => [a] -> [a]
 List.nub [1, 1, 2, 3] -- [1, 2, 3]
 
+-- List.elemIndex 获取第一个匹配的元素的位置
+:t List.elemIndex -- List.elemIndex :: Eq a => a -> [a] -> Maybe Int
+List.elemIndex 1 [1, 2] -- Just 0
+List.elemIndex 1 [0, 2] -- Nothing
+
 -- List.findIndex 返回第一个满足条件的元素的位置
 :t List.findIndex -- List.findIndex :: (a -> Bool) -> [a] -> Maybe Int
 List.findIndex (>0) [0, 1, 2] -- Just 1

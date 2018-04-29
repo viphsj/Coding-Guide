@@ -127,6 +127,8 @@
 - [node-resque](https://github.com/taskrabbit/node-resque)
 - [rsmq](https://github.com/smrchy/rsmq)
 - [kue](https://github.com/Automattic/kue)
+- [node-amqp](https://github.com/postwait/node-amqp)
+- [rabbot](https://github.com/arobson/rabbot)
 
 文章
 
