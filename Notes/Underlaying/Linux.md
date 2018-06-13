@@ -650,12 +650,21 @@ $ date --date "2017-04-01" +%s # 将字符串类型日期输入，并转换格�
 %s
 ```
 
-### 系统
+### Others
 
-查看机器内网和外网 IP
+- cURL
+
+[Linux命令行：cURL的十种常见用法](https://juejin.im/post/5915204b44d904006c463c61)
+
+- 查看机器内网和外网 IP
 
 ```bash
 $ hostname -I
 # 内网 IP 外网 IP
 ```
 
+### 通过 bash 发送邮件
+
+- [5 Ways to Send Email From Linux Command Line](https://tecadmin.net/ways-to-send-email-from-linux-command-line/)
+- [3 minute tip: Configure a Linux server to send email](https://rianjs.net/2013/08/send-email-from-linux-server-using-gmail-and-ubuntu-two-factor-authentication)
+- [“Mail” command hangs and maillogs shows error [closed]](https://serverfault.com/questions/548771/mail-command-hangs-and-maillogs-shows-error)

@@ -253,3 +253,12 @@ done
 
 ### 函数
 
+### Others
+
+#### Check if file exists
+
+```bash
+if [ ! -f /tmp/foo.txt ]; then
+  echo "File not found!"
+fi
+```
