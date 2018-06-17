@@ -14,6 +14,8 @@
     - [定义](#%E5%AE%9A%E4%B9%89)
     - [赋/取值](#%E8%B5%8B%E5%8F%96%E5%80%BC)
   - [函数](#%E5%87%BD%E6%95%B0)
+  - [Others](#others)
+    - [Check if file exists](#check-if-file-exists)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 

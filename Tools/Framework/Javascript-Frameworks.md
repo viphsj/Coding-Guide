@@ -7,6 +7,7 @@
   - [开箱即用](#%E5%BC%80%E7%AE%B1%E5%8D%B3%E7%94%A8)
   - [在线展示](#%E5%9C%A8%E7%BA%BF%E5%B1%95%E7%A4%BA)
   - [数据](#%E6%95%B0%E6%8D%AE)
+  - [Wiki](#wiki)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 

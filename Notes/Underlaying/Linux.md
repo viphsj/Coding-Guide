@@ -19,7 +19,8 @@
   - [shell 基础](#shell-%E5%9F%BA%E7%A1%80)
   - [正则表达式](#%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F)
   - [日期](#%E6%97%A5%E6%9C%9F)
-  - [系统](#%E7%B3%BB%E7%BB%9F)
+  - [Others](#others)
+  - [通过 bash 发送邮件](#%E9%80%9A%E8%BF%87-bash-%E5%8F%91%E9%80%81%E9%82%AE%E4%BB%B6)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 

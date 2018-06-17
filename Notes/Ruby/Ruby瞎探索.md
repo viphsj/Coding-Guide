@@ -1,3 +1,41 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [Ruby 瞎探索](#ruby-%E7%9E%8E%E6%8E%A2%E7%B4%A2)
+  - [基本语法](#%E5%9F%BA%E6%9C%AC%E8%AF%AD%E6%B3%95)
+  - [循环](#%E5%BE%AA%E7%8E%AF)
+  - [方法](#%E6%96%B9%E6%B3%95)
+    - [方法的定义](#%E6%96%B9%E6%B3%95%E7%9A%84%E5%AE%9A%E4%B9%89)
+  - [类](#%E7%B1%BB)
+    - [存取器](#%E5%AD%98%E5%8F%96%E5%99%A8)
+    - [类方法/单例类方法](#%E7%B1%BB%E6%96%B9%E6%B3%95%E5%8D%95%E4%BE%8B%E7%B1%BB%E6%96%B9%E6%B3%95)
+    - [实例变量/类变量/常量](#%E5%AE%9E%E4%BE%8B%E5%8F%98%E9%87%8F%E7%B1%BB%E5%8F%98%E9%87%8F%E5%B8%B8%E9%87%8F)
+    - [public/private/protected](#publicprivateprotected)
+    - [扩展类](#%E6%89%A9%E5%B1%95%E7%B1%BB)
+  - [模块](#%E6%A8%A1%E5%9D%97)
+  - [块](#%E5%9D%97)
+  - [数值类](#%E6%95%B0%E5%80%BC%E7%B1%BB)
+    - [类型转换](#%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2)
+    - [运算](#%E8%BF%90%E7%AE%97)
+    - [方法](#%E6%96%B9%E6%B3%95-1)
+  - [数组](#%E6%95%B0%E7%BB%84)
+    - [创建数组](#%E5%88%9B%E5%BB%BA%E6%95%B0%E7%BB%84)
+    - [索引](#%E7%B4%A2%E5%BC%95)
+    - [集合运算](#%E9%9B%86%E5%90%88%E8%BF%90%E7%AE%97)
+    - [常用方法](#%E5%B8%B8%E7%94%A8%E6%96%B9%E6%B3%95)
+  - [字符串](#%E5%AD%97%E7%AC%A6%E4%B8%B2)
+    - [常用操作](#%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C)
+  - [散列](#%E6%95%A3%E5%88%97)
+    - [散列的键值操作](#%E6%95%A3%E5%88%97%E7%9A%84%E9%94%AE%E5%80%BC%E6%93%8D%E4%BD%9C)
+  - [Proc 类](#proc-%E7%B1%BB)
+    - [封装块](#%E5%B0%81%E8%A3%85%E5%9D%97)
+    - [lambda 表达式](#lambda-%E8%A1%A8%E8%BE%BE%E5%BC%8F)
+    - [Proc 的实例方法](#proc-%E7%9A%84%E5%AE%9E%E4%BE%8B%E6%96%B9%E6%B3%95)
+  - [异常处理](#%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 ## Ruby 瞎探索
 
 ### 基本语法
@@ -823,4 +861,572 @@ Numeric 数值 ------ Integer 整数 ----- Fixnum 普通的整数
               |___ Complex 复数
 ```
 
+```ruby
+# 有理数用 Rational 类表示
+r = Rational(2, 5) # 表示 2/5
+r.numerator # 获取分子
+r.denominator # 获取分母
+
+# 复数用 Complex 类表示
+c = Complex(1, 2) # 表示 1 + 2i
+c.real # 获取实数部分
+c.imaginary # 获取虚数部分
+```
+
+#### 类型转换
+
+```ruby
+=begin
+num.to_i
+num.to_f
+num.to_r
+num.to_c
+
+在小数和整数的末尾添加 r 即可得到 Rational 对象
+在小数和整数的末尾添加 i 即可得到 Complex 对象
+
+在 ** 乘方运算时，指数如果为负整数，则返回有理数的 Rational 对象
+5 ** -2 => (1/25)
+
+============================================================
+
+round 可以对小数进行四舍五入，并指定位数
+- 当参数为正数时，指定取几位小数
+- 当参数为负时，则往整数部分取整
+0.12.round(1) => 0.1
+120.round(-2) => 100
+180.rount(-2) => 200
+
+ceil 向大数的方向取整
+1.2.ceil => 2
+-1.2.ceil => -1
+
+floor 向小数的方向取整
+1.8.floor => 1
+-1.2.floor => -2
+=end
+```
+
+#### 运算
+
+```ruby
+# x.div(y) 相当于 (x / y).floor
+5.div(2) # 2
+-5.div(2) # -3
+
+# x.quo(y) 返回 x / y 的商。如果 x,y 都是整数，则返回 Rational 对象
+5.quo(2) # (5/2)
+
+# x.modulo(y) 相当于 x % y
+
+# x.divmod(y) 返回商和余数的数组，相当于 [x.div(y), x.modulo(y)]
+
+# x.remainder(y) 返回 x 除以 y 的余数。和 x % y 相比，该方法返回数值的符号和 x 一致
+-5 % 2 # 1
+-5.remainder(2) # -1
+```
+
+```ruby
+# 随机数
+Random.rand # 返回比 1 小的随机浮点数
+Random.rand(num) # 返回 0 到 num（正整数）之间的正整数
+
+# 生成随机数种子
+r = Random.new(num)
+r = Random.new # 不指定参数会使每次的种子不一样
+r.rand
+```
+
+#### 方法
+
+```ruby
+n.times { |i| ... }
+
+from.upto(to) { |i| ... } # 相当于 from...to
+
+from.downto(to) { |i| ... }
+
+from.step(to, step) { |i| ... }
+```
+
+### 数组
+
+#### 创建数组
+
+```ruby
+# 利用 Array.new 构造函数
+Array.new # []
+Array.new(3) # [nil, nil, nil]
+Array.new(3, 1) # [1, 1, 1]
+
+# Array.new 可以指定块
+a = Array.new(3) do
+  [1]
+end
+a # [[1], [1], [1]]
+
+# 用 %w 创建不包含空白的字符串数组
+%w(1 2 3) # ["1", "2", "3"]
+
+# 用 %i 创建不包含空白的符号数组
+%i(1 2 3) # [:"1", :"2", :"3"]
+
+# 通过 to_a 方法将散列转换为 [[:key, val]] 形式的数组
+dict = { "a": 1 }
+dict.to_a # [[:a, 1]]
+
+# 通过 split 方法
+"1,2,3".split(',') # [1, 2, 3]
+```
+
+#### 索引
+
+```ruby
+# 索引
+a[n] # 索引为负时从末尾开始获取元素
+a[n..m] # 获取索引在 [n, m] 范围内的元素
+a[n...m] # 获取索引在 [n, m)范围内的元素
+a[n, len] # 获取索引在 [n, n + len) 范围内的元素
+
+a.at(n) # 相当于 a[n]
+a.slice(n) # 相当于 a[n]
+a.slice(n, len) # 相当于 a[n, len]
+a.slice(n..m) # 相当于 a[n..m]
+
+a.values_at(n1, n2,...) # 获取指定位置上的索引
+
+# 替换
+# 索引的方法可以直接赋值以进行元素的替换，例如，
+a = [1, 2, 3, 4, 5]
+a[1..2] # [2, 3]
+a[1..2] = 2
+a => [1, 2, 4, 5]
+
+a[1..2] = [9, 10]
+a => [1, 9, 10, 5]
+
+# 通过 a[n, 0] 可以在第 n 位上插入元素
+a[1, 0] = 100
+a => [1, 100, 9, 10, 5]
+
+# 即便插入的是数组，也会被扁平展开
+a[1,0] = [1,2]
+a => [1, 1, 2, 100, 9, 10, 5]
+```
+
+#### 集合运算
+
+```ruby
+arr1 = [1, 1, 2]
+arr2 = [2, 3, 4]
+
+# 交集
+# arr1 & arr2
+arr1 & arr2 # [2]
+
+# 并集，不会包含重复元素
+# arr1 | arr2
+arr1 | arr2 # [1, 2, 3, 4]
+
+# 数组连接
+# arr1 + arr2
+arr1 + arr2 # [1, 1, 2, 2, 3, 4]
+
+# 差集
+# arr1 - arr2
+arr1 - arr2 # [1, 1]
+```
+
+#### 常用方法
+
+```ruby
+array.length
+array.size
+array.empty?
+
+# 对数组末尾的操作
+array.push(num)
+array << item
+array.pop
+array.last
+
+# 对数组开头的操作
+array.unshift(num)
+array.shift
+array.first
+
+# 数组合并
+array.concat(arr) # 修改原有数组
+array + arr # 不修改数组，返回新数组
+
+# 删除元素
+# 删除所有 nil
+arr.compact # 返回新数组
+arr.compact! # 直接修改原数组
+
+# 删除所有指定元素
+arr.delete(num) # 直接修改原数组
+
+# 删除指定位置的元素
+arr.delete_at(n) # 直接修改原数组
+
+# 根据条件删除
+a.delete_if { |item| ... } # 直接修改原数组
+a.reject { |item| ... } # 返回新数组
+a.reject! { |item| ... } # 直接修改原数组
+
+# 利用 slice! 删除
+a.slice!(n)
+a.slice!(n..m)
+a.slice!(n...m)
+a.slice!(n, len)
+
+# 删除重复元素
+a.uniq # 返回新数组
+a.uniq! # 修改原数组
+
+# 直接在原数组上替换
+a.fill(value) # 将所有元素都换位 value
+a.fill(value, begin)
+a.fill(value, begin, len)
+a.fill(value, n..m)
+a.fill(value, n...m)
+
+# 将嵌套的数组扁平化
+a.flatten
+a.flatten!
+
+# 反转数组
+a.reverse
+a.reverse!
+
+# 排序
+a.sort
+a.sort!
+a.sort { |i, j| ... }
+a.sort! { |i, j| ... }
+a.sort_by { |i| ... }
+a.sort_by! { |i| ... }
+```
+
+```ruby
+# 遍历数组
+
+# map/collect
+a.collect { |item| ... }
+a.collect! { |item| ... }
+a.map { |item| ... }
+a.map! { |item| ... }
+
+# each
+a.each { |item| ... }
+a.each do |item|
+  ...
+end
+
+# each_with_index
+a.each_with_index { |item, index| ... }
+
+# 利用 zip 同时访问多个数组
+a1 = [1, 2, 3]
+a2 = [4, 5, 6]
+
+a1.zip(a2) do |val1, val2|
+  puts "sum: #{val1 + val2}"
+end
+```
+
+### 字符串
+
+```ruby
+s.length
+s.size
+s.empty?
+String.new # ""
+
+# %Q 可创建 "" 字符串
+%Q{123} # "123"
+
+# %q 可创建 '' 字符串
+%q{123} # '123'
+
+# sprintf/format 格式化字符串
+a = sprintf("hello, %s", "world")
+```
+
+#### 常用操作
+
+```ruby
+s1 + s2 # 拼接，返回新字符串
+s1 << s2 # 把 s2 加在 s1 后面
+s1.concat(s2) # 把 s2 加在 s1 后面
+
+# 删除字符串最后一个字符
+s.chop
+s.chop!
+
+# 删除字符串行末的换行符
+s.chomp
+s.chomp!
+
+# 获取索引
+s.index('char') # 获取从开头开始第一次出现时的索引
+s.rindex('char') # 获取从结尾开始第一次出现时的索引
+
+s.include?('char') # 判断是否包含某子字符串
+
+# 字符串的索引、删除、反转操作和数组一样
+
+# 删除两端的空白字符
+s.strip
+s.strip!
+
+# 改变大小写
+# 全部大写
+s.upcase
+s.upcase!
+
+# 全部小写
+s.downcase
+s.downcase!
+
+# 大小写反转
+s.swapcase
+s.swapcase!
+
+# 仅首字母大写，其他小写
+s.capitalize
+s.capitalize!
+
+# 替换字符
+s.tr('B', 'b') # 将 B 替换为 b
+```
+
+### 散列
+
+```ruby
+h.length
+h.size
+h.empty?
+
+# 创建散列
+h = { "a" => 1 }
+h["a"] # 1
+
+h = { a: 1 } # 键将作为符号 { :a => 1 }
+h[:a] # 1
+
+# 通过 Hash.new/Hash.new(default)
+h = Hash.new
+h[:a] # nil
+
+h = Hash.new("none")
+h[:a] # none
+
+# 或者在 Hash.new 时指定块
+h = Hash.new do |hash, key|
+  hash[key] = key.upcase
+end
+h["x"] # X
+```
+
+#### 散列的键值操作
+
+```ruby
+h = Hash.new
+
+# store 储存值
+h.store("R", "Ruby")
+h.store(:r, "Ruby")
+
+# fetch 获取值
+h.fetch(:r) # "Ruby"
+
+# 当 fetch 的 key 不存在时会报错
+h.fetch(:m) # error
+# 可以给 fetch 指定键不存在时的默认返回值
+h.fetch(:m, nil)
+# fetch 还可以指定块
+h.fetch(:m) {
+  # return default value
+}
+```
+
+```ruby
+# 获取所有键
+h.keys
+
+# 获取所有值
+k.values
+
+# 以 [键, 值] 的形式获取所有键值对
+k.to_a
+
+# 迭代
+h.each_key { |key| ... }
+h.each_value { |value| ... }
+h.each { |key, value| ... }
+h.each { |arr| ... }
+```
+
+```ruby
+# 判断是否含有指定的键
+h.key?(key)
+h.has_key?(key)
+h.include?(key)
+h.member?(key)
+
+# 判断是否含有指定的值
+h.value?(value)
+h.has_value?(value)
+
+# 删除键值对
+h.delete(key)
+h.delete_if { |key, val| ... } # 返回修改后的散列
+h.reject! { |key, val| ... } # 返回 nil
+
+# 清空散列的所有键值对
+h.clear
+
+# 合并散列
+h1.merge(h2)
+h1.merge!(h2)
+
+h1.update(h2)
+h1.update!(h2)
+```
+
+关于判断散列中的键是否相等：
+
+对于两个键 key1 和 key2，如果`key1.hash == key2.hash && key1.eql?(key2)`，则认为两个键相等
+
+### Proc 类
+
+#### 封装块
+
+`Proc`类可以使块对象化
+
+```ruby
+# 创建 Proc 对象
+echo = Proc.new do |name|
+  puts "echo: #{name}"
+end
+
+echo.call("ruby") # echo: ruby
+
+echo = proc do |name|
+  puts "echo: #{name}"
+end
+
+# 块变量可以使用可变参数或关键字参数
+double = Proc.new do |*args|
+  args.map { |val| val * 2 }
+end
+double.call(1, 2, 3) # 2, 4, 6
+```
+
+#### lambda 表达式
+
+- Proc 创建的块对象，在调用时，传入的参数和块可接受的参数个数可以不同；但 lambda 则要求参数数量必须对应
+- lambda 表达式可以使用 return 将值从块中返回，而通过 Proc 创建的块中如果调用 return，则会跳过当前执行的块
+- 对于 break，表现和 return 一样
+
+```ruby
+lam = lambda do |a, b, c|
+  a + b + c
+end
+
+lam.call(1, 2, 3) # 6
+
+# 闭包
+def power_of(n)
+  lambda do |x|
+    return x ** n
+  end
+end
+
+cube = power_of(3)
+cube.call(5) # 125
+
+# lambda 的另一种简写方式
+# -> (块变量) { do... }
+square = -> (n) { return n ** 2 }
+square(5) # 25
+```
+
+#### Proc 的实例方法
+
+```ruby
+# 执行块
+prc.call(args)
+prc[args, ..]
+prc.yield(args)
+prc.(args)
+prc === arg # 只能传递一个参数，可以是数组
+
+# 获取参数个数
+prc.arity # 返回作为 call 方法的参数的块变量个数
+p = Proc.new { |a| a }
+p.arity # 1
+# 当以 *args 形式指定块变量时，返回 -1
+p = Proc.new { |*args| args }
+p.arity # -1
+
+prc.lambda? # 判断是否是 lambda 表达式
+```
+
 ### 异常处理
+
+```ruby
+=begin
+基本语法
+
+begin
+  # do
+rescue => ex
+  # handle error
+end
+
+ex 对象的方法：
+ex.class # 异常的种类
+ex.message # 异常信息
+ex.backtrace # 异常的发生未知
+
+在没有赋值 ex 的时候，可以在异常处理块内通过 $! 获取到异常对象，通过 $@ 获取到发生异常的位置
+begin
+  # do
+rescue
+  puts $!.message
+  puts $@
+end
+
+在处理异常的时候可以通过 ensure 执行希望总能够处理的语句
+begin
+  # do
+rescue
+  # handle error
+ensure
+  # always do
+end
+
+可以使用多个 rescue 来捕捉不同类型的错误
+可以通过 raise 来抛出错误
+=end
+
+def open_file
+  File.open('not_exist_file')
+end
+
+def handle_file(file)
+  raise "some unexpect error"
+end
+
+io = open_file
+begin
+  handle_file(io)
+rescue
+  puts $!.message
+ensure
+  io.close
+end
+```
