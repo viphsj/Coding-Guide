@@ -33,6 +33,7 @@
     - [lambda 表达式](#lambda-%E8%A1%A8%E8%BE%BE%E5%BC%8F)
     - [Proc 的实例方法](#proc-%E7%9A%84%E5%AE%9E%E4%BE%8B%E6%96%B9%E6%B3%95)
   - [异常处理](#%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86)
+  - [导入](#%E5%AF%BC%E5%85%A5)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -413,7 +414,6 @@ attr_accessor :name => 实例变量可读写
   def y
     @y
   end
-
 end
 
 foo = Foo.new(x: 1)
@@ -455,7 +455,6 @@ Foo.hello('123') # 调用类方法
 
 ```ruby
 # 单例类方法
-
 # 单例类方法即只给某个类的实例定义的方法，仅有该实例可以调用
 
 class << instance
@@ -1429,4 +1428,28 @@ rescue
 ensure
   io.close
 end
+
+=begin
+如果错误处理的范围是整个方法或者类的话，则可以省略 begin 和 end
+例如，
+
+def function
+  # do
+rescue => ex
+  # handle error
+ensure
+  # final
+end
+
+class Foo
+  # class info
+rescue => ex
+  # handle error
+ensure
+  # final
+end
+=end
 ```
+
+### 导入
+
