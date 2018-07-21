@@ -39,6 +39,8 @@
 
 ## Ruby 瞎探索
 
+- [Ruby style guide (zh)](https://github.com/JuanitoFatas/ruby-style-guide/blob/master/README-zhCN.md)
+
 ### 基本语法
 
 ```ruby
@@ -309,7 +311,7 @@ end
 
 在方法定义时，可以给参数指定默认值，类似 ES6，并且有位置参数和关键字参数，类似 Python
 
-在方法内，如果没有手动 return，则最后一个表达式的执行结果就会成为方法发返回值。
+在方法内，如果没有手动 return，则最后一个表达式的执行结果就会成为方法返回值。
 
 ```ruby
 # 默认参数
@@ -377,7 +379,7 @@ String.is_a?(Object) # true
 
 ```ruby
 class Foo
-  # 存取器，定义 name 实例变量时可读写的
+  # 存取器，定义 name 实例变量是可读写的
   attr_accessor :name
 
   # ================ 初始化方法 ================
@@ -385,6 +387,7 @@ class Foo
     @x = x # 初始实例变量
     @y = y # 只有获取没有赋值，被定义为只读
     @z = z # 实例变量在没有存取器的时候，不能获取或者赋值
+    @name = name
   end
 
   def echo
@@ -418,20 +421,28 @@ end
 
 foo = Foo.new(x: 1)
 foo.echo # x: 1, y: 2, z: 3
+puts foo.name # 已经定义 name 为可读写
+foo.name = 123
+puts foo.name # 123
+# 而 y 为只读
+puts foo.y # 2
+foo.y = 3 # error!
 ```
 
 #### 类方法/单例类方法
 
 ```ruby
 # 类方法
-
 # 为类定义类方法有如下一些形式
+
+# Template 1
 class << Foo
   def hello(name)
     puts "hello #{name}"
   end
 end
 
+# Template 2
 class Foo
   class << self
     def hello(name)
@@ -440,12 +451,14 @@ class Foo
   end
 end
 
+# Template 3
 class Foo
   def self.hello(name)
     puts "hello #{name}"
   end
 end
 
+# Template 4
 def Foo.hello(name)
   puts "hello #{name}"
 end
@@ -457,6 +470,7 @@ Foo.hello('123') # 调用类方法
 # 单例类方法
 # 单例类方法即只给某个类的实例定义的方法，仅有该实例可以调用
 
+# Template
 class << instance
   def func
    # do
@@ -485,13 +499,13 @@ str2.hello # error
 
 =begin
 实例变量：以 @ 开头，提供外部访问、修改时需要定义存取器
-@name
+例如：@name
 
 类变量：以 @@ 开头，也需要定义存取器，但是不能使用 attr_accessor 等便捷方式去定义
-@@name
+例如：@@name
 
 常量：以首字母大写开头
-Name
+例如：Name
 =end
 
 # 类常量通过 类名::Name 访问
@@ -499,7 +513,7 @@ class Foo
   Version = 1
 end
 
-puts Foo::Version
+puts Foo::Version # 1
 
 # 类变量是所有实例的共享变量
 class Foo
@@ -606,6 +620,8 @@ end
 
 boo = Boo.new
 boo.echo
+# boo
+# foo
 ```
 
 在没有指定父类时，Ruby 会默认继承`Object`类作为父类。也可以手动指定父类为`BasicObject`类
@@ -657,15 +673,20 @@ end
 module ExampleModule
   Version = 1 # 定义常量
 
-  # 如果想能够通过 模块.方法 的形式调用模块内的方法，
-  # 则需要通过 module_function 进行暴露
-  module_function :echo
   def echo
     puts "example"
   end
+
+  def test
+    puts "test"
+  end
+
+  # 如果想能够通过 模块.方法 的形式调用模块内的方法，
+  # 则需要通过 module_function 进行暴露
+  module_function :echo
 end
 
-ExampleModule.Version # 1
+puts ExampleModule::Version # 1
 ExampleModule.echo # "example"
 
 # 类扩展模块
@@ -700,7 +721,7 @@ ExampleClass.superclass # Object
 =end
 str = "1"
 str.extend(ExampleModule)
-str.echo # "example"
+str.test # "test"
 
 =begin
 而类的 extend Module 则是给类扩展类方法
@@ -791,21 +812,22 @@ end
 
 def function
   if block_given? then
-    echo "block_given"
+    puts "block_given"
     yield
   else
-    echo "no block given"
+    puts "no block given"
 end
 
 # Proc 参数一定要在最后一位
 def function(val, &block)
   if block then
-    echo "has block"
+    puts "has block"
     # 如果没有传入块，则 block 为 nil
     # 在调用 Proc 对象的 call 方法之前，块中定义的程序不会被执行
     block.call(val)
   else
-    echo "no block"
+    puts "no block"
+  end
 end
 
 # ===============================================================
@@ -884,7 +906,7 @@ num.to_c
 在小数和整数的末尾添加 r 即可得到 Rational 对象
 在小数和整数的末尾添加 i 即可得到 Complex 对象
 
-在 ** 乘方运算时，指数如果为负整数，则返回有理数的 Rational 对象
+在 ** 乘方运算时，指数如果为负整数，则返回有理数的 Rational 对象
 5 ** -2 => (1/25)
 
 ============================================================
@@ -892,7 +914,7 @@ num.to_c
 round 可以对小数进行四舍五入，并指定位数
 - 当参数为正数时，指定取几位小数
 - 当参数为负时，则往整数部分取整
-0.12.round(1) => 0.1
+0.12.round(1) => 0.1
 120.round(-2) => 100
 180.rount(-2) => 200
 
@@ -920,7 +942,7 @@ floor 向小数的方向取整
 
 # x.divmod(y) 返回商和余数的数组，相当于 [x.div(y), x.modulo(y)]
 
-# x.remainder(y) 返回 x 除以 y 的余数。和 x % y 相比，该方法返回数值的符号和 x 一致
+# x.remainder(y) 返回 x 除以 y 的余数。和 x % y 相比，该方法返回数值的符号和 x 一致
 -5 % 2 # 1
 -5.remainder(2) # -1
 ```
@@ -939,13 +961,25 @@ r.rand
 #### 方法
 
 ```ruby
-n.times { |i| ... }
+# n.times { |i| ... }
+2.times { |index|
+  puts index
+}
 
-from.upto(to) { |i| ... } # 相当于 from...to
+# from.upto(to) { |i| ... } 相当于 from...to
+1.upto(3) { |index|
+  puts index
+}
 
-from.downto(to) { |i| ... }
+# from.downto(to) { |i| ... }
+3.downto(1) { |index|
+  puts index
+}
 
-from.step(to, step) { |i| ... }
+# from.step(to, step) { |i| ... }
+1.step(3, 2) { |index|
+  puts index
+}
 ```
 
 ### 数组
@@ -984,7 +1018,7 @@ dict.to_a # [[:a, 1]]
 # 索引
 a[n] # 索引为负时从末尾开始获取元素
 a[n..m] # 获取索引在 [n, m] 范围内的元素
-a[n...m] # 获取索引在 [n, m)范围内的元素
+a[n...m] # 获取索引在 [n, m) 范围内的元素
 a[n, len] # 获取索引在 [n, n + len) 范围内的元素
 
 a.at(n) # 相当于 a[n]
@@ -1116,6 +1150,9 @@ a.collect { |item| ... }
 a.collect! { |item| ... }
 a.map { |item| ... }
 a.map! { |item| ... }
+
+arr = [1, 2, 3].collect { |item| item * 2 }
+print arr # [2,4,6]
 
 # each
 a.each { |item| ... }
@@ -1287,7 +1324,7 @@ h.reject! { |key, val| ... } # 返回 nil
 # 清空散列的所有键值对
 h.clear
 
-# 合并散列
+# 合并散列，merge 和 update 用法相同
 h1.merge(h2)
 h1.merge!(h2)
 
