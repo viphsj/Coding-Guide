@@ -7,7 +7,7 @@
     - [chrome扩展程序](#chrome%E6%89%A9%E5%B1%95%E7%A8%8B%E5%BA%8F)
     - [开发缘由](#%E5%BC%80%E5%8F%91%E7%BC%98%E7%94%B1)
   - [`manifest.json`](#manifestjson)
-  - [不同运行环境JS的生命周期](#%E4%B8%8D%E5%90%8C%E8%BF%90%E8%A1%8C%E7%8E%AF%E5%A2%83js%E7%9A%84%E7%BB%B3%E5%91%BD%E5%91%A8%E6%9C%9F)
+  - [不同运行环境JS的绳命周期](#%E4%B8%8D%E5%90%8C%E8%BF%90%E8%A1%8C%E7%8E%AF%E5%A2%83js%E7%9A%84%E7%BB%B3%E5%91%BD%E5%91%A8%E6%9C%9F)
     - [`content_scripts`](#content_scripts)
     - [`background`](#background)
     - [`browser_action`](#browser_action)

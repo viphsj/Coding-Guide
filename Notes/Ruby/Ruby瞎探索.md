@@ -24,6 +24,7 @@
     - [索引](#%E7%B4%A2%E5%BC%95)
     - [集合运算](#%E9%9B%86%E5%90%88%E8%BF%90%E7%AE%97)
     - [常用方法](#%E5%B8%B8%E7%94%A8%E6%96%B9%E6%B3%95)
+    - [遍历](#%E9%81%8D%E5%8E%86)
   - [字符串](#%E5%AD%97%E7%AC%A6%E4%B8%B2)
     - [常用操作](#%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C)
   - [散列](#%E6%95%A3%E5%88%97)
@@ -33,7 +34,7 @@
     - [lambda 表达式](#lambda-%E8%A1%A8%E8%BE%BE%E5%BC%8F)
     - [Proc 的实例方法](#proc-%E7%9A%84%E5%AE%9E%E4%BE%8B%E6%96%B9%E6%B3%95)
   - [异常处理](#%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86)
-  - [导入](#%E5%AF%BC%E5%85%A5)
+  - [引入库](#%E5%BC%95%E5%85%A5%E5%BA%93)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -67,6 +68,11 @@ messageController
 # 字符串数字转换
 string.to_i # 字符串转数字
 number.to_s # 数字转字符串
+
+# 字符串专 Symbol
+string.to_sym
+# 例
+"1".to_sym # :"1"
 
 "1".to_i # 1
 1.to_s # "1"
@@ -140,6 +146,17 @@ else
   # do something
 end
 
+unless 1 > 2 then
+  puts '1 > 2 is false'
+else
+  puts '1 < 2'
+end
+# 1 > 2 is false
+
+# one line code
+a = 1 unless false
+print a # 1
+
 # while
 while condition do
   # do something
@@ -156,6 +173,8 @@ case 语句在执行时使用的 === 运算符
 1 === "1" # false
 String === "1" # true
 =end
+
+# case 和 when 在同一级
 case target
 when value1 then
   # do
@@ -164,6 +183,16 @@ when value2 then
 else
   # do
 end
+
+# case 语句的结果可以赋值
+val = case year
+      when 1850..1889 then 'Blues'
+      when 1890..1909 then 'Ragtime'
+      when 1910..1929 then 'New Orleans Jazz'
+      when 1930..1939 then 'Swing'
+      when 1940..1950 then 'Bebop'
+      else 'Jazz'
+      end
 
 # times 迭代器
 number.times do
@@ -1043,7 +1072,7 @@ a[1, 0] = 100
 a => [1, 100, 9, 10, 5]
 
 # 即便插入的是数组，也会被扁平展开
-a[1,0] = [1,2]
+a[1, 0] = [1, 2]
 a => [1, 1, 2, 100, 9, 10, 5]
 ```
 
@@ -1142,6 +1171,8 @@ a.sort_by { |i| ... }
 a.sort_by! { |i| ... }
 ```
 
+#### 遍历
+
 ```ruby
 # 遍历数组
 
@@ -1150,6 +1181,8 @@ a.collect { |item| ... }
 a.collect! { |item| ... }
 a.map { |item| ... }
 a.map! { |item| ... }
+
+['1', '2', '3'].map(&:to_i) # [1, 2, 3]
 
 arr = [1, 2, 3].collect { |item| item * 2 }
 print arr # [2,4,6]
@@ -1387,7 +1420,7 @@ cube.call(5) # 125
 # lambda 的另一种简写方式
 # -> (块变量) { do... }
 square = -> (n) { return n ** 2 }
-square(5) # 25
+square[5] # 25
 ```
 
 #### Proc 的实例方法
@@ -1488,5 +1521,19 @@ end
 =end
 ```
 
-### 导入
+### 引入库
 
+```ruby
+require some_library
+require_relative some_library
+
+# 在 require 之后，Ruby 会同步式的搜索并读取库中的内容，读取完毕之后再运行后序的代码
+# require_relative 引入的是相对当前文件的其他文件路径
+```
+
+```ruby
+require "date"
+
+days = Date.today - Date.new(1993, 2, 24)
+puts days.to_i
+```

@@ -215,6 +215,19 @@ Example.create("test")
 Example.new.test(1,2,3)
 ```
 
+`define_method` 除了在 Class 内部使用以外，也可以直接在外部创建方法：
+
+```ruby
+chars = %w(a b c)
+chars.each_with_index do |char, index|
+  define_method char.to_sym do
+    puts index ** 2
+  end
+end
+
+c() # 4
+```
+
 #### `method_missing`
 
 当调用对象中并不存在的方法时，会触发`method_missing`方法。可以通过覆写该方法，动态的自定义的处理缺失的方法
