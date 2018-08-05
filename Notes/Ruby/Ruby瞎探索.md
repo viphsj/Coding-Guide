@@ -1137,6 +1137,9 @@ a.delete_if { |item| ... } # 直接修改原数组
 a.reject { |item| ... } # 返回新数组
 a.reject! { |item| ... } # 直接修改原数组
 
+# select 根据条件筛选
+[1, 2, 3, 4, 5].select { |num| num > 3 }
+
 # 利用 slice! 删除
 a.slice!(n)
 a.slice!(n..m)
@@ -1169,6 +1172,19 @@ a.sort { |i, j| ... }
 a.sort! { |i, j| ... }
 a.sort_by { |i| ... }
 a.sort_by! { |i| ... }
+
+# combination 方法，通过数组形成任意数量元素组成的组合
+a = [1, 2, 3, 4]
+a.combination(1).to_a  #=> [[1],[2],[3],[4]]
+a.combination(2).to_a  #=> [[1,2],[1,3],[1,4],[2,3],[2,4],[3,4]]
+a.combination(3).to_a  #=> [[1,2,3],[1,2,4],[1,3,4],[2,3,4]]
+a.combination(4).to_a  #=> [[1,2,3,4]]
+a.combination(0).to_a  #=> [[]] # one combination of length 0
+a.combination(5).to_a  #=> []   # no combinations of length 5
+
+# reduce
+# arr.inject(init) { |result, current| }
+[1, 2, 3, 4, 5].inject(1) { |r, c| r * c } # 120
 ```
 
 #### 遍历

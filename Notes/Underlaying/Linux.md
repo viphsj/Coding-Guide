@@ -20,7 +20,6 @@
   - [正则表达式](#%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F)
   - [日期](#%E6%97%A5%E6%9C%9F)
   - [Others](#others)
-  - [通过 bash 发送邮件](#%E9%80%9A%E8%BF%87-bash-%E5%8F%91%E9%80%81%E9%82%AE%E4%BB%B6)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -398,6 +397,7 @@ $ test.md.gz
 - `unzip zipname`
 
 ```bash
+# zip 可以压缩目录
 $ zip -r result.zip folder # 把 folder 压缩为 result.zip，且 folder 内的其他子目录都会被压缩
 $ unzip result.zip
 ```
@@ -664,8 +664,27 @@ $ hostname -I
 # 内网 IP 外网 IP
 ```
 
-### 通过 bash 发送邮件
+- 查看内存占用
+
+```bash
+$ ps -e -o 'pid,comm,args,pcpu,rsz,vsz,stime,user,uid'
+```
+
+- 查看 CPU 核数
+
+```bash
+$ cat /proc/cpuinfo |grep "cores"|uniq
+```
+
+- 通过 bash 发送邮件
 
 - [5 Ways to Send Email From Linux Command Line](https://tecadmin.net/ways-to-send-email-from-linux-command-line/)
 - [3 minute tip: Configure a Linux server to send email](https://rianjs.net/2013/08/send-email-from-linux-server-using-gmail-and-ubuntu-two-factor-authentication)
 - [“Mail” command hangs and maillogs shows error [closed]](https://serverfault.com/questions/548771/mail-command-hangs-and-maillogs-shows-error)
+
+- CPU/进程/线程/并发/并行
+
+- [CPU 核心数目与多线程](https://blog.csdn.net/qq_33530388/article/details/62448212)
+- [线程、进程与处理器](http://jsonliangyoujun.iteye.com/blog/2358274)
+- [多核 CPU 是否能同时执行多个进程？](https://www.zhihu.com/question/271821176)
+- [操作系统中的进程与线程](http://www.cnblogs.com/CareySon/archive/2012/05/04/ProcessAndThread.html)
