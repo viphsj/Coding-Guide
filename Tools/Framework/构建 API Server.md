@@ -18,6 +18,22 @@
 - [feathersjs](https://feathersjs.com/)
 - [Restify](http://restify.com/)
 
+- [hapi.js](https://github.com/hapijs/hapi)
+  - [yar](https://github.com/hapijs/yar)
+  - [joi](https://github.com/hapijs/joi)
+  - [hapi-swagger](https://github.com/glennjones/hapi-swagger)
+  - [boom](https://github.com/hapijs/boom)
+  - [hapi-cron](https://github.com/antonsamper/hapi-cron)
+  - [hapi-mysql2](https://github.com/midnightcodr/hapi-mysql2)
+  - [hapi-redis2](https://github.com/midnightcodr/hapi-redis2)
+  - [hapi-mongodb](https://github.com/Marsup/hapi-mongodb)
+  - [hapi-pino](https://github.com/pinojs/hapi-pino)
+  - [hapi-auth-basic](https://github.com/hapijs/hapi-auth-basic)
+  - [hapi-auth-cookie](https://github.com/hapijs/hapi-auth-cookie)
+  - [Technology-best-practices](https://github.com/vaquarkhan/Technology-best-practices/blob/master/backend/nodejs/hapijs.md)
+  - [Introducing hapi pal](https://medium.com/@hapipal/introducing-hapi-pal-550c13f30c5b)
+  - [我看 hapi](http://www.10tiao.com/html/240/201703/2649257193/1.html)
+
 ## 工具
 
 - [ratelimit](https://github.com/koajs/ratelimit)【Api Usage Limit】
@@ -29,6 +45,14 @@
 
 - [API Blueprint](https://apiblueprint.org/)
 - [Swagger](http://swagger.io/)
+- [slate](https://github.com/lord/slate) 基于 Ruby
+- [jsdoc](https://github.com/jsdoc3/jsdoc)
+- [docbox](https://github.com/tmcw/docbox) 基于 JavaScript
+- [Docusaurus](https://github.com/facebook/Docusaurus)
+- [docsify](https://github.com/docsifyjs/docsify)
+- [dapperdox](https://github.com/DapperDox/dapperdox)
+- [sourcey](https://github.com/sourcey)
+- [documentation](https://github.com/documentationjs/documentation)
 
 ## 测试
 

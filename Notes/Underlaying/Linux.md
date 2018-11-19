@@ -372,6 +372,8 @@ $ vim filename # 进入一般模式
 
 - `gzip [-d/-#] filename`
 
+gzip 不能压缩目录
+
 ```bash
 # -d 在解压缩时使用
 # # 为 1~9 的数字，代表压缩等级，1 为最差，9 为最好，默认为 6
@@ -688,3 +690,25 @@ $ cat /proc/cpuinfo |grep "cores"|uniq
 - [线程、进程与处理器](http://jsonliangyoujun.iteye.com/blog/2358274)
 - [多核 CPU 是否能同时执行多个进程？](https://www.zhihu.com/question/271821176)
 - [操作系统中的进程与线程](http://www.cnblogs.com/CareySon/archive/2012/05/04/ProcessAndThread.html)
+
+- 修改 TCP
+
+- [Linux TCP/IP 协议栈调优](https://colobu.com/2014/09/18/linux-tcpip-tuning/)
+- [Linux 下 Http 高并发参数优化之 TCP 参数](https://kiswo.com/article/1017)
+- [Linux 之 TCPIP 内核参数优化](https://www.cnblogs.com/fczjuever/archive/2013/04/17/3026694.html)
+- [sysctl 命令](http://man.linuxde.net/sysctl)
+
+```bash
+# 通过以下命令查看各个状态的TCP连接的数据
+$ netstat -n | awk '/^tcp/ {++y[$NF]} END {for(w in y) print w, y[w]}'
+
+# 修改文件，增加配置项
+$ sudo vim /etc/sysctl.conf
+# net.ipv4.tcp_syncookies = 1 表示开启 SYN Cookies。当出现 SYN 等待队列溢出时，启用 cookies 来处理，可防范少量 SYN 攻击，默认为 0，表示关闭
+# net.ipv4.tcp_tw_reuse = 1 表示开启重用。允许将 TIME-WAIT sockets 重新用于新的 TCP 连接，默认为 0，表示关闭
+# net.ipv4.tcp_tw_recycle = 1 表示开启 TCP 连接中 TIME-WAIT sockets 的快速回收，默认为 0，表示关闭
+# net.ipv4.tcp_fin_timeout = 30 修改系統默认的 TIMEOUT 时间
+
+# 生效修改的参娄
+$ sudo /sbin/sysctl -p
+```

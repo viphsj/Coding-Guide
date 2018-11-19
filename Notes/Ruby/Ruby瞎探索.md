@@ -283,6 +283,10 @@ end
   print i
 end
 
+(1...3).each do |i|
+  print i
+end
+
 =begin
 loop 无限循环，除非设置条件 break
 loop do
@@ -1055,7 +1059,7 @@ a.slice(n) # 相当于 a[n]
 a.slice(n, len) # 相当于 a[n, len]
 a.slice(n..m) # 相当于 a[n..m]
 
-a.values_at(n1, n2,...) # 获取指定位置上的索引
+a.values_at(n1, n2, ...) # 获取指定位置上的索引
 
 # 替换
 # 索引的方法可以直接赋值以进行元素的替换，例如，

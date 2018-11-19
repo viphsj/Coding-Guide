@@ -102,6 +102,7 @@
 - [graphql.js](https://github.com/graphql/graphql-js/)
 - [graphql-tools](https://github.com/apollographql/graphql-tools)
 - [apollo-server](https://github.com/apollographql/apollo-server)
+- [graphql.js](https://github.com/f/graphql.js)
 
 ### Progress
 
@@ -115,6 +116,7 @@
 - [cron](https://github.com/kelektiv/node-cron)
 - [node-cron](https://github.com/merencia/node-cron)
 - [later](https://github.com/bunkat/later)
+- [cRonstrue](https://github.com/bradymholt/cRonstrue)
 
 ### 消息队列
 
@@ -125,10 +127,10 @@
 - [disq](https://github.com/djanowski/disq)
 - [bull](https://github.com/OptimalBits/bull)
 - [node-resque](https://github.com/taskrabbit/node-resque)
-- [rsmq](https://github.com/smrchy/rsmq)
-- [kue](https://github.com/Automattic/kue)
-- [node-amqp](https://github.com/postwait/node-amqp)
-- [rabbot](https://github.com/arobson/rabbot)
+- [rsmq](https://github.com/smrchy/rsmq) 基于 Redis
+- [kue](https://github.com/Automattic/kue) 基于 Redis
+- [node-amqp](https://github.com/postwait/node-amqp) rabbitMQ
+- [rabbot](https://github.com/arobson/rabbot) rabbitMQ
 
 文章
 
@@ -201,6 +203,9 @@
 - [nodemailer](https://github.com/nodemailer/nodemailer) 【Node.js 发送邮件】
 - [debug](https://github.com/visionmedia/debug) 【Tiny node.js & browser debugging utility for your libraries and applications】
 - [url-to-pdf-api](https://github.com/alvarcarto/url-to-pdf-api)
+- [puppeteer](https://github.com/GoogleChrome/puppeteer)
+  - [Take a screenshot of web page using Node JS (Puppeteer + Chrome)](http://mytypings.com/take-a-screenshot-of-web-page-using-node-js-puppeteer-chrome/)
+  - [A Guide to Automating & Scraping the Web with JavaScript (Chrome + Puppeteer + Node JS)](https://codeburst.io/a-guide-to-automating-scraping-the-web-with-javascript-chrome-puppeteer-node-js-b18efb9e9921)
 - [node-cache-manager](https://github.com/BryanDonovan/node-cache-manager) 【缓存】
-- [slate](https://github.com/lord/slate) 【搭建 API 文档】
-- [winston](https://github.com/winstonjs/winston) 【logger】
+- [winston](https://github.com/winstonjs/winston) 「logger」
+- [dotenv](https://github.com/motdotla/dotenv)「环境变量」

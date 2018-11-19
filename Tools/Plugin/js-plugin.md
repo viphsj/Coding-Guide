@@ -424,6 +424,9 @@ before.to(after); // in a day 相对时间多久之后
 
 > 无依赖JavaScript库，提供模糊搜索（近似字符串匹配）
 
+- [browser-detect](https://www.npmjs.com/package/browser-detect)
+- [bowser](https://www.npmjs.com/package/bowser)
+
 ### 函数库
 
 - [bacon.js](https://github.com/baconjs/bacon.js)
@@ -442,6 +445,8 @@ before.to(after); // in a day 相对时间多久之后
 - [RxJS - 4.x](https://github.com/Reactive-Extensions/RxJS)
 
 > Everything is steam !
+
+- [ramda](https://github.com/ramda/ramda)
 
 ### 文件
 
