@@ -124,9 +124,9 @@
 ### Python进阶
 
 - [Magic Python](./Notes/Python/Python进阶/Magic%20Python.md)
-- [Effective Python](https://github.com/ecmadao/Coding-Guide/blob/master/Notes/Python/Python%E8%BF%9B%E9%98%B6/Effective%20Python.md)
+- [Effective Python](./Notes/Python/Python%E8%BF%9B%E9%98%B6/Effective%20Python.md)
 - [Python Style Guide](./Notes/Python/Python进阶/Python%20Style%20Guide.md)
-- [Python 中的 Collections 库](https://github.com/ecmadao/Coding-Guide/blob/master/Notes/Python/Python%E8%BF%9B%E9%98%B6/Python%20%E4%B8%AD%E7%9A%84%20Collections%20%E5%BA%93.md)
+- [Python 中的 Collections 库](./Notes/Python/Python%E8%BF%9B%E9%98%B6/Python%20%E4%B8%AD%E7%9A%84%20Collections%20%E5%BA%93.md)
 
 ### Ember文档翻译系列(V2.8.0)
 
