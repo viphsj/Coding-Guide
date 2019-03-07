@@ -57,6 +57,13 @@ print(json.dumps(database))
 # {"users": {"name": "ecmadao"}}
 ```
 
+使用这种方式更容易理解：
+
+```python
+database = defaultdict(lambda: defaultdict())
+database["users"]["name"] = "ecmadao"
+```
+
 ### `fromkeys`
 
 提供默认的值，通过一个list生成一个dict
@@ -138,7 +145,7 @@ dict_example = dict(ChainMap({}, info, default))
 
 # method 5
 # 最优解
-dict_example = {**default, **info}
+dict_example = {**default, **info}  # python 3.5以后版本支持
 ```
 
 ### 命名元组
@@ -252,7 +259,7 @@ __slots__ = ['year', 'month', 'day']
 class Structure:
     _fields = []
 
-    def __init__(self, *args):
+    def __init__(self, *args):  # 缺点：参数定义不明确，不支持关键字参数
         if len(args) != len(self._fields):
             raise TypeError('Expected {} arguments'.format(len(self._fields)))
         # Set the arguments
@@ -276,7 +283,7 @@ class Stock(Structure):
 ```python
 class Person:
 	def __init__(self, name):
-		self.name = _name
+		self._name = name
 	@property
 	def name(self):
 		return self._name
@@ -299,7 +306,7 @@ class Person:
 # 父类
 class Person:
     def __init__(self, name):
-        self.name = name
+        self._name = name
 
     # Getter function
     @property
@@ -427,7 +434,7 @@ def is_number(s):
 ```
 
 ```python
-# 对字符串对象用isdigit()方法:
+# 对字符串对象用isdigit()方法（只能检查是否是整数）:
 a = "03523"
 a.isdigit()
 # True
