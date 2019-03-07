@@ -322,6 +322,8 @@ $ df -m # 以 M 为单位
 # -s: 只列出总和
 
 $ du -sh folder # 列出某文件夹占空间的总大小，并根据大小自动选择合适的单位
+
+$ du --max-depth=1 -h ./ # 查看指定目录下第一层级内各文件夹占用磁盘大小
 ```
 
 ### VIM
@@ -712,3 +714,5 @@ $ sudo vim /etc/sysctl.conf
 # 生效修改的参娄
 $ sudo /sbin/sysctl -p
 ```
+
+- 安装中文字体 https://wiki.ubuntu.com.cn/%E5%AD%97%E4%BD%93

@@ -33,6 +33,8 @@
   - [Technology-best-practices](https://github.com/vaquarkhan/Technology-best-practices/blob/master/backend/nodejs/hapijs.md)
   - [Introducing hapi pal](https://medium.com/@hapipal/introducing-hapi-pal-550c13f30c5b)
   - [我看 hapi](http://www.10tiao.com/html/240/201703/2649257193/1.html)
+- [httpie](https://github.com/lukeed/httpie)
+- [Nestjs - Typescript](https://nestjs.com/)
 
 ## 工具
 
@@ -48,6 +50,7 @@
 - [slate](https://github.com/lord/slate) 基于 Ruby
 - [jsdoc](https://github.com/jsdoc3/jsdoc)
 - [docbox](https://github.com/tmcw/docbox) 基于 JavaScript
+- [docz](https://github.com/pedronauck/docz)
 - [Docusaurus](https://github.com/facebook/Docusaurus)
 - [docsify](https://github.com/docsifyjs/docsify)
 - [dapperdox](https://github.com/DapperDox/dapperdox)

@@ -90,6 +90,7 @@
 - [guid](https://github.com/dandean/guid)
 - [node-hat](https://github.com/substack/node-hat)
 - [shortid](https://github.com/dylang/shortid)
+- [nanoid](https://github.com/ai/nanoid)
 
 ### Server
 
@@ -131,6 +132,7 @@
 - [kue](https://github.com/Automattic/kue) 基于 Redis
 - [node-amqp](https://github.com/postwait/node-amqp) rabbitMQ
 - [rabbot](https://github.com/arobson/rabbot) rabbitMQ
+- [bee-queue](https://github.com/bee-queue/bee-queue) 基于 Redis
 
 文章
 
@@ -209,3 +211,5 @@
 - [node-cache-manager](https://github.com/BryanDonovan/node-cache-manager) 【缓存】
 - [winston](https://github.com/winstonjs/winston) 「logger」
 - [dotenv](https://github.com/motdotla/dotenv)「环境变量」
+- [envalid](https://github.com/af/envalid)「环境变量」
+- [mitt](https://github.com/developit/mitt) event emitter/pubsub
