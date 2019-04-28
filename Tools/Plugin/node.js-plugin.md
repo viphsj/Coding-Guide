@@ -21,6 +21,7 @@
     - [Intro](#intro)
   - [矩阵运算](#%E7%9F%A9%E9%98%B5%E8%BF%90%E7%AE%97)
   - [Schema](#schema)
+  - [DB](#db)
   - [Others](#others)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -97,6 +98,7 @@
 - [nodemon](https://github.com/remy/nodemon)
 - [http-server](https://github.com/indexzero/http-server)
 - [json-server](https://github.com/typicode/json-server)
+- [nest](https://github.com/nestjs/nest) http server based on ts
 
 ### GraphQL
 
@@ -161,6 +163,7 @@
 - [shaman](https://github.com/luccastera/shaman) 【包含了普通的线性拟合和分类】
 - [deeplearn](https://github.com/PAIR-code/deeplearnjs)
 - [natural](https://github.com/NaturalNode/natural) 【自然语言处理】
+- [nlp.js](https://github.com/axa-group/nlp.js)
 
 #### Intro
 
@@ -195,11 +198,16 @@
 - [normalizr](https://github.com/paularmstrong/normalizr)
 - [sequelize](https://github.com/sequelize/sequelize)
 
+### DB
+
+- [sqlite3](https://github.com/JoshuaWise/better-sqlite3)
+
 ### Others
 
 - [phantomjs-node](https://github.com/amir20/phantomjs-node)
   - [How to evaluate a page using awaitFor to load dynamic contents](https://github.com/amir20/phantomjs-node/issues/431)
   如果有类似 `waitFor` 的需求，即保持阻塞直到触发某种条件，一般是用来通过检查某个 DOM 是否存在，来判断页面是否加载完成，以便进行下一步的操作（比如截图）。可以通过上面的 issue 来实现这样的需求。
+- [nightmare](https://github.com/segmentio/nightmare) A high-level browser automation library
 
 - [jsinspect](https://github.com/danielstjules/jsinspect) 【检查代码中的重复代码，虽然不是非常精准，但对优化代码也有一定帮助。】
 - [nodemailer](https://github.com/nodemailer/nodemailer) 【Node.js 发送邮件】
@@ -213,3 +221,5 @@
 - [dotenv](https://github.com/motdotla/dotenv)「环境变量」
 - [envalid](https://github.com/af/envalid)「环境变量」
 - [mitt](https://github.com/developit/mitt) event emitter/pubsub
+
+- [ink](https://github.com/vadimdemedes/ink) 像写 React 一样写命令行 App
