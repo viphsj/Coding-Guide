@@ -218,8 +218,14 @@
   - [A Guide to Automating & Scraping the Web with JavaScript (Chrome + Puppeteer + Node JS)](https://codeburst.io/a-guide-to-automating-scraping-the-web-with-javascript-chrome-puppeteer-node-js-b18efb9e9921)
 - [node-cache-manager](https://github.com/BryanDonovan/node-cache-manager) 【缓存】
 - [winston](https://github.com/winstonjs/winston) 「logger」
-- [dotenv](https://github.com/motdotla/dotenv)「环境变量」
-- [envalid](https://github.com/af/envalid)「环境变量」
-- [mitt](https://github.com/developit/mitt) event emitter/pubsub
 
+环境变量
+
+- [dotenv](https://github.com/motdotla/dotenv)
+- [envalid](https://github.com/af/envalid)
+- [custom-env](https://www.npmjs.com/package/custom-env)
+- [Managing Configurations in Node.JS apps with dotenv and convict](https://medium.com/@sherryhsu/managing-configurations-in-node-js-apps-with-dotenv-and-convict-d74070d37373)
+
+- [mitt](https://github.com/developit/mitt) event emitter/pubsub
 - [ink](https://github.com/vadimdemedes/ink) 像写 React 一样写命令行 App
+- [np](https://github.com/sindresorhus/np) npm publish helper

@@ -16,6 +16,9 @@
     - [定时任务](#%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1)
     - [用户和用户组](#%E7%94%A8%E6%88%B7%E5%92%8C%E7%94%A8%E6%88%B7%E7%BB%84)
     - [磁盘管理](#%E7%A3%81%E7%9B%98%E7%AE%A1%E7%90%86)
+    - [系统信息](#%E7%B3%BB%E7%BB%9F%E4%BF%A1%E6%81%AF)
+    - [日志记录](#%E6%97%A5%E5%BF%97%E8%AE%B0%E5%BD%95)
+    - [信号](#%E4%BF%A1%E5%8F%B7)
   - [VIM](#vim)
   - [压缩/备份](#%E5%8E%8B%E7%BC%A9%E5%A4%87%E4%BB%BD)
     - [常见压缩文件后缀名](#%E5%B8%B8%E8%A7%81%E5%8E%8B%E7%BC%A9%E6%96%87%E4%BB%B6%E5%90%8E%E7%BC%80%E5%90%8D)
@@ -25,7 +28,7 @@
   - [正则表达式](#%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F)
   - [网络](#%E7%BD%91%E7%BB%9C)
     - [下载](#%E4%B8%8B%E8%BD%BD)
-    - [配置](#%E9%85%8D%E7%BD%AE)
+    - [网络](#%E7%BD%91%E7%BB%9C-1)
   - [日期](#%E6%97%A5%E6%9C%9F)
   - [Others](#others)
 
@@ -535,7 +538,7 @@ do
 done
 ```
 
-> 利用并行进程加速命令执行：利用 bash 的操作符 &，会使得 shell 将命令置于后台并继续执行脚本
+> 利用并行进程加速命令执行：**利用 bash 的操作符 &，会使得 shell 将命令置于后台并继续执行脚本**
 
 ```bash
 #!/bin/bash
@@ -568,10 +571,9 @@ $ crontab -d # 删除当前用户的定时任务
 $ sudo crontab -u ecmadao -l # 使用 -u 查看指定用户的定时任务，执行时必须有 root 权限
 ```
 
-crontan 各时间段意义：
-
 ```bash
 :<<COMMENT
+crontan 各时间段意义
 * * * * * cmd
 分 时 日期 月 星期 命名
 
@@ -584,6 +586,16 @@ crontan 各时间段意义：
 当设定为 a-b 时，表示 a-b 的时间段内都要执行
 当设定为 */n 时，表示每隔 n 个时间段后要执行
 当设定为 a,b,c 时，表示第 a,b,c 个时间段要执行
+
+======================
+
+- 执行 cron 作业所使用的权限同创建 crontab 的用户权限相同
+- 在 cron 作业中指定的命令需要使用完整路径，这是因为 cron 并不会执行用户的 .bashrc，因此在执行 cron 作业时的环境与终端所使用的环境不同
+  - cron 命令会将 SHELL 变量设置为 /bin/sh，还会根据 /etc/passwd 设置 LOGNAME 和 HOME
+  - 可以在 crontab 中设置其他环境变量，可针对所有作业设置，也可针对个别作业设置
+
+NAME=abc
+00 * * * * bash /user/home/test.sh
 COMMENT
 ```
 
@@ -643,7 +655,7 @@ $ passwd user1 # 更改 user1 用户密码（当前必须以 root 用户登录�
 
 #### 磁盘管理
 
-- `df [-i/-h/-k/-m]`
+- `df [-i/-h/-k/-m]` dist free
 
 ```bash
 # df 可查看已挂载磁盘的总容量、使用容量、剩余容量等。默认以 KB 为单位
@@ -654,11 +666,11 @@ $ df -k # 以 K 为单位
 $ df -m # 以 M 为单位
 ```
 
-- `du [option] file/folder`
+- `du [-ahcs] file/folder` dist usage
 
 ```bash
 :<<COMMENT
-查看某个目录或文件所占空间的大小
+查看某些目录或文件所占空间的大小
 option:
 -a: 表示全部文件和目录的大小都列出来。不带 -a 参数则只列出文件夹的大小
 
@@ -669,11 +681,246 @@ option:
 
 -c: 在最后显示总和
 -s: 只列出总和
+
+--exclude PATTERN/file 排除通配符匹配到的文件或单个文件
+--max-depth=n 指定递归的深度（子目录层级）
+
+使用 du 时，需要确保其对所有的文件有读权限，对所有的目录有读权限和执行权限
+另外，du 输出的是文件字节数，未必和文件所占的磁盘空间完全一样，因为磁盘空间是以块为单位分配的，就算是 1 字节的文件，也会消耗一个磁盘块
 COMMENT
 
 $ du -sh folder # 列出某文件夹占空间的总大小，并根据大小自动选择合适的单位
 
 $ du --max-depth=1 -h ./ # 查看指定目录下第一层级内各文件夹占用磁盘大小
+
+$ du -h folder --exclude "*.log"
+```
+
+#### 系统信息
+
+- `who`/`w` 获取当前登录用户的信息
+- `last [user]` 获取自文件 /var/log/wtmp 创建之后登录过系统的用户列表。可以指定用户
+- `lastb [-F]` 获取登录失败的信息，-F 输出完整的日期
+
+- `hostname` 打印当前主机名
+- `uname [-n/-a]` 输出 Linux 内核版本、硬件架构等详细信息
+- `uptime` 查看系统的加电运行时长
+- `reboot` 重启系统，仅 root 用户有权限
+- `poweroff` 关闭系统，仅 root 用户有权限
+
+- `which cmd`
+- `whereis cmd`
+- `whatis cmd`
+
+- `watch [-n/-d] 'command'` 按照指定的间隔执行命令并显示输出
+
+```bash
+$ watch 'ls -lh' # 默认 2 秒执行一次命令
+$ watch -n 5 'ls -lh' # 指定每隔 5 秒执行一次命令
+$ watch -d 'ls -lh' # 着重标记处连续命令输出之间的差异
+```
+
+- `nice`/`renice` 调整任务调度优先级
+
+```bash
+:<<COMMENT
+nice 命令会修改内核的调度表，以更低/更高的优先级运行任务。
+表示优先级的值越低，则调度器分配给任务的 CPU 时间就越多；优先级越高，则分配的 CPU 时间越少，占用的资源则越少
+
+nice cmd # 默认在命令已有优先级上增加 10
+nice -num cmd # 以指定的 num 优先级运行命令
+nice -adjustment=num cmd # 指定命令优先级，但只有超级用户可以指定负数的优先级
+
+renice 可以修改正在运行的任务的优先级
+对占用大量资源，但运行时间没有特别要求的任务，可以利用该命令降低优先级
+
+renice num pid # 给某进程指定优先级
+COMMENT
+```
+
+- `ps [-f/-e/-ax/-o] [--sort] [-u/-U] [-C]`
+
+```bash
+:<<COMMENT
+ps 默认值显示当前终端所启动的进程。-e/-ax 命令可以显示系统中运行的所有进程
+-f 打印多列的完整信息
+
+-o 指定显示哪些列的数据：
+pcpu CPU 占用率
+pid 进程 ID
+ppid 父进程 ID
+pmem 内存使用率
+comm 可执行
+cmd 简单命令
+user 启动进程的用户
+nice 优先级
+time 累计的 CPU 时间
+stat 进程状态
+tty 所关联的 TTY 设备
+
+--sort 强制对输出进行排序，后面的参数名称和 -o 一致。+代表升序，-代表降序
+
+-u user1,user2.. 指定有效用户列表
+-U user1,user2.. 指定真实用户列表
+
+-C cmd1,cmd2.. 找出特定命令的进程
+COMMENT
+
+$ ps -axf
+$ ps -axo pid,user,comm
+
+# 按照 CPU 占用率从高到低排序，并只输出占用最高的前 5 个
+$ ps -axo pid,user,comm,pcpu --sort -pcpu | head -5
+
+# 用 grep 过滤出特定用户的进程
+$ ps -axo pid,user,comm,pcpu | grep user
+# 或者直接用 -u 参数输出该用户的进程（注：不能和 -ax/-e 一起用）
+$ ps -u user -U user -o pid,user,comm,pcpu
+```
+
+- `pgrep cmd [-d/-u/-c]`
+
+```bash
+# pgrep 列出命令的进程 ID，命令不需要使用精准名称（ps 命令则需要使用精准名称）
+# 默认使用换行符作为分隔符
+$ pgrep bash # 或者 pgrep ash
+$ pgrep bash -d ':' # 使用 : 作为分隔符
+
+# -u 可以过滤用户
+$ pgrep -u root,user cmd
+
+# -c 返回匹配的进程数量
+$ pgrep -c cmd
+```
+
+```bash
+:<<COMMENT
+/proc 目录中存有系统、模块及运行进程的相关信息
+
+/proc/cpuinfo 中包含了 CPU 的详细信息
+/proc/meminfo 中包含了内存相关的信息
+/proc/partitions 中描述了磁盘分区的信息
+COMMENT
+```
+
+- `sysctl [-a/-p]` 修改内核参数，需要 root 权限
+
+```bash
+:<<COMMENT
+sysctl 命令可以立即改变参数值，但除非将参数定义在 /etc/sysctl.conf 中，否则重启之后会复原
+修改 /etc/sysctl.conf 前尽量前测试，否则可能导致系统无法启动
+
+一些值的作用
+kernel.sched_migration_cost_ns 控制任务被切换之前能够保持活跃状态的时长
+net.core.rmem_max 网络缓存的最大值
+
+sysctl 支持的参数通常 /proc 文件系统也支持
+例如，参数 net.core.rmem_max 可以以 /proc/sys/net/core/rmem_max 的形式访问
+COMMENT
+
+$ sysctl -a # 输出所有的参数
+$ sysctl -p filename # 从 filename 中读入值。默认从 /etc/sysctl.conf 中读取
+$ sysctl param # 读取 param 的值
+$ sysctl param=value # 临时设置值
+```
+
+#### 日志记录
+
+> 与守护进程和系统进程相关的日志文件位于 /var/log 目录中。在 Linux 系统中，由守护进程 syslogd 使用 syslog 标准协议处理日志，每个标准应用程序都可以利用 syslogd 记录日志
+
+- `logger [-tfp] message`
+
+```bash
+:<<COMMENT
+一些标准的 Linux 日志文件
+/var/log/boot.log 系统启动信息
+/var/log/messages 内核启动信息、普通日志文件
+/var/log/auth.log 用户认证信息
+/var/log/mail.log 邮箱服务器日志
+COMMENT
+
+$ logger 'message' # 直接向 /var/log/messages 中写入信息
+$ logger -t TAG 'message' # -t 定义消息标签
+$ logger -f target.log # -f 将其他文件的内容写入日志文件
+
+# -p 和 /etc/rsyslog.d/ 目录下的配置文件决定了日志消息保存的地方
+$ vim /etc/rsyslog.d/mylog.conf
+# 写入: testlog.* /var/log/testlog.log
+$ service syslog restart
+$ logger -p testlog.info 'message'
+```
+
+- 使用 logrotate 配置日志压缩和切分
+
+- [LOGROTATE 日志滚动解决日志占用空间过大](https://www.noisyfox.io/logrotate.html)
+- [ubuntu server 使用 logrotate 切割日志](http://jiangli373.github.io/2014/10/08/ubuntu-server%E4%BD%BF%E7%94%A8logrotate%E5%88%87%E5%89%B2%E6%97%A5%E5%BF%97/)
+
+```bash
+:<<COMMENT
+参数                         功能
+compress                     通过gzip 压缩转储以后的日志
+nocompress                   不需要压缩时，用这个参数
+copytruncate                 用于还在打开中的日志文件，把当前日志备份并截断
+nocopytruncate               备份日志文件但是不截断
+create mode owner group      转储文件，使用指定的文件模式创建新的日志文件
+nocreate                     不建立新的日志文件
+delaycompress                和 compress 一起使用时，转储的日志文件到下一次转储时才压缩
+nodelaycompress              覆盖 delaycompress 选项，转储同时压缩。
+errors address               专储时的错误信息发送到指定的Email 地址
+ifempty                      即使是空文件也转储，这个是 logrotate 的缺省选项。
+notifempty                   如果是空文件的话，不转储
+mail address                 把转储的日志文件发送到指定的E-mail 地址
+nomail                       转储时不发送日志文件
+olddir directory             转储后的日志文件放入指定的目录，必须和当前日志文件在同一个文件系统
+noolddir                     转储后的日志文件和当前日志文件放在同一个目录下
+prerotate/endscript          在转储以前需要执行的命令可以放入这个对，这两个关键字必须单独成行
+postrotate/endscript         在转储以后需要执行的命令可以放入这个对，这两个关键字必须单独成行
+hourly                       指定转储周期为每小时。开启此项前，需利用 man logrotate 确认版本是否支持，然后到 /etc/cron.daily 文件夹下，将 logrotate.conf 文件复制到 /etc/cron.hourly 文件夹中
+daily                        指定转储周期为每天
+weekly                       指定转储周期为每周
+monthly                      指定转储周期为每月
+rotate count                 指定日志文件删除之前转储的次数，0 指没有备份，5 指保留5 个备份
+tabootext [+] list           让logrotate 不转储指定扩展名的文件，缺省的扩展名是：.rpm-orig, .rpmsave, v, 和 ~
+size size                    当日志文件到达指定的大小时才转储，Size 可以指定 bytes (缺省)以及KB (sizek)或者MB (sizem).
+COMMENT
+
+$ cd /etc/logrotate.d/
+$ vim xxx
+
+# 强制执行
+sudo logrotate -f /etc/logrotate.d/xxx
+```
+
+#### 信号
+
+> 信号可以中断正在运行的程序。当进程收到一个信号时，会执行对应的信号处理程序作为相应。编译型的应用程序使用系统调用 kill 生成信号。在命令行（或是 shell 脚本）中则通过 kill 命令实现
+
+- `kill [-l/-s] [pid]`
+- `killall [-s/-u] process_name`
+
+```bash
+:<<COMMENT
+-l 列出所有可用的信号，常用信号有：
+SIGHUP 1: 对控制进程或终端的结束进行挂起检测
+SIGINT 2: 当按下 Ctrl+C 时发送该信号
+SIGKILL 9: 用于强制杀死进程
+SIGTERM 15: 默认用于终止进程
+SIGTSTP 20: 当按下 Ctrl+Z 时发送该信号
+COMMENT
+$ kill -l
+
+# 终止某进程
+$ kill pid
+# 给某进程发送信号
+$ kill -s signal pid
+$ kill -s 9 pid # 信号量 9 用于强制杀死信号
+$ kill -9 pid # 同上
+
+$ killall process_name # killall 以进程名称为参数
+$ killall -9 process_name
+
+# 杀死某用户的所有指定进程
+$ killall -u user process_name
 ```
 
 ### VIM
@@ -798,15 +1045,15 @@ $ zip -l zipfile.zip
 -a: 根据输出文件的扩展名，自动选择合适的压缩方式
 
 -x: 解包或解压缩，可以通过 -C path 来指定输出目录
--t: 查看 tar 包里的文件
 -c: 创建一个 tar 包或者压缩文件包
--v: 可视化
+
 -f: 后面需跟文件名，即 -f filename，表示压缩/解压后的文件名为 filename。在多参数组合的情况下，f 需要被写在最后
 -p: 使用原文件的属性
 -P: 表示可以使用绝对路径
 --exclude PATTERN: 在打包或压缩时，不要包含某文件
 --totals: 打印出归档的总字节数
 
+-t: 查看 tar 包里的文件
 -r: 将新文件追加到已有的归档文件中
 -u: 当新文件和归档内的文件重名时，仅当文件更新时间更新时，才会被加入到归档中
 
@@ -823,8 +1070,8 @@ $ tar -czvf result.tar.gz folder # 打包同时利用 gzip 压缩
 $ tar -cjvf result.tar.bz2 folder # 打包同时利用 bzip2 压缩
 $ tar -cavf result.tar.lzma folder # 自动旋转合适的压缩方式
 
-$ tar -zxvf result target.tar.gz # 解压 gz 文件
-$ tar -jxzf result target.tar.bz2 # 解压 bz2 文件
+$ tar -zxvf target.tar.gz result # 解压 gz 文件
+$ tar -jxzf target.tar.bz2 result # 解压 bz2 文件
 
 $ tar -tf target.tar.gz # 查看压缩文件/包内的内容
 
@@ -1258,10 +1505,12 @@ fi
 ```bash
 :<<COMMENT
 -R 在目录中递归搜索
--c 打印符合要求的行数
 -i 忽略大小写
--n 输出符合要求的行和行号
+
 -v 打印不符合要求的行
+-c 仅打印符合要求的行
+-n 输出行号
+
 -A 后 ＋数字，例如 -A2，表示打印符合要求的行和后面两行
 -B 后 ＋数字，例如 -B2，表示打印符合要求的行和上面两行
 -C 后 ＋数字，例如 -C2，表示打印符合要求的行和上下各两行
@@ -1360,7 +1609,7 @@ $ wget --user username --password pwd url
 
 [Linux命令行：cURL的十种常见用法](https://juejin.im/post/5915204b44d904006c463c61)
 
-#### 配置
+#### 网络
 
 ```bash
 :<<COMMENT
@@ -1375,59 +1624,89 @@ $ ifconfig # 用于配置或显示网络接口、子网掩码等信息
 $ host domain # 列出域名所有的 IP 地址
 
 $ route [-n] # 显示路由表，-n 则会指定已数字形式显示地址
+
+$ hostname -I # 内网 IP 外网 IP
+```
+
+- `ping [-c] host/ip`
+
+> ping 命令使用 ICMP 协议（Internet Control Message Protocol，网络控制消息协议）中的 echo 分组检验主机间连通性。发送 echo 分组之后，如果目标主机处于活跃状态，则会返回一条 reply。
+
+```bash
+$ ping -c2 domain # 限制发送 2 次 echo 分组
+```
+
+- `traceroute domain/ip` 显示分组途径的所有网关的地址
+
+- `scp [-rp] source target` Secure Copy Program，安全复制程序，文件均通过 SSH 加密通道进行传输
+
+```bash
+# -r 以递归形式复制目录
+# -p 可以在复制文件同时保留文件的权限和模式
+
+$ scp filename user@host:path # 本机文件复制到远程
+$ scp user@host:filepath path # 远程文件复制到本机
+```
+
+- `lsof [-i] [port]` 列出已打开的文件，-i 则将范围限制在已打开的网络连接，port 参数可指明端口号
+- `netstat -tnp` 列出开放端口与服务
+
+```bash
+$ lsof -i 27017
 ```
 
 ### 日期
 
+- `date`
+
 ```bash
+:<<COMMENT
+时间格式 format
+=== 星期 ===
+%a # Sun
+%A # Sunday
+
+=== 月 ===
+%b # Nov
+%B # November
+
+=== 日 ===
+%d # 31
+
+=== 固定格式 ===
+%D # mm/dd/yy
+
+=== 年 ===
+%y # 18
+%Y # 2018
+
+=== 小时 ===
+%I # 09
+%H # 09
+
+=== 分钟 ===
+%M # 33
+
+=== 秒 ===
+%S # 10
+
+=== 时间戳（秒）===
+%s
+
+=== 查看当前是今年的第几天 ===
+%j
+COMMENT
+
 $ date # 读取当前时间和日期
 $ date +%s # 将时间转换为时间戳，以秒为单位
 $ date --date "2017-04-01" # 将字符串类型日期输入，转换为时间
 $ date --date "2017-04-01" +%s # 将字符串类型日期输入，并转换格式
-```
 
-```bash
-# 时间格式 format
-# === 星期 ===
-%a # Sun
-%A # Sunday
-
-# === 月 ===
-%b # Nov
-%B # November
-
-# === 日 ===
-%d # 31
-
-# === 固定格式 ===
-%D # mm/dd/yy
-
-# === 年 ===
-%y # 18
-%Y # 2018
-
-# === 小时 ===
-%I # 09
-%H # 09
-
-# === 分钟 ===
-%M # 33
-
-# === 秒 ===
-%S # 10
-
-# === 时间戳（秒）===
-%s
+$ date "+%Y-%M-%d %H:%M:%S" # 2019-18-06 22:18:54
+$ date -s "20170901 8:30:00" # 设置时间
 ```
 
 ### Others
-
-- 查看机器内网和外网 IP
-
-```bash
-$ hostname -I
-# 内网 IP 外网 IP
-```
 
 - 查看内存占用
 
