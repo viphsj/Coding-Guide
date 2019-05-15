@@ -16,6 +16,7 @@
     - [定时任务](#%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1)
     - [用户和用户组](#%E7%94%A8%E6%88%B7%E5%92%8C%E7%94%A8%E6%88%B7%E7%BB%84)
     - [磁盘管理](#%E7%A3%81%E7%9B%98%E7%AE%A1%E7%90%86)
+    - [软链接](#%E8%BD%AF%E9%93%BE%E6%8E%A5)
     - [系统信息](#%E7%B3%BB%E7%BB%9F%E4%BF%A1%E6%81%AF)
     - [日志记录](#%E6%97%A5%E5%BF%97%E8%AE%B0%E5%BD%95)
     - [信号](#%E4%BF%A1%E5%8F%B7)
@@ -25,6 +26,10 @@
     - [压缩/打包命令](#%E5%8E%8B%E7%BC%A9%E6%89%93%E5%8C%85%E5%91%BD%E4%BB%A4)
     - [备份](#%E5%A4%87%E4%BB%BD)
   - [shell 基础](#shell-%E5%9F%BA%E7%A1%80)
+    - [基础](#%E5%9F%BA%E7%A1%80)
+    - [输出、重定向和管道符](#%E8%BE%93%E5%87%BA%E9%87%8D%E5%AE%9A%E5%90%91%E5%92%8C%E7%AE%A1%E9%81%93%E7%AC%A6)
+    - [函数和流程控制](#%E5%87%BD%E6%95%B0%E5%92%8C%E6%B5%81%E7%A8%8B%E6%8E%A7%E5%88%B6)
+    - [比较与测试](#%E6%AF%94%E8%BE%83%E4%B8%8E%E6%B5%8B%E8%AF%95)
   - [正则表达式](#%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F)
   - [网络](#%E7%BD%91%E7%BB%9C)
     - [下载](#%E4%B8%8B%E8%BD%BD)
@@ -42,6 +47,7 @@
 - [linux基础命令介绍](https://segmentfault.com/a/1190000007258280)
 - [Linux工具快速教程](http://linuxtools-rst.readthedocs.io/zh_CN/latest/index.html)
 - [Linux 文本处理三利器](https://segmentfault.com/a/1190000007993999)
+- [linux-command](https://github.com/jaywcjlove/linux-command)
 
 ### 文件和目录管理
 
@@ -134,11 +140,7 @@ $ ls -l | cat -n
 # -n 输出行号
 ```
 
-> **注：`cat`不能使用相同的文件作为输入和重定向后的输出，否则会清空文件。** 例如：
-
-```bash
-$ cat file1 > file1 # 并没有写入，清空了文件
-```
+> **注：`cat`不能使用相同的文件作为输入和重定向后的输出，否则会清空文件。** 例如 cat file1 > file1 并没有写入，但清空了文件
 
 - `more filaname`
 - `less filename`
@@ -233,6 +235,7 @@ $ cd path # 切换目录到 path
 $ cd - # 回到上一个目录
 ```
 
+- `pwd` 显示当前用户所处的路径
 - `pushd` 压入并切换路径
 - `popd` 删除最近压入的路径并切换到下一个目录
 - `dirs` 查看栈中的内容
@@ -291,8 +294,8 @@ drwxr-xr-x  100 ecmadao  staff   3200 10  2 21:32 leetcode
   x 代表可执行 execute
   - 代表没有对应的权限
   前 3 位为所属主的权限，中间 3 位代表所属组的权限，后 3 位代表其他非本群组用户的权限
-  用户权限（rwx------）中还有一位 setuid(S) 的特殊权限，位于执行权限（x）的位置，代表允许可执行文件以其拥有者的权限来执行，即便该文件是由其他用户运行的
-  用户组权限（---rwx---）中还有一位 setgid(S) 的特殊权限，位于执行权限（x）的位置，代表允许可执行文件以其拥有组的权限来执行，即便该文件是由其他用户组运行的
+  用户权限（rwx------）中还有一位 setuid(S/s)，SUID 的特殊权限，位于执行权限（x）的位置，代表允许可执行文件以其拥有者的权限来执行，即便该文件是由其他用户运行的。如果原先没有 x 权限，则赋予特殊权限后显示为 S，否则为 s
+  用户组权限（---rwx---）中还有一位 setgid(S/s)，SGID 的特殊权限，位于执行权限（x）的位置，代表允许可执行文件以其拥有组的权限来执行，即便该文件是由其他用户组运行的。如果原先没有 x 权限，则赋予特殊权限后显示为 S，否则为 s
   目录有一个叫作粘滞位（t/T）的特殊权限。如果设置了粘滞位，则只有创建该目录的用户才能删除目录中的文件，其他用户即便有写权限，也不能删除
     - 没有执行权限但设置了粘滞位：d------rwT
     - 有执行权限和粘滞位：d------rwt
@@ -339,14 +342,15 @@ $ chmod o-w filename # 其他用户不可写
 $ chmod a+t dir # 设置粘滞位，设置后仅目录所有者可删除其中的文件
 ```
 
-- `chattr [+-=][A/s/a/c/i] filename`
+- `chattr [+-=][A/s/a/c/i] filename` 为文件增加、删除隐藏权限
+- `lsattr [-a] filename/dir` 列出文件或文件夹下文件的隐藏权限
 
 ```bash
 :<<COMMENT
 +-= 分别代表增加，去除，设定
 A: 增加该属性后，文件或目录的 atime 不可被修改
 s: 增加该属性后，会将数据同步写入磁盘中
-a: 增加该属性后，表示只能追加不能删除
+a: 增加该属性后，表示只能追加，不能删除
 c: 增加该属性后，表示自动压缩该文件，读取时会自动解压
 i: 增加该属性后，表示文件不能被删除、重命名、设定链接、写入、新增数据
 COMMENT
@@ -601,6 +605,15 @@ COMMENT
 
 #### 用户和用户组
 
+```bash
+:<<COMMENT
+管理员 UID 为 0: 系统的管理员用户
+系统用户 UID 为 1~999: 默认服务程序会有独立的系统用户负责运行
+普通用户的 UID 从 1000 开始
+UID 不保证连续，且不能重复
+COMMENT
+```
+
 - `groupadd [-g GID] groupname`
 
 ```bash
@@ -617,40 +630,56 @@ $ groupadd -g 511 groupTest2
 $ groupdel groupTest1
 ```
 
-- `useradd [-u UID] [-g GID] [-d HOME] [-M] [-s] username`
+- `useradd [-e YYYY-MM-DD] [-u UID] [-g GID] [-d HOME] [-M] [-s shell] username` 创建新账户
 
 ```bash
-# -u 自定义 UID
-# -g 表示令用户属于某个已存在的组，-g 后可使用 GID 或组名
-# -d 自定义用户的家目录
-# -M 表示不建立家目录
-# -s 表示自定义 shell
+:<<COMMENT
+-u 自定义 UID
+-g 表示令用户属于某个已存在的组，-g 后可使用 GID 或组名
+-d 自定义用户的家目录
+-M 表示不建立家目录
+-e 代表账户到期时间，格式为 YYYY-MM-DD
+-s 表示指定用户的 shell 解释器，设置为 /sbin/nologin 则用户不能登录系统
+COMMENT
+
 $ useradd -g 0 ecmadao # 添加 ecmadao 用户，并放到 root 组内
 # 如果 -g 后使用了不存在的 gid 则会报错
 ```
 
-- `userdel [-r] username`
+- `usermod [-L/-U] [-e YYYY-MM-DD] [-g GID] [-u UID] [-s shell] username` 修改用户信息，-L 代表锁定用户禁止登录系统，-U 则解锁用户
+
+- `userdel [-rf] username`
 
 ```bash
+# -f: 强制删除
 # -r: 删除用户时同时删除该用户的家目录
 $ userdel ecmadao
 $ userdel -r ecmadao
 ```
 
-- `passwd [username]`
+- `passwd [-l/-u] [-d] [-e] [username]`
 
 ```bash
-# 更改用户的密码
+:<<COMMENT
+passwd 不指定用户的时候，则仅针对当前登录用户
+指定其他用户时，需要有 root 权限
+
+-l: 锁定用户，禁止其登录
+-u: 解锁用户
+-d: 删除用户的密码，使其可以以空密码登录
+-e: 让用户的密码过期，强制用户下次登录的时候修改密码
+COMMENT
+
 $ passwd # 修改自身密码
 $ passwd user1 # 更改 user1 用户密码（当前必须以 root 用户登录）
-# 只有 root 用户有权限更改其他用户的密码
 ```
 
 - `su [-] username`
 
 ```bash
 # 切换当前登录用户
-# 加上 - 则会重置环境变量
+# 加上 - 则会重置环境变量，即切换时将环境变量也设置为该用户的信息
+$ su - user
 ```
 
 #### 磁盘管理
@@ -696,7 +725,47 @@ $ du --max-depth=1 -h ./ # 查看指定目录下第一层级内各文件夹占�
 $ du -h folder --exclude "*.log"
 ```
 
+#### 软链接
+
+Linux 系统中存在硬链接和软链接两种文件：
+
+- 硬链接 hard link：「指向原文件 inode 的指针」，硬链接和原文件其实是同一个文件。每增加一个硬链接，文件的 inode 数就加 1。只有当 inode 数为 0 时，才算把文件真正删除。不能跨分区对目录文件进行链接
+- 软链接 symbolic link：仅包含所链接文件的路径名，可链接目录文件，可跨分区链接。当原始文件被删除后，链接文件也将失效
+
+- `ln [-sfiv] source target`
+
+```bash
+:<<COMMENT
+-s: 创建软链接，否则创建硬链接
+-f: 强制创建链接
+-i: 覆盖前询问
+-v: 显示创建链接的过程
+COMMENT
+
+$ ln -sv example.txt ./example_soft.txt
+```
+
 #### 系统信息
+
+```bash
+:<<COMMENT
+Linux 系统中常见的目录名称以及相应内容
+/boot: 开机所需文件 - 内核、开机菜单以及所需配置文件等
+/dev: 以文件形式存放任何设备与接口
+/etc: 配置文件
+/home: 家目录
+/bin: 存放单用户模式下可操作的命令
+/lib: 开机时用到的函数库，以及 /bin 和 /sbin 下命令要调用的函数
+/media: 用于挂载设备文件的目录
+/root: 系统管理员的家目录
+/tmp: 任何人都可以使用的共享临时目录
+/proc: 虚拟文件系统，例如系统内核、进程、外部设备及网络状态等
+/usr/local: 用户自行安装的软件
+/usr/sbin: Linux 开机时不会使用到的软件、命令、脚本
+/usr/share: 帮助与说明文件、共享文件
+/var: 经常变化的文件，例如日志
+COMMENT
+```
 
 - `who`/`w` 获取当前登录用户的信息
 - `last [user]` 获取自文件 /var/log/wtmp 创建之后登录过系统的用户列表。可以指定用户
@@ -776,6 +845,8 @@ $ ps -axo pid,user,comm,pcpu --sort -pcpu | head -5
 $ ps -axo pid,user,comm,pcpu | grep user
 # 或者直接用 -u 参数输出该用户的进程（注：不能和 -ax/-e 一起用）
 $ ps -u user -U user -o pid,user,comm,pcpu
+
+$ ps -e -o 'pid,comm,args,pcpu,rsz,vsz,stime,user,uid'
 ```
 
 - `pgrep cmd [-d/-u/-c]`
@@ -801,6 +872,8 @@ $ pgrep -c cmd
 /proc/meminfo 中包含了内存相关的信息
 /proc/partitions 中描述了磁盘分区的信息
 COMMENT
+
+$ cat /proc/cpuinfo |grep "cores"|uniq # 查看 CPU 核数
 ```
 
 - `sysctl [-a/-p]` 修改内核参数，需要 root 权限
@@ -850,7 +923,7 @@ $ service syslog restart
 $ logger -p testlog.info 'message'
 ```
 
-- 使用 logrotate 配置日志压缩和切分
+使用 logrotate 配置日志压缩和切分
 
 - [LOGROTATE 日志滚动解决日志占用空间过大](https://www.noisyfox.io/logrotate.html)
 - [ubuntu server 使用 logrotate 切割日志](http://jiangli373.github.io/2014/10/08/ubuntu-server%E4%BD%BF%E7%94%A8logrotate%E5%88%87%E5%89%B2%E6%97%A5%E5%BF%97/)
@@ -923,7 +996,13 @@ $ killall -9 process_name
 $ killall -u user process_name
 ```
 
+- `history [-c]` 显示历史执行过的命令，默认显示 1000 条记录，可修改`/etc/profile`文件中的`HISTSIZE`变量。`-c`则清除所有记录。历史记录会保存在`~/.bash_history`文件中
+- `!number` `history`命令打印的信息带有行号，该命令可快速输出某行的命令，避免重复输入
+
 ### VIM
+
+- [Learn Vim Progressively](http://yannesposito.com/Scratch/en/blog/Learn-Vim-Progressively/)
+- [简明 VIM 练级攻略](https://coolshell.cn/articles/5426.html)
 
 ```bash
 $ vim filename # 进入一般模式
@@ -931,12 +1010,15 @@ $ vim filename # 进入一般模式
 :<<COMMENT
 在一般模式中，有如下快捷操作可以编辑文档:
 
+0: 移动光标到行首
+$: 移动光标到行尾
+
 x: 向后删除一个字符
 X: 向前删除一个字符
 nx: 向后删除 n 个字符
 
 dd: 删除/剪切光标所在的行（执行后该行已被复制）
-ndd: 删除/剪切光标所在行之后的 n 行（包括当前行）
+ndd: 删除/剪切光标所在行之后的 n 行（包括当前行），例如 5dd
 
 yy: 复制当前行
 nyy: 从光标所在行开始，复制下面的 n 行（包括当前行）
@@ -948,14 +1030,27 @@ u: 还原上一步操作
 v: 按 v 后移动光标会选中指定字符，然后可以实现复制、粘贴等操作
 
 ########################################################
+
 在一般模式下，输入 : 可进入命令模式
 :w 保存文本
 :w! 强制保存
 :q 退出 vim
 :q! 强制退出
 :wq 保存并退出
+:wq! 强制保存退出
 :set nu 显示行号
 :set nonu 不显示行号
+:整数 跳到该行
+
+########################################################
+
+从一般模式进入编辑模式
+i: 把光标放在 cursor 处
+I: 把光标放在行首
+a: 把光标放在 cursor 后一个位置
+A: 把光标放在行尾
+o: 在光标所在行的下一行插入新行
+O: 在光标所在行的上一行插入新行
 COMMENT
 ```
 
@@ -1110,51 +1205,34 @@ $ rsync -avzr source target --delete
 
 ### shell 基础
 
-> 双引号`""`中的特殊字符会被转义，但单引号`''`不会
-
-- 彩色输出
+#### 基础
 
 ```bash
 :<<COMMENT
-颜色码：0-重置，30-黑色，31-红色，32-绿色，33-黄色，34-蓝色，35-洋红，36-青色，37-白色
-
-更改文字颜色：`\e[1;3xm...\e[0m`
-更改背景色：`\e[1;4xm...\e[0m`
+转义符
+\: 反斜杠之后的变量变为单纯的字符串
+'': 转义其中所有的变量为单纯的字符串
+"": 保留其中的变量
+``: 把其中执行的命令输出返回
 COMMENT
 
-echo "\e[1;31m 12345 \e[0m"
-echo "\e[1;41m 12345 \e[0m"
-```
+$ echo `ls`
 
-- 文件描述符和重定向
-
-```bash
 :<<COMMENT
-0 - stdin（标准输入）
-1 - stdout（标准输出）
-2 - stderr（标准错误）
-
-在命令执行完后，可以在特殊变量`$?`中获取退出状态。如果正常完成，则退出状态为`0`
-
-`>`将输出重定向，`>>`为重定向追加，但仅打印`stdin`的信息。在命令前加入文件描述符则可打印对应的输出：
+主要环境变量
+HOME: 用户主目录
+SHELL: 用户在使用的 shell 解释器名称
+HISTSIZE: 输出的历史记录条数
+HISTFILESIZE: 保存的历史记录条数
+MAIL: 邮件保存路径
+LANG: 系统语言、语系名称
+RANDOM: 生成一个随机数字
+PS1: Bash 解释器的提示符
+PATH: 定义解释器搜索用户执行命令的路径
+EDITOR: 用户默认的文本编辑器
 COMMENT
 
-ls -l > test.txt # 等同于 ls -l 1> test.txt
-ls -l 2> test.txt # 仅打印错误信息
-ls -l &> test.txt # 打印 stdout 和 stderr
-```
-
-```bash
-# 输出通过`>`重定向到文件后，不会再在终端输出。如果需要同时输出到文件和终端，需要使用`tee`命令
-ls -l > test.txt # 终端不会再输出
-ls -l | tee test.txt # 输入文件后，再输出到终端
-
-# tee file1 file2 file3....
-# tee 命令将输入写入后，再将其作为后续命令的 stdin 传递下去
-ls -l | tee test.txt | cat -n
-
-# tee 默认覆盖写入。通过 -a 参入转为追加
-# tee -a file
+$ echo $RANDOM # 生成一个随机数
 ```
 
 - 数组和关联数组
@@ -1195,25 +1273,6 @@ $ alias ls="ls -l"
 $ ls # 执行 ls -l
 # 但通过 \ 可以执行被覆盖的原生命令
 $ \ls # 执行原生 ls
-```
-
-- 输入/输出重定向
-
-```bash
-# < 输入重定向
-# > 输出重定向
-# >> 追加重定向命令
-# 2> 错误重定向
-# 2>> 追加错误重定向
-
-$ echo '1' > test.md # 把 1 输入到 test.md
-$ cat test.md # 1
-$ echo '2' > test.md # 把 2 输入到 test.md
-$ cat test.md # 2，可以看见原内容被覆盖
-$ echo '3' >> test.md # 把 3 追加到 test.md
-$ cat test.md
-# 2
-# 3
 ```
 
 - `env` 显示全部预设的系统变量
@@ -1281,6 +1340,93 @@ echo $result # 7
 result=$(expr $no1 + $no2) # 3
 ```
 
+- 子 shell
+
+```bash
+# 将命令序列的输出赋值给变量
+# cmd_output=$(cmd)
+# cmd_output=`cmd`
+$ cmd_output=$(ls -l)
+$ cmd_output=`ls -l`
+
+# 在 () 运行的命令是一个独立的子 shell 进程，不会对当前 shell 造成影响
+$ pwd # /var/ecmadao
+$ (cd ../www && pwd) # /var/www
+$ pwd # /var/ecmadao
+```
+
+#### 输出、重定向和管道符
+
+- 彩色输出
+
+```bash
+:<<COMMENT
+颜色码：0-重置，30-黑色，31-红色，32-绿色，33-黄色，34-蓝色，35-洋红，36-青色，37-白色
+
+更改文字颜色：`\e[1;3xm...\e[0m`
+更改背景色：`\e[1;4xm...\e[0m`
+COMMENT
+
+echo "\e[1;31m 12345 \e[0m"
+echo "\e[1;41m 12345 \e[0m"
+```
+
+- 文件描述符和重定向
+
+```bash
+:<<COMMENT
+0 - stdin（标准输入）
+1 - stdout（标准输出）
+2 - stderr（标准错误）
+
+在命令执行完后，可以在特殊变量 $? 中获取退出状态。如果正常完成，则退出状态为 0
+
+> 将输出重定向，>> 为重定向追加，但仅打印 stdin 的信息。在命令前加入文件描述符则可打印对应的输出：
+1> 标准输出重定向
+2> 标准错误重定向
+&> 输出/错误重定向
+
+cmd < file # 将文件作为命令的标准输入
+cmd << 结束符 # 从标准输入中读入，指定遇见结束符为止
+COMMENT
+
+ls -l > test.txt # 等同于 ls -l 1> test.txt
+ls -l 2> test.txt # 仅打印错误信息
+ls -l &> test.txt # 打印 stdout 和 stderr
+```
+
+```bash
+# 输出通过`>`重定向到文件后，不会再在终端输出。如果需要同时输出到文件和终端，需要使用`tee`命令
+ls -l > test.txt # 终端不会再输出
+ls -l | tee test.txt # 输入文件后，再输出到终端
+
+# tee file1 file2 file3....
+# tee 命令将输入写入后，再将其作为后续命令的 stdin 传递下去
+ls -l | tee test.txt | cat -n
+
+# tee 默认覆盖写入。通过 -a 参入转为追加
+# tee -a file
+```
+
+- 输入/输出重定向
+
+```bash
+# < 输入重定向
+# > 输出重定向
+# >> 追加重定向命令
+# 2> 错误重定向
+# 2>> 追加错误重定向
+
+$ echo '1' > test.md # 把 1 输入到 test.md
+$ cat test.md # 1
+$ echo '2' > test.md # 把 2 输入到 test.md
+$ cat test.md # 2，可以看见原内容被覆盖
+$ echo '3' >> test.md # 把 3 追加到 test.md
+$ cat test.md
+# 2
+# 3
+```
+
 - `tee file`
 
 ```bash
@@ -1289,7 +1435,7 @@ result=$(expr $no1 + $no2) # 3
 $ echo 'example' | tee test.txt | xargs
 ```
 
-- 管道符 `|`
+- `|` 管道符
 
 ```bash
 # 将前一个指令的输出作为后一个的输入
@@ -1365,7 +1511,7 @@ $ mkdir test; echo '123'
 # || 前一个执行失败才会执行后一个，类似于 或 操作符
 ```
 
-- 函数
+#### 函数和流程控制
 
 ```bash
 # 函数定义
@@ -1416,22 +1562,58 @@ fname a b
 # 2 is b
 ```
 
-- 子 shell
-
 ```bash
-# 将命令序列的输出赋值给变量
-# cmd_output=$(cmd)
-# cmd_output=`cmd`
-$ cmd_output=$(ls -l)
-$ cmd_output=`ls -l`
+:<<COMMENT
+if condition1; then
+  do something
+elif condition2; then
+  do something
+else
+  do something
+fi
+COMMENT
 
-# 在 () 运行的命令是一个独立的子 shell 进程，不会对当前 shell 造成影响
-$ pwd # /var/ecmadao
-$ (cd ../www && pwd) # /var/www
-$ pwd # /var/ecmadao
+:<<COMMENT
+for var in list
+do
+  do something
+done
+COMMENT
+
+:<<COMMENT
+while condition
+do
+  do something
+done
+COMMENT
+
+:<<COMMENT
+case var in
+pattern1)
+  do something
+  ;;
+pattern2)
+  do something
+  ;;
+*)
+  do something
+esac
+COMMENT
+
+$ KEY=1
+case "$KEY" in
+[a-z]|[A-Z])
+  echo "key $KEY is letter"
+  ;;
+[0-9])
+  echo "key $KEY is number"
+  ;;
+*)
+  echo "key $KEY is other word"
+esac
 ```
 
-- 比较与测试
+#### 比较与测试
 
 ```bash
 # [ condition ] && action; 如果 condition 为真，则执行 action
@@ -1444,22 +1626,19 @@ $ pwd # /var/ecmadao
 
 ```bash
 :<<COMMENT
--gt 大于
--lt 大于
--ge 大于或等于
--le 小于或等于
--eq 等于
--ne 不等于
+整数比较运算：
+[ $var -gt $num ] # 大于
+[ $var -lt $num ] # 小于
+[ $var -ge $num ] # 大于或等于
+[ $var -le $num ] # 小于或等于
+[ $var -eq $num ] # 等于
+[ $var -ne $num ] # 不等于
 COMMENT
-$ [ $var -eq 0 ]
-$ [ $var -ne 0 ]
 $ [ $var1 -ne 0 -o $var2 -gt 0 ] # 逻辑 or，等同于 [ $var1 -ne 0 ] or [ $var2 -gt 0 ]
 $ [ $var1 -ne 0 -a $var2 -gt 0 ] # 逻辑 and，等同于 [ $var1 -ne 0 ] and [ $var2 -gt 0 ]
-```
 
-文件系统相关测试
-
-```bash
+:<<COMMENT
+文件系统相关测试:
 [ -f $file_var ] # 如果给定的变量包含正常的文件路径或文件名，则返回真
 [ -x $var ] # 如果给定的变量包含的文件可执行，则返回真
 [ -d $var ] # 如果给定的变量包含的是目录，则返回真
@@ -1469,17 +1648,25 @@ $ [ $var1 -ne 0 -a $var2 -gt 0 ] # 逻辑 and，等同于 [ $var1 -ne 0 ] and [ 
 [ -w $var ] # 如果给定的变量包含的文件可写，则返回真
 [ -r $var ] # 如果给定的变量包含的文件可读，则返回真
 [ -L $var ] # 如果给定的变量包含的是一个符号链接，则返回真
+COMMENT
+
+:<<COMMENT
+字符串比较运算：
+[ $str1 = $str2 ]
+[ $str2 != $str2 ]
+[ -z $str ] # 判断是否是空字符串
+COMMENT
 ```
 
 ```bash
 fpath="/etc/www"
 
-if [ -r $fpath ];
+if [ -d $fpath ];
 then
-  echo "file can be read"
-elif [ -e $fpath ];
+  echo "folder $fpath existed"
+elif [ -f $fpath ];
 then
-  echo "file exists"
+  echo "file $fpath exists"
 else
   echo "file not exist"
 fi
@@ -1655,6 +1842,28 @@ $ scp user@host:filepath path # 远程文件复制到本机
 $ lsof -i 27017
 ```
 
+**修改 TCP**
+
+- [Linux TCP/IP 协议栈调优](https://colobu.com/2014/09/18/linux-tcpip-tuning/)
+- [Linux 下 Http 高并发参数优化之 TCP 参数](https://kiswo.com/article/1017)
+- [Linux 之 TCPIP 内核参数优化](https://www.cnblogs.com/fczjuever/archive/2013/04/17/3026694.html)
+- [sysctl 命令](http://man.linuxde.net/sysctl)
+
+```bash
+# 通过以下命令查看各个状态的TCP连接的数据
+$ netstat -n | awk '/^tcp/ {++y[$NF]} END {for(w in y) print w, y[w]}'
+
+# 修改文件，增加配置项
+$ sudo vim /etc/sysctl.conf
+# net.ipv4.tcp_syncookies = 1 表示开启 SYN Cookies。当出现 SYN 等待队列溢出时，启用 cookies 来处理，可防范少量 SYN 攻击，默认为 0，表示关闭
+# net.ipv4.tcp_tw_reuse = 1 表示开启重用。允许将 TIME-WAIT sockets 重新用于新的 TCP 连接，默认为 0，表示关闭
+# net.ipv4.tcp_tw_recycle = 1 表示开启 TCP 连接中 TIME-WAIT sockets 的快速回收，默认为 0，表示关闭
+# net.ipv4.tcp_fin_timeout = 30 修改系統默认的 TIMEOUT 时间
+
+# 生效修改的参娄
+$ sudo /sbin/sysctl -p
+```
+
 ### 日期
 
 - `date`
@@ -1708,51 +1917,17 @@ $ date -s "20170901 8:30:00" # 设置时间
 
 ### Others
 
-- 查看内存占用
-
-```bash
-$ ps -e -o 'pid,comm,args,pcpu,rsz,vsz,stime,user,uid'
-```
-
-- 查看 CPU 核数
-
-```bash
-$ cat /proc/cpuinfo |grep "cores"|uniq
-```
-
-- 通过 bash 发送邮件
+通过 bash 发送邮件
 
 - [5 Ways to Send Email From Linux Command Line](https://tecadmin.net/ways-to-send-email-from-linux-command-line/)
 - [3 minute tip: Configure a Linux server to send email](https://rianjs.net/2013/08/send-email-from-linux-server-using-gmail-and-ubuntu-two-factor-authentication)
 - [“Mail” command hangs and maillogs shows error [closed]](https://serverfault.com/questions/548771/mail-command-hangs-and-maillogs-shows-error)
 
-- CPU/进程/线程/并发/并行
+CPU/进程/线程/并发/并行
 
 - [CPU 核心数目与多线程](https://blog.csdn.net/qq_33530388/article/details/62448212)
 - [线程、进程与处理器](http://jsonliangyoujun.iteye.com/blog/2358274)
 - [多核 CPU 是否能同时执行多个进程？](https://www.zhihu.com/question/271821176)
 - [操作系统中的进程与线程](http://www.cnblogs.com/CareySon/archive/2012/05/04/ProcessAndThread.html)
-
-- 修改 TCP
-
-- [Linux TCP/IP 协议栈调优](https://colobu.com/2014/09/18/linux-tcpip-tuning/)
-- [Linux 下 Http 高并发参数优化之 TCP 参数](https://kiswo.com/article/1017)
-- [Linux 之 TCPIP 内核参数优化](https://www.cnblogs.com/fczjuever/archive/2013/04/17/3026694.html)
-- [sysctl 命令](http://man.linuxde.net/sysctl)
-
-```bash
-# 通过以下命令查看各个状态的TCP连接的数据
-$ netstat -n | awk '/^tcp/ {++y[$NF]} END {for(w in y) print w, y[w]}'
-
-# 修改文件，增加配置项
-$ sudo vim /etc/sysctl.conf
-# net.ipv4.tcp_syncookies = 1 表示开启 SYN Cookies。当出现 SYN 等待队列溢出时，启用 cookies 来处理，可防范少量 SYN 攻击，默认为 0，表示关闭
-# net.ipv4.tcp_tw_reuse = 1 表示开启重用。允许将 TIME-WAIT sockets 重新用于新的 TCP 连接，默认为 0，表示关闭
-# net.ipv4.tcp_tw_recycle = 1 表示开启 TCP 连接中 TIME-WAIT sockets 的快速回收，默认为 0，表示关闭
-# net.ipv4.tcp_fin_timeout = 30 修改系統默认的 TIMEOUT 时间
-
-# 生效修改的参娄
-$ sudo /sbin/sysctl -p
-```
 
 - 安装中文字体 https://wiki.ubuntu.com.cn/%E5%AD%97%E4%BD%93
