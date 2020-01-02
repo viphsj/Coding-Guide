@@ -44,8 +44,8 @@ var data = require('./data.json');
 // example.js
 
 function example() {
-	// do something..
-	console.log('do something');
+    // do something..
+    console.log('do something');
 }
 
 exports.example = example;
@@ -71,6 +71,7 @@ example.example(); // do something
 ---- side.js
 ---- example.js
 ```
+
 其中，`main.js`是总出口，它引用并使用了`side.js`和`example.js`
 
 ```javascript
@@ -85,11 +86,13 @@ exports.main = function (name) {
     };
 };
 ```
+
 在其它模块里使用包的时候，需要加载包的入口模块（main.js）。在现在这种情况下，需要安装下面的方式加载：
 
 ```javascript
 require('./demo_package/main.js');
 ```
+
 **但是，如果我们把`main.js`改名为`index.js`，则可通过只加载包名而加载包**
 
 ```javascript

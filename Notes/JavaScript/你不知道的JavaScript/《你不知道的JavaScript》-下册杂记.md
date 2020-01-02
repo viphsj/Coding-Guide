@@ -23,6 +23,7 @@ const example = {
   arrowFunc: () => {
   }
 };
+
 // 实际等效于
 const example = {
   someFunc: function() {
@@ -31,6 +32,8 @@ const example = {
   }
 }
 ```
+
+- 标签模板字面量
 
 ```javascript
 // 标签模板字面量
@@ -45,6 +48,8 @@ foo`Swift is ${desc} and awesome and ${desc}`;
 // ["Swift is ", " and awesome"]
 // ["interesting", "interesting"]
 ```
+
+- Symbol
 
 ```javascript
 /*
@@ -87,6 +92,8 @@ for (const key in object) {
 // 但是，可以通过 Object.getOwnPropertySymbols(..) 获取到 Symbol 的键
 ```
 
+- 模块
+
 ```javascript
 /*
  * 模块
@@ -109,11 +116,18 @@ function foo() {}
 export { foo as default };
 ```
 
+- Promise
+
 ```javascript
 // Promise
 // 题外话：How do I tell if an object is a Promise?
 // -> https://stackoverflow.com/questions/27746304/how-do-i-tell-if-an-object-is-a-promise
 ```
+
+- WeakMap/WeakSet
+
+- [Difference between Map and WeakMap in JavaScript](https://www.mattzeunert.com/2017/01/31/weak-maps.html)
+- [What are the actual uses of ES6 WeakMap?](https://stackoverflow.com/questions/29413222/what-are-the-actual-uses-of-es6-weakmap)
 
 ```javascript
 // WeakMap/WeakSet
@@ -121,12 +135,15 @@ export { foo as default };
 // 则 WeakMap/WeakSet 中这些项目也会被回收
 // 它们只接受对象作为键
 const weakMap = new WeakMap();
-let a = {a: 1};
-let b = {b: 2};
+
+let a = { a: 1 };
+let b = { b: 2 };
 weakMap.set(a, b);
 a = null;
-weakMap.get(a); // undefined
+// 则 a 将彻底从内存中释放，不会因为 WeakMap 的弱引用而造成无法释放
 ```
+
+- New APIs
 
 ```javascript
 // 新增 API
@@ -156,6 +173,7 @@ Number.isFinite(42); // true
 // String
 // string.repeat(number)
 'a'.repeat(3); // aaa
+
 // string.startsWith();
 // string.endsWith();
 // string.inclueds();

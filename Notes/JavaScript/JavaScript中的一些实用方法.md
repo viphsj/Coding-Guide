@@ -177,7 +177,7 @@ $.ajax({
 ### 关于数组
 
 `map()`
-通过`.map((value, index) => {})` 
+通过`.map((value, index) => {})`
 方法返回一个由原数组中的每个元素调用一个指定方法后的返回值组成的新数组
 
 `some(callback)`
@@ -197,7 +197,7 @@ const list = [1, 2, 3, 4];
 
 const newList = list.map((value) => {
   return value * 2
-}); 
+});
 console.log(newList); // [2, 4, 6, 8];
 return list.some((value, index) => value < 3); // true
 return list.every((value, index) => value < 3); // false

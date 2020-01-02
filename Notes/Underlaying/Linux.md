@@ -1531,6 +1531,8 @@ fname() {
   return 0; # 函数返回值
 }
 fname 1 2 3
+# $? 上一个命令运行结果，为 0 表示正常运行，非零表示出现异常
+echo $?
 ```
 
 ```bash
@@ -1538,10 +1540,9 @@ fname 1 2 3
 # Fork 炸弹
 # https://linux.cn/article-5685-1.html
 # https://zh.wikipedia.org/wiki/Fork炸弹
-:() {
-  :|:&
-};
-:
+:() { :|:& }; :
+# or
+forkbomb(){ forkbomb|forkbomb & } ; forkbomb
 
 # 读取命令返回值
 # 命令的返回值被保存在变量 $? 中
@@ -1761,15 +1762,17 @@ $ sed '/al/'d filename # 删除有 al 的行
 - `sed [-i] 'ns/target/replace/[g]' filename`
 
 ```bash
-# 替换字符或字符串之后输出
-# -i: 直接修改原文件，不加则不会修改，值在输出内容中进行替换
+:<<COMMENT
+替换字符或字符串之后输出
+-i: 直接修改原文件，不加则不会修改，值在输出内容中进行替换
 
-# n: 代表某行或行的范围，不加则代表全部行
-# s: 替换的标识符
-# /: 操作分隔符，也可以使用 @ 或者 #
-# target 被替换对象
-# replace 替换对象
-# g: 是否全部替换匹配的对象。如果不加，则只替换每行的第一个匹配
+n: 代表某行或行的范围，不加则代表全部行
+s: 替换的标识符
+/: 操作分隔符，也可以使用 @ 或者 #
+target 被替换对象
+replace 替换对象
+g: 是否全部替换匹配的对象。如果不加，则只替换每行的第一个匹配
+COMMENT
 
 $ sed 's@a@bbbbbbbbbbbbbbbbbbbbbbbbbb@' README.md # 把每行第一个匹配的 a 替换为 bbbbbbbbbbbbbbbbbbbbbbbbbb
 $ sed '1,3s@about@abort@g' README.md # 把 1~3 行全部匹配的 about 替换为 abort
@@ -1835,11 +1838,11 @@ $ scp filename user@host:path # 本机文件复制到远程
 $ scp user@host:filepath path # 远程文件复制到本机
 ```
 
-- `lsof [-i] [port]` 列出已打开的文件，-i 则将范围限制在已打开的网络连接，port 参数可指明端口号
+- `lsof [-i:port]` 列出已打开的文件，-i 则将范围限制在已打开的网络连接，port 参数可指明端口号
 - `netstat -tnp` 列出开放端口与服务
 
 ```bash
-$ lsof -i 27017
+$ lsof -i:27017
 ```
 
 **修改 TCP**

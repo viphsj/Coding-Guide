@@ -38,7 +38,7 @@ function fun2() {
   console.log(arguments.length);
 }
 
-fun(1,2,3,4,5);
+fun(1, 2, 3, 4, 5);
 // 1
 // 4
 ```
@@ -49,6 +49,12 @@ fun(1,2,3,4,5);
 // WRONG
 const fun = () => {
   console.log(arguments.length);
+}
+
+// GOOD
+const fun2 = (...args) => {
+  console.log(Array.isArray(args)) // true
+  console.log(args.length);
 }
 ```
 
