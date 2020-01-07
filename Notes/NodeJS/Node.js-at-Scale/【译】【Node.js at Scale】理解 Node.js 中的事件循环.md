@@ -308,8 +308,8 @@ promise6
 
 **周期1：**
 
-1. `setInterval` 被规划为一个任务
-2. `setTimeout 1` 被规划为一个任务
+1. `setInterval` 被规划为一个宏任务
+2. `setTimeout 1` 被规划为一个宏任务
 3. `Promise.resolve 1` 里的 `then` 方法被规划为一个微任务
 4. 堆栈空了以后微任务开始执行
 

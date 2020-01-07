@@ -20,17 +20,17 @@
 
 > 本文译自：[Better Node with ES6, Pt. I](https://scotch.io/tutorials/better-node-with-es6-pt-i)
 
-随着ES2015的最终敲定和Node.js的稳重发展，现在终于可以说：未来离我们不远了。
+随着 ES2015 的最终敲定和 Node.js 的稳重发展，现在终于可以说：未来离我们不远了。
 
 ...我老早就想这么说了。
 
-这是真的。[V8引擎的高性能](http://v8project.blogspot.com/2016/03/v8-release-50.html)和Node对于ES2015特性的支持都为其生产环境发挥作用做好的准备。在Node中我们可以使用那些新的特性而不需要[Babel](https://babeljs.io/)或者[Traceur](https://github.com/google/traceur-compiler)这样的预处理器。
+这是真的。[V8引擎的高性能](http://v8project.blogspot.com/2016/03/v8-release-50.html)和 Node 对于 ES2015 特性的支持都为其生产环境发挥作用做好的准备。在 Node 中我们可以使用那些新的特性而不需要 [Babel](https://babeljs.io/) 或者 [Traceur](https://github.com/google/traceur-compiler) 这样的预处理器。
 
-这篇文章将会介绍在Node中可用的下面几种ES2015特性：
+这篇文章将会介绍在 Node 中可用的下面几种 ES2015 特性：
 
-  - `let`，`const`以及它们的作用域
-  - 箭头函数
-  - 简写属性和方法
+- `let`，`const`以及它们的作用域
+- 箭头函数
+- 简写属性和方法
 
 Let's get to it.
 
@@ -38,11 +38,11 @@ Let's get to it.
 
 作用域代表着你的代码中，变量可见的那一块区域。换句话说，它规定了你声明的变量在哪些区域里可以使用。
 
-我们都知道JavaScript会在函数内创建新的作用域。你所创建的作用域有98%都是函数作用域，它们通常由三种方法创建：
+我们都知道 JavaScript 会在函数内创建新的作用域。你所创建的作用域有 98% 都是函数作用域，它们通常由三种方法创建：
 
-  1. 创建一个方法
-  2. 创建一个`catch`块
-  3. 创建一个代码块。当你在使用ES2015的时候，在代码块内声明的`let`和`const`变量仅仅在该代码块内可用。这种作用域叫作块作用域。
+1. 创建一个方法
+2. 创建一个`catch`块
+3. 创建一个代码块。当你在使用 ES2015 的时候，在代码块内声明的`let`和`const`变量仅仅在该代码块内可用。这种作用域叫作块作用域。
 
 作用域仅仅是代码中的一个段落，`{like this}`。它们会随着`if/else`或者`try/catch/finally`的声明而自然出现。如果你想利用块作用域，也可以通过手动创建`{}`来完成。
 
@@ -86,15 +86,15 @@ let invisible = "You can't see me, yet"; // let 声明的变量没有变量提�
 
 需要注意的几点：
 
-  - 在`if`的外面，`foobar`不能被调用。因为我们使用`let`进行的声明
-  - 在任何地方都能使用`foo`，因为我们是用`var`将其作为全局变量声明的
-  - 在函数`baz`的内部我们可以随意使用`bar`，因为`var`声明的变量在它们的作用域内是完全可用的。
-  - 在`let`或`const`声明之前该变量不可用。换句话说，它们不像`var`那样有变量声明
+- 在`if`的外面，`foobar`不能被调用。因为我们使用`let`进行的声明
+- 在任何地方都能使用`foo`，因为我们是用`var`将其作为全局变量声明的
+- 在函数`baz`的内部我们可以随意使用`bar`，因为`var`声明的变量在它们的作用域内是完全可用的。
+- 在`let`或`const`声明之前该变量不可用。换句话说，它们不像`var`那样有变量声明
 
 `const`和`let`很像：
 
-  1. 必须先声明，再使用
-  2. 不能重复声明和改变。否则会有`TypeError`
+1. 必须先声明，再使用
+2. 不能重复声明和改变。否则会有`TypeError`
 
 #### `let` & `const`：谁在乎呢？
 
@@ -102,9 +102,9 @@ let invisible = "You can't see me, yet"; // let 声明的变量没有变量提�
 
 好问题。这儿有一些使用`let`和`const`会给我们带来的好处：
 
-  - `let`和`host`都不能变量提升。这增加了代码可读性。
-  - 它们限制了变量作用域。因此命名空间不会再像之前那么困扰了。
-  - 制止变量改变。`const`声明的变量不可变
+- `let`和`host`都不能变量提升。这增加了代码可读性。
+- 它们限制了变量作用域。因此命名空间不会再像之前那么困扰了。
+- 制止变量改变。`const`声明的变量不可变
 
 `let`在循环体也非常有用：
 
@@ -157,7 +157,7 @@ for (var j = 0; j < 6; j += 1) {
 
 ### 动态的`this`
 
-作为一个能够做所有你想让它做的事情的东西，`this`在JavaScript中早就臭名昭著。
+作为一个能够做所有你想让它做的事情的东西，`this`在 JavaScript 中早就臭名昭著。
 
 事实上，[规则很简单](https://github.com/getify/You-Dont-Know-JS/tree/master/this%20%26%20object%20prototypes)。不管怎样，在一些情景`this`会变得很笨拙：
 
@@ -171,7 +171,7 @@ const polyglot = {
         // this.name 是 "Michel Thomas"
         const self = this;
         this.languages.forEach(function(language) {
-            // this.name is undefined, 所以我们得使用之前保存的self变量
+            // this.name is undefined, 所以我们得使用之前保存的 self 变量
             console.log("My name is " + self.name + ", and I speak " + language + ".");
         });
     }
@@ -180,9 +180,9 @@ const polyglot = {
 polyglot.introduce();
 ```
 
-在`introduce`的循环体内部，`this.name`是`undefined`。在`forEach`循环里，它提及到了`polyglot`这个Object。而通常，我们希望在函数的内部和外部，`this`都能指向同一个Object。
+在`introduce`的循环体内部，`this.name`是`undefined`。在`forEach`循环里，它提及到了`polyglot`这个 Object。而通常，我们希望在函数的内部和外部，`this`都能指向同一个 Object。
 
-问题在于，JavaScript中的方法都会在调用过程中，[根据四个规则](https://github.com/getify/You-Dont-Know-JS/blob/master/this%20&%20object%20prototypes/ch2.md)创建它自己的`this`值。这样的机制被称为动态`this`。
+问题在于，JavaScript 中的方法都会在调用过程中，[根据四个规则](https://github.com/getify/You-Dont-Know-JS/blob/master/this%20&%20object%20prototypes/ch2.md)创建它自己的`this`值。这样的机制被称为动态`this`。
 
 这意味着，当引擎寻找`this`的时候，它所找到的那个并不一定是回调函数外部的那个。有两种传统方法解决这个问题：
 
@@ -191,13 +191,13 @@ polyglot.introduce();
 
 这两种方法都有效，但是一点也不简洁。
 
-从另一个方面考虑，如果内部函数没有找到它们的`this`，JavaScript会像寻找其他变量一样寻找`this`：查看父作用域直到找到一个同名的变量。这就使得我们可以使用“附近的”`this`来替代函数内的`this`。
+从另一个方面考虑，如果内部函数没有找到它们的`this`，JavaScript 会像寻找其他变量一样寻找`this`：查看父作用域直到找到一个同名的变量。这就使得我们可以使用“附近的”`this`来替代函数内的`this`。
 
 如果我们能够将内部的`this`指向外部的`this`，代码就会干净许多。你不这么认为吗？
 
 #### 箭头函数里的`this`
 
-在ES2015中，我们做到了这点。箭头函数没有绑定`this`变量，使得我们可以更好的利用`this`。我们可以这样重构上面的代码：
+在 ES2015 中，我们做到了这点。箭头函数没有绑定`this`变量，使得我们可以更好的利用`this`。我们可以这样重构上面的代码：
 
 ```javascript
 "use strict";
@@ -229,7 +229,7 @@ let languages_lower = languages.map((language) => {
 
 // 单行箭头函数中，中括号可选
 // 并且函数隐式的返回了表达式的最终结果
-// 你也可以显式的return一个值，不过这是可选的
+// 你也可以显式的 return 一个值，不过这是可选的
 let languages_lower = languages.map((language) => language.toLowerCase());
 
 // 如果箭头函数只有一个参数，你都不需要使用小括号
@@ -244,15 +244,15 @@ console.log(languages_lower); // ["spanish", "french", "italian", "german", "pol
 (() => alert("Hello!"))();
 ```
 
-[MDN文档里对于箭头函数给出了很好的介绍](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions)
+[MDN 文档里对于箭头函数给出了很好的介绍](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions)
 
 ### 简写属性和方法
 
-ES2015提供了一些定义属性和方法的途径。
+ES2015 提供了一些定义属性和方法的途径。
 
 #### 简写方法
 
-在JavaScript中，方法是Object的一个参数，只不过以一个函数作为它的值：
+在 JavaScript 中，方法是 Object 的一个参数，只不过以一个函数作为它的值：
 
 ```javascript
 "use strict";
@@ -264,7 +264,7 @@ const myObject = {
 }
 ```
 
-在ES2015中，我们可以简写成这样：
+在 ES2015 中，我们可以简写成这样：
 
 ```javascript
 "use strict";
@@ -338,7 +338,7 @@ function Module () {
     const publicAPI =  {
        foo : foo,
        bar : bar
-    } */ 
+    } */
 
     return publicAPI;
 };
