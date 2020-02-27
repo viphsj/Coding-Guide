@@ -187,7 +187,7 @@ let Mater = new Car({name: 'Mater', power: 100})
 
 ##### 新生代
 
-通常，只有不到 20% 的新生代可以成为老生代，而jiu'kong'jian旧空间只有在几乎耗尽时才会触发回收机制。V8 引擎采用了两种回收算法来实现：Scavenge 和 Mark-Sweep 。
+通常，只有不到 20% 的新生代可以成为老生代，而旧空间只有在几乎耗尽时才会触发回收机制。V8 引擎采用了两种回收算法来实现：Scavenge 和 Mark-Sweep 。
 
 ##### Scavenge 和 Mark-Sweep 回收
 

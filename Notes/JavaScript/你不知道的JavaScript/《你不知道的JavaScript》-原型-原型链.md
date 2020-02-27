@@ -20,7 +20,11 @@
 
 我们创建的每个函数都有一个**原型属性(prototype)**，该属性是一个指针，指向一个对象。
 
-**这个对象的用途是包含可以由特定类型的所有实例共享的属性和方法 ==> 使用原型对象的好处是可以让所有对象实例共享它所包含的属性和方法。**通俗一点讲，prototype 的主要作用就是继承，prototype 中定义的属性和方法都是留给自己的 “后代” 用的，因此，子类完全可以访问prototype 中的属性和方法
+**这个对象的用途是包含可以由特定类型的所有实例共享的属性和方法 ==> 使用原型对象的好处是可以让所有对象实例共享它所包含的属性和方法。**通俗一点讲，`prototype`的主要作用就是继承，`prototype`中定义的属性和方法都是留给自己的 “后代” 用的，因此，子类完全可以访问`prototype`中的属性和方法
+
+`prototype`对于父对象本身是不可见的，但子类可以完全访问。当通过`new`操作符创建新对象的时候，通常会把父类的`prototype`赋值给新对象的`__proto__`属性，子类就可以调用到继承的属性或方法。
+
+原型链的形成真正是靠`__proto__`而非`prototype`，当 JS 引擎执行对象的方法时，先查找对象本身是否存在该方法，如果不存在，会在原型链上查找，但不会查找自身的`prototype`
 
 ```javascript
 function Person() {};
@@ -41,7 +45,24 @@ var person1 = new Person();
 var person2 = new Person();
 person1.sayName(); // ecmadao;
 person2.sayName(); // ecmadao;
+
+Person.name // undefined. prototype 对父类而言是透明的，无法访问
 ```
+
+```javascript
+function func() {}
+func.prototype.foo = 'foo'
+console.log(func.foo) // undefined
+
+const f = new func()
+console.log(f.foo) // foo
+```
+
+向上追溯原型链：
+
+1. `f.__proto__` -> `func.prototype`
+2. `func.prototype.__proto__` -> `Object.prototype`
+3. `Object.prototype.__proto__` -> `null`
 
 ### 属性设置与屏蔽
 
@@ -79,7 +100,7 @@ var a = new Foo();
 Object.getPrototypeOf(a) === Foo.prototype; // true
 ```
 
-`new Foo()`会生成一个新对象(a)，这个新对象的内部链接`[[Prototype]]`关联的是`Foo.prototype`对象
+`new Foo()`会生成一个新对象(a)，这个新对象的内部链接`[[Prototype]]`，即`__proto__`关联的是`Foo.prototype`对象
 
 > 在 JavaScript 中，我们并不会将一个对象（“类”）复制到另一个对象（“实例”），只是将它们关联起来。（**原型继承**）
 >
