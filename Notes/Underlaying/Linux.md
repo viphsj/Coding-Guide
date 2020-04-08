@@ -566,6 +566,9 @@ wait ${PIDARRAY[@]} # wait 等待指定进程结束
 - `crontab [-u/user] {-l/-r/-e}`
 - [Linux 下执行定时任务 crontab 命令详解](https://segmentfault.com/a/1190000002628040)
 - [crontab 定时任务](http://linuxtools-rst.readthedocs.io/zh_CN/latest/tool/crontab.html)
+- [迷之 crontab 异常：不运行、不报错、无日志](https://my.oschina.net/leejun2005/blog/1788342)
+- [Linux Crontab 定时任务不好使了?](https://xu3352.github.io/linux/2017/08/18/linux-crontab-not-working)
+- [分享一次Linux任务计划crontab不执行的问题排查过程](https://zhang.ge/5093.html)
 
 ```bash
 $ crontab file filepath # 用指定的文件替代目前的 crontab
@@ -1674,6 +1677,10 @@ fi
 ```
 
 字符串比较
+
+- [Shell 字符串匹配](https://blog.csdn.net/xy913741894/article/details/74355576)
+- [Linux shell 字符串操作（长度，查找，替换）详解](https://www.cnblogs.com/chengmo/archive/2010/10/02/1841355.html)
+- [Shell 判断字符串包含关系的几种方法](https://blog.csdn.net/iamlihongwei/article/details/59484029)
 
 > 最好使用`[[ ]]`形式的双中括号
 

@@ -335,6 +335,8 @@ JSON.parse(JSON.stringify(obj)) // hack
 - [HTTP 状态码](https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Status)
 - [一文读懂一台计算机是如何把数据发送给另一台计算机的](https://mp.weixin.qq.com/s?__biz=MzAxODQxMDM0Mw==&mid=2247484481&amp;idx=2&amp;sn=42a550504e2cbee2f10f36d83e017f9d&source=41#wechat_redirect)
 
+- [每天都在用的Ping命令，它到底是什么？](https://zhuanlan.zhihu.com/p/45110873)
+
 #### TCP/UDP
 
 TCP/UDP/IP
