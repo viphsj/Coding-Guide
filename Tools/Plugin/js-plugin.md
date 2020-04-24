@@ -210,6 +210,8 @@ before.to(after); // in a day 相对时间多久之后
 
 ### About Data Storage
 
+- [PouchDB](https://github.com/pouchdb/pouchdb)
+
 - [Basil.js](http://wisembly.github.io/basil.js/)
 
 > 集本地存储、Cookie和Session Storage API于一体，使得前端的存储管理更加方便，允许完全的本地存储
@@ -424,6 +426,9 @@ before.to(after); // in a day 相对时间多久之后
 
 > 无依赖JavaScript库，提供模糊搜索（近似字符串匹配）
 
+- [browser-detect](https://www.npmjs.com/package/browser-detect)
+- [bowser](https://www.npmjs.com/package/bowser)
+
 ### 函数库
 
 - [bacon.js](https://github.com/baconjs/bacon.js)
@@ -442,6 +447,8 @@ before.to(after); // in a day 相对时间多久之后
 - [RxJS - 4.x](https://github.com/Reactive-Extensions/RxJS)
 
 > Everything is steam !
+
+- [ramda](https://github.com/ramda/ramda)
 
 ### 文件
 

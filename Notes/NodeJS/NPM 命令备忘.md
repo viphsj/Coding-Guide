@@ -55,13 +55,14 @@ npm update packageName
 npm update -g packageName
 // 更新全部包
 npm update
-npm update -g 
+npm update -g
 ```
 
-  - show all package
+- show all package
 
 ```sass
 npm -g list
 ```
 
 [玩转npm](http://www.alloyteam.com/2016/03/master-npm/)
+[npm scripts](https://docs.npmjs.com/misc/scripts)

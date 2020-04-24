@@ -137,7 +137,7 @@ export default function combineReducers(reducers) {
   } catch (e) {
     sanityError = e
   }
-  
+
   // 返回一个function。该方法接收state和action作为参数
   return function combination(state = {}, action) {
     // 如果之前的判断reducers中有不法值，则抛出错误

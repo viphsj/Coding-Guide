@@ -28,14 +28,14 @@ IO 操作与数据处理相比，要慢上好几个等级。举个例子，SSD �
 
 ```bash
 $ ping google.com
-64 bytes from 172.217.16.174: icmp_seq=0 ttl=52 time=33.017 ms  
-64 bytes from 172.217.16.174: icmp_seq=1 ttl=52 time=83.376 ms  
-64 bytes from 172.217.16.174: icmp_seq=2 ttl=52 time=26.552 ms  
-64 bytes from 172.217.16.174: icmp_seq=3 ttl=52 time=40.153 ms  
-64 bytes from 172.217.16.174: icmp_seq=4 ttl=52 time=37.291 ms  
-64 bytes from 172.217.16.174: icmp_seq=5 ttl=52 time=58.692 ms  
-64 bytes from 172.217.16.174: icmp_seq=6 ttl=52 time=45.245 ms  
-64 bytes from 172.217.16.174: icmp_seq=7 ttl=52 time=27.846 ms  
+64 bytes from 172.217.16.174: icmp_seq=0 ttl=52 time=33.017 ms
+64 bytes from 172.217.16.174: icmp_seq=1 ttl=52 time=83.376 ms
+64 bytes from 172.217.16.174: icmp_seq=2 ttl=52 time=26.552 ms
+64 bytes from 172.217.16.174: icmp_seq=3 ttl=52 time=40.153 ms
+64 bytes from 172.217.16.174: icmp_seq=4 ttl=52 time=37.291 ms
+64 bytes from 172.217.16.174: icmp_seq=5 ttl=52 time=58.692 ms
+64 bytes from 172.217.16.174: icmp_seq=6 ttl=52 time=45.245 ms
+64 bytes from 172.217.16.174: icmp_seq=7 ttl=52 time=27.846 ms
 ```
 
 平均延迟是 44 毫秒。在这段时间里，上面提到的那个处理器可以操作 8 千 8 百万次操作周期。
@@ -68,14 +68,14 @@ $ ping google.com
  7   const squareA = square(a)
  8   const squareB = square(b)
  9   const sumOfSquares = squareA + squareB
-10   return Math.sqrt(sumOfSquares)  
-11 }  
-12  
-13 function square(number) {  
-14   return number * number  
-15 }  
-16  
-17 main()  
+10   return Math.sqrt(sumOfSquares)
+11 }
+12
+13 function square(number) {
+14   return number * number
+15 }
+16
+17 main()
 ```
 
 首先调用 `main()` 函数：
@@ -137,19 +137,19 @@ $ ping google.com
 来看一眼最普通的 Node.js 应用 —— 一个监听 `localhost:3000/` 的 server。当收到请求后，server 会调用 `wttr.in/<city>` 来获取天气数据，并在 console 中打印信息，最后将结果返回。
 
 ```javascript
-'use strict'  
-const express = require('express')  
-const superagent = require('superagent')  
+'use strict'
+const express = require('express')
+const superagent = require('superagent')
 const app = express()
 
 app.get('/', sendWeatherOfRandomCity)
 
-function sendWeatherOfRandomCity (request, response) {  
+function sendWeatherOfRandomCity (request, response) {
   getWeatherOfRandomCity(request, response)
   sayHi()
 }
 
-const CITIES = [  
+const CITIES = [
   'london',
   'newyork',
   'paris',
@@ -162,7 +162,7 @@ const CITIES = [
   'capetown',
 ]
 
-function getWeatherOfRandomCity (request, response) {  
+function getWeatherOfRandomCity (request, response) {
   const city = CITIES[Math.floor(Math.random() * CITIES.length)]
   superagent.get(`wttr.in/${city}`)
     .end((err, res) => {
@@ -178,7 +178,7 @@ function getWeatherOfRandomCity (request, response) {
   console.log('Fetching the weather, please be patient')
 }
 
-function sayHi () {  
+function sayHi () {
   console.log('Hi')
 }
 
@@ -188,8 +188,8 @@ app.listen(3000)
 那么当我们访问 `localhost:3000` 的时候 console 会打印什么？如果你了解 Node.js，那么肯定知道，尽管在代码里 `console.log('Fetching the weather, please be patient')` 比 `console.log('Got the weather')` 后执行，但输出结果会是这样的：
 
 ```bash
-Fetching the weather, please be patient  
-Hi  
+Fetching the weather, please be patient
+Hi
 Got the weather
 ```
 
@@ -230,15 +230,15 @@ JavaScript 是一门单线程的、事件驱动的语言。这意味着我们可
 
 #### 微任务（Microtasks） 和宏任务（Macrotasks）
 
-实际上，我们有不止一种任务队列。一个是 microtasks，另一个是 macrotasks
+实际上，我们有不止一种任务队列。一个是*microtasks*，另一个是*macrotasks*
 
-microtasks 的例子：
+*microtasks* 的例子：
 
 - `process.nextTick`
 - `promises`
 - `Object.observe`
 
-macrotasks 的例子：
+*macrotasks* 的例子：
 
 - `setTimeout`
 - `setInterval`
@@ -250,11 +250,11 @@ macrotasks 的例子：
 ```javascript
 console.log('script start')
 
-const interval = setInterval(() => {  
+const interval = setInterval(() => {
   console.log('setInterval')
 }, 0)
 
-setTimeout(() => {  
+setTimeout(() => {
   console.log('setTimeout 1')
   Promise.resolve().then(() => {
     console.log('promise 3')
@@ -274,7 +274,7 @@ setTimeout(() => {
   })
 }, 0)
 
-Promise.resolve().then(() => {  
+Promise.resolve().then(() => {
   console.log('promise 1')
 }).then(() => {
   console.log('promise 2')
@@ -284,17 +284,17 @@ Promise.resolve().then(() => {
 输出如下：
 
 ```bash
-script start  
-promise1  
-promise2  
-setInterval  
-setTimeout1  
-promise3  
-promise4  
-setInterval  
-setTimeout2  
-setInterval  
-promise5  
+script start
+promise1
+promise2
+setInterval
+setTimeout1
+promise3
+promise4
+setInterval
+setTimeout2
+setInterval
+promise5
 promise6
 ```
 
@@ -308,8 +308,8 @@ promise6
 
 **周期1：**
 
-1. `setInterval` 被规划为一个任务
-2. `setTimeout 1` 被规划为一个任务
+1. `setInterval` 被规划为一个宏任务
+2. `setTimeout 1` 被规划为一个宏任务
 3. `Promise.resolve 1` 里的 `then` 方法被规划为一个微任务
 4. 堆栈空了以后微任务开始执行
 
@@ -343,11 +343,11 @@ promise6
 ```javascript
 console.log('script start')
 
-const interval = setInterval(() => {  
+const interval = setInterval(() => {
   console.log('setInterval')
 }, 0)
 
-setTimeout(() => {  
+setTimeout(() => {
   console.log('setTimeout 1')
   process.nextTick(() => {
     console.log('nextTick 3')
@@ -367,7 +367,7 @@ setTimeout(() => {
   })
 })
 
-process.nextTick(() => {  
+process.nextTick(() => {
   console.log('nextTick 1')
   process.nextTick(() => {
     console.log('nextTick 2')

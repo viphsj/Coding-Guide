@@ -33,7 +33,7 @@
 副作用是指，函数内部与外部互动，产生运算以外的其他结果。
 例如在函数调用的过程中，利用并修改到了外部的变量，那么就是一个有副作用的函数。
 
-由于**函数式编程不修改外部变量**，所以根本不存在线程锁的问题。多线程并发的时候不用担心使用的变量被其他线程所修改 
+由于**函数式编程不修改外部变量**，所以根本不存在线程锁的问题。多线程并发的时候不用担心使用的变量被其他线程所修改
 
 概括而言，副作用包含：
 
@@ -51,7 +51,7 @@
 
 ### immutable
 
-如果要改变变量，则需要把数据deep copy出去进行修改
+如果要改变变量，则需要把数据 deep copy 出去进行修改
 
 几个函数式编程的普通例子：
 
@@ -74,12 +74,12 @@ console.log(a); // 1
 ```
 
 ```javascript
-// 比较Array中的slice和splice
+// 比较 Array 中的 slice 和 splice
 let test = [1, 2, 3, 4, 5];
 
-// slice为纯函数，返回一个新的数组
+// slice 为纯函数，返回一个新的数组
 console.log(test.slice(0, 3)); // [1, 2, 3]
-console.log(test); //[1, 2, 3, 4, 5]
+console.log(test); // [1, 2, 3, 4, 5]
 
 // splice则会修改参数数组
 console.log(test.splice(0, 3)); // [1, 2, 3]
@@ -120,6 +120,7 @@ console.log(plus2(1)); // 3
 
 即：
 传入一个（或很少量的）参数调用父函数，父函数返回一个可接受多个参数的子函数。例：
+
 ```javascript
 const add = (x) => {
   return (y, z) => {
@@ -131,9 +132,10 @@ let increase = add(1);
 console.log(increase(2, 3)); // 6
 ```
 
-函数式编程+柯里化，将提取成柯里化的函数部分配置好之后，可作为参数传入，简化操作流程。
+函数式编程 + 柯里化，将提取成柯里化的函数部分配置好之后，可作为参数传入，简化操作流程。
+
 ```javascript
-// 给list中每个元素先加1，再加5，再减1
+// 给 list 中每个元素先加 1，再加 5，再减 1
 let list = [1, 2, 3, 4, 5];
 
 //正常做法
@@ -161,8 +163,8 @@ console.log(list1); // [6, 7, 8, 9, 10]
 #### 创建柯里化函数
 
 ```javascript
-// 安装lodash依赖
-$ npm install lodash
+// 安装 lodash 依赖
+// $ npm install lodash
 
 let curry = require('lodash').curry;
 let list = [1, 2, 3, 4];
@@ -202,7 +204,7 @@ console.log(mapedList); // [2, 3, 4, 5]
 
 将数个函数对象作为参数传递给一个函数，在该函数内部将传入的函数参数分别作为参数进行嵌套。最直观的例子如下所示：
 ```javascript
-const compose = (f,g) => {
+const compose = (f, g) => {
   return (x) => {
     return f(g(x));
   };
@@ -212,11 +214,11 @@ const compose = (f,g) => {
 #### pointfree 函数无需提及要操作的数据是什么样的
 
 ```javascript
-// 非pointfree函数。提及到了数据list
+// 非 pointfree 函数。提及到了数据 list
 const filterList = (list) => {
   return list.map((value) => value * 2).filter((value) => return value < 3);
 }
-// 非pointfree函数，提及到了数据word
+// 非 pointfree 函数，提及到了数据 word
 const changeWord = (word) => {
   return word.toLowerCase().split(' ');
 }
@@ -231,7 +233,7 @@ const changeWord = compose(split(' '), toLowerCase)
 ```javascript
 compose(f, compose(g, h)) == compose(compose(f, g), h);
 
-// map函数的组合律
+// map 函数的组合律
 compose(map(f), map(p)) == map(compose(f, g));
 ```
 

@@ -21,6 +21,7 @@
     - [Intro](#intro)
   - [矩阵运算](#%E7%9F%A9%E9%98%B5%E8%BF%90%E7%AE%97)
   - [Schema](#schema)
+  - [DB](#db)
   - [Others](#others)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -90,18 +91,21 @@
 - [guid](https://github.com/dandean/guid)
 - [node-hat](https://github.com/substack/node-hat)
 - [shortid](https://github.com/dylang/shortid)
+- [nanoid](https://github.com/ai/nanoid)
 
 ### Server
 
 - [nodemon](https://github.com/remy/nodemon)
 - [http-server](https://github.com/indexzero/http-server)
 - [json-server](https://github.com/typicode/json-server)
+- [nest](https://github.com/nestjs/nest) http server based on ts
 
 ### GraphQL
 
 - [graphql.js](https://github.com/graphql/graphql-js/)
 - [graphql-tools](https://github.com/apollographql/graphql-tools)
 - [apollo-server](https://github.com/apollographql/apollo-server)
+- [graphql.js](https://github.com/f/graphql.js)
 
 ### Progress
 
@@ -115,6 +119,7 @@
 - [cron](https://github.com/kelektiv/node-cron)
 - [node-cron](https://github.com/merencia/node-cron)
 - [later](https://github.com/bunkat/later)
+- [cRonstrue](https://github.com/bradymholt/cRonstrue)
 
 ### 消息队列
 
@@ -123,6 +128,13 @@
 - [disque](https://github.com/antirez/disque)
 - [disqueue-node](https://github.com/gideonairex/disqueue-node)
 - [disq](https://github.com/djanowski/disq)
+- [bull](https://github.com/OptimalBits/bull)
+- [node-resque](https://github.com/taskrabbit/node-resque)
+- [rsmq](https://github.com/smrchy/rsmq) 基于 Redis
+- [kue](https://github.com/Automattic/kue) 基于 Redis
+- [node-amqp](https://github.com/postwait/node-amqp) rabbitMQ
+- [rabbot](https://github.com/arobson/rabbot) rabbitMQ
+- [bee-queue](https://github.com/bee-queue/bee-queue) 基于 Redis
 
 文章
 
@@ -151,6 +163,7 @@
 - [shaman](https://github.com/luccastera/shaman) 【包含了普通的线性拟合和分类】
 - [deeplearn](https://github.com/PAIR-code/deeplearnjs)
 - [natural](https://github.com/NaturalNode/natural) 【自然语言处理】
+- [nlp.js](https://github.com/axa-group/nlp.js)
 
 #### Intro
 
@@ -183,17 +196,36 @@
 - [node-orm2](https://github.com/dresende/node-orm2)
 - [joi](https://github.com/hapijs/joi)
 - [normalizr](https://github.com/paularmstrong/normalizr)
+- [sequelize](https://github.com/sequelize/sequelize)
+
+### DB
+
+- [sqlite3](https://github.com/JoshuaWise/better-sqlite3)
 
 ### Others
 
 - [phantomjs-node](https://github.com/amir20/phantomjs-node)
   - [How to evaluate a page using awaitFor to load dynamic contents](https://github.com/amir20/phantomjs-node/issues/431)
   如果有类似 `waitFor` 的需求，即保持阻塞直到触发某种条件，一般是用来通过检查某个 DOM 是否存在，来判断页面是否加载完成，以便进行下一步的操作（比如截图）。可以通过上面的 issue 来实现这样的需求。
+- [nightmare](https://github.com/segmentio/nightmare) A high-level browser automation library
 
 - [jsinspect](https://github.com/danielstjules/jsinspect) 【检查代码中的重复代码，虽然不是非常精准，但对优化代码也有一定帮助。】
 - [nodemailer](https://github.com/nodemailer/nodemailer) 【Node.js 发送邮件】
 - [debug](https://github.com/visionmedia/debug) 【Tiny node.js & browser debugging utility for your libraries and applications】
 - [url-to-pdf-api](https://github.com/alvarcarto/url-to-pdf-api)
+- [puppeteer](https://github.com/GoogleChrome/puppeteer)
+  - [Take a screenshot of web page using Node JS (Puppeteer + Chrome)](http://mytypings.com/take-a-screenshot-of-web-page-using-node-js-puppeteer-chrome/)
+  - [A Guide to Automating & Scraping the Web with JavaScript (Chrome + Puppeteer + Node JS)](https://codeburst.io/a-guide-to-automating-scraping-the-web-with-javascript-chrome-puppeteer-node-js-b18efb9e9921)
 - [node-cache-manager](https://github.com/BryanDonovan/node-cache-manager) 【缓存】
-- [slate](https://github.com/lord/slate) 【搭建 API 文档】
-- [winston](https://github.com/winstonjs/winston) 【logger】
+- [winston](https://github.com/winstonjs/winston) 「logger」
+
+环境变量
+
+- [dotenv](https://github.com/motdotla/dotenv)
+- [envalid](https://github.com/af/envalid)
+- [custom-env](https://www.npmjs.com/package/custom-env)
+- [Managing Configurations in Node.JS apps with dotenv and convict](https://medium.com/@sherryhsu/managing-configurations-in-node-js-apps-with-dotenv-and-convict-d74070d37373)
+
+- [mitt](https://github.com/developit/mitt) event emitter/pubsub
+- [ink](https://github.com/vadimdemedes/ink) 像写 React 一样写命令行 App
+- [np](https://github.com/sindresorhus/np) npm publish helper

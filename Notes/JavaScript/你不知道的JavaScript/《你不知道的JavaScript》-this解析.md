@@ -2,7 +2,7 @@
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 **Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
-- [JavaScript的this](#javascript%E7%9A%84this)
+- [JavaScript 的 this](#javascript-%E7%9A%84-this)
   - [独立函数调用](#%E7%8B%AC%E7%AB%8B%E5%87%BD%E6%95%B0%E8%B0%83%E7%94%A8)
   - [绑定规则](#%E7%BB%91%E5%AE%9A%E8%A7%84%E5%88%99)
     - [隐式绑定](#%E9%9A%90%E5%BC%8F%E7%BB%91%E5%AE%9A)
@@ -14,11 +14,10 @@
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
-## JavaScript的this
+## JavaScript 的 this
 
-**`this`不指向自身，也不指向函数的作用域**
-
-`this`是在运行中绑定的，并不是在编写时绑定。它的上下文取决于函数调用时的各种条件。`this`的绑定和函数声明的位置没有任何关系，只取决于函数的调用方式。
+- **`this`不指向自身，也不指向函数的作用域**
+- **`this`是在运行中绑定的，并不是在编写时绑定。它的上下文取决于函数调用时的各种条件。`this`的绑定和函数声明的位置没有任何关系，只取决于函数的调用方式。**
 
 当一个函数被调用时，会创建一个活动记录（执行上下文）。这个记录会包含函数在哪里被调用（调用栈）、函数的调用方式、传入的参数等信息。`this`就是这样一个属性，**它指向什么完全取决于在哪里被调用。**
 
@@ -45,7 +44,7 @@ foo(); // 2
 #### 隐式绑定
 
 ```javascript
-function foo(){
+function foo() {
 	console.log(this.a);
 }
 
@@ -63,7 +62,7 @@ obj.foo(); // 2
 
 
 ```javascript
-function foo(){
+function foo() {
 	console.log(this.a);
 }
 
@@ -72,10 +71,10 @@ var obj = {
 	foo: foo
 }
 
-var a = 'I am global'; //全局对象的属性
+var a = 'I am global'; // 全局对象的属性
 
-function doFoo(fn){
-	// fn实际上引用的是foo
+function doFoo(fn) {
+	// fn 实际上引用的是 foo
 	fn(); // <---调用位置
 }
 
@@ -87,10 +86,10 @@ doFoo(obj.foo); // I am global
 - `call(...)`
 - `apply(...)`
 - `bind(...)`
-- 第一个参数是一个对象（为this准备），在调用函数时将它绑定到this
+- 第一个参数是一个对象（为 this 准备），在调用函数时将它绑定到 this
 
 ```javascript
-function foo(){
+function foo() {
 	console.log(this.a);
 }
 
@@ -102,7 +101,7 @@ foo.call(obj); // 2
 
 // 通过 foo.call(..)，可以在调用 foo 时强制把它的 this 绑定到 obj 上
 
-function foo(something){
+function foo(something) {
 	console.log(this.a, something);
 	return this.a + something;
 }
@@ -117,7 +116,7 @@ var b = bar(3); // 2 3
 
 console.log(b); // 5
 
-// bind() 会返回一个硬编码的新函数，它会把你所指定的参数设置为this的上下文并调用原始函数
+// bind() 会返回一个硬编码的新函数，它会把你所指定的参数设置为 this 的上下文并调用原始函数
 ```
 
 #### new绑定
@@ -136,9 +135,9 @@ function foo(a) {
 
 var bar = new foo(2);
 
-console.log(bar.a); //2
+console.log(bar.a); // 2
 
-//使用 new 来调用 foo(..) 时，我们会构造一个新对象并把它绑定到 foo(..) 调用中的 this 上
+// 使用 new 来调用 foo(..) 时，我们会构造一个新对象并把它绑定到 foo(..) 调用中的 this 上
 ```
 
 ### 判断this（绑定优先级）
@@ -153,17 +152,16 @@ console.log(bar.a); //2
 - 如果把`null`、`undefined`作为`this`的绑定对象传入`call`、`apply`或者`bind`，这些值在调用时会被忽略，实际应用的是默认绑定规则
 
 ```javascript
-//显式绑定到 null 的应用
+// 显式绑定到 null 的应用
+// 使用 apply(..) 来展开一个数组，并当做参数传入一个函数
 
-//使用 apply(..) 来展开一个数组，并当做参数传入一个函数
-
-function foo(a, b){
+function foo(a, b) {
 	console.log("a : " + a + ", b : " + b);
 }
 
 foo.apply(null, [2, 3]); // a : 2, b : 3
 
-//使用 bind(..) 对参数进行柯里化（预先设置一些参数）
+// 使用 bind(..) 对参数进行柯里化（预先设置一些参数）
 
 var bar = foo.bind(null, 2);
 
@@ -173,13 +171,13 @@ bar(3); // a : 2, b : 3
 更安全的做法 --- 创建一个空对象进行绑定：
 
 ```javascript
-function foo(a, b){
+function foo(a, b) {
 	console.log("a : " + a + ", b : " + b);
 }
 
 var EMPTY = Object.create(null);
 
-foo.apply(EMPTY, [2, 3]); //a : 2, b : 3
+foo.apply(EMPTY, [2, 3]); // a : 2, b : 3
 
 var bar = foo.bind(EMPTY, 2);
 bar(3); // a : 2, b : 3
@@ -190,10 +188,10 @@ bar(3); // a : 2, b : 3
 箭头函数不适用`this`的四种标准规则，而是根据外层（函数或者全局）作用域来决定`this`
 
 ```javascript
-function foo(){
-//返回一个箭头函数
-	return (a) => {
-		//this继承自foo()
+function foo() {
+ // 返回一个箭头函数
+	return () => {
+		// this 继承自 foo()
 		console.log(this.a);
 	}
 }
@@ -208,7 +206,7 @@ var obj2 = {
 
 var bar = foo.call(obj1);
 
-bar.call(obj2); // 2，不是3！
+bar.call(obj2); // 2，不是 3！
 ```
 
 `foo()`内部创建的箭头函数会捕获调用时`foo()`的`this`。由于`foo()`的`this`绑定到`obj1`，`bar`的`this`也会绑定到`obj1`，箭头函数的绑定无法被修改（`new`也不行）

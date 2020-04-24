@@ -51,7 +51,7 @@ const isEqual: Equal = (a, b) => a === b;
 let isEqual: Equal;
 isEqual = function(a, b) {
     return a === b;
-} 
+}
 ```
 
 ##### 类与接口

@@ -6,6 +6,7 @@
   - [redis-cli](#redis-cli)
     - [key/value](#keyvalue)
     - [expire](#expire)
+  - [References](#references)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -109,7 +110,7 @@ $ redis-cli
 > ttl key1 # -1
 ```
 
-
+### References
 
 - http://www.awaimai.com/761.html
 - https://ruby-china.org/topics/28094

@@ -141,7 +141,7 @@ module.exports = {
 
 #### `ExtractTextPlugin`分离CSS
 
-> 行内插入一坨CSS是万恶之源 
+> 行内插入一坨CSS是万恶之源
 >
 > -- 我瞎扯的
 

@@ -47,7 +47,7 @@ Material Design现在变得很火了，许多设计师也不仅局限在Android�
 
 ### 1.熟悉其核心思想
 
-如果你想学Material Design，最好的开始方式就是去看[谷歌的官方文档]()
+如果你想学Material Design，最好的开始方式就是去看[谷歌的官方文档](https://material.io/design/introduction/)
 
 文档会实时保持更新，并且解释说明了在使用Material Design设计过程中的一些细节。
 

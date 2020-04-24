@@ -107,7 +107,7 @@ int main() {
 
 ```javascript
 
-function add (a, b) {  
+function add (a, b) {
   return a + b
 }
 
@@ -119,7 +119,7 @@ add(4, 5);
 堆用于储存可以被引用的对象，例如 string 或者 object。下面的代码里，被创建的 `Car` 对象将要入堆：
 
 ```javascript
-function Car (opts) {  
+function Car (opts) {
   this.name = opts.name
 }
 
@@ -133,12 +133,12 @@ const LightningMcQueen = new Car({name: 'Lightning McQueen'});
 再让我们实例化一些车，看看内存会变成什么样：
 
 ```javascript
-function Car (opts) {  
+function Car (opts) {
   this.name = opts.name
 }
 
-const LightningMcQueen = new Car({name: 'Lightning McQueen'})  
-const SallyCarrera = new Car({name: 'Sally Carrera'})  
+const LightningMcQueen = new Car({name: 'Lightning McQueen'})
+const SallyCarrera = new Car({name: 'Sally Carrera'})
 const Mater = new Car({name: 'Mater'})
 ```
 
@@ -149,17 +149,17 @@ const Mater = new Car({name: 'Mater'})
 我们再给车增加些部件：
 
 ```javascript
-function Engine (power) {  
+function Engine (power) {
   this.power = power
 }
 
-function Car (opts) {  
+function Car (opts) {
   this.name = opts.name
   this.engine = new Engine(opts.power)
 }
 
-let LightningMcQueen = new Car({name: 'Lightning McQueen', power: 900})  
-let SallyCarrera = new Car({name: 'Sally Carrera', power: 500})  
+let LightningMcQueen = new Car({name: 'Lightning McQueen', power: 900})
+let SallyCarrera = new Car({name: 'Sally Carrera', power: 500})
 let Mater = new Car({name: 'Mater', power: 100})
 ```
 
@@ -187,7 +187,7 @@ let Mater = new Car({name: 'Mater', power: 100})
 
 ##### 新生代
 
-通常，只有不到 20% 的新生代可以成为老生代，而jiu'kong'jian旧空间只有在几乎耗尽时才会触发回收机制。V8 引擎采用了两种回收算法来实现：Scavenge 和 Mark-Sweep 。
+通常，只有不到 20% 的新生代可以成为老生代，而旧空间只有在几乎耗尽时才会触发回收机制。V8 引擎采用了两种回收算法来实现：Scavenge 和 Mark-Sweep 。
 
 ##### Scavenge 和 Mark-Sweep 回收
 
@@ -198,8 +198,8 @@ Scavenge 回收算法速度很快，运行在新空间，而 Mark-Sweep 相对�
 2013 年，Meteor 框架的作者们发布了他们遇见了一个内存泄露的例子：
 
 ```javascript
-var theThing = null  
-var replaceThing = function () {  
+var theThing = null
+var replaceThing = function () {
   var originalThing = theThing
   var unused = function () {
     if (originalThing)
